@@ -75,13 +75,13 @@ Always run local checks using committed lockfiles before requesting review:
   ```
 - **Documentation (`littlesteps-docs`):**
   ```bash
-  npm test # runs verify-docs script to validate relative links, templates, and formatting
+  npm test # runs verify-docs unit tests and repository link/frontmatter verification
   ```
 
 ### Continuous Integration (CI)
 - Pull requests in `littlesteps-api` must pass the required GitHub Actions check: **`API CI/verify`**.
 - Pull requests in `littlesteps-web` must pass the required GitHub Actions check: **`Web CI/verify`**.
-- Pull requests in `littlesteps-docs` run the automated GitHub Actions check: **`Docs CI/verify`** (validating relative links, template frontmatter, and Markdown files).
+- Pull requests in `littlesteps-docs` run the automated GitHub Actions check: **`Docs CI/verify`** (validating relative internal links, image paths, and issue-template frontmatter; not a general Markdown linter).
 
 ---
 

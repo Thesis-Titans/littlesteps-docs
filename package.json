@@ -5,7 +5,7 @@
   "description": "Canonical project documentation repository for LittleSteps",
   "type": "module",
   "scripts": {
-    "verify": "node scripts/verify-docs.mjs",
-    "test": "node scripts/verify-docs.mjs"
+    "test": "node scripts/verify-docs.test.mjs && node scripts/verify-docs.mjs",
+    "verify": "node scripts/verify-docs.mjs"
   }
 }
