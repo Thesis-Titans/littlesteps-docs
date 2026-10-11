@@ -1,6 +1,6 @@
 # LittleSteps Documentation Standards & Repository Consistency
 
-Status: Stage 1 standards baseline established and merged in PR #9. This document defines the canonical documentation standards, repository information architecture, file baselines, and audit checklist across the LittleSteps multi-repository project. Stages 2–5 remain in progress or pending as tracked in the roadmap below.
+Status: Stages 1–3 baselines established and merged across active repositories (PR #9, PR #10, PR #11, API PR #6, Web PR #4). Stage 4 (Docs CI quality workflow) is in progress on this branch. Stage 5 (System-wide verification) is pending.
 
 ---
 
@@ -102,16 +102,16 @@ The table records the observed baseline at the time of this Stage 1 draft and th
 | | `CONTRIBUTING.md` | Canonical contributor guidelines | Present on main (Stage 2) |
 | | `SECURITY.md` | Public vulnerability reporting guide | Present on main (Stage 2; Private Vulnerability Reporting enabled) |
 | | `CODE_OF_CONDUCT.md` | Standard academic contributor conduct | Present on main (Stage 2) |
-| | PR / Issue Templates | Structured review and issue templates | Present on this PR branch (Stage 3) |
-| | Docs CI | Automated Markdown and link validation | Pending (Stage 4) |
-| **`littlesteps-api`** | `README.md` | API overview linking to canonical docs and rights notice | Present on the current default branch; alignment pending |
-| | `CONTRIBUTING.md` | API-specific test/lint commands and PR rules | Pending (Stage 3) |
-| | `SECURITY.md` | API security reporting pointer | Pending (Stage 3; Private Vulnerability Reporting enabled) |
-| | PR / Issue Templates | API change and test evidence templates | Pending (Stage 3) |
-| **`littlesteps-web`** | `README.md` | Web overview linking to canonical docs and rights notice | Present on the current default branch; alignment pending |
-| | `CONTRIBUTING.md` | Web-specific test/lint commands and PR rules | Pending (Stage 3) |
-| | `SECURITY.md` | Web security reporting pointer | Pending (Stage 3; Private Vulnerability Reporting enabled) |
-| | PR / Issue Templates | Web UI change and test evidence templates | Pending (Stage 3) |
+| | PR / Issue Templates | Structured review and issue templates | Present on main (Stage 3) |
+| | Docs CI | Automated Markdown and link validation | Present on this PR branch (Stage 4) |
+| **`littlesteps-api`** | `README.md` | API overview linking to canonical docs and rights notice | Aligned on main (Stage 3) |
+| | `CONTRIBUTING.md` | API-specific test/lint commands and PR rules | Present on main (Stage 3) |
+| | `SECURITY.md` | API security reporting pointer | Present on main (Stage 3; Private Vulnerability Reporting enabled) |
+| | PR / Issue Templates | API change and test evidence templates | Present on main (Stage 3) |
+| **`littlesteps-web`** | `README.md` | Web overview linking to canonical docs and rights notice | Aligned on main (Stage 3) |
+| | `CONTRIBUTING.md` | Web-specific test/lint commands and PR rules | Present on main (Stage 3) |
+| | `SECURITY.md` | Web security reporting pointer | Present on main (Stage 3; Private Vulnerability Reporting enabled) |
+| | PR / Issue Templates | Web UI change and test evidence templates | Present on main (Stage 3) |
 | **`littlesteps-mobile`** | All files | **Untouched** pending CC 207B fork | Preserved by scope; do not modify or audit for implementation changes in this workstream |
 
 ---
@@ -122,6 +122,6 @@ Work is tracked on [Thesis-Titans LittleSteps Project #2](https://github.com/org
 
 1. **Stage 1 — Standards Baseline (Complete):** Established and merged canonical documentation standard (`docs/documentation-standards.md`, PR #9).
 2. **Stage 2 — Contributor & Security Policies (Complete):** Drafted and merged canonical `CONTRIBUTING.md`, `SECURITY.md`, and `CODE_OF_CONDUCT.md` in `littlesteps-docs` (PR #10); enabled GitHub Private Vulnerability Reporting.
-3. **Stage 3 — Repository Alignment & Templates (Current):** Add PR and issue templates across active repositories; align READMEs and add repo-specific contributor/security pointers in `littlesteps-api` and `littlesteps-web`.
-4. **Stage 4 — Docs Quality CI:** Add automated Markdown formatting and link verification workflow in `littlesteps-docs`.
+3. **Stage 3 — Repository Alignment & Templates (Complete):** Added PR and issue templates across active repositories; aligned READMEs and added repo-specific contributor/security guidance in `littlesteps-api` (PR #6) and `littlesteps-web` (PR #4).
+4. **Stage 4 — Docs Quality CI (Current):** Add automated Markdown formatting and link verification workflow in `littlesteps-docs`.
 5. **Stage 5 — System-Wide Verification:** Verify cross-repository links, setup commands, and consistency before closing Issue #8.
