@@ -10,10 +10,17 @@ Reviewed for the initial architecture baseline on 2026-10-11. Recheck official d
 | OWASP REST Security Cheat Sheet | https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html | Use explicit CORS origins, allowlisted methods, request limits, input validation, safe errors, and rate limits. |
 | OWASP Input Validation Cheat Sheet | https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html | Validate syntax and semantics on the server, including fields, lengths, ranges, and nested structures. Authorization is a separate check. |
 | Philippine Data Privacy Act IRR (NPC) | https://privacy.gov.ph/implementing-rules-regulations-data-privacy-act-2012/ | Review transparency, declared purpose, data minimization, recipients, retention, rights, and automated-processing disclosures with the responsible privacy/legal adviser. |
+| ECCD Council resources — NELF, NELC, ECCD Checklist | https://eccdcouncil.gov.ph/resources/ | Official landing page lists candidate Philippine early-childhood framework, curriculum, and checklist materials. The exact document version, usage permissions, and relevance to each content item still require item-level review. |
+| ECCD Council center-based standards | https://eccdcouncil.gov.ph/center-based-standards-guidelines/ | Candidate guidance for early-childhood programs serving ages 0–4; do not assume institutional standards validate caregiver-facing milestone claims. |
+| DepEd Kindergarten curriculum overview | https://www.deped.gov.ph/k-to-12/about/k-to-12-basic-education-curriculum/kindergarten/ | Official access point for Kindergarten curriculum guidance relevant to educational activities; verify the exact current guide and version before adapting competencies. |
+| DepEd MATATAG curriculum materials | https://www.deped.gov.ph/matatagcurriculumk147/ | DepEd's curriculum page links a Kindergarten guide; use the exact version and competency locator when grounding learning activities. |
+| Early Years Act of 2013 (RA 10410) | https://lawphil.net/statutes/repacts/ra2013/ra_10410_2013.html | Policy context for the Philippine ECCD system and the 0–8 early-years period, not item-level evidence for individual developmental claims. |
 
 ## Evidence limits and follow-up
-- These sources inform engineering design; they do not establish legal compliance.
-- Confirm applicable ECCD Council and DepEd source documents for each content item and maintain item-level citations.
+- These sources inform engineering and content sourcing; they do not establish legal compliance or validate a developmental screening tool.
+- Candidate Philippine early-childhood sources are recorded in [the content provenance protocol](philippine-content-provenance.md). Their inclusion is not a claim that exact PDFs, versions, permissions, or every relevant passage have been fully reviewed.
+- Before authoring catalog items, record each exact source title, issuing body, publication/version date if stated, access date, exact page/section/competency, adaptation notes, and reviewer.
+- Have an appropriate subject-matter adviser review content before it is described as reviewed or approved.
 - Confirm current Firebase pricing/billing in the actual project before deployment.
 - Review provider terms and data-processing practices before enabling external AI.
 - Do not describe CDC milestone checklists as a validated local screening tool.
