@@ -21,6 +21,11 @@ LittleSteps is an early learning and caregiver support system for children aged 
 
 The mobile repository is outside this implementation pass and must not be changed.
 
+## Community & Contribution
+- [Contribution guidelines](CONTRIBUTING.md): branch conventions, verification expectations, synthetic data rules, and PR review workflow.
+- [Security policy](SECURITY.md): vulnerability reporting, responsible disclosure, and academic response expectations.
+- [Code of conduct](CODE_OF_CONDUCT.md): expectations for respectful academic collaboration.
+
 ## Status
 This is an initial foundation proposal for review, not evidence of a deployed or production-ready system. Test locally before deployment. Review privacy obligations, Firebase billing, and GitHub repository settings before a public demo or production use.
 
