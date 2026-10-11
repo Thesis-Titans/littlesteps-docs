@@ -32,6 +32,7 @@ For web changes:
 4. Check keyboard navigation and responsive behavior for touched UI.
 
 ## Local-first Firebase workflow
+- Follow the verified step-by-step setup in [getting-started.md](getting-started.md) to initialize the local multi-repo environment.
 - Start with Firebase Emulator Suite and synthetic data.
 - Keep deployment credentials and production data out of local development.
 - Before deployment, review billing and cost exposure, set budget alerts, and confirm the target project explicitly.

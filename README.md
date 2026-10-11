@@ -2,6 +2,9 @@
 
 LittleSteps is an early learning and caregiver support system for children aged 0–71 months. This repository is the canonical home for product scope, decisions, research provenance, privacy and safety requirements, and course deliverables.
 
+## Getting started
+- [Developer onboarding guide](docs/getting-started.md): verified step-by-step tutorial for Node.js 22, Java 21, Firebase Emulators, and local full-stack development.
+
 ## Source of truth
 - [Product scope](docs/product-scope.md): six core features and boundaries.
 - [Architecture decisions](docs/architecture-decisions.md): current technical direction.
