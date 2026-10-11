@@ -48,15 +48,19 @@ Following the governance audit ([Docs Issue #2](https://github.com/Thesis-Titans
      - Direct pushes to `main` are blocked.
      - Force pushes (`allow_force_pushes: false`) and branch deletions (`allow_deletions: false`) are strictly prohibited.
      - Pull requests are required before merging into `main`.
-2. **Review & Approval Policy:**
-   - During the foundation/setup stage, Mark serves as the reviewer and approval boundary. Setting `required_approving_review_count: 0` ensures PRs are mandatory while avoiding owner self-review deadlocks.
-   - For feature execution, stricter review requirements (formal peer review where feasible) will be adopted by team agreement.
+2. **Review & Approval Policy (Technical Enforcement vs. Procedural Boundary):**
+   - **Technical GitHub Configuration:** Pull requests are strictly required before merging to `main`, but GitHub's `required_approving_review_count` is set to `0`. This technically prohibits direct git pushes to `main` while avoiding owner/author self-review deadlocks during solo setup tasks. GitHub's branch rule alone does not enforce an approval before merge under this configuration.
+   - **Procedural Team Enforcement:** The team operates under an agreed procedural rule that Mark serves as the reviewer and approval boundary during the setup stage. No pull request may be merged into `main` without Mark's explicit human review and approval, even though GitHub's technical setting permits merges without an approval.
+   - **Feature Execution Transition:** For subsequent feature execution, stricter server-side review requirements (e.g., `required_approving_review_count: 1` or CODEOWNERS) will be evaluated and configured by team agreement once multiple collaborators are submitting PRs.
 3. **Required Status Checks:**
    - **`littlesteps-api`:** Strictly requires the `API CI/verify` GitHub Actions status check to pass before merging.
    - **`littlesteps-web`:** Strictly requires the `Web CI/verify` GitHub Actions status check to pass before merging.
    - **`littlesteps-docs`:** No automated CI workflow is configured; PR verification relies on manual peer review.
-4. **Cross-Repository Work Queue:**
-   - [Thesis-Titans LittleSteps Project #2](https://github.com/orgs/Thesis-Titans/projects/2) is the designated organization-level board tracking all active issues and pull requests across `littlesteps-docs`, `littlesteps-api`, and `littlesteps-web`.
+4. **Cross-Repository Work Queue & Coverage:**
+   - [Thesis-Titans LittleSteps Project #2](https://github.com/orgs/Thesis-Titans/projects/2) is the organization-level board tracking active issues and pull requests across `littlesteps-docs`, `littlesteps-api`, and `littlesteps-web`.
+   - As verified by repository queries, `littlesteps-api` and `littlesteps-web` currently have 0 open issues and 0 open pull requests. All active organization items ([Docs Issue #2](https://github.com/Thesis-Titans/littlesteps-docs/issues/2), [Docs Issue #3](https://github.com/Thesis-Titans/littlesteps-docs/issues/3), [Docs PR #6](https://github.com/Thesis-Titans/littlesteps-docs/pull/6), and [Docs PR #7](https://github.com/Thesis-Titans/littlesteps-docs/pull/7)) are currently populated on the board.
+   - Items are maintained manually or via Project workflows as new work is scheduled.
 5. **Mobile Repository Boundary:**
    - `littlesteps-mobile` remains private and strictly untouched pending the CC 207B external fork requirement.
+
 
