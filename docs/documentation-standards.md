@@ -103,7 +103,7 @@ The table records the observed baseline at the time of this Stage 1 draft and th
 | | `SECURITY.md` | Public vulnerability reporting guide | Present on main (Stage 2; Private Vulnerability Reporting enabled) |
 | | `CODE_OF_CONDUCT.md` | Standard academic contributor conduct | Present on main (Stage 2) |
 | | PR / Issue Templates | Structured review and issue templates | Present on main (Stage 3) |
-| | Docs CI | Automated relative-link, image-path, and issue-template field validation (lightweight zero-dependency verifier; not a full YAML parser or general Markdown style linter) | Present on this PR branch (Stage 4) |
+| | Docs CI | Automated relative-link, image-path, and issue-template field validation (lightweight zero-dependency verifier; not a full YAML parser or general Markdown style linter) | Present on main (Stage 4; Docs PR #12 merged, branch protection required check verified) |
 | **`littlesteps-api`** | `README.md` | API overview linking to canonical docs and rights notice | Aligned on main (Stage 3) |
 | | `CONTRIBUTING.md` | API-specific test/lint commands and PR rules | Present on main (Stage 3) |
 | | `SECURITY.md` | API security reporting pointer | Present on main (Stage 3; Private Vulnerability Reporting enabled) |
@@ -123,5 +123,5 @@ Work is tracked on [Thesis-Titans LittleSteps Project #2](https://github.com/org
 1. **Stage 1 — Standards Baseline (Complete):** Established and merged canonical documentation standard (`docs/documentation-standards.md`, PR #9).
 2. **Stage 2 — Contributor & Security Policies (Complete):** Drafted and merged canonical `CONTRIBUTING.md`, `SECURITY.md`, and `CODE_OF_CONDUCT.md` in `littlesteps-docs` (PR #10); enabled GitHub Private Vulnerability Reporting.
 3. **Stage 3 — Repository Alignment & Templates (Complete):** Added PR and issue templates across active repositories; aligned READMEs and added repo-specific contributor/security guidance in `littlesteps-api` (PR #6) and `littlesteps-web` (PR #4).
-4. **Stage 4 — Docs Quality CI (Current):** Add automated relative-link, image-path, and issue-template frontmatter verification workflow in `littlesteps-docs` (PR #12).
-5. **Stage 5 — System-Wide Verification:** Verify cross-repository links, setup commands, and consistency before closing Issue #8.
+4. **Stage 4 — Docs Quality CI (Complete):** Added automated relative-link, image-path, and issue-template frontmatter verification workflow in `littlesteps-docs` (PR #12); branch protection enabled with strict required status check (`verify`).
+5. **Stage 5 — System-Wide Verification (Complete):** Verified cross-repository links, setup commands, branch protection, and consistency across Docs, API, and Web.
