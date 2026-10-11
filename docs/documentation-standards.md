@@ -50,61 +50,69 @@ Documentation in `littlesteps-docs` aligns with the Diátaxis documentation fram
 
 | Type | Reader's Question | Focus | LittleSteps Document |
 | :--- | :--- | :--- | :--- |
-| **Tutorial** | *"Help me get started from scratch."* | Learning-oriented step-by-step guidance | [`docs/getting-started.md`](getting-started.md) |
-| **How-To Guide** | *"How do I complete a specific operational task?"* | Task-oriented problem solving | Branching and verification guides in [`docs/development-workflow.md`](development-workflow.md) |
-| **Reference** | *"What is the exact technical contract or specification?"* | Information-oriented technical facts | OpenAPI contract (`openapi/openapi.yaml`), environment variables, provenance schemas |
-| **Explanation** | *"Why is the system designed this way?"* | Understanding-oriented rationale and context | [`docs/product-scope.md`](product-scope.md), [`docs/architecture-decisions.md`](architecture-decisions.md), [`docs/security-privacy-ai.md`](security-privacy-ai.md), [`docs/philippine-content-provenance.md`](philippine-content-provenance.md) |
+| **Tutorial** | *"Help me get started from scratch."* | Learning-oriented step-by-step guidance | [Developer onboarding guide](getting-started.md) |
+| **How-To Guide** | *"How do I complete a specific operational task?"* | Task-oriented problem solving | [Development workflow](development-workflow.md) |
+| **Reference** | *"What is the exact technical contract or specification?"* | Information-oriented technical facts | [OpenAPI contract in the API repository](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml), environment variables, and provenance schemas |
+| **Explanation** | *"Why is the system designed this way?"* | Understanding-oriented rationale and context | [Product scope](product-scope.md), [architecture decisions](architecture-decisions.md), [security, privacy, and AI guardrails](security-privacy-ai.md), [Philippine content provenance](philippine-content-provenance.md) |
+
+These are intended destinations in the documentation architecture, not a claim that every listed document or contract is complete or production-ready. Each linked resource's current status must be checked before relying on it.
 
 ---
 
 ## 4. Policy Baselines
 
-### 4.1 Licensing Standard: All Rights Reserved (Academic Evaluation Only)
-- **Status:** Public visibility on GitHub is maintained to enable native branch protection and transparency for thesis/capstone evaluation.
-- **Terms:** **All Rights Reserved**. No general open-source redistribution, commercial reuse, or public derivative licensing is granted.
-- **Scope:** Public code and documentation are visible strictly for academic examination, faculty review, and demonstration purposes. Real child and caregiver personal data, production credentials, and restricted curriculum packages are strictly excluded.
+### 4.1 Intended Rights Policy: All Rights Reserved (Academic Evaluation Only)
+
+- **Project intent:** The project owner intends to reserve copyright and not grant a general open-source license for reuse, modification, redistribution, or commercial use.
+- **Public visibility:** Repositories are public for thesis/capstone evaluation, faculty review, and demonstration. Public visibility is not an access restriction: people may be able to view, fork, or otherwise interact with public repositories under GitHub's platform features and terms.
+- **Notice limitations:** The phrase **“All Rights Reserved (Academic Evaluation Only)”** communicates project intent, but this document and a README notice are not a substitute for a reviewed license instrument or legal advice. Do not describe the academic-only purpose as a technical restriction on who can view the public repositories.
+- **Before finalizing:** Have the exact copyright/license notice and intended restrictions reviewed by the faculty adviser or an appropriate legal resource. Until that review, do not add an open-source license such as MIT, Apache-2.0, or GPL, and do not claim the notice has been legally reviewed.
+- **Data boundary:** Real child and caregiver personal data, production credentials, and restricted curriculum packages must not be committed to public repositories.
 
 ### 4.2 Multi-Repository Community Health File Placement
-- **Location:** Maintained as **explicit files within each active repository** (`littlesteps-docs`, `littlesteps-api`, and `littlesteps-web`).
-- **Rationale:** An organization-level `Thesis-Titans/.github` repository is intentionally **not used** to ensure that default templates and policies do not inadvertently apply to `littlesteps-mobile`.
+
+- **Location:** Maintain community health files as **explicit files within each active repository** (`littlesteps-docs`, `littlesteps-api`, and `littlesteps-web`).
+- **Rationale:** An organization-level `Thesis-Titans/.github` repository is intentionally **not used** so that default templates and policies do not inadvertently apply to `littlesteps-mobile`.
 
 ---
 
 ## 5. Standard File Baseline Specification
 
-Each active repository must maintain a consistent set of root and `.github` files:
+The following is the **target baseline** for each active repository; it does not mean every file already exists. Repository-specific requirements should be adapted to the codebase, without duplicating canonical project documentation.
 
 | File / Resource | Priority | Purpose & Required Content |
 | :--- | :---: | :--- |
-| **`README.md`** | **Required** | Project/repository front door: what it does, current implementation status vs. planned features, prerequisites, fast local commands, link to canonical docs in `littlesteps-docs`, and license notice. |
+| **`README.md`** | **Required** | Project/repository front door: what it does, current implementation status vs. planned features, prerequisites, fast local commands, link to canonical docs in `littlesteps-docs`, and the reviewed rights notice when finalized. |
 | **`CONTRIBUTING.md`** | **Required** | Contributor manual: branch naming, PR workflow, required local/CI verification, secret-handling rules, and Mark's review/approval boundary. |
 | **`SECURITY.md`** | **Required** | Vulnerability reporting: realistic reporting channels, academic project context, and responsible disclosure instructions. |
 | **`CODE_OF_CONDUCT.md`** | **Recommended** | Contributor expectations and academic community standards. |
 | **`.github/PULL_REQUEST_TEMPLATE.md`** | **Required** | Structured PR submission template: change summary, linked issue, tests run, documentation updates, security/privacy impact, and checklist. |
 | **`.github/ISSUE_TEMPLATE/`** | **Required** | Structured templates for bug reports and feature proposals. |
-| **`docs/`** | **As needed** | Detailed technical guides, architecture specifications, and reference records (centralized in `littlesteps-docs`). |
+| **`docs/`** | **As needed** | Detailed technical guides, architecture specifications, and reference records. Keep cross-repository canonical project documentation in `littlesteps-docs`; add repository-local docs only where they serve a distinct repository-specific need. |
 
 ---
 
 ## 6. Repository-by-Repository Audit Checklist
 
+The table records the observed baseline at the time of this Stage 1 draft and the target state. Items marked pending are not yet implemented as part of this workstream; re-check each repository during the relevant stage before marking anything complete.
+
 | Repository | Component | Target State | Current Baseline Status |
 | :--- | :--- | :--- | :--- |
-| **`littlesteps-docs`** | `README.md` | Front door indexing all canonical documentation | Present; needs index link to this standard |
+| **`littlesteps-docs`** | `README.md` | Front door indexing canonical documentation and this standard | Present on this PR branch; index includes this standard |
 | | `CONTRIBUTING.md` | Canonical contributor guidelines | Pending (Stage 2) |
 | | `SECURITY.md` | Public vulnerability reporting guide | Pending (Stage 2) |
-| | `CODE_OF_CONDUCT.md`| Standard academic contributor conduct | Pending (Stage 2) |
-| | PR / Issue Templates| Structured review & issue templates | Pending (Stage 3) |
+| | `CODE_OF_CONDUCT.md` | Standard academic contributor conduct | Pending (Stage 2) |
+| | PR / Issue Templates | Structured review and issue templates | Pending (Stage 3) |
 | | Docs CI | Automated Markdown and link validation | Pending (Stage 4) |
-| **`littlesteps-api`** | `README.md` | API overview linking to canonical docs | Present; needs canonical doc links & license |
-| | `CONTRIBUTING.md` | API-specific test/lint commands & PR rules | Pending (Stage 3) |
+| **`littlesteps-api`** | `README.md` | API overview linking to canonical docs and rights notice | Present on the current default branch; alignment pending |
+| | `CONTRIBUTING.md` | API-specific test/lint commands and PR rules | Pending (Stage 3) |
 | | `SECURITY.md` | API security reporting pointer | Pending (Stage 3) |
-| | PR / Issue Templates| API change & test evidence templates | Pending (Stage 3) |
-| **`littlesteps-web`** | `README.md` | Web overview linking to canonical docs | Present; needs canonical doc links & license |
-| | `CONTRIBUTING.md` | Web-specific test/lint commands & PR rules | Pending (Stage 3) |
+| | PR / Issue Templates | API change and test evidence templates | Pending (Stage 3) |
+| **`littlesteps-web`** | `README.md` | Web overview linking to canonical docs and rights notice | Present on the current default branch; alignment pending |
+| | `CONTRIBUTING.md` | Web-specific test/lint commands and PR rules | Pending (Stage 3) |
 | | `SECURITY.md` | Web security reporting pointer | Pending (Stage 3) |
-| | PR / Issue Templates| Web UI change & test evidence templates | Pending (Stage 3) |
-| **`littlesteps-mobile`** | *All Files* | **Untouched** pending CC 207B fork | Preserved (No modifications) |
+| | PR / Issue Templates | Web UI change and test evidence templates | Pending (Stage 3) |
+| **`littlesteps-mobile`** | All files | **Untouched** pending CC 207B fork | Preserved by scope; do not modify or audit for implementation changes in this workstream |
 
 ---
 
@@ -114,6 +122,6 @@ Work is tracked on [Thesis-Titans LittleSteps Project #2](https://github.com/org
 
 1. **Stage 1 — Standards Baseline (Current):** Establish and review this canonical documentation standard (`docs/documentation-standards.md`).
 2. **Stage 2 — Contributor & Security Policies:** Draft canonical `CONTRIBUTING.md`, `SECURITY.md`, and `CODE_OF_CONDUCT.md` in `littlesteps-docs`.
-3. **Stage 3 — Repository Alignment & Templates:** Align READMEs in `littlesteps-api` and `littlesteps-web` with canonical links and academic license notices; add PR and issue templates across active repositories.
+3. **Stage 3 — Repository Alignment & Templates:** Align READMEs in `littlesteps-api` and `littlesteps-web` with canonical links and the rights notice after its wording has been reviewed; add PR and issue templates across active repositories.
 4. **Stage 4 — Docs Quality CI:** Add automated Markdown formatting and link verification workflow in `littlesteps-docs`.
-5. **Stage 5 — System-Wide Verification:** Verify all cross-repository links, setup commands, and consistency before closing Issue #8.
+5. **Stage 5 — System-Wide Verification:** Verify cross-repository links, setup commands, and consistency before closing Issue #8.
