@@ -43,7 +43,7 @@ Exit criteria:
 - A navigable UI prototype covering all six product capabilities has been reviewed; findings and scope decisions are recorded.
 - API/Web feature implementation remains gated until prototype review, contract dependencies, and M0 exit criteria are complete.
 
-**Prototype-first gate:** Before feature implementation, create and review a navigable prototype for the main caregiver journeys. Include key empty, loading, error, permission-denied, and no-data states; use synthetic data; and show the privacy, content-provenance, and non-diagnostic AI boundaries. Track this work in [Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15). The prototype is a validation artifact, not a substitute for API contract design or implementation tests.
+**Prototype-first gate:** Before feature implementation, create and review a navigable UI prototype covering both Web (desktop/tablet) and Mobile (responsive mobile-sized browser viewports, keeping `littlesteps-mobile` untouched) experiences using an AI-assisted rapid prototyping approach and purely synthetic data / simulated services. Include key empty, loading, error, permission-denied, and deterministic AI fallback states, making privacy and non-diagnostic boundaries visible. Track this work in [Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15). The prototype is a validation artifact, not a substitute for API contract design or implementation tests.
 
 ### M1 — Secure end-to-end foundation
 
