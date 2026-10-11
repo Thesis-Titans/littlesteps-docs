@@ -14,7 +14,7 @@ Reviewed for the initial architecture baseline on 2026-10-11. Recheck official d
 | ECCD Council center-based standards | https://eccdcouncil.gov.ph/center-based-standards-guidelines/ | Candidate guidance for early-childhood programs serving ages 0–4; do not assume institutional standards validate caregiver-facing milestone claims. |
 | DepEd Kindergarten curriculum overview | https://www.deped.gov.ph/k-to-12/about/k-to-12-basic-education-curriculum/kindergarten/ | Official access point for Kindergarten curriculum guidance relevant to educational activities; verify the exact current guide and version before adapting competencies. |
 | DepEd MATATAG curriculum materials | https://www.deped.gov.ph/matatagcurriculumk147/ | DepEd's curriculum page links a Kindergarten guide; use the exact version and competency locator when grounding learning activities. |
-| Early Years Act of 2013 (RA 10410) | https://lawphil.net/statutes/repacts/ra2013/ra_10410_2013.html | Policy context for the Philippine ECCD system and the 0–8 early-years period, not item-level evidence for individual developmental claims. |
+| Republic Act No. 12199 — ECCD System Act of 2025 | https://eccdcouncil.gov.ph/policy-documents/ | Primary statutory framework for the Philippine ECCD system, signed May 8, 2025 (IRR signed August 5, 2026), repealing RA 10410. Allocates responsibilities: ECCD Council for ages below 5 (0–59 months) and DepEd for ages 5–8 (60–96 months, covering Kindergarten). |
 
 ## Evidence limits and follow-up
 - These sources inform engineering and content sourcing; they do not establish legal compliance or validate a developmental screening tool.
