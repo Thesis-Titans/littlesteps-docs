@@ -10,6 +10,11 @@ import { fileURLToPath } from 'node:url';
  * - Links with optional titles: [text](target "title") or [text](target 'title')
  * - Links with anchors: [text](target#section)
  * - URI-encoded targets: [text](path%20with%20spaces.md)
+ *
+ * Scope & Limitations:
+ * This parser is deliberately lightweight and zero-dependency. It handles inline links
+ * and image references. It does not parse reference-style links ([text][ref]) or
+ * targets with nested unescaped parentheses.
  */
 export function parseMarkdownLinks(content) {
   const links = [];
@@ -83,7 +88,11 @@ export function parseMarkdownLinks(content) {
 
 /**
  * Validates YAML frontmatter in issue templates.
- * Checks for opening/closing '---' delimiters and required fields (name, about).
+ * Checks for opening/closing '---' delimiters and required top-level fields (name, about).
+ *
+ * Scope & Limitations:
+ * Extracts top-level key: value pairs. It is a lightweight validator for required
+ * GitHub issue template fields, not a comprehensive YAML parser.
  */
 export function validateFrontmatter(content, filePath = '') {
   const errors = [];

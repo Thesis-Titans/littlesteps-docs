@@ -140,4 +140,24 @@ name: Feature Proposal
   }
 }
 
+// 4. Broken image reference detection in mock directory
+{
+  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'verify-docs-img-test-'));
+  try {
+    fs.mkdirSync(path.join(tmpDir, 'assets'));
+    fs.writeFileSync(path.join(tmpDir, 'assets', 'good.png'), 'fake-image-bytes\n');
+    fs.writeFileSync(
+      path.join(tmpDir, 'README.md'),
+      '# Test\n![Existing Image](assets/good.png)\n![Missing Image](assets/missing.png)\n'
+    );
+
+    const result = verifyRepository(tmpDir);
+    assert.strictEqual(result.errors.length, 1);
+    assert.ok(result.errors[0].includes('Image not found: assets/missing.png'));
+    console.log('✔ verifyRepository: broken image reference successfully detected.');
+  } finally {
+    fs.rmSync(tmpDir, { recursive: true, force: true });
+  }
+}
+
 console.log('\nAll verify-docs unit tests PASSED successfully!\n');

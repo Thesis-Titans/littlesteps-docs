@@ -103,7 +103,7 @@ The table records the observed baseline at the time of this Stage 1 draft and th
 | | `SECURITY.md` | Public vulnerability reporting guide | Present on main (Stage 2; Private Vulnerability Reporting enabled) |
 | | `CODE_OF_CONDUCT.md` | Standard academic contributor conduct | Present on main (Stage 2) |
 | | PR / Issue Templates | Structured review and issue templates | Present on main (Stage 3) |
-| | Docs CI | Automated relative-link, image-path, and issue-template validation | Present on this PR branch (Stage 4) |
+| | Docs CI | Automated relative-link, image-path, and issue-template field validation (lightweight zero-dependency verifier; not a full YAML parser or general Markdown style linter) | Present on this PR branch (Stage 4) |
 | **`littlesteps-api`** | `README.md` | API overview linking to canonical docs and rights notice | Aligned on main (Stage 3) |
 | | `CONTRIBUTING.md` | API-specific test/lint commands and PR rules | Present on main (Stage 3) |
 | | `SECURITY.md` | API security reporting pointer | Present on main (Stage 3; Private Vulnerability Reporting enabled) |

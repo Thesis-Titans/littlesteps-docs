@@ -81,7 +81,7 @@ Always run local checks using committed lockfiles before requesting review:
 ### Continuous Integration (CI)
 - Pull requests in `littlesteps-api` must pass the required GitHub Actions check: **`API CI/verify`**.
 - Pull requests in `littlesteps-web` must pass the required GitHub Actions check: **`Web CI/verify`**.
-- Pull requests in `littlesteps-docs` run the automated GitHub Actions check: **`Docs CI/verify`** (validating relative internal links, image paths, and issue-template frontmatter; not a general Markdown linter).
+- Pull requests in `littlesteps-docs` run the automated GitHub Actions check: **`Docs CI/verify`** (validating relative internal links, image paths, and required issue-template frontmatter fields; not a full YAML parser or general Markdown style linter).
 
 ---
 
