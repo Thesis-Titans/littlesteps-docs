@@ -1,0 +1,11 @@
+{
+  "name": "littlesteps-docs",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Canonical project documentation repository for LittleSteps",
+  "type": "module",
+  "scripts": {
+    "test": "node scripts/verify-docs.test.mjs && node scripts/verify-docs.mjs",
+    "verify": "node scripts/verify-docs.mjs"
+  }
+}
