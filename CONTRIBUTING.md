@@ -64,7 +64,7 @@ Always run local checks using committed lockfiles before requesting review:
   npm run lint
   npm run build
   npm test
-  npm run test:emulators # verifies in-memory emulator suite
+  npm run test:emulator # runs the Auth Emulator integration tests
   ```
 - **Web (`littlesteps-web`):**
   ```bash
