@@ -12,7 +12,7 @@ Ensure the following tools are installed and available in your shell:
 | :--- | :--- | :--- | :--- |
 | **Node.js** | 22.x LTS | `node -v` | Active engine target in all packages. |
 | **npm** | 10.x+ | `npm -v` | Bundled with Node.js 22. |
-| **Java JDK** | 21 LTS (Temurin/OpenJDK) | `java -version` | Required by the Firebase Emulator Suite. |
+| **Java JDK** | 21 LTS (Temurin/OpenJDK) | `java -version` | Required by the Firebase Emulator Suite runtime. |
 | **Git** | 2.34+ | `git --version` | Version control. |
 
 > [!NOTE]
@@ -37,10 +37,10 @@ git clone https://github.com/Thesis-Titans/littlesteps-web.git
 Resulting directory tree:
 ```text
 littlesteps/
-├── littlesteps-docs/   # Canonical architecture, scope, research, and provenance
-├── littlesteps-api/    # TypeScript Express backend on Firebase Functions v2
-├── littlesteps-web/    # React + TypeScript + Vite frontend
-└── (littlesteps-mobile/) # Untouched pending CC 207B fork; do not modify
+├── littlesteps-docs/     # Canonical architecture, scope, research, and provenance
+├── littlesteps-api/      # TypeScript Express backend on Firebase Functions v2
+├── littlesteps-web/      # React + TypeScript + Vite frontend
+└── (littlesteps-mobile/) # Preserved and untouched pending CC 207B fork; do not modify
 ```
 
 ---
@@ -57,9 +57,12 @@ cp .env.example .env
 ```
 Default `.env` contents:
 ```ini
-CORS_ORIGINS=http://localhost:5173
+CORS_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
 ```
 *(Allowlists local Vite frontend requests during development).*
+
+> [!SECURITY]
+> `.env` is ignored by Git. Never commit service account keys, private secrets, or production credentials to `.env`.
 
 ### B. Dependency Installation
 Install dependencies cleanly from the locked manifest:
@@ -76,7 +79,7 @@ npm run lint
 # 2. Typecheck with TypeScript compiler
 npm run typecheck
 
-# 3. Compile output to lib/
+# 3. Compile TypeScript output to lib/
 npm run build
 
 # 4. Run unit tests (Vitest)
@@ -91,14 +94,21 @@ npm run test:emulator
 
 ### D. Running Interactive Emulators
 To start the emulators for active frontend development:
-```bash
-npm run emulators
-```
+1. First ensure the API code is compiled:
+   ```bash
+   npm run build
+   ```
+2. Start the emulator suite bound to the demo project ID:
+   ```bash
+   npm run emulators -- --project demo-littlesteps
+   ```
+*(Note: Passing `--project demo-littlesteps` ensures the Functions emulator binds to the expected `demo-littlesteps` path).*
+
 This boots:
 - **Emulator UI**: `http://127.0.0.1:4000` (inspect auth records and database state)
-- **Authentication**: `127.0.0.1:9099`
-- **Firestore**: `127.0.0.1:8080`
-- **Cloud Functions / API**: `127.0.0.1:5001/demo-littlesteps/us-central1/api`
+- **Authentication Emulator**: `127.0.0.1:9099`
+- **Firestore Emulator**: `127.0.0.1:8080`
+- **Cloud Functions / API**: `http://127.0.0.1:5001/demo-littlesteps/asia-southeast1/api`
 
 ---
 
@@ -112,10 +122,18 @@ Open a second terminal window, navigate to the web directory, and configure loca
 cd ../littlesteps-web
 cp .env.example .env.local
 ```
-Ensure `VITE_API_BASE_URL` points to your local Functions emulator endpoint:
+Configure `VITE_API_BASE_URL` to point to your local Functions emulator endpoint:
 ```ini
-VITE_API_BASE_URL=http://127.0.0.1:5001/demo-littlesteps/us-central1/api
+VITE_API_BASE_URL=http://127.0.0.1:5001/demo-littlesteps/asia-southeast1/api
+# The following client keys are reserved for future Firebase Auth integration:
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_AUTH_DOMAIN=
+VITE_FIREBASE_PROJECT_ID=demo-littlesteps
+VITE_FIREBASE_APP_ID=
 ```
+
+> [!CAUTION]
+> Never place server secrets (such as Firebase Admin SDK keys or AI provider API keys) in `.env.local` or any `VITE_*` variable. Vite exposes all `VITE_*` variables to client browser bundles.
 
 ### B. Dependency Installation
 Install dependencies cleanly from the lockfile:
@@ -149,19 +167,22 @@ Vite will start the local development server at `http://localhost:5173`.
 
 ## 5. End-to-End Local Verification
 
-To verify that the frontend and backend are communicating properly:
+To verify that the frontend and backend communicate properly:
 
-1. **Terminal 1**: Start emulators:
+1. **Terminal 1**: Compile and start API emulators:
    ```bash
-   cd littlesteps-api && npm run emulators
+   cd littlesteps-api
+   npm run build
+   npm run emulators -- --project demo-littlesteps
    ```
 2. **Terminal 2**: Start web dev server:
    ```bash
-   cd littlesteps-web && npm run dev
+   cd littlesteps-web
+   npm run dev
    ```
 3. Open `http://localhost:5173` in your browser.
 4. In the **API connection** card on the landing page, click **"Check local API"**.
-5. The status indicator should transition to **"Connected"** with the message:
+5. The status indicator will transition to **"Connected"** with the message:
    > *"The API health endpoint responded successfully."*
 
 ---
@@ -176,8 +197,19 @@ To verify that the frontend and backend are communicating properly:
    - Never commit API keys, service account credentials, or real personal information.
 3. **API Contract Single Source of Truth**:
    - The canonical REST contract is defined in `littlesteps-api/openapi/openapi.yaml`.
-   - Never invent arbitrary response structures in the web client without updating the contract.
+   - The web client must consume endpoints defined in this contract rather than inventing ad-hoc response structures.
 4. **Milestone Content Provenance**:
    - Before drafting or adapting milestone or activity catalog entries, consult [docs/philippine-content-provenance.md](philippine-content-provenance.md) for required ECCD Council / DepEd citations, metadata fields, and non-diagnostic review boundaries.
 5. **Mobile Repository Preservation**:
    - `Thesis-Titans/littlesteps-mobile` is off-limits and must not be modified during this stage.
+
+---
+
+## 7. Canonical Documentation Index
+
+- [Product Scope](product-scope.md) — 6 core features, app navigation age bands (0–71 months), non-diagnostic boundaries.
+- [Architecture Decisions](architecture-decisions.md) — ADRs covering shared backend, Express on Firebase Functions, Firebase Auth, and Firestore.
+- [Security, Privacy, and AI Guardrails](security-privacy-ai.md) — Philippine Data Privacy Act (RA 10173), OWASP REST guidelines, and AI safety controls.
+- [Development Workflow](development-workflow.md) — Branch and review policies, testing gates, and verification standards.
+- [Philippine Content Provenance](philippine-content-provenance.md) — ECCD Council and DepEd source candidates, per-item citation fields, and review protocol.
+- [Research Register](research-register.md) — External technical, legal, and educational references.
