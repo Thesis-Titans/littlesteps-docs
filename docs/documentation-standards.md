@@ -99,18 +99,18 @@ The table records the observed baseline at the time of this Stage 1 draft and th
 | Repository | Component | Target State | Current Baseline Status |
 | :--- | :--- | :--- | :--- |
 | **`littlesteps-docs`** | `README.md` | Front door indexing canonical documentation, community policies, and rights notice | Present on main; includes index and community links |
-| | `CONTRIBUTING.md` | Canonical contributor guidelines | Present on this PR branch (Stage 2) |
-| | `SECURITY.md` | Public vulnerability reporting guide | Present on this PR branch (Stage 2) |
-| | `CODE_OF_CONDUCT.md` | Standard academic contributor conduct | Present on this PR branch (Stage 2) |
-| | PR / Issue Templates | Structured review and issue templates | Pending (Stage 3) |
+| | `CONTRIBUTING.md` | Canonical contributor guidelines | Present on main (Stage 2) |
+| | `SECURITY.md` | Public vulnerability reporting guide | Present on main (Stage 2; Private Vulnerability Reporting enabled) |
+| | `CODE_OF_CONDUCT.md` | Standard academic contributor conduct | Present on main (Stage 2) |
+| | PR / Issue Templates | Structured review and issue templates | Present on this PR branch (Stage 3) |
 | | Docs CI | Automated Markdown and link validation | Pending (Stage 4) |
 | **`littlesteps-api`** | `README.md` | API overview linking to canonical docs and rights notice | Present on the current default branch; alignment pending |
 | | `CONTRIBUTING.md` | API-specific test/lint commands and PR rules | Pending (Stage 3) |
-| | `SECURITY.md` | API security reporting pointer | Pending (Stage 3) |
+| | `SECURITY.md` | API security reporting pointer | Pending (Stage 3; Private Vulnerability Reporting enabled) |
 | | PR / Issue Templates | API change and test evidence templates | Pending (Stage 3) |
 | **`littlesteps-web`** | `README.md` | Web overview linking to canonical docs and rights notice | Present on the current default branch; alignment pending |
 | | `CONTRIBUTING.md` | Web-specific test/lint commands and PR rules | Pending (Stage 3) |
-| | `SECURITY.md` | Web security reporting pointer | Pending (Stage 3) |
+| | `SECURITY.md` | Web security reporting pointer | Pending (Stage 3; Private Vulnerability Reporting enabled) |
 | | PR / Issue Templates | Web UI change and test evidence templates | Pending (Stage 3) |
 | **`littlesteps-mobile`** | All files | **Untouched** pending CC 207B fork | Preserved by scope; do not modify or audit for implementation changes in this workstream |
 
@@ -121,7 +121,7 @@ The table records the observed baseline at the time of this Stage 1 draft and th
 Work is tracked on [Thesis-Titans LittleSteps Project #2](https://github.com/orgs/Thesis-Titans/projects/2) under [Docs Issue #8](https://github.com/Thesis-Titans/littlesteps-docs/issues/8):
 
 1. **Stage 1 — Standards Baseline (Complete):** Established and merged canonical documentation standard (`docs/documentation-standards.md`, PR #9).
-2. **Stage 2 — Contributor & Security Policies (Current):** Draft canonical `CONTRIBUTING.md`, `SECURITY.md`, and `CODE_OF_CONDUCT.md` in `littlesteps-docs`.
-3. **Stage 3 — Repository Alignment & Templates:** Align READMEs in `littlesteps-api` and `littlesteps-web` with canonical links and the rights notice after its wording has been reviewed; add PR and issue templates across active repositories.
+2. **Stage 2 — Contributor & Security Policies (Complete):** Drafted and merged canonical `CONTRIBUTING.md`, `SECURITY.md`, and `CODE_OF_CONDUCT.md` in `littlesteps-docs` (PR #10); enabled GitHub Private Vulnerability Reporting.
+3. **Stage 3 — Repository Alignment & Templates (Current):** Add PR and issue templates across active repositories; align READMEs and add repo-specific contributor/security pointers in `littlesteps-api` and `littlesteps-web`.
 4. **Stage 4 — Docs Quality CI:** Add automated Markdown formatting and link verification workflow in `littlesteps-docs`.
 5. **Stage 5 — System-Wide Verification:** Verify cross-repository links, setup commands, and consistency before closing Issue #8.
