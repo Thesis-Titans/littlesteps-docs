@@ -27,16 +27,19 @@ Statutory age allocations and LittleSteps product navigation categories are stri
 1. **Statutory jurisdiction** establishes government agency legal authority under RA 12199 (ECCD Council for <5 years; DepEd for 5–8 years).
 2. **LittleSteps navigation categories** are internal UX categories created to help parents discover age-appropriate activities and record private observations. They are **not** statutory jurisdictions, legal definitions, or medical/developmental developmental milestones.
 3. Specifically, the **60–71 month band ("Kindergarten Transition") is solely a LittleSteps product UX category** designed as a bridge for children entering Kindergarten, referencing DepEd Kindergarten competencies. It is **not** a separate statutory category under Philippine law.
+4. **All LRP-to-age-band mappings are provisional:** Because the complete Learning Resource Packages have not been inspected, their detailed contents, exact age brackets, and mappings to LittleSteps navigation bands remain provisional candidates pending physical/digital examination of the actual packages.
 
-| LittleSteps Product Category | UX Navigation Range | Statutory Authority (RA 12199) | Primary Curriculum Reference |
+| LittleSteps Product Category | UX Navigation Range | Statutory Authority (RA 12199) | Provisional Candidate Curriculum Reference* |
 | :--- | :---: | :--- | :--- |
-| **Young Infants** | 0–5 months | ECCD Council (<5 years) | NELC — Learning Resource Package (LRP) 2 & 3 |
-| **Older Infants** | 6–11 months | ECCD Council (<5 years) | NELC — Learning Resource Package (LRP) 2 & 3 |
-| **Young Toddlers** | 12–23 months | ECCD Council (<5 years) | NELC — Learning Resource Package (LRP) 2 & 3 |
-| **Older Toddlers** | 24–35 months | ECCD Council (<5 years) | NELC — Learning Resource Package (LRP) 2, 4, 8 |
-| **Younger Preschoolers** | 36–47 months | ECCD Council (<5 years) | NELC — Learning Resource Package (LRP) 2, 4, 5 |
-| **Older Preschoolers** | 48–59 months | ECCD Council (<5 years) | NELC — Learning Resource Package (LRP) 2, 4, 6, 7 |
-| **Kindergarten Transition** | 60–71 months *(Product UX Band)* | DepEd (5–8 years) | DepEd MATATAG Curriculum — Kindergarten Guide |
+| **Young Infants** | 0–5 months | ECCD Council (<5 years) | NELC — Learning Resource Package (LRP) 2 & 3 *(Provisional)* |
+| **Older Infants** | 6–11 months | ECCD Council (<5 years) | NELC — Learning Resource Package (LRP) 2 & 3 *(Provisional)* |
+| **Young Toddlers** | 12–23 months | ECCD Council (<5 years) | NELC — Learning Resource Package (LRP) 2 & 3 *(Provisional)* |
+| **Older Toddlers** | 24–35 months | ECCD Council (<5 years) | NELC — Learning Resource Package (LRP) 2, 4, 8 *(Provisional)* |
+| **Younger Preschoolers** | 36–47 months | ECCD Council (<5 years) | NELC — Learning Resource Package (LRP) 2, 4, 5 *(Provisional)* |
+| **Older Preschoolers** | 48–59 months | ECCD Council (<5 years) | NELC — Learning Resource Package (LRP) 2, 4, 6, 7 *(Provisional)* |
+| **Kindergarten Transition** | 60–71 months *(Product UX Band)* | DepEd (5–8 years) | DepEd MATATAG Curriculum — Kindergarten Guide *(Candidate)* |
+
+*\*Note: All LRP mappings to LittleSteps navigation bands are provisional candidates and must not be treated as verified source evidence until the complete official packages are inspected.*
 
 ---
 
@@ -46,7 +49,8 @@ Philippine government publications are subject to specific legal conditions unde
 
 1. **Government Works & Exploitation:** Section 176 provides that no copyright shall subsist in any work of the Government of the Philippines. However, prior approval of the government agency or office wherein the work is created is necessary for exploitation of such work for profit, and conditions such as payment of royalties may be imposed.
 2. **Borrowed Third-Party Materials:** Under DepEd and ECCD Council publication guidelines, "borrowed materials" (including songs, stories, poems, photographs, illustrations, and trademarks) included within government guides remain the property of their respective copyright holders. Neither DepEd nor the ECCD Council claims ownership over these works.
-3. **Implications for LittleSteps Content:**
+3. **ECCD Council Distribution Advisories:** The ECCD Council maintains public notices concerning the unauthorized distribution, reproduction, and commercial sale of its learning packages. Access to a portal or document does not establish unrestricted adaptation or distribution rights.
+4. **Implications for LittleSteps Content:**
    - Any rhymes, songs, or literary materials (such as those in NELC LRP 7) cannot be assumed to be in the public domain; each creative work requires individual copyright verification.
    - All official curriculum packages remain **unavailable for content authoring** until complete physical/digital editions and applicable terms of use are obtained and legally verified.
 
@@ -58,23 +62,23 @@ Philippine government publications are subject to specific legal conditions unde
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Republic Act No. 12199** | Republic of the Philippines | 0–8 years | Policy context; interagency responsibilities (Section 2); early childhood workforce standards. | Public statute. Free for policy and architectural grounding. | **Statute verified** (May 8, 2025; [Lawphil text](https://lawphil.net/statutes/repacts/ra2025/ra_12199_2025.html)). |
 | **RA 12199 IRR** | ECCD Council, DepEd, DILG | 0–8 years | Implementing rules, operational guidelines for LGUs and Child Development Centers. | Pending official gazette publication. | **Unverified (needs confirmation)** pending official signed text. |
-| **National Early Learning Framework (NELF)** | ECCD Council | 0–4 years | Foundational principles, developmental domains, and expectations. | ECCD Council Policy Document. Free for conceptual reference. | **Verified** candidate framework. |
-| **NELC — LRP 1 (Implementation Guidelines)** | ECCD Council | 0–4 years | Center and home implementation guidelines. | Requires official copy request. **Unavailable for content authoring.** | Title noted; **complete package uninspected**. |
-| **NELC — LRP 2 (Standards & Competencies)** | ECCD Council | 0–4 years | Domains, competencies, and behavioral indicators (infants through pre-K). | Requires official copy request. **Unavailable for content authoring until full copy & terms confirmed.** | Title noted; **complete package uninspected**. |
-| **NELC — LRP 3 (Parent-Mentor Activity Calendar)** | ECCD Council | 0–23 months | Suggested home-based calendar of activities for infants and toddlers. | Requires official copy request. **Unavailable for content authoring until full copy & terms confirmed.** | Title noted; **complete package uninspected**. |
-| **NELC — LRP 4 (Activities for 2–3 Years Old)** | ECCD Council | 24–35 months | Daily center/home activity plans for toddlers. | Requires official copy request. **Unavailable for content authoring.** | Title noted; **complete package uninspected**. |
-| **NELC — LRP 5 & 6 (Pre-K1 & Pre-K2 Activities)** | ECCD Council | 36–59 months | Center and home routine activities for 3- and 4-year-olds. | Requires official copy request. **Unavailable for content authoring.** | Titles noted; **complete package uninspected**. |
-| **NELC — LRP 7 (Creative Resources, Songs & Rhymes)** | ECCD Council | 0–4 years | Action songs, poems, rhymes, and creative activities. | Third-party borrowed works protected under RA 8293. **Unavailable for content authoring.** | Titles noted; **complete package uninspected**. |
+| **National Early Learning Framework (NELF)** | ECCD Council | 0–4 years | Foundational principles, developmental domains, and expectations. | Official framework available for reference. Reproduction, adaptation, redistribution, and commercial-use conditions have not been independently verified; confirm applicable terms before incorporating source material. | **Candidate framework**; specific reuse terms unverified. |
+| **NELC — LRP 1 (Implementation Guidelines)** | ECCD Council | 0–4 years | Center and home implementation guidelines. | Requires official copy request. **Unavailable for content authoring.** | Title noted; **complete package uninspected; mapping provisional**. |
+| **NELC — LRP 2 (Standards & Competencies)** | ECCD Council | 0–4 years | Domains, competencies, and behavioral indicators (infants through pre-K). | Requires official copy request. **Unavailable for content authoring until full copy & terms confirmed.** | Title noted; **complete package uninspected; mapping provisional**. |
+| **NELC — LRP 3 (Parent-Mentor Activity Calendar)** | ECCD Council | 0–23 months | Suggested home-based calendar of activities for infants and toddlers. | Requires official copy request. **Unavailable for content authoring until full copy & terms confirmed.** | Title noted; **complete package uninspected; mapping provisional**. |
+| **NELC — LRP 4 (Activities for 2–3 Years Old)** | ECCD Council | 24–35 months | Daily center/home activity plans for toddlers. | Requires official copy request. **Unavailable for content authoring.** | Title noted; **complete package uninspected; mapping provisional**. |
+| **NELC — LRP 5 & 6 (Pre-K1 & Pre-K2 Activities)** | ECCD Council | 36–59 months | Center and home routine activities for 3- and 4-year-olds. | Requires official copy request. **Unavailable for content authoring.** | Titles noted; **complete package uninspected; mapping provisional**. |
+| **NELC — LRP 7 (Creative Resources, Songs & Rhymes)** | ECCD Council | 0–4 years | Action songs, poems, rhymes, and creative activities. | Third-party borrowed works protected under RA 8293. **Unavailable for content authoring.** | Titles noted; **complete package uninspected; mapping provisional**. |
 | **DepEd MATATAG Kindergarten Curriculum Guide** | Department of Education (DepEd) | 5–6 years (60–71 mo UX) | Foundational learning domains: Literacy, Numeracy, Socio-Emotional, Motor Development. | Official DepEd portal ([MATATAG Portal](https://www.deped.gov.ph/matatagcurriculumk147/)). Subject to RA 8293 Sec. 176 and borrowed materials rule. | **Portal accessible**; specific guide edition & reuse terms **unverified (needs confirmation)**. |
-| **Philippine Early Childhood Development (ECD) Checklist (LRP 8)** | ECCD Council | 0–59 months | Professional assessment checklist used by trained Child Development Workers. | **Strictly non-diagnostic.** Do NOT reproduce scoring or convert to parent-facing screening tool. | **Restricted professional tool**; observation prompts only. |
-| **CDC Milestone Checklists** | US CDC | 0–5 years | Educational references for milestone prompts. | US Public domain educational material. Must NOT be presented as a validated Philippine instrument. | **Educational reference only**. |
+| **Philippine Early Childhood Development (ECD) Checklist (LRP 8)** | ECCD Council | 0–59 months | Professional assessment checklist used by trained Child Development Teachers (CDTs) and Child Development Workers (CDWs) for early identification of delays and intervention planning. | **Strictly non-diagnostic in LittleSteps.** Do NOT reproduce scoring, calculate developmental quotients, or convert to parent-facing screening tool. | **Restricted professional tool**; complete LRP 8 package uninspected; observation prompts only. |
+| **CDC Milestone Checklists** | US CDC | 0–5 years | Educational references for milestone prompts. | US CDC educational resource. While general government text may be public domain, specific checklists, guides, and third-party assets require independent verification of attribution and copyright before reuse. Must NOT be presented as a validated Philippine instrument. | **Educational reference only**; specific asset permissions unverified. |
 
 ---
 
 ## 4. Strict Non-Diagnostic Scope & Boundaries
 
 1. **Strictly Non-Diagnostic Purpose:** LittleSteps is strictly an educational planning, reflection, and observational support application for parents and caregivers. It must **never** present milestone prompts or activity suggestions as medical advice, clinical evaluations, validated developmental screenings, or formal diagnostic determinations.
-2. **Assessment Tool Isolation:** The Philippine Early Childhood Development (ECD) Checklist is an assessment tool designed specifically for trained Child Development Teachers (CDTs) and Child Development Workers (CDWs). It must **never** be adapted into an automated clinical diagnosis, developmental delay calculator, pass/fail grading system, or self-service screening engine in LittleSteps.
+2. **Assessment Tool Isolation:** The ECCD Council describes the Philippine Early Childhood Development (ECD) Checklist as an instrument administered by trained service providers (CDTs and CDWs) for center-based monitoring, early identification of developmental delays, and intervention planning. In LittleSteps, this checklist must **never** be adapted into an automated clinical diagnosis, developmental delay calculator, pass/fail grading system, or self-service screening engine. Note: Because the complete LRP 8 package remains uninspected, this restriction serves as an architectural safeguard rather than an endorsement of unverified document details.
 3. **No Scoring or Pass/Fail Language:** Observational prompts must only use descriptive and reflective phrasing (e.g., *"Noticed whether child reaches for objects"* rather than *"Passed / Failed"* or numerical developmental quotients).
 4. **Mandatory Advisory Disclaimer:** Every milestone and activity view must prominently display:
    > *"LittleSteps is an educational support tool for caregivers and is not a medical, clinical, screening, or diagnostic instrument. For developmental questions or concerns, consult a licensed pediatrician or healthcare professional."*
@@ -115,7 +119,8 @@ limitations: "Educational prompt only; not a clinical milestone."
 This evidence gate ([Docs Issue #3](https://github.com/Thesis-Titans/littlesteps-docs/issues/3)) establishes that:
 
 1. **Current Legal Baseline Established:** RA 12199 (repealing RA 10410) is verified as the governing statute (signed May 8, 2025; [Lawphil text](https://lawphil.net/statutes/repacts/ra2025/ra_12199_2025.html)); the IRR status remains unverified pending official gazette confirmation.
-2. **Jurisdictional Boundaries Distinct:** ECCD Council covers <5 years; DepEd covers 5–8 years. LittleSteps product navigation categories (including the 60–71 month Kindergarten transition band) are recognized as separate product UX groupings and not statutory categories.
-3. **Curriculum Resource Packages Explicitly Gated:** All ECCD Council LRPs and DepEd MATATAG materials are marked **unavailable for content authoring** until complete document copies, exact editions, and reuse permissions under RA 8293 are obtained and verified.
+2. **Jurisdictional Boundaries Distinct:** ECCD Council covers <5 years; DepEd covers 5–8 years. LittleSteps product navigation categories (including the 60–71 month Kindergarten transition band) are recognized as separate product UX groupings and not statutory categories. LRP-to-UX mappings remain strictly provisional.
+3. **Curriculum Resource Packages Explicitly Gated:** All ECCD Council LRPs (1–8) and DepEd MATATAG materials are marked **provisional and unavailable for content authoring** until complete document copies, exact editions, and reuse permissions under RA 8293 are obtained and verified.
 4. **No Diagnostic Scoring or Unsupported Screening Claims:** Non-diagnostic boundaries are strictly codified across all content types and UI components.
 5. **No Premature Catalog Population:** No production catalog records will be authored without a corresponding verified per-item provenance record and subject-matter reviewer sign-off.
+6. **Documentation CI Status Explicit:** The documentation repository (`littlesteps-docs`) has no CI workflow configured (`.github/workflows/` does not exist); status queries report `no checks reported`. Verification relies on manual inspection and peer review.
