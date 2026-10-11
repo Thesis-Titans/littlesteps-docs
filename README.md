@@ -10,6 +10,7 @@ LittleSteps is an early learning and caregiver support system for children aged 
 - [Architecture decisions](docs/architecture-decisions.md): current technical direction.
 - [Security, privacy, and AI guardrails](docs/security-privacy-ai.md): required safeguards.
 - [Development workflow](docs/development-workflow.md): branch, review, and verification expectations.
+- [Documentation standards](docs/documentation-standards.md): canonical documentation hierarchy, Diátaxis framework mapping, and repository consistency audit.
 - [Research register](docs/research-register.md): external sources and their design implications.
 - [Philippine content provenance](docs/philippine-content-provenance.md): source candidates, item-level citation fields, and content-review gates.
 
@@ -24,3 +25,6 @@ The mobile repository is outside this implementation pass and must not be change
 This is an initial foundation proposal for review, not evidence of a deployed or production-ready system. Test locally before deployment. Review privacy obligations, Firebase billing, and GitHub repository settings before a public demo or production use.
 
 The age bands are app navigation categories, not clinical developmental classifications. Milestone content is observational and educational, not diagnostic.
+
+## License
+All Rights Reserved (Academic Evaluation Only). Code and documentation are publicly visible for academic examination, faculty review, and demonstration purposes. No open-source reuse, modification, or commercial redistribution is granted without prior written consent.
