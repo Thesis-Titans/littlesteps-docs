@@ -8,6 +8,7 @@ LittleSteps is an early learning and caregiver support system for children aged 
 - [Security, privacy, and AI guardrails](docs/security-privacy-ai.md): required safeguards.
 - [Development workflow](docs/development-workflow.md): branch, review, and verification expectations.
 - [Research register](docs/research-register.md): external sources and their design implications.
+- [Philippine content provenance](docs/philippine-content-provenance.md): source candidates, item-level citation fields, and content-review gates.
 
 ## Repositories
 - [Documentation](https://github.com/Thesis-Titans/littlesteps-docs)
