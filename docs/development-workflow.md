@@ -38,13 +38,25 @@ For web changes:
 - Before deployment, review billing and cost exposure, set budget alerts, and confirm the target project explicitly.
 - Emulator success is not proof of deployed cloud configuration or production readiness.
 
-## Repository settings to configure manually
-1. Protect main: require pull requests before merging.
-2. Configure approval requirements to match the agreed workflow: Mark reviews setup PRs; apply stricter teammate review during feature execution where feasible.
-3. Dismiss stale approvals or require approval of the latest push, if feasible.
-4. Require status checks only after CI workflows exist and their check names are verified.
-5. Block force pushes and branch deletion on main.
-6. Consider organization rulesets for consistent settings across the three repositories.
-7. Add CODEOWNERS only after actual maintainers and ownership paths are agreed.
+## Repository settings & governance baseline (Active & Verified)
 
-The current GitHub integration can create branches, files, commits, and pull requests, but does not expose repository branch-protection/ruleset or organization Project configuration in this workflow. An organization owner/admin must apply those settings in GitHub.
+Following the governance audit ([Docs Issue #2](https://github.com/Thesis-Titans/littlesteps-docs/issues/2)), repository settings are configured and enforced in GitHub across the active repositories:
+
+1. **Visibility & Branch Protection Enforcement:**
+   - Repositories (`littlesteps-docs`, `littlesteps-api`, and `littlesteps-web`) are set to public to enable GitHub's native branch protection and ruleset enforcement.
+   - The `main` branch across all three repositories is protected:
+     - Direct pushes to `main` are blocked.
+     - Force pushes (`allow_force_pushes: false`) and branch deletions (`allow_deletions: false`) are strictly prohibited.
+     - Pull requests are required before merging into `main`.
+2. **Review & Approval Policy:**
+   - During the foundation/setup stage, Mark serves as the reviewer and approval boundary. Setting `required_approving_review_count: 0` ensures PRs are mandatory while avoiding owner self-review deadlocks.
+   - For feature execution, stricter review requirements (formal peer review where feasible) will be adopted by team agreement.
+3. **Required Status Checks:**
+   - **`littlesteps-api`:** Strictly requires the `API CI/verify` GitHub Actions status check to pass before merging.
+   - **`littlesteps-web`:** Strictly requires the `Web CI/verify` GitHub Actions status check to pass before merging.
+   - **`littlesteps-docs`:** No automated CI workflow is configured; PR verification relies on manual peer review.
+4. **Cross-Repository Work Queue:**
+   - [Thesis-Titans LittleSteps Project #2](https://github.com/orgs/Thesis-Titans/projects/2) is the designated organization-level board tracking all active issues and pull requests across `littlesteps-docs`, `littlesteps-api`, and `littlesteps-web`.
+5. **Mobile Repository Boundary:**
+   - `littlesteps-mobile` remains private and strictly untouched pending the CC 207B external fork requirement.
+
