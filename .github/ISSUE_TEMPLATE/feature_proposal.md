@@ -21,5 +21,5 @@ assignees: ""
 ## Proposed Document Path
 <!-- e.g., docs/architecture/..., docs/decisions/... -->
 
-## Risks, Legal & Content Provenance Considerations
-<!-- Does this involve child privacy, Philippine legal baselines (RA 12199), or external source licenses? -->
+## Risks, Privacy & Content Provenance Considerations
+<!-- Does this proposal involve child/caregiver data privacy (Data Privacy Act of 2012 / RA 10173), ECCD age scope (RA 12199), or external source copyrights? Note: Identifying these considerations helps plan engineering safeguards, but does not establish legal compliance. -->
