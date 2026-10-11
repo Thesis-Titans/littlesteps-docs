@@ -1,6 +1,6 @@
 # Philippine Early-Childhood Content Provenance
 
-Status: source candidates and statutory framework verified; item-level content catalog review in progress. This document is a sourcing, legal grounding, and review protocol. It is **not** an endorsement of any milestone as clinically or diagnostically validated.
+Status: Sourcing framework, statutory context, and review protocol established; item-level content catalog review in progress under Docs Issue #3. This document is an architectural sourcing and provenance protocol, not an assertion that external curriculum packages have been cleared for reproduction or that milestones are diagnostically validated.
 
 ---
 
@@ -17,8 +17,8 @@ Status: source candidates and statutory framework verified; item-level content c
   - **Early Childhood Care and Development (ECCD) Council:** Assigned mandated responsibility for Filipino children **below five (5) years of age** (0–59 months).
   - **Department of Education (DepEd):** Assigned mandated responsibility for children in the formative basic education years from **five (5) to eight (8) years of age** (60–96 months, covering Kindergarten through Grade 2), consistent with the *Enhanced Basic Education Act of 2013* (Republic Act No. 10533).
 - **IRR Status (Implementing Rules and Regulations):**
-  - An IRR signing was reported on **August 5, 2026** (involving ECCD Council, DepEd, and DILG).
-  - **Status:** **Unverified (needs confirmation)**. Until an official signed copy, official gazette publication, or official repository text is inspected, all specific IRR provisions remain unverified.
+  - Government announcements (Philippine Information Agency, DepEd, and ECCD Council) report that the Implementing Rules and Regulations (IRR) were signed on **August 5, 2026** by the ECCD Council, DepEd, and DILG.
+  - **Status & Open Checks:** While the signing has been reported by official sources, the **actual full text, Official Gazette publication, and effectivity date remain pending inspection**. Until an official signed copy or gazette publication is inspected, specific operational provisions must not be cited as definitive.
 
 ### Statutory Jurisdiction vs. LittleSteps Product Navigation Bands
 
@@ -61,7 +61,7 @@ Philippine government publications are subject to specific legal conditions unde
 | Source Title | Issuing Organization | Target Age Band | Content Scope & Relevant Sections | Access & Reuse Terms (RA 8293) | Verification Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Republic Act No. 12199** | Republic of the Philippines | 0–8 years | Policy context; interagency responsibilities (Section 2); early childhood workforce standards. | Public statute. Free for policy and architectural grounding. | **Statute verified** (May 8, 2025; [Lawphil text](https://lawphil.net/statutes/repacts/ra2025/ra_12199_2025.html)). |
-| **RA 12199 IRR** | ECCD Council, DepEd, DILG | 0–8 years | Implementing rules, operational guidelines for LGUs and Child Development Centers. | Pending official gazette publication. | **Unverified (needs confirmation)** pending official signed text. |
+| **RA 12199 IRR** | ECCD Council, DepEd, DILG | 0–8 years | Implementing rules, operational guidelines for LGUs and Child Development Centers. | Pending official gazette publication and inspection of text. | **Signing reported August 5, 2026**; official text, gazette publication, and effectivity date pending verification. |
 | **National Early Learning Framework (NELF)** | ECCD Council | 0–4 years | Foundational principles, developmental domains, and expectations. | Official framework available for reference. Reproduction, adaptation, redistribution, and commercial-use conditions have not been independently verified; confirm applicable terms before incorporating source material. | **Candidate framework**; specific reuse terms unverified. |
 | **NELC — LRP 1 (Implementation Guidelines)** | ECCD Council | 0–4 years | Center and home implementation guidelines. | Requires official copy request. **Unavailable for content authoring.** | Title noted; **complete package uninspected; mapping provisional**. |
 | **NELC — LRP 2 (Standards & Competencies)** | ECCD Council | 0–4 years | Domains, competencies, and behavioral indicators (infants through pre-K). | Requires official copy request. **Unavailable for content authoring until full copy & terms confirmed.** | Title noted; **complete package uninspected; mapping provisional**. |
@@ -118,9 +118,9 @@ limitations: "Educational prompt only; not a clinical milestone."
 
 This evidence gate ([Docs Issue #3](https://github.com/Thesis-Titans/littlesteps-docs/issues/3)) establishes that:
 
-1. **Current Legal Baseline Established:** RA 12199 (repealing RA 10410) is verified as the governing statute (signed May 8, 2025; [Lawphil text](https://lawphil.net/statutes/repacts/ra2025/ra_12199_2025.html)); the IRR status remains unverified pending official gazette confirmation.
+1. **Current Legal Baseline Established:** RA 12199 (repealing RA 10410) is verified as the governing statute (signed May 8, 2025; [Lawphil text](https://lawphil.net/statutes/repacts/ra2025/ra_12199_2025.html)); government sources (PIA, DepEd, ECCD Council) report the IRR was signed on August 5, 2026, while official text, Official Gazette publication, and effectivity date remain pending inspection.
 2. **Jurisdictional Boundaries Distinct:** ECCD Council covers <5 years; DepEd covers 5–8 years. LittleSteps product navigation categories (including the 60–71 month Kindergarten transition band) are recognized as separate product UX groupings and not statutory categories. LRP-to-UX mappings remain strictly provisional.
 3. **Curriculum Resource Packages Explicitly Gated:** All ECCD Council LRPs (1–8) and DepEd MATATAG materials are marked **provisional and unavailable for content authoring** until complete document copies, exact editions, and reuse permissions under RA 8293 are obtained and verified.
 4. **No Diagnostic Scoring or Unsupported Screening Claims:** Non-diagnostic boundaries are strictly codified across all content types and UI components.
 5. **No Premature Catalog Population:** No production catalog records will be authored without a corresponding verified per-item provenance record and subject-matter reviewer sign-off.
-6. **Documentation CI Status Explicit:** The documentation repository (`littlesteps-docs`) has no CI workflow configured (`.github/workflows/` does not exist); status queries report `no checks reported`. Verification relies on manual inspection and peer review.
+6. **Automated Documentation CI Active:** The documentation repository (`littlesteps-docs`) runs automated verification on pull requests and pushes via GitHub Actions (`Docs CI/verify`), validating relative internal link integrity, image references, and issue template structure.
