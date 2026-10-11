@@ -40,6 +40,10 @@ Exit criteria:
 - Each execution issue has acceptance criteria, dependencies, and a verification approach.
 - No tasks are assigned until the team has reviewed the backlog and confirmed capacity.
 - The OpenAPI contract and product-scope documents are identified as the requirements sources of truth.
+- A navigable UI prototype covering all six product capabilities has been reviewed; findings and scope decisions are recorded.
+- API/Web feature implementation remains gated until prototype review, contract dependencies, and M0 exit criteria are complete.
+
+**Prototype-first gate:** Before feature implementation, create and review a navigable prototype for the main caregiver journeys. Include key empty, loading, error, permission-denied, and no-data states; use synthetic data; and show the privacy, content-provenance, and non-diagnostic AI boundaries. Track this work in [Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15). The prototype is a validation artifact, not a substitute for API contract design or implementation tests.
 
 ### M1 — Secure end-to-end foundation
 
@@ -130,7 +134,8 @@ Use epics/work packages to group work. Create implementation issues only after t
 | Work package | Main deliverables | Depends on |
 |---|---|---|
 | WP-0: Execution readiness | Reconciled governance work, agreed backlog and board conventions | Existing documentation PRs/issues |
-| WP-1: Shared contract and data model | API schema, ownership model, validation/error conventions | M0 |
+| WP-0.5: Prototype and journey validation | Navigable prototype, reviewed caregiver journeys, documented findings and scope decisions | Product scope, architecture and privacy baselines; M0 |
+| WP-1: Shared contract and data model | API schema, ownership model, validation/error conventions | M0 and prototype review |
 | WP-2: Authenticated child-profile slice | API endpoints, ownership tests, Web auth/profile flow, emulator integration | WP-1 |
 | WP-3: Learning catalog | Catalog schema/API and Web discovery | Content metadata decision; real content also gated by Issue #3 |
 | WP-4: Activity planning and observations | Planning, completion history, safe observation records | WP-2, WP-3 |
@@ -204,6 +209,7 @@ Keep work in progress small. Do not start dependent feature work while a key con
 
 - Review and approve or revise this execution plan before treating it as the delivery baseline.
 - Configure and verify the shared GitHub Project board, including cross-repository issue visibility and the agreed workflow fields/statuses.
+- Plan, create, and review the navigable UI prototype tracked in [Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15); do not start API/Web feature implementation until prototype review findings are recorded.
 - Create native GitHub milestones aligned with the agreed milestone outcomes and associate execution issues with them.
 - Review all API/Web backlog issues against the Definition of Ready, add explicit blocking links where supported, and ensure each issue has testable acceptance criteria and verification steps.
 - Verify that project-management setup work is separated from product-delivery work on the board.
