@@ -190,12 +190,28 @@ Keep work in progress small. Do not start dependent feature work while a key con
 - **Mobile:** Keep the repository untouched. Preserve a shared, client-neutral API contract for future integration.
 - **Schedule and assignments:** No dates, sprint commitments, or assignees are set by this plan. Confirm team availability and review the refined backlog first.
 
-## 8. Existing project-management cleanup
+## 8. Project setup cleanup and execution handoff
 
-- Complete the remaining documentation-standardization work tracked by [Docs Issue #8](https://github.com/Thesis-Titans/littlesteps-docs/issues/8), including the final Docs/API/Web consistency check.
-- Keep [Docs Issue #3](https://github.com/Thesis-Titans/littlesteps-docs/issues/3) open as a content-evidence gate.
-- Review [Docs PR #12](https://github.com/Thesis-Titans/littlesteps-docs/pull/12) for the documentation CI baseline and [Docs PR #6](https://github.com/Thesis-Titans/littlesteps-docs/pull/6) for accurate source-provenance status claims before merging.
-- After Issue #8 is complete, retire the setup/standardization queue from active execution tracking and use the cross-repository board for the product backlog above.
+### Completed repository-governance work
+
+- [Docs Issue #8](https://github.com/Thesis-Titans/littlesteps-docs/issues/8) is closed after the five governance stages and cross-repository audit were recorded as complete.
+- [Docs PR #12](https://github.com/Thesis-Titans/littlesteps-docs/pull/12) added the scoped documentation CI verifier and is merged.
+- [Docs PR #6](https://github.com/Thesis-Titans/littlesteps-docs/pull/6) established the content-provenance protocol and is merged.
+- [Web Issue #12](https://github.com/Thesis-Titans/littlesteps-web/issues/12) is closed after correcting the emulator region in the Web README.
+- [Docs Issue #3](https://github.com/Thesis-Titans/littlesteps-docs/issues/3) remains open intentionally as the evidence, reuse-rights, and subject-matter review gate for real content. It is not a general repository-setup issue.
+
+### Remaining M0 work — do not start feature implementation yet
+
+- Review and approve or revise this execution plan before treating it as the delivery baseline.
+- Configure and verify the shared GitHub Project board, including cross-repository issue visibility and the agreed workflow fields/statuses.
+- Create native GitHub milestones aligned with the agreed milestone outcomes and associate execution issues with them.
+- Review all API/Web backlog issues against the Definition of Ready, add explicit blocking links where supported, and ensure each issue has testable acceptance criteria and verification steps.
+- Verify that project-management setup work is separated from product-delivery work on the board.
+- Confirm team availability and capacity before creating sprint dates or assigning people.
+
+The coordination tracker is [Docs Issue #14](https://github.com/Thesis-Titans/littlesteps-docs/issues/14). Keep it open until the remaining M0 work above is verified. The issue should then be closed with evidence and product execution can begin through normal backlog refinement and sprint planning.
+
+Do not claim the board or native milestones are configured until they are visible and verified in GitHub. If the connected tooling cannot create or edit these Project features, record that as a tooling blocker and complete the setup through an authorized Projects-capable interface rather than treating the proposed workflow as already operational.
 
 ## 9. Change control
 
