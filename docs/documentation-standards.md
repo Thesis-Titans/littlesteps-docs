@@ -1,6 +1,6 @@
 # LittleSteps Documentation Standards & Repository Consistency
 
-Status: Stage 1 baseline proposal. This document defines the canonical documentation standards, repository information architecture, file baselines, and audit checklist across the LittleSteps multi-repository project.
+Status: Stage 1 standards baseline established and merged in PR #9. This document defines the canonical documentation standards, repository information architecture, file baselines, and audit checklist across the LittleSteps multi-repository project. Stages 2–5 remain in progress or pending as tracked in the roadmap below.
 
 ---
 
