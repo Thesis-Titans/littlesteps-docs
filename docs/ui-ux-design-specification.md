@@ -3,7 +3,7 @@
 **Status:** Canonical Design Specification for Prototype Validation  
 **Associated Gate:** [Docs Issue #15 — [M0] Plan and validate the LittleSteps UI prototype before implementation](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)  
 **Curriculum & Provenance Gate:** [Docs Issue #3](https://github.com/Thesis-Titans/littlesteps-docs/issues/3)  
-**Academic Context:** WVSU BSIT — Thesis Titans (Academic Evaluation Only)  
+**Academic Context:** WVSU BSIT Application Development & Web Development (Course Project)  
 **Target Platform:** Web Desktop/Tablet & Responsive Mobile Viewport (375px–414px) in `littlesteps-web`  
 **Repository Boundaries:** `littlesteps-mobile` (Flutter) and `littlesteps-api` remain strictly untouched.
 
@@ -203,7 +203,7 @@ Every user journey in the Figma prototype must include all five interaction stat
 
 ## 8. Figma Prototype Validation Checklist (For Docs Issue #15)
 
-When preparing the prototype for thesis adviser review, the team must verify:
+When preparing the prototype for course instructor and faculty review, the team must verify:
 
 - [ ] **Viewport Parity:** Both Desktop (1280px) and Mobile (375px) frames are synchronized across all 6 core capabilities.
 - [ ] **Ergonomic Verification:** All primary buttons and tabs in mobile frames meet minimum **44 × 44 CSS pixels**.

@@ -22,7 +22,7 @@ Status: proposed baseline for team review. Amend through a pull request when a d
 **Decision:** openapi/openapi.yaml in the API repository is the canonical client/server contract. The web client must not independently invent response shapes.
 
 ## ADR-006 — AI suggestions
-**Decision:** AI is a constrained helper over reviewed catalog content, not an open-ended child-development adviser. Keep provider credentials server-side, minimize prompt data, validate output against catalog IDs and schema, and use deterministic fallback when unavailable.
+**Decision:** AI is a constrained helper over reviewed catalog content, not an open-ended child-development diagnostic tool or clinical consultant. Keep provider credentials server-side, minimize prompt data, validate output against catalog IDs and schema, and use deterministic fallback when unavailable.
 
 ## ADR-007 — Change control
 **Decision:** Work on branches and use draft pull requests. Seek one teammate review when feasible. Protect main with repository settings; those settings must be configured manually if unavailable through the current integration.
