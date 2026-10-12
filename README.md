@@ -45,14 +45,16 @@ This repository is the canonical home for product scope, decisions, research pro
 
 ## Source of truth
 - [Product scope](docs/product-scope.md): six core features and boundaries.
+- [Architecture decisions](docs/architecture-decisions.md): current technical direction and ADRs.
+- [Data model specification](docs/data-model.md): Firestore entities, relationships, ownership, and retention.
+- [Security, privacy, and AI guardrails](docs/security-privacy-ai.md): required safeguards and statutory baselines.
+- [Verification and traceability matrix](docs/traceability-matrix.md): requirements-to-tests and delivery traceability.
+- [UI/UX design specification](docs/ui-ux-design-specification.md): human-computer interaction principles, responsive design system, and prototype validation requirements.
 - [Execution plan](docs/execution-plan.md): delivery approach, milestones, and academic calendar.
-- [Architecture decisions](docs/architecture-decisions.md): current technical direction.
-- [Security, privacy, and AI guardrails](docs/security-privacy-ai.md): required safeguards.
 - [Development workflow](docs/development-workflow.md): branch, review, and verification expectations.
 - [Documentation standards](docs/documentation-standards.md): canonical documentation hierarchy, academic deliverables mapping, and repository consistency.
 - [Research register](docs/research-register.md): external sources and their design implications.
 - [Philippine content provenance](docs/philippine-content-provenance.md): source candidates, item-level citation fields, and content-review gates.
-- [UI/UX design specification](docs/ui-ux-design-specification.md): human-computer interaction principles, responsive design system, and prototype validation requirements.
 
 ## Academic Course Deliverables
 - [Academic Deliverables Index](docs/academic/README.md): centralized directory for course-specific evaluation packages.
