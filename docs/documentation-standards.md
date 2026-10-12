@@ -6,9 +6,9 @@
 
 ---
 
-## 1. Purpose & Core Questions
+## 1. Purpose and Core Questions
 
-LittleSteps maintains a clean, maintainable documentation system designed to answer four core questions without duplicating content or creating competing sources of truth:
+LittleSteps documentation is version-controlled and organized to answer four questions without duplicating authoritative information:
 
 1. **What is this project, and how do I run it?** Clear repository overviews, prerequisites, and reproducible local setups.
 2. **How should contributors make changes safely and consistently?** Standardized branch, test, PR, and review workflows.
@@ -46,9 +46,9 @@ Level 3: Repository-Specific Documentation (`littlesteps-api`, `littlesteps-web`
 
 ---
 
-## 3. Industry Standards & "Docs-as-Code" Traceability
+## 3. Reference Standards and Documentation Traceability
 
-LittleSteps uses a **docs-as-code** workflow: Markdown documents are version-controlled, reviewed through pull requests, and checked by automated CI. The table below identifies relevant reference standards and the intended coverage of each document. Mapping a document to a standard does not by itself establish conformity or certification.
+LittleSteps uses a **docs-as-code** workflow: Markdown documents are version-controlled, reviewed through pull requests, and checked by automated CI. The table below identifies reference standards and the intended coverage of each document. A mapping does not by itself establish conformity or certification.
 
 | Industry Standard | Specification Domain | LittleSteps Canonical Document | Standard Description & Coverage |
 | :--- | :--- | :--- | :--- |
@@ -112,7 +112,7 @@ Documentation in `littlesteps-docs` aligns with the Diátaxis documentation fram
 | **Reference** | *"What is the exact technical contract or specification?"* | Information-oriented technical facts | [OpenAPI contract in the API repository](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml), [Data model specification](data-model.md), [Verification & traceability matrix](traceability-matrix.md), [UI/UX design specification](ui-ux-design-specification.md), environment variables, and provenance schemas |
 | **Explanation** | *"Why is the system designed this way?"* | Understanding-oriented rationale and context | [Product scope](product-scope.md), [architecture decisions](architecture-decisions.md), [security, privacy, and AI guardrails](security-privacy-ai.md), [Philippine content provenance](philippine-content-provenance.md) |
 
-These are intended destinations in the documentation architecture, not a claim that every listed document or contract is complete or production-ready. Each linked resource's current status must be checked before relying on it.
+These are intended locations for information, not a claim that every linked document or contract is complete or production-ready. Check each resource's status before relying on it.
 
 ---
 
