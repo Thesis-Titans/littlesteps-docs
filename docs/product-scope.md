@@ -8,7 +8,7 @@
 
 ## 1. System Purpose & Concept
 
-LittleSteps is an early-childhood learning and development tracking platform designed for parents, caregivers, and early-learning practitioners supporting children aged 0–5 years (0–71 months). The system provides age-aware activity discovery, routine planning, developmental milestone observation prompts, a private observation journal, deterministic progress reflections, and an AI-assisted activity recommendation helper.
+LittleSteps is a proposed early-childhood learning and development platform for parents and caregivers supporting children aged 0–5 years (0–71 months). The planned system covers age-aware activity discovery, routine planning, milestone observation prompts, a private observation journal, factual summaries of recorded activity, and an AI-assisted activity recommendation helper.
 
 > [!IMPORTANT]
 > **Clinical Non-Diagnostic Boundary:** LittleSteps is explicitly an educational, reflective, and routine-support tool. It is **not** a clinical diagnostic, pediatric screening, medical treatment, or emergency-care system. All milestone and developmental information serves as prompts for caregiver observation, not diagnostic criteria.
@@ -17,9 +17,9 @@ LittleSteps is an early-childhood learning and development tracking platform des
 
 ## 2. System Scope Boundaries
 
-The table below defines in-scope implementation and out-of-scope boundaries across the project:
+The table below defines the planned system scope. Inclusion does not mean a capability has been implemented or verified.
 
-| System Domain | In-Scope (Implemented) | Out-of-Scope (Excluded) |
+| System Domain | In Scope (Planned or Required) | Out of Scope |
 | :--- | :--- | :--- |
 | **User Roles** | Single authenticated caregiver role (parent/guardian managing one or more child profiles). | Multi-tenant school/daycare administration, teacher-student rosters, public social profiles. |
 | **Developmental Guidance** | Educational milestone observation prompts sourced from DepEd ECCD / CDC milestones with clear attributions. | Automated clinical diagnoses, developmental quotient (DQ) scores, developmental delay categorizations. |
@@ -35,9 +35,9 @@ The table below defines in-scope implementation and out-of-scope boundaries acro
 The system is designed for parents, legal guardians, and home caregivers of children aged 0–5 years:
 
 - **Physical Multitasking:** Caregivers frequently operate devices one-handed while holding a child or managing household chores. The interface requires natural thumb-zone placement and large touch targets ($\ge$ 44px).
-- **Divided Attention & Cognitive Load:** Caregivers face high mental load, sleep deprivation, and limited time (often 10–15 minutes). Information must be chunked into short, scannable steps without clinical jargon or guilt-inducing gamification streaks.
-- **Connectivity Realities:** Caregivers in Philippine barangays frequently rely on prepaid mobile data or intermittent connections. The system prioritizes lightweight text payloads, local optimistic caching, and avoids mandatory video streaming.
-- **Shared Household Devices:** Smartphones are often shared across family members or handled by children, requiring secure authentication and simple PIN protections against accidental edits.
+- **Divided Attention & Cognitive Load:** Design for short, scannable instructions and avoid clinical jargon or guilt-inducing streaks. The assumed time available for an activity has not been validated with a broad user sample.
+- **Connectivity:** Intermittent connectivity and data costs are design considerations. The system should favor lightweight content and define offline behavior; the prevalence of these constraints among intended users remains to be validated.
+- **Shared Devices:** Shared-device use is a risk to consider. Authentication, session handling, and protection against accidental edits require usability and security validation.
 
 ---
 
