@@ -53,7 +53,12 @@ This repository is the canonical home for product scope, decisions, research pro
 - [Research register](docs/research-register.md): external sources and their design implications.
 - [Philippine content provenance](docs/philippine-content-provenance.md): source candidates, item-level citation fields, and content-review gates.
 - [UI/UX design specification](docs/ui-ux-design-specification.md): human-computer interaction principles, responsive design system, and prototype validation requirements.
-- [CIT 246 Checkpoint 1 Concept](docs/cit246-checkpoint-1-concept.md): one-page project concept proposal for IT Project Management Plan.
+
+## Academic Course Deliverables
+- [Academic Deliverables Index](docs/academic/README.md): centralized directory for course-specific evaluation packages.
+- [CIT 246 — IT Project Management Plan](docs/academic/cit246/README.md): project management plan packages (including [Checkpoint 1 Concept Proposal](docs/academic/cit246/checkpoint-1-concept.md)).
+- [CC 207B — Applications Development](docs/academic/cc207b/README.md): Flutter mobile client deliverables and defense requirements.
+- [CIT 210 — Web Systems & Technologies](docs/academic/cit210/README.md): React web application and API integration deliverables.
 
 ## Repositories
 - [Documentation](https://github.com/Thesis-Titans/littlesteps-docs)
