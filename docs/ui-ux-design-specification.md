@@ -84,34 +84,34 @@ graph TD
 
 ---
 
-## 3. Evidence-Grounded Personas
+## 3. Illustrative Personas and Research Limitations
 
-Derived from secondary research synthesis (WHO, PSA 2024, RA 12199, RA 12027) and preliminary pilot fieldwork (`P01`):
+These personas are design aids, not validated user profiles. They combine secondary sources, project assumptions, and limited preliminary fieldwork (`P01`). P01 is one exploratory interview and does not support population-level conclusions. Do not attribute a persona detail to P01 unless the interview record directly supports it.
 
 ### Persona 1: "Maricel" — Working Mother / Primary Caregiver
-- **Demographics & Context:** 29 years old; lives in urban Western Visayas; works full-time; cares for Maya (14 months old, Young Toddler band).
-- **Device & Environment:** Mid-range Android smartphone; shares device with family members; connects via **prepaid mobile data** [PSA 2024 Context].
-- **Current Practices:** Reads physical storybooks, plays floor games with household items, asks family about daily milestones [P01 Evidence].
+- **Illustrative scenario:** A working caregiver in Western Visayas caring for a 14-month-old child. Demographic details are fictional and are not findings from P01.
+- **Device & Environment:** Assumes a mid-range Android phone and prepaid mobile data as a design scenario; validate device-sharing and connectivity needs with intended users.
+- **Possible Practices:** Storybooks, household-item play, and family discussion are examples for design exploration, not established facts about a representative caregiver.
 - **Core Friction:** Exhausted in the evening; has only 10–15 minutes of dedicated time; overwhelmed by conflicting online parenting blogs; worried about heavy data consumption.
 - **UX Solution:** 10-minute activity filters using household items (cups, folded towels); instant offline-cached browsing; no data-heavy video streams.
 
 ### Persona 2: "Tatay Jun" — Solo / Hands-On Father
-- **Demographics & Context:** 35 years old; runs a home-based business; primary daytime caregiver for Liam (48 months old, Older Preschooler band).
-- **Device & Environment:** Budget Android phone; strictly regulates child screen time [WHO 2019 / P01 Evidence].
-- **Current Practices:** Uses a **kitchen whiteboard** for schedules; engages in outdoor play and board games [P01 Evidence].
+- **Illustrative scenario:** A hands-on caregiver with daytime responsibility for a four-year-old child. Details are fictional design assumptions.
+- **Device & Environment:** Assumes a budget Android phone and a preference for limited child screen time; validate these assumptions.
+- **Possible Practices:** A kitchen whiteboard, outdoor play, and board games are illustrative examples, not validated observations.
 - **Core Friction:** Intimidated by clinical milestone checklists that feel like tests; anxious about Kindergarten readiness [RA 12199]; dislikes commercial ad clutter.
 - **UX Solution:** Non-diagnostic observation prompts in conversational language; offline-ready play ideas that foster school readiness through games; zero ads or clinical scores.
 
-### Persona 3: "Teacher Lea" — Barangay Child Development Worker (ECCD Proxy)
-- **Demographics & Context:** 38 years old; manages a community Child Development Center serving 18 children aged 3–4 years.
-- **Core Friction:** Parents arrive panicked over unvetted social media checklists; lacks centralized access to official ECCD Council and DepEd MATATAG materials.
-- **UX Solution:** Clear attribution chips referencing recognized Philippine early childhood frameworks; explicit non-diagnostic language reassuring parents that children develop at their own pace.
+### Persona 3: "Teacher Lea" — Illustrative Child Development Worker Scenario
+- **Illustrative scenario:** A child development worker supporting a community center. Age, center size, and work conditions are fictional and have not been validated with this stakeholder group.
+- **Assumed Friction:** Families may encounter inconsistent online milestone information, and staff may need easy access to reviewed sources. Confirm these needs with child development workers.
+- **Design Response to Test:** Show source attribution and non-diagnostic language; test whether caregivers understand and trust these explanations.
 
 ---
 
 ## 4. Requirements Traceability Matrix
 
-Every feature in the prototype traces directly to published research, statutory baselines, or preliminary fieldwork insight:
+This matrix records the evidence or policy that informs each design choice. Published guidance, statutory context, project constraints, and preliminary interview observations are different evidence types; the matrix does not establish that caregiver needs or design hypotheses have been validated.
 
 | Feature / UX Requirement | Source Evidence / Policy Driver | User Problem Solved | Verification Criteria in Prototype |
 |---|---|---|---|
