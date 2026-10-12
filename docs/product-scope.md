@@ -24,7 +24,18 @@ The table below defines in-scope implementation and out-of-scope boundaries acro
 
 ---
 
-## 3. Intended Age Bands
+## 3. User Characteristics & Operating Context
+
+The system is designed for parents, legal guardians, and home caregivers of children aged 0–5 years:
+
+- **Physical Multitasking:** Caregivers frequently operate devices one-handed while holding a child or managing household chores. The interface requires natural thumb-zone placement and large touch targets ($\ge$ 44px).
+- **Divided Attention & Cognitive Load:** Caregivers face high mental load, sleep deprivation, and limited time (often 10–15 minutes). Information must be chunked into short, scannable steps without clinical jargon or guilt-inducing gamification streaks.
+- **Connectivity Realities:** Caregivers in Philippine barangays frequently rely on prepaid mobile data or intermittent connections. The system prioritizes lightweight text payloads, local optimistic caching, and avoids mandatory video streaming.
+- **Shared Household Devices:** Smartphones are often shared across family members or handled by children, requiring secure authentication and simple PIN protections against accidental edits.
+
+---
+
+## 4. Intended Age Bands
 
 The application organizes activities and milestone prompts across seven navigation categories spanning 0–71 months:
 
@@ -42,7 +53,17 @@ The application organizes activities and milestone prompts across seven navigati
 
 ---
 
-## 4. Cross-Cutting System Prerequisites
+## 5. General Assumptions & System Constraints
+
+- **Non-Diagnostic Assumption:** Caregivers use the platform for home routine support and observational prompts; the system assumes caregivers understand it does not replace pediatric consultations.
+- **Emulator-First Constraint:** Engineering and test execution utilize the local Firebase Emulator Suite (`demo-littlesteps`); production deployment remains gated on billing, security, and institutional privacy reviews.
+- **Shared Architecture Constraint:** A single unified Node.js Express API and Firestore schema must serve both React web (CIT 210) and Flutter mobile (CC 207B) frontends without divergent security rules.
+- **Mobile Boundary Constraint:** The `littlesteps-mobile` repository remains strictly frozen on `main` pending academic fork policies. Responsive mobile layouts in `littlesteps-web` are used for prototype validation (Docs Issue #15).
+- **Content Provenance Constraint:** Production deployment of real Philippine rhymes, traditional games, and milestone prompts remains gated on verified source locators and permissions review (Docs Issue #3). Synthetic fixtures are used for development.
+
+---
+
+## 6. Cross-Cutting System Prerequisites
 
 The following capabilities are mandatory architectural prerequisites supporting the entire application, but under CC 207B course rules they are cross-cutting infrastructure rather than standalone core features:
 
@@ -52,7 +73,7 @@ The following capabilities are mandatory architectural prerequisites supporting 
 
 ---
 
-## 5. Functional Requirements Specification (Core Features)
+## 7. Functional Requirements Specification (Core Features)
 
 Per CC 207B requirements, a 5-member team must deliver at least 6 core features ($5 \rightarrow 6$). Each core feature is an interactive workflow that accepts input, modifies state, and produces an observable output across both Web (React) and Mobile (Flutter) clients using the shared API:
 
@@ -106,7 +127,7 @@ Per CC 207B requirements, a 5-member team must deliver at least 6 core features 
 
 ---
 
-## 6. Milestone-Content & Provenance Rules
+## 8. Milestone-Content & Provenance Rules
 
 1. **Source Attribution:** Every milestone item and library activity must display clear source attribution (e.g., ECCD Council Philippine Early Learning Standards, CDC Milestone Checklists).
 2. **Prompts Not Tests:** Milestones must be presented as prompts for parent-child engagement and caregiver observation, never as pass/fail tests.
@@ -115,7 +136,7 @@ Per CC 207B requirements, a 5-member team must deliver at least 6 core features 
 
 ---
 
-## 7. Quality & Acceptance Criteria
+## 9. Quality & Acceptance Criteria
 
 - **Security & Identity:** All child-scoped data access requires valid Firebase ID token verification; identity is derived exclusively from the server-verified UID.
 - **Ownership Enforcement (BOLA Defense):** Every database mutation and read verifies that the target child profile belongs to the authenticated caregiver UID.
