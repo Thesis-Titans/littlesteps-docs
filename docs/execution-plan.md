@@ -12,7 +12,7 @@ Canonical product requirements remain in [Product Scope](product-scope.md), arch
 ## 1. Academic Calendar & Delivery Approach
 
 ### 1.1 Hard Academic Deadlines
-- **October 14, 2026:** **CIT 246 Checkpoint 1** (One-page project concept covering Organization, Problem, Proposed System, and Possible Sponsor; A4, Arial 11). Documented in [CIT 246 Checkpoint 1 Concept](cit246-checkpoint-1-concept.md).
+- **October 14, 2026:** **CIT 246 Checkpoint 1** (One-page project concept covering Organization, Problem, Proposed System, and Possible Sponsor; A4, Arial 11). Documented in [CIT 246 Checkpoint 1 Concept](academic/cit246/checkpoint-1-concept.md).
 - **December 2, 2026:** **Final Submission & Demonstrations for All Three Courses:**
   - **CC 207B:** LMS submission, 5–10 min presentation, live demo + backup video, and **Individual Code Defense** (2–3 min/member with live code modification).
   - **CIT 210:** Presentation, local live demo of React app reading/writing shared data, and shared documentation.

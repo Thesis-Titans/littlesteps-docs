@@ -69,7 +69,7 @@ To satisfy the specific submission requirements of all three coordinated courses
 3. **Reproducible Local Setup:** Step-by-step developer onboarding tutorial in [`docs/getting-started.md`](getting-started.md) for local emulator and full-stack execution.
 
 ### 3.3 CIT 246: IT Project Management Plan
-1. **Checkpoint 1 Proposal (Due October 14, 2026):** One-page project concept covering Organization, Problem, Proposed System, and Possible Sponsor (A4, Arial 11), documented in [`docs/cit246-checkpoint-1-concept.md`](cit246-checkpoint-1-concept.md).
+1. **Checkpoint 1 Proposal (Due October 14, 2026):** One-page project concept covering Organization, Problem, Proposed System, and Possible Sponsor (A4, Arial 11), documented in [`docs/academic/cit246/checkpoint-1-concept.md`](academic/cit246/checkpoint-1-concept.md).
 2. **Full IT Project Management Plan (25–40 Pages, Due December 2, 2026):** 17-section PDF covering:
    - Sections 1–4: Title Page, Executive Summary, Business Case, and Project Charter.
    - Sections 5–6: Stakeholder Register (8+ entries with opponent) and Scope Statement (IN/OUT boundaries).
