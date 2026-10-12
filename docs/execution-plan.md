@@ -32,20 +32,21 @@ Use **lightweight Scrum with a visible GitHub issue backlog**. Avoid fixed sprin
 
 Under CC 207B requirements, the minimum number of core features scales with team size: **5 members require at least 6 core features** ($5 \rightarrow 6$), where the AI-powered feature counts as one core feature. A core feature must be a user-facing flow taking input, performing processing/state change, and producing a meaningful result (auth, splash, About, and Settings do not count).
 
-The six core capabilities are:
+The six core capabilities (formally specified in [Product Scope](product-scope.md)) are:
 
-1. Child profiles and milestone observation (Caregiver input $\rightarrow$ profile persistence $\rightarrow$ observation display).
-2. Daily activity planning and tracking (Activity selection $\rightarrow$ scheduling/completion state $\rightarrow$ calendar/timeline update).
-3. Private observation journal (Encrypted note input $\rightarrow$ secure storage $\rightarrow$ chronological journal display).
-4. Story, rhyme, and learning activity library (Search/filter criteria $\rightarrow$ catalog query $\rightarrow$ filtered learning resource view).
-5. Weekly progress summary (Activity/milestone records $\rightarrow$ non-diagnostic aggregation $\rightarrow$ weekly reflection report).
-6. AI activity suggestion helper (Caregiver constraints $\rightarrow$ constrained catalog match $\rightarrow$ recommended activities with fallback).
+1. **FR-01: Child Profile and Milestone Tracking** (Caregiver input $\rightarrow$ profile persistence $\rightarrow$ observation display).
+2. **FR-02: Daily Activity Planning and Tracking** (Activity selection $\rightarrow$ scheduling/completion state $\rightarrow$ calendar/timeline update).
+3. **FR-03: Private Observation Journal** (Encrypted note input $\rightarrow$ secure storage $\rightarrow$ chronological journal display).
+4. **FR-04: Story, Rhyme, and Learning Activity Library** (Search/filter criteria $\rightarrow$ catalog query $\rightarrow$ filtered learning resource view).
+5. **FR-05: Weekly Progress Summary** (Activity/milestone records $\rightarrow$ non-diagnostic aggregation $\rightarrow$ weekly reflection report).
+6. **FR-06: AI Activity Suggestion Helper** (Caregiver constraints $\rightarrow$ constrained catalog match $\rightarrow$ recommended activities with fallback).
 
 Deliver these in dependency order, not as six parallel projects.
 
 ## 3. Milestones and exit criteria
 
 ### M0 — Project execution readiness
+**Scope Traceability:** Governs preparation and validation for all six features (**FR-01** to **FR-06**) and baseline security/privacy policies.
 
 **Outcome:** One agreed scope, an ordered backlog, a usable board, and clear acceptance rules.
 
@@ -55,88 +56,93 @@ Exit criteria:
 - Each execution issue has acceptance criteria, dependencies, and a verification approach.
 - No tasks are assigned until the team has reviewed the backlog and confirmed capacity.
 - The OpenAPI contract and product-scope documents are identified as the requirements sources of truth.
-- A navigable UI prototype covering all six product capabilities has been reviewed; findings and scope decisions are recorded.
+- A navigable UI prototype covering all six product capabilities (**FR-01** to **FR-06**) has been reviewed; findings and scope decisions are recorded.
 - API/Web feature implementation remains gated until prototype review, contract dependencies, and M0 exit criteria are complete.
 
 **Prototype-first gate:** Before feature implementation, create and review a navigable UI prototype covering both Web (desktop/tablet) and Mobile (responsive mobile-sized browser viewports, keeping `littlesteps-mobile` untouched) experiences using an AI-assisted rapid prototyping approach, guided by the [UI/UX design specification](ui-ux-design-specification.md), and operating on purely synthetic data / simulated services. Include key empty, loading, error, permission-denied, and deterministic AI fallback states, making privacy and non-diagnostic boundaries visible. Track this work in [Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15). The prototype is a validation artifact, not a substitute for API contract design or implementation tests.
 
 ### M1 — Secure end-to-end foundation
+**Scope Traceability:** Implements foundation for **FR-01** (Child Profile); enforces **NFR-SEC-01** (Token auth), **NFR-SEC-02** (BOLA defense), and **NFR-PRIV-01** (Data minimization).
 
 **Outcome:** A signed-in caregiver can use the Web client to work with a child profile through the shared API and local Firebase emulators.
 
 Planned work:
 - Agree on the minimum caregiver/child data model, ownership relationship, validation rules, and deletion/retention questions.
 - Extend the OpenAPI contract before implementing new endpoints.
-- Implement and test child-scoped API operations with server-side ownership checks.
+- Implement and test child-scoped API operations with server-side ownership checks (**NFR-SEC-02**).
 - Integrate Web sign-in, token handling, API error/loading states, and protected routes.
 - Verify the end-to-end path with synthetic users/data using the emulator-first workflow.
 
 Exit criteria:
-- Requests without valid authentication are rejected.
-- A caregiver cannot read or mutate another caregiver's child data, including by changing an identifier.
-- Input validation and safe error responses are tested.
+- Requests without valid authentication are rejected (**NFR-SEC-01**).
+- A caregiver cannot read or mutate another caregiver's child data, including by changing an identifier (**NFR-SEC-02**).
+- Input validation and safe error responses are tested (**NFR-SEC-04**).
 - API contract, implementation, and Web client agree.
 - Relevant API and Web CI checks pass.
 
 ### M2 — Reviewed learning content and core activity loop
+**Scope Traceability:** Implements **FR-02** (Activity Planning), **FR-04** (Learning Library), and observation prompts for **FR-01**; enforces **NFR-PRIV-03** (Synthetic fixtures).
 
 **Outcome:** A caregiver can discover eligible content and plan/record activities.
 
 Planned work:
 - Define catalog item fields, age-band filtering, content lifecycle/status, and source metadata.
-- Implement catalog read/list behavior and Web browsing/filtering.
-- Implement activity planning, scheduling/recording, and completion history.
-- Add milestone observation prompts only when the source and review gate permits their use.
+- Implement catalog read/list behavior and Web browsing/filtering (**FR-04**).
+- Implement activity planning, scheduling/recording, and completion history (**FR-02**).
+- Add milestone observation prompts (**FR-01**) only when the source and review gate permits their use.
 - Cover empty, loading, error, invalid-input, and authorization states.
 
 Exit criteria:
 - API responses follow the OpenAPI contract.
 - Content is age-filtered and shows source/limitations where applicable.
 - No unreviewed or invented catalog items are presented as approved.
-- Child-scoped activity records enforce ownership.
+- Child-scoped activity records enforce ownership (**NFR-SEC-02**).
 - Unit and emulator integration tests cover the principal success and failure paths.
 
 **Content gate:** [Docs Issue #3](https://github.com/Thesis-Titans/littlesteps-docs/issues/3) remains a separate dependency for real Philippine milestone/activity content. Engineering can use clearly labelled synthetic fixtures, but must not treat those fixtures as reviewed production content.
 
 ### M3 — Private journal and weekly reflection
+**Scope Traceability:** Implements **FR-03** (Private Journal) and **FR-05** (Weekly Progress Summary); enforces **NFR-PRIV-02** (Journal confidentiality & AI isolation).
 
 **Outcome:** Caregivers can keep private observations and review a factual summary of recorded activity.
 
 Planned work:
-- Define journal privacy and retention/deletion behavior before exposing the feature.
-- Implement private journal create/read/update/delete behavior with ownership tests.
-- Define the summary calculation from recorded events before designing summary UI.
+- Define journal privacy and retention/deletion behavior before exposing the feature (**NFR-PRIV-02**).
+- Implement private journal create/read/update/delete behavior with ownership tests (**FR-03**).
+- Define the summary calculation from recorded events before designing summary UI (**FR-05**).
 - Implement weekly summaries that describe recorded activity without diagnostic scores or unsupported developmental conclusions.
 
 Exit criteria:
-- Unauthorized journal access is tested and denied.
-- Private notes are excluded from logs and external AI prompts.
+- Unauthorized journal access is tested and denied (**NFR-SEC-02**).
+- Private notes are excluded from logs and external AI prompts (**NFR-PRIV-02**).
 - Summary calculations are deterministic and covered by tests.
 - UI handles no-data and partial-data periods clearly.
 
 ### M4 — Constrained AI activity suggestions
+**Scope Traceability:** Implements **FR-06** (AI Activity Suggestion Helper); enforces **NFR-AI-01** (Relevance), **NFR-AI-02** (Server credential isolation), **NFR-AI-03** (Deterministic fallback), **NFR-AI-04** (Visual labeling & non-diagnostic rule), and **NFR-REL-01** (Rate limits).
 
 **Outcome:** Optional suggestions can be generated from approved catalog entries without sending unnecessary child data.
 
 Planned work:
 - Agree on the suggestion input/output schema and allowed catalog identifiers.
-- Define provider selection, data handling, timeout, rate/cost limits, and configuration.
+- Define provider selection, data handling, timeout (8s), rate/cost limits, and configuration.
 - Validate every result against the schema and approved catalog.
 - Provide a deterministic fallback for provider errors or invalid responses.
 - Add tests for prompt-data minimization, invalid outputs, provider failures, and rate limits.
 
 Exit criteria:
 - Suggestions only reference approved catalog IDs.
-- No direct child identifiers or private journal entries are sent to the provider.
-- Failure paths fall back safely and are observable without logging sensitive content.
+- No direct child identifiers or private journal entries are sent to the provider (**NFR-PRIV-01**, **NFR-PRIV-02**).
+- Failure paths fall back safely to deterministic catalog matching and are observable without logging sensitive content.
 - Provider terms, billing, and data processing are reviewed before activation.
 
 ### M5 — Release-readiness review
+**Scope Traceability:** Full cross-cutting verification of **FR-01** through **FR-06**, all **NFRs**, and coordinated deliverables for CC 207B, CIT 210, and CIT 246.
 
 **Outcome:** The team can demonstrate a coherent, tested API/Web release without claiming production readiness prematurely.
 
 Exit criteria:
-- Cross-feature authorization and regression tests pass.
+- Cross-feature authorization and regression tests pass across all six core features.
 - Keyboard access, responsive behavior, and common error states are checked.
 - Privacy notice, retention/deletion approach, and appropriate faculty/course instructor review are addressed.
 - Firebase billing, budget alerts, environment configuration, provider settings, and rollback are reviewed before any deployment.
@@ -146,18 +152,18 @@ Exit criteria:
 
 Use epics/work packages to group work. Create implementation issues only after the relevant acceptance criteria and dependencies are clear.
 
-| Work package | Main deliverables | Depends on |
-|---|---|---|
-| WP-0: Execution readiness | Reconciled governance work, agreed backlog and board conventions | Existing documentation PRs/issues |
-| WP-0.5: Prototype and journey validation | Navigable prototype, reviewed caregiver journeys, documented findings and scope decisions | Product scope, architecture and privacy baselines; M0 |
-| WP-1: Shared contract and data model | API schema, ownership model, validation/error conventions | M0 and prototype review |
-| WP-2: Authenticated child-profile slice | API endpoints, ownership tests, Web auth/profile flow, emulator integration | WP-1 |
-| WP-3: Learning catalog | Catalog schema/API and Web discovery | Content metadata decision; real content also gated by Issue #3 |
-| WP-4: Activity planning and observations | Planning, completion history, safe observation records | WP-2, WP-3 |
-| WP-5: Private journal | Private notes and retention/deletion behavior | WP-2, privacy decisions |
-| WP-6: Weekly summary | Defined summary rules, API output, Web presentation | WP-4; journal data only if explicitly approved |
-| WP-7: AI helper | Catalog-grounded suggestions, validation, fallback, cost controls | WP-3, WP-4, privacy/provider review |
-| WP-8: Release readiness | Cross-feature regression, accessibility, privacy/security and deployment gates | Relevant feature work |
+| Work package | Main deliverables | Traceability (Standards & Scope) | Depends on |
+|---|---|---|---|
+| **WP-0: Execution readiness** | Reconciled governance work, agreed backlog and board conventions | PMBOK Scope Baseline, M0 | Existing documentation PRs/issues |
+| **WP-0.5: Prototype and journey validation** | Navigable prototype, reviewed caregiver journeys, documented findings | ISO 9241, FR-01–FR-06 validation | Product scope, architecture, privacy; M0 |
+| **WP-1: Shared contract and data model** | API schema, ownership model, validation/error conventions | IEEE 1016 Interface View, NFR-SEC-02 | M0 and prototype review |
+| **WP-2: Authenticated child-profile slice** | API endpoints, ownership tests, Web auth/profile flow, emulator | FR-01, PRQ-01, NFR-SEC-01, NFR-PRIV-01 | WP-1 |
+| **WP-3: Learning catalog** | Catalog schema/API and Web discovery | FR-04, Philippine content provenance | Content metadata decision; Issue #3 |
+| **WP-4: Activity planning and observations** | Planning, completion history, safe observation records | FR-02, FR-01 milestones | WP-2, WP-3 |
+| **WP-5: Private journal** | Private notes and retention/deletion behavior | FR-03, NFR-PRIV-02 | WP-2, privacy decisions |
+| **WP-6: Weekly summary** | Defined summary rules, API output, Web presentation | FR-05 (deterministic aggregation) | WP-4; journal data only if approved |
+| **WP-7: AI helper** | Catalog-grounded suggestions, validation, fallback, cost controls | FR-06, NFR-AI-01..05, NFR-REL-01 | WP-3, WP-4, privacy/provider review |
+| **WP-8: Release readiness** | Cross-feature regression, accessibility, security/deployment gates | All FR-01–FR-06, all NFRs, Course Deliverables | Relevant feature work |
 
 The work packages are a planning hierarchy, not a commitment to implement all work in a single sprint. Keep the first implementation slice small: WP-1 and WP-2 establish a secure vertical path before broad feature work.
 
