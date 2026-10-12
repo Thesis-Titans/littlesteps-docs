@@ -3,7 +3,7 @@
 **Status:** Canonical Design Specification for Prototype Validation  
 **Governing Standard:** ISO 9241 (Ergonomics of Human-System Interaction) & WCAG 2.2 AA  
 **Associated Gate:** [Docs Issue #15 — [M0] Plan and validate the LittleSteps UI prototype before implementation](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)  
-**Related Documents:** [Product Scope](product-scope.md), [Traceability Matrix](traceability-matrix.md), [Philippine Content Provenance](philippine-content-provenance.md)  
+**Related Documents:** [Product Scope](product-scope.md), [Traceability Matrix](traceability-matrix.md), [Prototype Traceability & Storyboards](prototype-traceability-storyboards.md), [Philippine Content Provenance](philippine-content-provenance.md)  
 **Repository Boundaries:** `littlesteps-mobile` (Flutter) and `littlesteps-api` remain strictly untouched.
 
 ---
