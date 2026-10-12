@@ -1,4 +1,4 @@
-# Security, Privacy, and AI Safeguards (IEEE 29148 NFR Baseline)
+# Security, Privacy, and AI Safeguards
 
 This document establishes the non-functional requirements (NFRs) and statutory security baselines for LittleSteps. It is an engineering specification, not legal advice or a formal declaration of regulatory compliance.
 
@@ -63,8 +63,8 @@ LittleSteps processes sensitive family and early-learning observations. System a
 To satisfy the **CC 207B AI-Powered Feature Requirement (Items 12–17)**, the AI Activity Suggestion Helper (FR-06) operates under strict architectural and ethical constraints:
 
 ### NFR-AI-01: Relevance & Problem Fit (Item 13)
-- **Real Need:** Caregivers often have limited time, diverse home environments, and arbitrary materials on hand (e.g., "recycled boxes, plastic cups, spoons").
-- **Why AI Beats Rigid Logic:** Traditional relational filters fail when matching flexible natural-language descriptions of household materials. The AI helper semantically matches caregiver constraints to eligible activity IDs from the reviewed catalog without brittle keyword rules.
+- **Caregiver Need:** Caregivers often have limited time, diverse home settings, and arbitrary materials on hand (e.g., "recycled boxes, plastic cups, spoons").
+- **Technical Rationale:** Keyword matching fails when processing unstructured natural-language descriptions of household materials. The semantic helper matches caregiver constraints to eligible activity IDs from the reviewed catalog without rigid query rules.
 
 ### NFR-AI-02: Server-Side Execution & Credential Isolation (Item 14)
 - **Execution Boundary:** All AI model invocations (Gemini API / Firebase Vertex AI) execute exclusively server-side inside Cloud Functions.

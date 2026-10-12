@@ -1,12 +1,12 @@
-# LittleSteps Architecture Decisions (IEEE 1016 SDD Baseline)
+# LittleSteps Architecture Decisions
 
-This document records the architectural viewpoints and Architecture Decision Records (ADRs) governing LittleSteps. It follows the standard Michael Nygard format (*Context, Options Considered, Decision, Consequences*) to provide clear engineering rationale and traceability.
+This document records architectural decisions for LittleSteps using the Michael Nygard ADR format (*Status, Context, Options Considered, Decision, Consequences*).
 
 ---
 
 ## 1. Architectural Component Topology
 
-The following diagram illustrates the multi-client, shared-backend architecture deployed across the system:
+Component layout and request flow across clients, backend services, and datastores:
 
 ```mermaid
 graph TD
@@ -78,7 +78,7 @@ graph TD
 - **Context:** The shared backend requires rapid development, strong typing, robust routing, and seamless local emulation.
 - **Options Considered:**
   1. *Python FastAPI:* Strong data science libraries, but complicates Firebase integration.
-  2. *Go HTTP Service:* High performance, but higher boilerplate for academic project velocity.
+  2. *Go HTTP Service:* High performance, but higher boilerplate for the project schedule.
   3. *Node.js 22 + TypeScript + Express on Cloud Functions (2nd Gen):* Native Firebase SDK support, familiar TypeScript typing shared with React web client, managed HTTP hosting.
 - **Decision:** Use Node.js 22, TypeScript, and Express hosted as a 2nd Gen HTTP Cloud Function.
 - **Consequences:**

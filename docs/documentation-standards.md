@@ -46,9 +46,7 @@ Level 3: Repository-Specific Documentation (`littlesteps-api`, `littlesteps-web`
 
 ## 3. Industry Standards & "Docs-as-Code" Traceability
 
-Modern enterprise engineering avoids monolithic, static 300-page specifications (such as legacy waterfall Word documents) because they decouple from implementation and rapidly become obsolete. Instead, LittleSteps implements the **"Docs-as-Code"** paradigm, decomposing traditional software engineering standards into modular, version-controlled Markdown specifications tracked via Git, verified by continuous integration, and updated in lockstep with codebase pull requests.
-
-The 10 canonical system documents map directly to governing software engineering and project management standards:
+LittleSteps uses a **Docs-as-Code** structure: modular, version-controlled Markdown specifications tracked in Git, verified via automated CI checks, and mapped directly to software engineering and project management standards:
 
 | Industry Standard | Specification Domain | LittleSteps Canonical Document | Standard Description & Coverage |
 | :--- | :--- | :--- | :--- |
@@ -69,7 +67,7 @@ The 10 canonical system documents map directly to governing software engineering
 
 To satisfy the specific submission requirements of all three coordinated courses without duplicate authoring, project documentation is mapped to each course's evaluated artifacts:
 
-### 3.1 CC 207B: Applications Development and Emerging Technologies
+### 4.1 CC 207B: Applications Development and Emerging Technologies
 1. **Software Documentation Package:**
    - **Overview & Introduction:** App Name, Purpose/Target Clients, and Technology Stack with specific versions.
    - **Functional Requirements:** Package inventory with purpose, UI/UX Prototypes, Implemented core features with screenshots and descriptions.
@@ -84,12 +82,12 @@ To satisfy the specific submission requirements of all three coordinated courses
    - PR history showing teammate reviews and continuous contributions.
    - Preparation for individual code defense (2–3 min/member).
 
-### 3.2 CIT 210: Web Systems and Technologies
+### 4.2 CIT 210: Web Systems and Technologies
 1. **Web System Documentation:** Shared documentation package covering React web client, API endpoints, and database integration.
 2. **Technical Contract:** Canonical OpenAPI specification maintained in the API repository (`openapi/openapi.yaml`).
 3. **Reproducible Local Setup:** Step-by-step developer onboarding tutorial in [`docs/getting-started.md`](getting-started.md) for local emulator and full-stack execution.
 
-### 3.3 CIT 246: IT Project Management Plan
+### 4.3 CIT 246: IT Project Management Plan
 1. **Checkpoint 1 Proposal (Due October 14, 2026):** One-page project concept covering Organization, Problem, Proposed System, and Possible Sponsor (A4, Arial 11), documented in [`docs/academic/cit246/checkpoint-1-concept.md`](academic/cit246/checkpoint-1-concept.md).
 2. **Full IT Project Management Plan (25–40 Pages, Due December 2, 2026):** 17-section PDF covering:
    - Sections 1–4: Title Page, Executive Summary, Business Case, and Project Charter.
