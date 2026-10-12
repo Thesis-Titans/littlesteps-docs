@@ -32,10 +32,10 @@ The table below defines the planned system scope. Inclusion does not mean a capa
 
 ## 3. User Characteristics & Operating Context
 
-The system is designed for parents, legal guardians, and home caregivers of children aged 0–5 years:
+The intended users are parents, legal guardians, and home caregivers of children aged 0–5 years. The characteristics below are design considerations to validate, not established claims about all caregivers:
 
 - **Physical Multitasking:** Caregivers frequently operate devices one-handed while holding a child or managing household chores. The interface requires natural thumb-zone placement and large touch targets ($\ge$ 44px).
-- **Divided Attention & Cognitive Load:** Design for short, scannable instructions and avoid clinical jargon or guilt-inducing streaks. The assumed time available for an activity has not been validated with a broad user sample.
+- **Divided Attention & Cognitive Load:** Use short, scannable instructions and avoid clinical jargon or guilt-inducing streaks. The assumed time available for an activity has not been validated with intended users.
 - **Connectivity:** Intermittent connectivity and data costs are design considerations. The system should favor lightweight content and define offline behavior; the prevalence of these constraints among intended users remains to be validated.
 - **Shared Devices:** Shared-device use is a risk to consider. Authentication, session handling, and protection against accidental edits require usability and security validation.
 
