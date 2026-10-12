@@ -1,4 +1,4 @@
-# LittleSteps Product Scope (IEEE 29148 SRS Baseline)
+# LittleSteps Product Scope
 
 ## 1. System Purpose & Concept
 
@@ -11,7 +11,7 @@ LittleSteps is an early-childhood learning and development tracking platform des
 
 ## 2. System Scope Boundaries
 
-To maintain rigorous alignment with academic deliverables (CC 207B, CIT 210, CIT 246) and prevent scope creep, explicit system boundaries are established:
+The table below defines in-scope implementation and out-of-scope boundaries across the project:
 
 | System Domain | In-Scope (Implemented) | Out-of-Scope (Excluded) |
 | :--- | :--- | :--- |
@@ -54,7 +54,7 @@ The following capabilities are mandatory architectural prerequisites supporting 
 
 ## 5. Functional Requirements Specification (Core Features)
 
-In accordance with the **CC 207B Team-Scaling Formula** (5 team members $\rightarrow$ exactly 6 core features), the application implements six user-facing features. Each core feature represents a complete, interactive workflow accepting user input, updating system state, and generating verifiable outputs across both Web (React) and Mobile (Flutter) clients sharing a unified backend API:
+Per CC 207B requirements, a 5-member team must deliver at least 6 core features ($5 \rightarrow 6$). Each core feature is an interactive workflow that accepts input, modifies state, and produces an observable output across both Web (React) and Mobile (Flutter) clients using the shared API:
 
 ### FR-01: Child Profile and Milestone Tracking
 - **Primary Actor:** Caregiver
