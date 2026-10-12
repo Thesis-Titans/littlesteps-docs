@@ -92,15 +92,15 @@ These personas are design aids, not validated user profiles. They combine second
 - **Illustrative scenario:** A working caregiver in Western Visayas caring for a 14-month-old child. Demographic details are fictional and are not findings from P01.
 - **Device & Environment:** Assumes a mid-range Android phone and prepaid mobile data as a design scenario; validate device-sharing and connectivity needs with intended users.
 - **Possible Practices:** Storybooks, household-item play, and family discussion are examples for design exploration, not established facts about a representative caregiver.
-- **Core Friction:** Exhausted in the evening; has only 10–15 minutes of dedicated time; overwhelmed by conflicting online parenting blogs; worried about heavy data consumption.
-- **UX Solution:** 10-minute activity filters using household items (cups, folded towels); instant offline-cached browsing; no data-heavy video streams.
+- **Design Hypotheses to Validate:** Limited time, conflicting online advice, and data costs may affect activity selection; test these assumptions with intended users.
+- **Design Response to Test:** Offer short activity filters, household-material options, and low-data browsing. Offline availability must be verified in the prototype and implementation.
 
 ### Persona 2: "Tatay Jun" — Solo / Hands-On Father
 - **Illustrative scenario:** A hands-on caregiver with daytime responsibility for a four-year-old child. Details are fictional design assumptions.
 - **Device & Environment:** Assumes a budget Android phone and a preference for limited child screen time; validate these assumptions.
 - **Possible Practices:** A kitchen whiteboard, outdoor play, and board games are illustrative examples, not validated observations.
-- **Core Friction:** Intimidated by clinical milestone checklists that feel like tests; anxious about Kindergarten readiness [RA 12199]; dislikes commercial ad clutter.
-- **UX Solution:** Non-diagnostic observation prompts in conversational language; offline-ready play ideas that foster school readiness through games; zero ads or clinical scores.
+- **Design Hypotheses to Validate:** Some caregivers may find milestone checklists judgmental or have concerns about school readiness and advertising; validate these concerns directly.
+- **Design Response to Test:** Use non-diagnostic observation prompts and activity suggestions; test whether the wording is clear and non-judgmental.
 
 ### Persona 3: "Teacher Lea" — Illustrative Child Development Worker Scenario
 - **Illustrative scenario:** A child development worker supporting a community center. Age, center size, and work conditions are fictional and have not been validated with this stakeholder group.
@@ -115,8 +115,8 @@ This matrix records the evidence or policy that informs each design choice. Publ
 
 | Feature / UX Requirement | Source Evidence / Policy Driver | User Problem Solved | Verification Criteria in Prototype |
 |---|---|---|---|
-| **Caregiver-Facing UI (Not Child Screen)** | WHO (2020) Responsive Caregiving; WHO (2019) Screen Limits | Prevents passive child screen sedation; fosters adult-child responsive interaction. | Interface designed exclusively for adult caregiver guidance; no child-direct game loops. |
-| **Data-Minimized Child Model** | [Security, Privacy, and AI Guardrails](security-privacy-ai.md); NPC 2026 Advisory | Minimizes privacy risk by avoiding unnecessary child personal data. | Stores **coarse age in months** (`ageMonths`) and nickname (`displayName`) only; **zero birth dates, surnames, or photos**. |
+| **Caregiver-Facing UI (Not Child Screen)** | WHO (2020) Responsive Caregiving; WHO (2019) Screen Limits | Keeps the product focused on caregiver guidance and adult-child interaction. | Interface designed exclusively for adult caregiver guidance; no child-direct game loops. |
+| **Data-Minimized Child Model** | [Security, Privacy, and AI Guardrails](security-privacy-ai.md); NPC guidance | Reduces collection of unnecessary child personal data. | Stores **coarse age in months** (`ageMonths`) and nickname (`displayName`) only; **zero birth dates, surnames, or photos**. |
 | **Non-Diagnostic Observation Prompts** | [Product Scope](product-scope.md); RA 12199; P01 Insight | Prevents parental anxiety caused by clinical pass/fail scoring. | Replaces "Pass/Fail" with "Observed on [Date]" / "Observing"; prominent non-diagnostic disclaimer. |
 | **Provisional Content Attribution** | [Philippine Content Provenance](philippine-content-provenance.md) (Issue #3 Gate) | Avoids misleading claims of official government endorsement or clinical validation. | Catalog cards display: *"Provisional Academic Reference — Pending Review"*; no unreviewed claims. |
 | **Household-Material Activity Catalog** | UNICEF Care for Child Development; P01 Evidence (A-02) | Eliminates financial and preparation barriers to developmental play. | Activities require only zero-cost household items (cups, spoons, towels, paper). |
