@@ -29,16 +29,31 @@ This is an engineering baseline, not legal advice or a declaration of compliance
 - Configure security headers and appropriate cache policy for private responses.
 - Add dependency updates and automated tests; only require CI checks after they exist and their check names are verified.
 
-## AI Activity Suggestion Helper
-- Ground recommendations in reviewed catalog entries and return catalog IDs, not invented activity records.
-- Use age band, interests, time, materials, and language only as needed.
-- Do not include names, birth dates, private journal text, or direct identifiers in provider prompts.
-- Do not diagnose, screen, rank children, or provide medical advice.
-- Validate output against a strict schema and allowlisted catalog IDs.
-- Provide a deterministic catalog-based fallback for provider failures or invalid output.
-- Set timeouts, request limits, rate limits, usage monitoring, and budget alerts.
-- Keep provider keys server-side. Review provider terms, data processing, and retention before activation.
-- Make clear suggestions are optional and must be adapted and supervised by an adult.
+## AI Activity Suggestion Helper (CC 207B Compliance: Items 12–17)
+
+To satisfy the **CC 207B AI-Powered Feature Requirement**, the helper is designed as a user-facing recommendation capability with strict ethical, architectural, and statutory boundaries:
+
+1. **Relevance & Problem Fit (Item 13):**
+   - **Real Need:** Caregivers struggle to find structured offline activities that fit their immediate time constraints, child age, language preference, and specific household items on hand.
+   - **Why AI Beats Ordinary Logic:** Combinatorial rule engines require rigid tag matches that fail when caregivers have unusual household materials (e.g., "cardboard box, yarn, plastic spoons"). The AI helper semantically matches caregiver constraints to eligible items from the reviewed catalog without rigid query brittleness.
+2. **Security & Credential Isolation (Item 14):**
+   - AI model credentials (e.g., Gemini API keys / Firebase Vertex AI) are strictly kept server-side in Firebase Cloud Functions.
+   - Zero API keys, secrets, or cloud tokens are ever committed to Git or exposed in client bundles (`.env` files are git-ignored; emulator workflows use synthetic mocks).
+3. **Graceful Failure & Deterministic Fallback (Item 15):**
+   - Frontends display explicit loading skeletons and timers during AI inference.
+   - Strict 8-second timeouts and provider error handlers prevent hanging requests.
+   - **Deterministic Fallback:** If the external AI service times out, errors, or is unreachable offline, the system automatically falls back to deterministic age-band catalog filtering, ensuring caregivers are never stranded without activities.
+4. **Responsible Use & RA 10173 Compliance (Item 16):**
+   - **Clear Labeling:** All suggested activities are visually labeled with an AI badge and disclaimer: *"AI Suggestion — Always adapt to your child and ensure adult supervision."*
+   - **Caregiver Override:** Caregivers can freely reject, re-generate, edit, or override any recommendation.
+   - **Data Minimization:** Under the Data Privacy Act of 2012 (RA 10173), no child names, exact birth dates, locations, or private journal entries are ever sent to an external AI provider. Prompts include only coarse age bands, duration, and material keywords.
+   - **Non-Diagnostic Constraint:** The AI is strictly prohibited from diagnosing developmental delays, providing medical advice, or generating pass/fail scores.
+5. **AI Use Policy for Project Development (Item 17):**
+   - Using AI to write the whole application wholesale is strictly prohibited.
+   - Any AI-assisted code snippets, debugging suggestions, or synthetic test fixtures must be logged in the project's **AI Usage Log**.
+   - Every team member must personally understand and be able to defend their code during the **Individual Code Defense**.
+6. **Synthetic Data Team Policy:**
+   - While RA 10173 governs real personal data, the LittleSteps team enforces a proactive **team policy** to use exclusively synthetic child/caregiver profiles in all demos, test fixtures, and presentations to completely eliminate accidental data disclosure risks.
 
 ## Pre-deployment gate
 Do not deploy until the team has reviewed the Firebase project and billing plan, budget alerts, required APIs, environment configuration, CORS origins, authentication, ownership tests, Firestore rules/indexes, privacy notice and retention/deletion policy, AI provider data terms, and rollback steps.

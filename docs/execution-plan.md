@@ -2,29 +2,44 @@
 
 Status: proposed execution baseline; no implementation tasks are assigned by this document.
 
-This plan moves LittleSteps from repository setup into controlled delivery of the API and Web application. The canonical product requirements remain in [Product Scope](product-scope.md), architecture decisions in [Architecture Decisions](architecture-decisions.md), security requirements in [Security, Privacy, and AI Safeguards](security-privacy-ai.md), and the client/server contract in the API repository's [OpenAPI specification](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml).
+This plan moves LittleSteps from repository setup into controlled delivery across our three coordinated courses:
+- **CC 207B — Applications Development and Emerging Technologies:** Flutter mobile application with 6 core features, user-facing AI, live demo, and individual code defense.
+- **CIT 210 — Web Systems and Technologies:** React web client using shared API & database, local demo, and documentation.
+- **CIT 246 — IT Project Management Plan:** 25–40 page Project Management Plan governing the entire system, with Checkpoint 1 due October 14, 2026 and final defense on December 2, 2026.
 
-## 1. Delivery approach
+Canonical product requirements remain in [Product Scope](product-scope.md), architecture decisions in [Architecture Decisions](architecture-decisions.md), security requirements in [Security, Privacy, and AI Safeguards](security-privacy-ai.md), and the client/server contract in the API repository's [OpenAPI specification](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml).
 
+## 1. Academic Calendar & Delivery Approach
+
+### 1.1 Hard Academic Deadlines
+- **October 14, 2026:** **CIT 246 Checkpoint 1** (One-page project concept covering Organization, Problem, Proposed System, and Possible Sponsor; A4, Arial 11). Documented in [CIT 246 Checkpoint 1 Concept](cit246-checkpoint-1-concept.md).
+- **December 2, 2026:** **Final Submission & Demonstrations for All Three Courses:**
+  - **CC 207B:** LMS submission, 5–10 min presentation, live demo + backup video, and **Individual Code Defense** (2–3 min/member with live code modification).
+  - **CIT 210:** Presentation, local live demo of React app reading/writing shared data, and shared documentation.
+  - **CIT 246:** Final 25–40 page IT Project Management Plan (PDF + printed copy), 15 min presentation + 5 min Q&A.
+
+### 1.2 Delivery Approach
 Use **lightweight Scrum with a visible GitHub issue backlog**. Avoid fixed sprint dates until the group confirms availability and capacity.
 
 - **Product scope:** The six features in Product Scope remain the target scope. This plan orders delivery; it does not silently remove features.
 - **Initial execution focus:** API and Web. Keep the API contract client-neutral so the untouched Mobile repository can integrate later. Do not modify `littlesteps-mobile` while the CC 207B external-fork constraint remains.
 - **Iteration length:** Propose one-week sprints after backlog refinement and capacity confirmation. Do not assign dates or people yet.
 - **Planning unit:** Small, independently reviewable issues with a clear outcome, acceptance criteria, dependencies, and verification steps. Split issues further only when implementation details are known.
-- **Review:** Every change goes through a pull request. API/Web checks must pass; security and privacy acceptance criteria apply to child-scoped features.
+- **Review:** Every change goes through a pull request. At least one teammate must review each PR (graded in CC 207B collaboration criteria). API/Web checks must pass; security and privacy acceptance criteria apply to child-scoped features.
 - **No speculative implementation:** Resolve product/data-contract questions before coding dependent features. Use synthetic fixtures for engineering work when reviewed catalog content is unavailable.
 
-## 2. Product target and delivery order
+## 2. Product Target & Team Sizing Derivation
 
-The product has six core capabilities:
+Under CC 207B requirements, the minimum number of core features scales with team size: **5 members require at least 6 core features** ($5 \rightarrow 6$), where the AI-powered feature counts as one core feature. A core feature must be a user-facing flow taking input, performing processing/state change, and producing a meaningful result (auth, splash, About, and Settings do not count).
 
-1. Child profiles and milestone observation.
-2. Daily activity planning and tracking.
-3. Private observation journal.
-4. Story, rhyme, and learning activity library.
-5. Weekly progress summary.
-6. AI activity suggestion helper.
+The six core capabilities are:
+
+1. Child profiles and milestone observation (Caregiver input $\rightarrow$ profile persistence $\rightarrow$ observation display).
+2. Daily activity planning and tracking (Activity selection $\rightarrow$ scheduling/completion state $\rightarrow$ calendar/timeline update).
+3. Private observation journal (Encrypted note input $\rightarrow$ secure storage $\rightarrow$ chronological journal display).
+4. Story, rhyme, and learning activity library (Search/filter criteria $\rightarrow$ catalog query $\rightarrow$ filtered learning resource view).
+5. Weekly progress summary (Activity/milestone records $\rightarrow$ non-diagnostic aggregation $\rightarrow$ weekly reflection report).
+6. AI activity suggestion helper (Caregiver constraints $\rightarrow$ constrained catalog match $\rightarrow$ recommended activities with fallback).
 
 Deliver these in dependency order, not as six parallel projects.
 

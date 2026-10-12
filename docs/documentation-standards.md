@@ -1,6 +1,6 @@
 # LittleSteps Documentation Standards & Repository Consistency
 
-Status: Stages 1–3 baselines established and merged across active repositories (PR #9, PR #10, PR #11, API PR #6, Web PR #4). Stage 4 (Docs CI quality workflow) is in progress on this branch. Stage 5 (System-wide verification) is pending.
+Status: Stages 1–5 baselines established and verified across active repositories (PR #9, PR #10, PR #11, PR #12, API PR #6, Web PR #4). Academic course deliverables mapped for CC 207B, CIT 210, and CIT 246.
 
 ---
 
@@ -44,7 +44,40 @@ Level 3: Repository-Specific Documentation (`littlesteps-api`, `littlesteps-web`
 
 ---
 
-## 3. Information Architecture (Diátaxis Framework)
+## 3. Academic Course Deliverables Mapping
+
+To satisfy the specific submission requirements of all three coordinated courses without duplicate authoring, project documentation is mapped to each course's evaluated artifacts:
+
+### 3.1 CC 207B: Applications Development and Emerging Technologies
+1. **Software Documentation Package:**
+   - **Overview & Introduction:** App Name, Purpose/Target Clients, and Technology Stack with specific versions.
+   - **Functional Requirements:** Package inventory with purpose, UI/UX Prototypes, Implemented core features with screenshots and descriptions.
+   - **Topic Coverage Matrix:** Maps course topics (Layout widgets, Navigation/routing, Forms & validation, Async operations/API, Data persistence, AI feature) directly to committed code (`file` and `widget/class`).
+   - **AI Feature Specification:** AI model/service used, prompt schemas, sample outputs, graceful failure/fallback handling, known limitations, relevance justification, and RA 10173 privacy minimization.
+   - **Future Enhancements & Roadmap:** Known limitations and planned improvements.
+2. **Appendices:**
+   - **AI Usage Log:** Tabular log (Member, Date, Tool, Prompt, Generated, Member Modifications).
+   - **Individual Reflections:** Half-page per member (what built, one bug fixed and how, future improvements).
+3. **Repository & Defense Evidence:**
+   - Setup and run README with versions.
+   - PR history showing teammate reviews and continuous contributions.
+   - Preparation for individual code defense (2–3 min/member).
+
+### 3.2 CIT 210: Web Systems and Technologies
+1. **Web System Documentation:** Shared documentation package covering React web client, API endpoints, and database integration.
+2. **Technical Contract:** Canonical OpenAPI specification maintained in the API repository (`openapi/openapi.yaml`).
+3. **Reproducible Local Setup:** Step-by-step developer onboarding tutorial in [`docs/getting-started.md`](getting-started.md) for local emulator and full-stack execution.
+
+### 3.3 CIT 246: IT Project Management Plan
+1. **Checkpoint 1 Proposal (Due October 14, 2026):** One-page project concept covering Organization, Problem, Proposed System, and Possible Sponsor (A4, Arial 11), documented in [`docs/cit246-checkpoint-1-concept.md`](cit246-checkpoint-1-concept.md).
+2. **Full IT Project Management Plan (25–40 Pages, Due December 2, 2026):** 17-section PDF covering:
+   - Sections 1–4: Title Page, Executive Summary, Business Case, and Project Charter.
+   - Sections 5–6: Stakeholder Register (8+ entries with opponent) and Scope Statement (IN/OUT boundaries).
+   - Sections 7–9: WBS (3+ levels with dictionary), Schedule (Network diagram & Gantt), and Cost Baseline (Peso amounts, WBS-linked).
+   - Sections 10–13: Quality Plan, Resource Plan (Org chart & RAM), Communications Plan, and Risk Register (8+ risks, $\ge 3$ non-technical).
+   - Sections 14–17: Procurement Plan, Change Control/Closing/Transition Plan, Conclusion, and Appendices (signed contribution statement).
+
+## 4. Information Architecture (Diátaxis Framework)
 
 Documentation in `littlesteps-docs` aligns with the Diátaxis documentation framework, organizing information into four distinct reader needs:
 
@@ -59,9 +92,9 @@ These are intended destinations in the documentation architecture, not a claim t
 
 ---
 
-## 4. Policy Baselines
+## 5. Policy Baselines
 
-### 4.1 Intended Rights Policy: All Rights Reserved (Academic Evaluation Only)
+### 5.1 Intended Rights Policy: All Rights Reserved (Academic Evaluation Only)
 
 - **Project intent:** The project owner intends to reserve copyright and not grant a general open-source license for reuse, modification, redistribution, or commercial use.
 - **Public visibility:** Repositories are public for academic course evaluation, faculty review, and demonstration. Public visibility is not an access restriction: people may be able to view, fork, or otherwise interact with public repositories under GitHub's platform features and terms.
@@ -69,14 +102,14 @@ These are intended destinations in the documentation architecture, not a claim t
 - **Before finalizing:** Have the exact copyright/license notice and intended restrictions reviewed by the course instructor or an appropriate legal resource. Until that review, do not add an open-source license such as MIT, Apache-2.0, or GPL, and do not claim the notice has been legally reviewed.
 - **Data boundary:** Real child and caregiver personal data, production credentials, and restricted curriculum packages must not be committed to public repositories.
 
-### 4.2 Multi-Repository Community Health File Placement
+### 5.2 Multi-Repository Community Health File Placement
 
 - **Location:** Maintain community health files as **explicit files within each active repository** (`littlesteps-docs`, `littlesteps-api`, and `littlesteps-web`).
 - **Rationale:** An organization-level `Thesis-Titans/.github` repository is intentionally **not used** so that default templates and policies do not inadvertently apply to `littlesteps-mobile`.
 
 ---
 
-## 5. Standard File Baseline Specification
+## 6. Standard File Baseline Specification
 
 The following is the **target baseline** for each active repository; it does not mean every file already exists. Repository-specific requirements should be adapted to the codebase, without duplicating canonical project documentation.
 
@@ -92,7 +125,7 @@ The following is the **target baseline** for each active repository; it does not
 
 ---
 
-## 6. Repository-by-Repository Audit Checklist
+## 7. Repository-by-Repository Audit Checklist
 
 The table records the observed baseline at the time of this Stage 1 draft and the target state. Items marked pending are not yet implemented as part of this workstream; re-check each repository during the relevant stage before marking anything complete.
 
@@ -116,7 +149,7 @@ The table records the observed baseline at the time of this Stage 1 draft and th
 
 ---
 
-## 7. Phased Implementation Roadmap
+## 8. Phased Implementation Roadmap
 
 Work is tracked on [Thesis-Titans LittleSteps Project #2](https://github.com/orgs/Thesis-Titans/projects/2) under [Docs Issue #8](https://github.com/Thesis-Titans/littlesteps-docs/issues/8):
 

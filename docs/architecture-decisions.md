@@ -3,8 +3,8 @@
 Status: proposed baseline for team review. Amend through a pull request when a decision changes.
 
 ## ADR-001 — Shared backend
-**Decision:** Both clients use one shared HTTP API, authentication system, data model, and authorization policy.
-**Rationale:** This prevents feature and security rules from diverging between clients.
+**Decision:** Both clients (Flutter mobile and React web) use one shared HTTP API, authentication system, data model, and authorization policy.
+**Rationale:** This prevents feature and security rules from diverging between clients and satisfies the academic requirements of both **CIT 210** (API & database integration) and **CC 207B** (cloud data persistence and server-side AI execution) simultaneously.
 
 ## ADR-002 — API runtime
 **Decision:** Node.js + TypeScript, Express hosted by Firebase Cloud Functions (2nd gen HTTP function).

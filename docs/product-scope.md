@@ -19,14 +19,17 @@ The product uses seven activity-navigation bands spanning 0–71 months:
 These are app categories, not official clinical developmental stages. Content for ages 60–71 months should consider applicable DepEd Kindergarten guidance as well as relevant ECCD Council materials.
 
 ## Six core features
-1. **Child Profile and Milestone Tracking** — maintain caregiver-managed profiles and record observations against clearly sourced, age-appropriate milestones.
-2. **Daily Activity Planning and Tracking** — select activities, schedule or mark them complete, and record participation.
-3. **Private Observation Journal** — let authorized caregivers record private notes with explicit ownership and access controls.
-4. **Story, Rhyme, and Learning Activity Library** — browse reviewed content with age range, materials, language, duration, and source metadata.
-5. **Weekly Progress Summary** — summarize recorded activity and observations without diagnosing, clinically scoring, or asserting unsupported developmental conclusions.
-6. **AI Activity Suggestion Helper** — recommend activities grounded in the reviewed catalog and caregiver-provided constraints.
 
-Both web and mobile clients must implement all six features and use the same backend API, data model, and authentication/authorization rules. Neither client is intended to be only a companion or partial system.
+To satisfy the **CC 207B team-scaling formula** (a group of 5 members requires at least 6 core features), the application implements exactly six core user-facing capabilities. Under CC 207B grading criteria, a **core feature** must be a complete user-facing flow that accepts user input, processes it or changes application state, and produces a meaningful result. Authentication/registration, splash screens, and static informational pages ("About", "Settings") **do not** count as core features. The AI-powered feature counts as one of the six core features.
+
+Both web and mobile clients serve a **single user role** (the caregiver/parent) and implement all six core features using the same backend API, data model, and authorization policies:
+
+1. **Child Profile and Milestone Tracking** — maintain caregiver-managed child profiles and record observations against clearly sourced, age-appropriate milestones. (Input: child details/observations $\rightarrow$ Processing: child-scoped database persistence $\rightarrow$ Result: structured profile and observation history).
+2. **Daily Activity Planning and Tracking** — select activities, schedule or mark them complete, and record participation. (Input: activity selection and date $\rightarrow$ Processing: schedule state update $\rightarrow$ Result: active daily routine and progress log).
+3. **Private Observation Journal** — let authorized caregivers record private qualitative notes with explicit ownership and access controls. (Input: journal text $\rightarrow$ Processing: encrypted storage with AI isolation $\rightarrow$ Result: chronological personal reflection feed).
+4. **Story, Rhyme, and Learning Activity Library** — browse reviewed content with age range, materials, language, duration, and source metadata. (Input: search queries and age/material filters $\rightarrow$ Processing: catalog query and filtering $\rightarrow$ Result: curated learning resource cards).
+5. **Weekly Progress Summary** — summarize recorded activity and observations without diagnosing, clinically scoring, or asserting unsupported developmental conclusions. (Input: date range $\rightarrow$ Processing: deterministic aggregation of completed activities/milestones $\rightarrow$ Result: structured weekly progress recap).
+6. **AI Activity Suggestion Helper** — recommend activities grounded in the reviewed catalog and caregiver-provided constraints, with deterministic non-AI fallback. (Input: caregiver constraints: time, materials, language $\rightarrow$ Processing: catalog-constrained recommendation $\rightarrow$ Result: tailored offline activity prompts with explicit AI labeling and override options).
 
 ## Milestone-content rules
 - Show source attribution and intended age range for each milestone item.

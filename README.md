@@ -6,8 +6,8 @@ LittleSteps is an academic software development project focused on helping paren
 
 ### Courses Involved
 
-- **CC 207B — Flutter:** Mobile application development.
-- **CIT 210 — Web Technology:** React web application, API, and database integration.
+- **CC 207B — Application Development and Emerging Technologies:** Flutter application development.
+- **CIT 210 — Web Systems and Technologies:** React web application, API, and database integration.
 - **CIT 246 — IT Project Management Plan:** Project planning, documentation, scheduling, and management.
 
 ### What the System Does
@@ -45,13 +45,15 @@ This repository is the canonical home for product scope, decisions, research pro
 
 ## Source of truth
 - [Product scope](docs/product-scope.md): six core features and boundaries.
+- [Execution plan](docs/execution-plan.md): delivery approach, milestones, and academic calendar.
 - [Architecture decisions](docs/architecture-decisions.md): current technical direction.
 - [Security, privacy, and AI guardrails](docs/security-privacy-ai.md): required safeguards.
 - [Development workflow](docs/development-workflow.md): branch, review, and verification expectations.
-- [Documentation standards](docs/documentation-standards.md): canonical documentation hierarchy, Diátaxis framework mapping, rights-policy caveats, and repository consistency audit.
+- [Documentation standards](docs/documentation-standards.md): canonical documentation hierarchy, academic deliverables mapping, and repository consistency.
 - [Research register](docs/research-register.md): external sources and their design implications.
 - [Philippine content provenance](docs/philippine-content-provenance.md): source candidates, item-level citation fields, and content-review gates.
 - [UI/UX design specification](docs/ui-ux-design-specification.md): human-computer interaction principles, responsive design system, and prototype validation requirements.
+- [CIT 246 Checkpoint 1 Concept](docs/cit246-checkpoint-1-concept.md): one-page project concept proposal for IT Project Management Plan.
 
 ## Repositories
 - [Documentation](https://github.com/Thesis-Titans/littlesteps-docs)
