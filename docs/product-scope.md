@@ -103,7 +103,7 @@ Per CC 207B requirements, a 5-member team must deliver at least 6 core features 
 - **Primary Actor:** Caregiver
 - **Preconditions:** Caregiver is securely authenticated.
 - **Inputs:** Narrative text notes, date/time, optional associated milestone tag or activity link, privacy confirmation.
-- **Processing:** Server validates ownership; stores journal entry with strict field isolation; guarantees journal entries are never indexed by analytics, exposed in error logs, or passed to external AI services.
+- **Processing:** The server validates ownership and stores journal entries with access controls. The implementation must prevent journal text from entering analytics, error logs, or external AI requests; verify this with tests and payload/log inspection.
 - **Outputs:** Chronological reverse-ordered personal journal feed with search and date filters; full text view; edit/delete controls.
 - **Verification Method:** Automated API tests confirming non-leakage to AI endpoints; authorization tests verifying cross-user access denial (403/404).
 

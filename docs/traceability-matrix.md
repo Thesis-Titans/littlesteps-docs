@@ -8,7 +8,7 @@
 
 ## 1. Traceability Framework
 
-This Requirements Traceability Matrix (RTM) establishes bidirectional traceability between system requirements, architectural components, test strategies, and delivery tracking issues across all three coordinated courses:
+This matrix links requirements to intended components, verification methods, work packages, and tracking issues. A listed test or evidence item is planned verification unless the status explicitly records a completed check and links its results. It covers the coordinated course scope:
 - **CC 207B:** Flutter mobile application with 6 core features and code defense.
 - **CIT 210:** React web client and shared API/database integration.
 - **CIT 246:** IT Project Management Plan scope and quality baselines.
@@ -32,7 +32,7 @@ This Requirements Traceability Matrix (RTM) establishes bidirectional traceabili
 
 | Prereq ID | Description | Target | Verification Method | Tracking Issue | Status |
 | :---: | :--- | :--- | :--- | :---: | :---: |
-| **PRQ-01** | **Caregiver Authentication & Sessions** | API, Web, Mobile | Auth Emulator Integration Tests | [Web #5](https://github.com/Thesis-Titans/littlesteps-web/issues/5)<br/>API `require-firebase-user.ts` | Scaffolded in API (`npm run test:emulator`) |
+| **PRQ-01** | **Caregiver Authentication & Sessions** | API, Web, Mobile | Auth Emulator Integration Tests | [Web #5](https://github.com/Thesis-Titans/littlesteps-web/issues/5)<br/>API `require-firebase-user.ts` | API scaffold reported; emulator verification evidence pending |
 | **PRQ-02** | **Ergonomic Responsive Shell** | Web, Mobile | Viewport Tests (375px–1440px) + Fitts's Law ($\ge$ 44px) | [Docs #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15) (Prototype) | Validated in UI/UX Specification |
 | **PRQ-03** | **App Settings & Informational Views** | Web, Mobile | Visual Inspection & Policy Link Audit | WP-0.5 | Prototype Stage |
 
@@ -42,10 +42,10 @@ This Requirements Traceability Matrix (RTM) establishes bidirectional traceabili
 
 | NFR Tag | Domain & Title | Governing Standard | Verification Method | Evidence & Enforcement |
 | :---: | :--- | :--- | :--- | :--- |
-| **NFR-SEC-01** | Token-Based Identity Verification | OWASP REST / NIST | Automated API Emulator Test | `npm run test:emulator` verifies token UID extraction; blocks forged headers. |
-| **NFR-SEC-02** | BOLA Ownership Defense | OWASP API1:2023 | Negative Security Integration Tests | Server rejects cross-caregiver document reads with safe `403`/`404`. |
-| **NFR-SEC-03** | Zero Secret Exposure | CC 207B Item 14 / Git | Git Pre-commit + Bundle Inspection | Zero API keys committed; server secrets in Cloud Functions environment variables. |
-| **NFR-SEC-04** | CORS Allowlist & Safe Errors | OWASP ASVS | Automated HTTP Header Tests | Wildcard CORS blocked; stack traces stripped from JSON error envelopes. |
+| **NFR-SEC-01** | Token-Based Identity Verification | OWASP REST / NIST | Automated API Emulator Test | Required: verify token UID extraction and rejection of forged identity headers. |
+| **NFR-SEC-02** | BOLA Ownership Defense | OWASP API1:2023 | Negative Security Integration Tests | Required: demonstrate cross-caregiver reads and writes are rejected with safe `403`/`404` responses. |
+| **NFR-SEC-03** | Secret Exposure Prevention | CC 207B Item 14 / Git | Secret scanning and bundle inspection | Required: no secrets in repository history or client bundles; server secrets remain server-side. |
+| **NFR-SEC-04** | CORS Allowlist & Safe Errors | OWASP ASVS | Automated HTTP Header Tests | Required: reject unauthorized origins and ensure error responses contain no stack traces or internal details. |
 | **NFR-PRIV-01** | RA 10173 Data Minimization | RA 10173 / NPC IRR | Schema Inspection & Privacy Notice | Exact birth dates avoided; no biometric or GPS data collected. |
 | **NFR-PRIV-02** | Journal Isolation from AI & Telemetry | RA 10173 / Statutory | Unit Tests on AI Prompt Payloads | Prompt-builder tests must assert that journal strings are absent from AI request payloads. |
 | **NFR-PRIV-03** | Synthetic Data Policy | Team Testing Policy | Test Fixture Audit | Fixture audit checks that demo and test profiles use synthetic names in the `demo-littlesteps` environment. |
