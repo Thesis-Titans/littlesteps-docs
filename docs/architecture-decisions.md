@@ -88,7 +88,7 @@ graph TD
   3. *Node.js 22 + TypeScript + Express on Cloud Functions (2nd Gen):* Native Firebase SDK support, familiar TypeScript typing shared with React web client, managed HTTP hosting.
 - **Decision:** Use Node.js 22, TypeScript, and Express hosted as a 2nd Gen HTTP Cloud Function.
 - **Consequences:**
-  - *Positive:* Full type safety across API routes and data schemas; standard Express middleware architecture; 100% compatible with Firebase Emulator Suite.
+  - *Positive:* Type checking across API routes and schemas; Express middleware; integration with the Firebase Emulator Suite.
   - *Constraint:* Cold start latency on 2nd Gen functions must be managed; local emulation requires Java 21 runtime.
 
 ---
@@ -102,7 +102,7 @@ graph TD
   3. *Firebase Authentication with Server-Side Admin SDK Verification & Application-Level BOLA Checks:* Firebase handles identity tokens; server decodes tokens and enforces data ownership programmatically.
 - **Decision:** Firebase Authentication manages identity; the backend API verifies ID tokens via the Firebase Admin SDK and programmatically validates that `child.caregiverId === authenticatedUid` on every child-scoped operation.
 - **Consequences:**
-  - *Positive:* Eliminates client-spoofed identities; enforces server-side authorization defense against OWASP API1:2023 (BOLA); centralized auditing.
+  - *Positive:* Uses verified identity tokens and requires server-side ownership checks to mitigate forged-identity and broken-object-level-authorization risks. These controls must be verified with negative authorization tests.
   - *Trade-off:* Every API endpoint must explicitly call the ownership verification service before reading or mutating records.
 
 ---
@@ -122,7 +122,7 @@ graph TD
 
 ### ADR-005: Canonical API Contract via OpenAPI 3.1
 - **Status:** Accepted
-- **Context:** Coordinating mobile (Flutter), web (React), and backend teams requires an immutable, machine-readable interface contract to prevent integration drift.
+- **Context:** Coordinating the Flutter client, React client, and backend requires a version-controlled, machine-readable interface contract to reduce integration drift.
 - **Options Considered:**
   1. *Ad-hoc Markdown Route Lists:* Informal and prone to drift from actual implementation.
   2. *Code-First Documentation (Swagger JSDoc):* Scattered across controllers and difficult to review in isolation.
@@ -143,7 +143,7 @@ graph TD
   3. *Constrained Server-Side Activity Recommender with Deterministic Fallback:* Cloud Function maps caregiver constraints to approved catalog item IDs, sanitizes prompts, labels outputs with AI badges, and falls back to deterministic rule matching on provider failure.
 - **Decision:** Implement the AI helper exclusively server-side, constrained strictly to approved catalog IDs, with an 8-second timeout and automatic deterministic catalog fallback.
 - **Consequences:**
-  - *Positive:* Zero API key exposure; eliminates medical hallucination risks; guarantees 100% availability even offline or during AI quota exhaustion; satisfies CC 207B Items 12–17.
+  - *Positive:* Keeps provider credentials on the server and limits suggestions to reviewed catalog entries. The deterministic fallback can return suggestions when the AI provider fails, provided the API and catalog are available. It does not guarantee offline availability or eliminate all model risks. Course criteria must be verified against the implementation and evaluation rubric.
   - *Trade-off:* Recommender cannot invent entirely novel activities on the fly; all suggested activities must exist in the curated catalog.
 
 ---

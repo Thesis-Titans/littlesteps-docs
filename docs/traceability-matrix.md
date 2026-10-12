@@ -47,9 +47,9 @@ This Requirements Traceability Matrix (RTM) establishes bidirectional traceabili
 | **NFR-SEC-03** | Zero Secret Exposure | CC 207B Item 14 / Git | Git Pre-commit + Bundle Inspection | Zero API keys committed; server secrets in Cloud Functions environment variables. |
 | **NFR-SEC-04** | CORS Allowlist & Safe Errors | OWASP ASVS | Automated HTTP Header Tests | Wildcard CORS blocked; stack traces stripped from JSON error envelopes. |
 | **NFR-PRIV-01** | RA 10173 Data Minimization | RA 10173 / NPC IRR | Schema Inspection & Privacy Notice | Exact birth dates avoided; no biometric or GPS data collected. |
-| **NFR-PRIV-02** | Journal Isolation from AI & Telemetry | RA 10173 / Statutory | Unit Tests on AI Prompt Payloads | Prompt builder assertions guarantee journal strings never enter AI request. |
-| **NFR-PRIV-03** | Synthetic Data Policy | Team Testing Policy | Test Fixture Audit | 100% of demo and test profiles use synthetic fictitious names (`demo-littlesteps`). |
-| **NFR-AI-01** | Relevance & Real Caregiver Problem Fit | CC 207B Item 13 | Usability Pilot Testing | Semantic mapping solves natural-language household material constraints. |
+| **NFR-PRIV-02** | Journal Isolation from AI & Telemetry | RA 10173 / Statutory | Unit Tests on AI Prompt Payloads | Prompt-builder tests must assert that journal strings are absent from AI request payloads. |
+| **NFR-PRIV-03** | Synthetic Data Policy | Team Testing Policy | Test Fixture Audit | Fixture audit checks that demo and test profiles use synthetic names in the `demo-littlesteps` environment. |
+| **NFR-AI-01** | Relevance & Real Caregiver Problem Fit | CC 207B Item 13 | Usability Pilot Testing | Usability testing must assess whether suggestions match the caregiver's stated time, materials, and setting constraints. |
 | **NFR-AI-02** | Server-Side Execution & Prompt Hygiene | CC 207B Item 14 | Architecture Review & Code Audit | Model calls execute exclusively in Cloud Functions; zero PII in prompts. |
 | **NFR-AI-03** | Graceful Degradation & Fallback | CC 207B Item 15 | Negative Chaos / Timeout Test | Provider failure or 8s timeout triggers deterministic catalog fallback. |
 | **NFR-AI-04** | AI Badge & Non-Diagnostic Boundary | CC 207B Item 16 | UI Inspection & Content Review | Visual AI badge on suggestions; prompt instructions strictly forbid diagnoses. |
@@ -62,7 +62,7 @@ This Requirements Traceability Matrix (RTM) establishes bidirectional traceabili
 
 | Milestone | Key Milestone Deliverable | Requirements Verified | Release Gate Link |
 | :---: | :--- | :--- | :---: |
-| **M0** | Execution Readiness & Prototype Validation | All FR-01..06 (Simulated), PRQ-01..03 | [Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15) |
+| **M0** | Execution Readiness & Prototype Validation | Prototype-only walkthroughs for FR-01..06; PRQ-01..03 | [Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15) |
 | **M1** | Secure End-to-End Foundation | FR-01, PRQ-01, NFR-SEC-01..02, NFR-PRIV-01 | [API #7](https://github.com/Thesis-Titans/littlesteps-api/issues/7), [Web #5](https://github.com/Thesis-Titans/littlesteps-web/issues/5) |
 | **M2** | Learning Content & Activity Loop | FR-02, FR-04, NFR-PRIV-03 | [API #9](https://github.com/Thesis-Titans/littlesteps-api/issues/9), [Web #7](https://github.com/Thesis-Titans/littlesteps-web/issues/7) |
 | **M3** | Private Journal & Weekly Reflection | FR-03, FR-05, NFR-PRIV-02 | [API #11](https://github.com/Thesis-Titans/littlesteps-api/issues/11), [Web #9](https://github.com/Thesis-Titans/littlesteps-web/issues/9) |

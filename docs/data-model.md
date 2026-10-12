@@ -8,7 +8,7 @@
 
 ## 1. Storage Architecture & Multi-Tenant Isolation
 
-LittleSteps uses **Cloud Firestore** in document-store mode. To guarantee Broken Object Level Authorization (BOLA) defense and tenant isolation per caregiver, private data is organized hierarchically under caregiver document paths:
+The planned datastore is **Cloud Firestore**. Private records are organized under caregiver-scoped paths to support tenant isolation. Path structure alone does not enforce authorization: every API operation must verify the authenticated caregiver's ownership, and tests must cover cross-caregiver access.
 
 ```text
 caregivers/{caregiverUid}/                      <-- Caregiver root record
@@ -137,14 +137,14 @@ Curated learning activities available to all caregivers.
 
 ---
 
-## 3. Data Lifecycle & RA 10173 Compliance
+## 3. Data Lifecycle Requirements and Privacy Review
 
-In compliance with Republic Act No. 10173 (Data Privacy Act of 2012):
+The following are proposed data-handling requirements informed by Republic Act No. 10173 (Data Privacy Act of 2012). This specification is not a legal compliance determination; the actual implementation, notices, retention rules, and rights-handling process require review.
 
 1. **Data Minimization:** No biometric data, exact GPS coordinates, or official national IDs are collected. Coarse age bands are preferred over exact birth dates.
 2. **Right to Rectification:** Caregivers can edit child details, journal notes, and observation records at any time.
 3. **Right to Erasure (Hard Cascade Deletion):**
-   - Deleting a child profile triggers a server-side cascade that permanently deletes all subcollection documents (`milestone_observations`, `scheduled_activities`, `journal_entries`, `weekly_summaries`).
-   - Deleting a caregiver account triggers a cascade deleting all child records and caregiver root documents.
+   - Deleting a child profile must trigger a server-side process that deletes all associated subcollection documents (`milestone_observations`, `scheduled_activities`, `journal_entries`, `weekly_summaries`).
+   - Deleting a caregiver account must trigger a server-side process that deletes associated child records and caregiver documents.
 4. **Data Export:** The API must support a structured JSON export of all records associated with a caregiver's UID upon verified request.
-5. **Retention Schedule:** Synthetic demo records are purged on emulator teardown. In production, inactive accounts are flagged for deletion after 12 months of inactivity following email notification.
+5. **Proposed Retention Rule:** Synthetic demo records should be reset with the emulator environment. The proposed 12-month inactivity rule for production is not approved policy; confirm lawful purpose, notice, exceptions, and deletion behavior before deployment.

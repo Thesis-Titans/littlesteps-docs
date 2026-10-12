@@ -6,7 +6,7 @@
 
 ---
 
-This document establishes the non-functional requirements (NFRs) and statutory security baselines for LittleSteps. It is an engineering specification, not legal advice or a formal declaration of regulatory compliance.
+This document defines proposed non-functional requirements (NFRs) and security/privacy controls informed by applicable guidance and law. It is an engineering specification, not legal advice or evidence of regulatory compliance. A requirement is not satisfied until implementation and verification evidence are recorded.
 
 ---
 
@@ -35,7 +35,7 @@ LittleSteps processes sensitive family and early-learning observations. System a
 - **Verification Rule:** Frontend web and mobile builds must contain zero service secrets. Server secrets must be injected exclusively via Cloud Functions environment variables / Secret Manager. Local development must use the Firebase Emulator Suite and synthetic mock providers.
 
 ### NFR-SEC-04: HTTP Security, CORS Allowlist & Information Protection
-- **Requirement:** The API must implement a restrictive Cross-Origin Resource Sharing (CORS) allowlist matching only explicitly registered frontend origins (e.g., local development ports and verified staging domains). Wildcard origins (`*`) are strictly prohibited for authenticated endpoints.
+- **Requirement:** The API must implement a restrictive Cross-Origin Resource Sharing (CORS) allowlist containing only explicitly registered frontend origins (for example, approved local development ports and verified staging domains). Wildcard origins (`*`) are strictly prohibited for authenticated endpoints.
 - **Information Protection:** The API must strip stack traces, database schema details, and internal file paths from error responses. Standardized JSON error envelopes must return client-safe diagnostic codes and messages.
 
 ---
@@ -109,4 +109,4 @@ Prior to cloud production deployment, the team must complete and sign off on the
 3. CORS origin allowlist restricted to verified production web domain.
 4. Privacy notice and data retention/deletion flows verified.
 5. AI provider terms confirmed to ensure zero data retention for training on submitted prompt tokens.
-6. Local emulator test suite passes 100% of integration and security unit tests.
+6. Required local emulator integration and security tests pass, with failures resolved or explicitly documented before release.

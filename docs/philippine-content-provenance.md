@@ -1,11 +1,12 @@
 # LittleSteps Philippine Content Provenance
 
-**Status:** Canonical Content Sourcing & Citation Schema  
+**Status:** Canonical Content Sourcing and Review Protocol  
+**Reference Basis:** Philippine statutory context and source-level provenance review.  
 **Related Documents:** [Research Register](research-register.md), [Product Scope](product-scope.md)
 
 ---
 
-Sourcing framework, statutory context, and review protocol established; item-level content catalog review in progress under Docs Issue #3. This document is an architectural sourcing and provenance protocol, not an assertion that external curriculum packages have been cleared for reproduction or that milestones are diagnostically validated.
+The sourcing framework and review protocol are defined; item-level catalog review remains in progress under Docs Issue #3. This document does not establish that a source is cleared for reproduction, that content has been validated, or that milestone prompts are diagnostic.
 
 ---
 

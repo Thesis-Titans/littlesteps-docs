@@ -6,7 +6,7 @@
 
 ---
 
-This guide provides verified, step-by-step instructions to set up the LittleSteps development environment locally across the active repositories.
+This guide describes the intended local setup for the active LittleSteps repositories. Verify commands and version requirements against the current repository state before relying on them.
 
 ---
 
