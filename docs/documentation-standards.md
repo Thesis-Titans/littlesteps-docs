@@ -52,7 +52,7 @@ Documentation in `littlesteps-docs` aligns with the Diátaxis documentation fram
 | :--- | :--- | :--- | :--- |
 | **Tutorial** | *"Help me get started from scratch."* | Learning-oriented step-by-step guidance | [Developer onboarding guide](getting-started.md) |
 | **How-To Guide** | *"How do I complete a specific operational task?"* | Task-oriented problem solving | [Development workflow](development-workflow.md) |
-| **Reference** | *"What is the exact technical contract or specification?"* | Information-oriented technical facts | [OpenAPI contract in the API repository](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml), environment variables, and provenance schemas |
+| **Reference** | *"What is the exact technical contract or specification?"* | Information-oriented technical facts | [OpenAPI contract in the API repository](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml), [UI/UX design specification](ui-ux-design-specification.md), environment variables, and provenance schemas |
 | **Explanation** | *"Why is the system designed this way?"* | Understanding-oriented rationale and context | [Product scope](product-scope.md), [architecture decisions](architecture-decisions.md), [security, privacy, and AI guardrails](security-privacy-ai.md), [Philippine content provenance](philippine-content-provenance.md) |
 
 These are intended destinations in the documentation architecture, not a claim that every listed document or contract is complete or production-ready. Each linked resource's current status must be checked before relying on it.

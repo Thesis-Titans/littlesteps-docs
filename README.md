@@ -13,6 +13,7 @@ LittleSteps is an early learning and caregiver support system for children aged 
 - [Documentation standards](docs/documentation-standards.md): canonical documentation hierarchy, Diátaxis framework mapping, rights-policy caveats, and repository consistency audit.
 - [Research register](docs/research-register.md): external sources and their design implications.
 - [Philippine content provenance](docs/philippine-content-provenance.md): source candidates, item-level citation fields, and content-review gates.
+- [UI/UX design specification](docs/ui-ux-design-specification.md): human-computer interaction principles, responsive design system, and prototype validation requirements.
 
 ## Repositories
 - [Documentation](https://github.com/Thesis-Titans/littlesteps-docs)
