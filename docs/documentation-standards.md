@@ -44,7 +44,28 @@ Level 3: Repository-Specific Documentation (`littlesteps-api`, `littlesteps-web`
 
 ---
 
-## 3. Academic Course Deliverables Mapping
+## 3. Industry Standards & "Docs-as-Code" Traceability
+
+Modern enterprise engineering avoids monolithic, static 300-page specifications (such as legacy waterfall Word documents) because they decouple from implementation and rapidly become obsolete. Instead, LittleSteps implements the **"Docs-as-Code"** paradigm, decomposing traditional software engineering standards into modular, version-controlled Markdown specifications tracked via Git, verified by continuous integration, and updated in lockstep with codebase pull requests.
+
+The 10 canonical system documents map directly to governing software engineering and project management standards:
+
+| Industry Standard | Specification Domain | LittleSteps Canonical Document | Standard Description & Coverage |
+| :--- | :--- | :--- | :--- |
+| **IEEE 29148 / IEEE 830** | Software Requirements Specification (**SRS**) — Functional Scope | [`docs/product-scope.md`](product-scope.md) | Functional Requirements (**FR-01** to **FR-06**), single caregiver actor, age-band classifications, and strict IN/OUT boundaries. |
+| **IEEE 29148 / IEEE 830** | Software Requirements Specification (**SRS**) — Non-Functional Scope | [`docs/security-privacy-ai.md`](security-privacy-ai.md) | Non-Functional Requirements: **NFR-SEC** (Token auth, BOLA defense), **NFR-PRIV** (RA 10173 data minimization), **NFR-AI** (Catalog constraints, fallbacks). |
+| **IEEE 29148 / ISO 9241** | Human-Centered Design & Ergonomics Specification | [`docs/ui-ux-design-specification.md`](ui-ux-design-specification.md) | Usability heuristics, cognitive load principles, touch ergonomics ($\ge$ 44px), WCAG 2.2 AA contrast, and 5-state interaction matrices. |
+| **IEEE 29148 / Statutory** | Domain Sourcing & Legislative Foundations | [`docs/philippine-content-provenance.md`](philippine-content-provenance.md) & [`docs/research-register.md`](research-register.md) | Statutory frameworks (RA 12199, RA 10173), official curriculum references, item-level citation schemas, and external regulatory registers. |
+| **IEEE 1016 / IEEE 42010** | Software Design Description (**SDD**) — Architectural View | [`docs/architecture-decisions.md`](architecture-decisions.md) | Architecture Decision Records (ADRs 001–007) in standard Michael Nygard format, architectural viewpoints, and component topologies. |
+| **IEEE 1016 / OpenAPI 3.1** | Software Design Description (**SDD**) — Interface View | [`littlesteps-api/openapi/openapi.yaml`](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml) | Machine-readable technical contract: request/response envelopes, HTTP statuses, and data schemas. |
+| **PMBOK / ISO 21500** | Project Management Plan (**PMP**) — Scope & Schedule Baseline | [`docs/execution-plan.md`](execution-plan.md) | Delivery milestones (M0–M5), academic calendar (Oct 14 / Dec 2), WBS work packages, and prototype approval gate. |
+| **PMBOK / ISO 21500** | Project Management Plan (**PMP**) — Quality & Change Control | [`docs/development-workflow.md`](development-workflow.md) | Branch protection, PR peer reviews, GitHub status checks (`Docs CI`, `API CI`, `Web CI`), and code defense criteria. |
+| **Diátaxis Framework** | Learning-Oriented Tutorial | [`docs/getting-started.md`](getting-started.md) | Reproducible full-stack local setup guide for Node.js 22, Java 21, and Firebase Emulator Suite. |
+| **Diátaxis Framework** | Quality & Information Architecture | [`docs/documentation-standards.md`](documentation-standards.md) | Documentation governance, three-tier hierarchy, Diátaxis quadrant mapping, and repository consistency audits. |
+
+---
+
+## 4. Academic Course Deliverables Mapping
 
 To satisfy the specific submission requirements of all three coordinated courses without duplicate authoring, project documentation is mapped to each course's evaluated artifacts:
 
@@ -77,7 +98,7 @@ To satisfy the specific submission requirements of all three coordinated courses
    - Sections 10–13: Quality Plan, Resource Plan (Org chart & RAM), Communications Plan, and Risk Register (8+ risks, $\ge 3$ non-technical).
    - Sections 14–17: Procurement Plan, Change Control/Closing/Transition Plan, Conclusion, and Appendices (signed contribution statement).
 
-## 4. Information Architecture (Diátaxis Framework)
+## 5. Information Architecture (Diátaxis Framework)
 
 Documentation in `littlesteps-docs` aligns with the Diátaxis documentation framework, organizing information into four distinct reader needs:
 
@@ -92,9 +113,9 @@ These are intended destinations in the documentation architecture, not a claim t
 
 ---
 
-## 5. Policy Baselines
+## 6. Policy Baselines
 
-### 5.1 Intended Rights Policy: All Rights Reserved (Academic Evaluation Only)
+### 6.1 Intended Rights Policy: All Rights Reserved (Academic Evaluation Only)
 
 - **Project intent:** The project owner intends to reserve copyright and not grant a general open-source license for reuse, modification, redistribution, or commercial use.
 - **Public visibility:** Repositories are public for academic course evaluation, faculty review, and demonstration. Public visibility is not an access restriction: people may be able to view, fork, or otherwise interact with public repositories under GitHub's platform features and terms.
@@ -102,14 +123,14 @@ These are intended destinations in the documentation architecture, not a claim t
 - **Before finalizing:** Have the exact copyright/license notice and intended restrictions reviewed by the course instructor or an appropriate legal resource. Until that review, do not add an open-source license such as MIT, Apache-2.0, or GPL, and do not claim the notice has been legally reviewed.
 - **Data boundary:** Real child and caregiver personal data, production credentials, and restricted curriculum packages must not be committed to public repositories.
 
-### 5.2 Multi-Repository Community Health File Placement
+### 6.2 Multi-Repository Community Health File Placement
 
 - **Location:** Maintain community health files as **explicit files within each active repository** (`littlesteps-docs`, `littlesteps-api`, and `littlesteps-web`).
 - **Rationale:** An organization-level `Thesis-Titans/.github` repository is intentionally **not used** so that default templates and policies do not inadvertently apply to `littlesteps-mobile`.
 
 ---
 
-## 6. Standard File Baseline Specification
+## 7. Standard File Baseline Specification
 
 The following is the **target baseline** for each active repository; it does not mean every file already exists. Repository-specific requirements should be adapted to the codebase, without duplicating canonical project documentation.
 
@@ -125,7 +146,7 @@ The following is the **target baseline** for each active repository; it does not
 
 ---
 
-## 7. Repository-by-Repository Audit Checklist
+## 8. Repository-by-Repository Audit Checklist
 
 The table records the observed baseline at the time of this Stage 1 draft and the target state. Items marked pending are not yet implemented as part of this workstream; re-check each repository during the relevant stage before marking anything complete.
 
@@ -149,7 +170,7 @@ The table records the observed baseline at the time of this Stage 1 draft and th
 
 ---
 
-## 8. Phased Implementation Roadmap
+## 9. Phased Implementation Roadmap
 
 Work is tracked on [Thesis-Titans LittleSteps Project #2](https://github.com/orgs/Thesis-Titans/projects/2) under [Docs Issue #8](https://github.com/Thesis-Titans/littlesteps-docs/issues/8):
 
