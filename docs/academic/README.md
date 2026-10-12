@@ -1,4 +1,10 @@
-# LittleSteps — Academic Course Deliverables
+# LittleSteps Academic Course Deliverables
+
+**Status:** Canonical Academic Deliverables Index  
+**Institution:** West Visayas State University — College of Information and Communications Technology  
+**Related Documents:** [CIT 246 Deliverables](cit246/README.md), [CC 207B Deliverables](cc207b/README.md), [CIT 210 Deliverables](cit210/README.md)
+
+---
 
 This directory contains the academic course evaluation packages and deliverables for **LittleSteps**, fulfilling the separate requirements of three coordinated courses in the West Visayas State University (WVSU) Bachelor of Science in Information Technology (BSIT) program.
 

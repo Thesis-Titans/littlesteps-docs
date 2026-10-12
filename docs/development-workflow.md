@@ -1,12 +1,18 @@
-# Development Workflow
+# LittleSteps Development Workflow
+
+**Status:** Canonical Engineering Workflow Baseline  
+**Governing Standard:** ISO/IEC/IEEE 12207:2026 (Process Governance) & GitHub Flow  
+**Related Documents:** [Documentation Standards](documentation-standards.md), [Execution Plan](execution-plan.md)
+
+---
 
 ## Branch and pull-request policy
 
 ### Initial setup/foundation stage
 - Do not work directly on `main`; use focused branches and draft pull requests.
-- Mark is the reviewer and approval boundary for foundation/setup work. A separate teammate review is not a blocker during this stage.
+- The project lead acts as the reviewer and approval boundary during the foundation setup stage. A separate teammate review is not a blocker during this stage.
 - Keep changes narrow, describe limitations, and verify technical claims with actual local or GitHub Actions checks.
-- Do not merge a draft PR or claim a check passed unless the relevant result is available. Mark reviews and approves the foundation PRs before merging.
+- Do not merge a draft PR or claim a check passed unless the relevant result is available. The project lead reviews and approves foundation PRs before merging.
 
 ### Feature execution stage
 - Use focused branches such as `feat/activity-planning`, `fix/child-ownership-check`, or `docs/privacy-notice`.
@@ -70,6 +76,3 @@ Following the governance audit ([Docs Issue #2](https://github.com/Thesis-Titans
    - `littlesteps-mobile` remains strictly untouched on `main` pending the CC 207B external fork requirement.
 7. **Synthetic Credentials & Exposure Verification:**
    - The test suite in `littlesteps-api/test/auth-emulator.test.ts` uses mock keys (`fake-api-key`) and local test passwords (`LocalTestPassword123!`). These values are strictly synthetic throwaway inputs for the ephemeral in-memory Firebase Auth Emulator and must never be reused in production, deployed environments, or real account credentials.
-
-
-

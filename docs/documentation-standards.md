@@ -1,6 +1,8 @@
-# LittleSteps Documentation Standards & Repository Consistency
+# LittleSteps Documentation Standards
 
-Status: Stages 1–5 baselines established and verified across active repositories (PR #9, PR #10, PR #11, PR #12, API PR #6, Web PR #4). Academic course deliverables mapped for CC 207B, CIT 210, and CIT 246.
+**Status:** Canonical Governance Baseline  
+**Diátaxis Category:** Governance & Information Architecture  
+**Related Documents:** [Development Workflow](development-workflow.md), [Academic Deliverables](academic/README.md)
 
 ---
 

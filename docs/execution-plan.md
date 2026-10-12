@@ -1,6 +1,10 @@
 # LittleSteps Execution Plan
 
-Status: proposed execution baseline; no implementation tasks are assigned by this document.
+**Status:** Canonical Delivery Baseline & Work Breakdown Structure  
+**Governing Standard:** PMBOK 7th Edition / ISO 21500 & Agile Scrum Baseline  
+**Related Documents:** [Product Scope](product-scope.md), [Traceability Matrix](traceability-matrix.md), [Academic Deliverables](academic/README.md)
+
+---
 
 This plan moves LittleSteps from repository setup into controlled delivery across our three coordinated courses:
 - **CC 207B — Applications Development and Emerging Technologies:** Flutter mobile application with 6 core features, user-facing AI, live demo, and individual code defense.
