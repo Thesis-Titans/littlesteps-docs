@@ -50,6 +50,7 @@ This repository is the canonical home for product scope, decisions, research pro
 - [Security, privacy, and AI guardrails](docs/security-privacy-ai.md): required safeguards and statutory baselines.
 - [Verification and traceability matrix](docs/traceability-matrix.md): requirements-to-tests and delivery traceability.
 - [UI/UX design specification](docs/ui-ux-design-specification.md): human-computer interaction principles, responsive design system, and prototype validation requirements.
+- [Prototype traceability and storyboards](docs/prototype-traceability-storyboards.md): provisional caregiver scenarios, minimal prototype scope, and walkthrough acceptance criteria.
 - [Execution plan](docs/execution-plan.md): delivery approach, milestones, and academic calendar.
 - [Development workflow](docs/development-workflow.md): branch, review, and verification expectations.
 - [Documentation standards](docs/documentation-standards.md): canonical documentation hierarchy, academic deliverables mapping, and repository consistency.
