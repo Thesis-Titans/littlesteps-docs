@@ -1,6 +1,44 @@
 # LittleSteps — Project Documentation
 
-LittleSteps is an early learning and caregiver support system for children aged 0–71 months. This repository is the canonical home for product scope, decisions, research provenance, privacy and safety requirements, and course deliverables.
+## Project Overview
+
+LittleSteps is an academic software development project focused on helping parents and caregivers support the early learning and development of children.
+
+### Courses Involved
+
+- **CC 207B — Flutter:** Mobile application development.
+- **CIT 210 — Web Technology:** React web application, API, and database integration.
+- **CIT 246 — IT Project Management Plan:** Project planning, documentation, scheduling, and management.
+
+### What the System Does
+
+The application has six core features:
+
+1. **Child Profile and Milestone Tracking** — record child information and caregiver observations.
+2. **Daily Activity Planning and Tracking** — plan and track everyday learning activities.
+3. **Private Observation Journal** — keep personal notes about a child's experiences and progress.
+4. **Story, Rhyme, and Learning Activity Library** — explore learning resources suitable for young children.
+5. **Weekly Progress Summary** — review recorded activities and observations without making unsupported developmental claims.
+6. **AI Activity Suggestion Helper** — recommend activities from a reviewed catalog, with a fallback when AI is unavailable.
+
+### Technical Direction
+
+- **Frontend:** React for the web and Flutter for mobile.
+- **Backend:** A shared API and data model.
+- **Database and services:** Firebase is included in the recorded initial technology scope.
+- **AI:** A constrained helper for activity suggestions, not a diagnostic tool.
+
+### Project Context and Current Status
+
+The project is currently focused on requirements, project documentation, UI/UX design, and prototype preparation before full implementation.
+
+The work must remain evidence-based: the initial caregiver research is limited, so user needs and design assumptions still require further validation. The prototype is intended to demonstrate the planned screens and workflows; it should not be mistaken for a fully functioning application.
+
+The project also needs to meet the separate academic requirements of the three courses, including implementation, documentation, presentation, demonstration, and code defense as applicable.
+
+In short: LittleSteps is one coordinated academic project with mobile, web, and project-management deliverables, intended to make everyday early-learning support more organized and accessible for caregivers.
+
+This repository is the canonical home for product scope, decisions, research provenance, privacy and safety requirements, and course deliverables.
 
 ## Getting started
 - [Developer onboarding guide](docs/getting-started.md): step-by-step tutorial for Node.js 22, Java 21, Firebase Emulators, and local full-stack development. Verify the guide against the current code before relying on it.
