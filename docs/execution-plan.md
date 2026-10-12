@@ -123,9 +123,9 @@ Exit criteria:
 Exit criteria:
 - Cross-feature authorization and regression tests pass.
 - Keyboard access, responsive behavior, and common error states are checked.
-- Privacy notice, retention/deletion approach, and appropriate adviser review are addressed.
+- Privacy notice, retention/deletion approach, and appropriate faculty/course instructor review are addressed.
 - Firebase billing, budget alerts, environment configuration, provider settings, and rollback are reviewed before any deployment.
-- Known limitations are documented and accepted by the team/adviser.
+- Known limitations are documented and accepted by the team and course instructor.
 
 ## 4. Backlog structure
 

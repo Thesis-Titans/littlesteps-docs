@@ -106,7 +106,7 @@ language: "en-PH / fil"
 safety_accessibility_notes: "Requires adult supervision at all times; avoid soft surfaces."
 review:
   reviewer_name: "TBD — Early Childhood Specialist"
-  reviewer_role: "Subject-Matter Adviser"
+  reviewer_role: "Subject-Matter Specialist / Course Faculty"
   review_date: "YYYY-MM-DD"
   review_status: "draft" # draft | source_checked | subject_matter_reviewed | approved
 limitations: "Educational prompt only; not a clinical milestone."

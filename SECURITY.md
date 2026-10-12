@@ -1,6 +1,6 @@
 # Security Policy
 
-LittleSteps is an early learning and caregiver support system developed as an academic capstone/thesis project by Thesis-Titans. This policy outlines our vulnerability disclosure process and response expectations.
+LittleSteps is an early learning and caregiver support system developed as a course project for Application Development and Web Development by Thesis-Titans. This policy outlines our vulnerability disclosure process and response expectations.
 
 ---
 
@@ -38,7 +38,7 @@ Please submit vulnerability details through either of the following private chan
 1. **GitHub Private Vulnerability Reporting (Preferred):**  
    If enabled on the repository, navigate to the **Security** tab of the relevant repository and click **Report a vulnerability** to open a private advisory draft.
 2. **Direct Contact:**  
-   Email the project lead and thesis maintainer, **Mark Alvin Cadangin**, at [markcadangin@gmail.com](mailto:markcadangin@gmail.com) with the subject prefix `[SECURITY] LittleSteps: <Brief Description>`.
+   Email the project lead and project maintainer, **Mark Alvin Cadangin**, at [markcadangin@gmail.com](mailto:markcadangin@gmail.com) with the subject prefix `[SECURITY] LittleSteps: <Brief Description>`.
 
 ### Information to Include in Your Report
 To help us triage and verify the issue efficiently, please provide:

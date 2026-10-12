@@ -16,7 +16,7 @@ LittleSteps is organized across multiple repositories under the [`Thesis-Titans`
 > **Mobile Repository Boundary:** `littlesteps-mobile` remains private and strictly untouched pending the required CC 207B course fork. Do not create branches, PRs, or modify files in `littlesteps-mobile`.
 
 ### Rights & Licensing Notice
-LittleSteps is an academic thesis project. The project's intended policy is **All Rights Reserved (Academic Evaluation Only)**. While active repositories are public for academic evaluation and faculty review, public visibility does not grant an open-source license for general reuse, modification, or redistribution. Do not introduce open-source licenses (MIT, Apache, GPL) without explicit review and approval from the project lead and faculty adviser.
+LittleSteps is a course project for Application Development and Web Development. The project's intended policy is **All Rights Reserved (Academic Evaluation Only)**. While active repositories are public for academic course evaluation and faculty review, public visibility does not grant an open-source license for general reuse, modification, or redistribution. Do not introduce open-source licenses (MIT, Apache, GPL) without explicit review and approval from the project lead and course instructor.
 
 ---
 

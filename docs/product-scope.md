@@ -33,7 +33,7 @@ Both web and mobile clients must implement all six features and use the same bac
 - Treat milestones as prompts for observation, not pass/fail judgments.
 - CDC milestone checklists may be educational references but must not be represented as a validated local screening instrument.
 - Do not imply that a single missed or observed behavior establishes a developmental condition.
-- Keep caregiver guidance cautious, non-diagnostic, and reviewed by an appropriate subject-matter adviser.
+- Keep caregiver guidance cautious, non-diagnostic, and reviewed by an appropriate subject-matter specialist or course faculty.
 
 ## AI boundaries
 Suggestions must be based on approved catalog items and may consider age band, interests, time, materials, and language. The helper must not diagnose, prescribe medical care, or infer a clinical condition. Do not send private journal entries or direct child identifiers to an external AI provider. Validate output against catalog IDs and a strict schema; provide a non-AI fallback and apply rate/cost limits.

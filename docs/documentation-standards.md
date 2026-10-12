@@ -64,9 +64,9 @@ These are intended destinations in the documentation architecture, not a claim t
 ### 4.1 Intended Rights Policy: All Rights Reserved (Academic Evaluation Only)
 
 - **Project intent:** The project owner intends to reserve copyright and not grant a general open-source license for reuse, modification, redistribution, or commercial use.
-- **Public visibility:** Repositories are public for thesis/capstone evaluation, faculty review, and demonstration. Public visibility is not an access restriction: people may be able to view, fork, or otherwise interact with public repositories under GitHub's platform features and terms.
+- **Public visibility:** Repositories are public for academic course evaluation, faculty review, and demonstration. Public visibility is not an access restriction: people may be able to view, fork, or otherwise interact with public repositories under GitHub's platform features and terms.
 - **Notice limitations:** The phrase **“All Rights Reserved (Academic Evaluation Only)”** communicates project intent, but this document and a README notice are not a substitute for a reviewed license instrument or legal advice. Do not describe the academic-only purpose as a technical restriction on who can view the public repositories.
-- **Before finalizing:** Have the exact copyright/license notice and intended restrictions reviewed by the faculty adviser or an appropriate legal resource. Until that review, do not add an open-source license such as MIT, Apache-2.0, or GPL, and do not claim the notice has been legally reviewed.
+- **Before finalizing:** Have the exact copyright/license notice and intended restrictions reviewed by the course instructor or an appropriate legal resource. Until that review, do not add an open-source license such as MIT, Apache-2.0, or GPL, and do not claim the notice has been legally reviewed.
 - **Data boundary:** Real child and caregiver personal data, production credentials, and restricted curriculum packages must not be committed to public repositories.
 
 ### 4.2 Multi-Repository Community Health File Placement
