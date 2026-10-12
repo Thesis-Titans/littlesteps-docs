@@ -1,5 +1,11 @@
 # LittleSteps Product Scope
 
+**Status:** Canonical System Scope Baseline  
+**Governing Standard:** ISO/IEC/IEEE 29148:2018 (Software Requirements Specification)  
+**Related Documents:** [Data Model Specification](data-model.md), [Security, Privacy, and AI Safeguards](security-privacy-ai.md), [Traceability Matrix](traceability-matrix.md)
+
+---
+
 ## 1. System Purpose & Concept
 
 LittleSteps is an early-childhood learning and development tracking platform designed for parents, caregivers, and early-learning practitioners supporting children aged 0–5 years (0–71 months). The system provides age-aware activity discovery, routine planning, developmental milestone observation prompts, a private observation journal, deterministic progress reflections, and an AI-assisted activity recommendation helper.

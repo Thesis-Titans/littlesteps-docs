@@ -1,5 +1,11 @@
 # LittleSteps Architecture Decisions
 
+**Status:** Canonical Architecture Description Baseline  
+**Governing Standard:** ISO/IEC/IEEE 42010:2022 (Software Architecture Description)  
+**Related Documents:** [Data Model Specification](data-model.md), [OpenAPI Specification](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml), [Product Scope](product-scope.md)
+
+---
+
 This document records architectural decisions for LittleSteps using the Michael Nygard ADR format (*Status, Context, Options Considered, Decision, Consequences*).
 
 ---
@@ -75,7 +81,7 @@ graph TD
 
 ### ADR-002: Backend Runtime & Framework Selection
 - **Status:** Accepted
-- **Context:** The shared backend requires rapid development, strong typing, robust routing, and seamless local emulation.
+- **Context:** The shared backend requires static typing, modular Express routing, and deterministic local emulation for testing.
 - **Options Considered:**
   1. *Python FastAPI:* Strong data science libraries, but complicates Firebase integration.
   2. *Go HTTP Service:* High performance, but higher boilerplate for the project schedule.
@@ -96,7 +102,7 @@ graph TD
   3. *Firebase Authentication with Server-Side Admin SDK Verification & Application-Level BOLA Checks:* Firebase handles identity tokens; server decodes tokens and enforces data ownership programmatically.
 - **Decision:** Firebase Authentication manages identity; the backend API verifies ID tokens via the Firebase Admin SDK and programmatically validates that `child.caregiverId === authenticatedUid` on every child-scoped operation.
 - **Consequences:**
-  - *Positive:* Completely eliminates client-spoofed identities; robust defense against OWASP API1:2023 (BOLA); centralized auditing.
+  - *Positive:* Eliminates client-spoofed identities; enforces server-side authorization defense against OWASP API1:2023 (BOLA); centralized auditing.
   - *Trade-off:* Every API endpoint must explicitly call the ownership verification service before reading or mutating records.
 
 ---
@@ -106,7 +112,7 @@ graph TD
 - **Context:** The system requires a flexible, document-oriented datastore supporting hierarchical child-caregiver relationships, offline-ready local emulation, and scalable cloud hosting.
 - **Options Considered:**
   1. *Relational Database (PostgreSQL / Cloud SQL):* Strict schemas, but higher operational cost and more complex emulator setup.
-  2. *Cloud Firestore:* Serverless NoSQL document database, seamless Firebase Emulator integration, fast document lookups by ID.
+  2. *Cloud Firestore:* Serverless NoSQL document database, local Firebase Emulator integration, fast document lookups by ID.
 - **Decision:** Adopt Cloud Firestore as the primary datastore, organized with top-level caregiver and child-scoped subcollections.
 - **Consequences:**
   - *Positive:* Zero infrastructure management; full local emulation via Firebase CLI; low latency for document CRUD.

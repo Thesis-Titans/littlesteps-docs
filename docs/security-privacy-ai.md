@@ -1,4 +1,10 @@
-# Security, Privacy, and AI Safeguards
+# LittleSteps Security, Privacy, and AI Safeguards
+
+**Status:** Canonical Security & Non-Functional Requirements Baseline  
+**Governing Standard:** ISO/IEC/IEEE 29148:2018 (Non-Functional Requirements) & RA 10173  
+**Related Documents:** [Product Scope](product-scope.md), [Data Model Specification](data-model.md), [Traceability Matrix](traceability-matrix.md)
+
+---
 
 This document establishes the non-functional requirements (NFRs) and statutory security baselines for LittleSteps. It is an engineering specification, not legal advice or a formal declaration of regulatory compliance.
 
@@ -72,7 +78,7 @@ To satisfy the **CC 207B AI-Powered Feature Requirement (Items 12–17)**, the A
 
 ### NFR-AI-03: Graceful Degradation & Deterministic Fallback (Item 15)
 - **Latency & Timeout:** AI calls are constrained to an 8-second execution timeout. Frontends render loading skeletons and progress indicators during inference.
-- **Deterministic Fallback:** If the external AI service times out, experiences rate limiting, returns an invalid schema, or the client is operating offline, the backend immediately executes a deterministic rule-based catalog filter. The caregiver is seamlessly served valid activities without an application error.
+- **Deterministic Fallback:** If the external AI service times out, experiences rate limiting, returns an invalid schema, or the client is operating offline, the backend immediately executes a deterministic rule-based catalog filter. The caregiver receives valid activities from the catalog without service interruption or application errors.
 
 ### NFR-AI-04: Ethical Transparency, Labeling & Non-Diagnostic Boundary (Item 16)
 - **Visual Labeling:** Every AI-generated suggestion must display an explicit AI badge and disclaimer: *"AI Suggestion — Always adapt to your child and ensure adult supervision."*

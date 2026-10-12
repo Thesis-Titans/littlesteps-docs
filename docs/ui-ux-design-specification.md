@@ -1,10 +1,9 @@
 # LittleSteps UI/UX Design Specification & HCI Principles
 
 **Status:** Canonical Design Specification for Prototype Validation  
+**Governing Standard:** ISO 9241 (Ergonomics of Human-System Interaction) & WCAG 2.2 AA  
 **Associated Gate:** [Docs Issue #15 — [M0] Plan and validate the LittleSteps UI prototype before implementation](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)  
-**Curriculum & Provenance Gate:** [Docs Issue #3](https://github.com/Thesis-Titans/littlesteps-docs/issues/3)  
-**Academic Context:** WVSU BSIT Application Development & Web Development (Course Project)  
-**Target Platform:** Web Desktop/Tablet & Responsive Mobile Viewport (375px–414px) in `littlesteps-web`  
+**Related Documents:** [Product Scope](product-scope.md), [Traceability Matrix](traceability-matrix.md), [Philippine Content Provenance](philippine-content-provenance.md)  
 **Repository Boundaries:** `littlesteps-mobile` (Flutter) and `littlesteps-api` remain strictly untouched.
 
 ---

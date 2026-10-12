@@ -1,4 +1,10 @@
-# LittleSteps Developer Onboarding & Getting Started
+# LittleSteps Developer Onboarding Guide
+
+**Status:** Canonical Developer Tutorial Baseline  
+**Diátaxis Category:** Tutorial  
+**Related Documents:** [Development Workflow](development-workflow.md), [Architecture Decisions](architecture-decisions.md)
+
+---
 
 This guide provides verified, step-by-step instructions to set up the LittleSteps development environment locally across the active repositories.
 
