@@ -1,49 +1,152 @@
 # LittleSteps Product Scope
 
-## Purpose
-LittleSteps supports caregivers and early-learning practitioners with age-aware activities, observation, and progress reflection. It is not a diagnostic, screening, treatment, or emergency-care tool.
+**Status:** Canonical System Scope Baseline  
+**Governing Standard:** ISO/IEC/IEEE 29148:2018 (Software Requirements Specification)  
+**Related Documents:** [Data Model Specification](data-model.md), [Security, Privacy, and AI Safeguards](security-privacy-ai.md), [Traceability Matrix](traceability-matrix.md)
 
-## Intended age groups
-The product uses seven activity-navigation bands spanning 0–71 months:
+---
 
-| App category | Age range |
-|---|---:|
-| Young Infants | 0–5 months |
-| Older Infants | 6–11 months |
-| Young Toddlers | 12–23 months |
-| Older Toddlers | 24–35 months |
-| Younger Preschoolers | 36–47 months |
-| Older Preschoolers | 48–59 months |
-| Kindergarten Transition | 60–71 months |
+## 1. System Purpose & Concept
 
-These are app categories, not official clinical developmental stages. Content for ages 60–71 months should consider applicable DepEd Kindergarten guidance as well as relevant ECCD Council materials.
+LittleSteps is a proposed early-childhood learning and development platform for parents and caregivers supporting children aged 0–5 years (0–71 months). The planned system covers age-aware activity discovery, routine planning, milestone observation prompts, a private observation journal, factual summaries of recorded activity, and an AI-assisted activity recommendation helper.
 
-## Six core features
-1. **Child Profile and Milestone Tracking** — maintain caregiver-managed profiles and record observations against clearly sourced, age-appropriate milestones.
-2. **Daily Activity Planning and Tracking** — select activities, schedule or mark them complete, and record participation.
-3. **Private Observation Journal** — let authorized caregivers record private notes with explicit ownership and access controls.
-4. **Story, Rhyme, and Learning Activity Library** — browse reviewed content with age range, materials, language, duration, and source metadata.
-5. **Weekly Progress Summary** — summarize recorded activity and observations without diagnosing, clinically scoring, or asserting unsupported developmental conclusions.
-6. **AI Activity Suggestion Helper** — recommend activities grounded in the reviewed catalog and caregiver-provided constraints.
+> [!IMPORTANT]
+> **Clinical Non-Diagnostic Boundary:** LittleSteps is explicitly an educational, reflective, and routine-support tool. It is **not** a clinical diagnostic, pediatric screening, medical treatment, or emergency-care system. All milestone and developmental information serves as prompts for caregiver observation, not diagnostic criteria.
 
-Both web and mobile clients must implement all six features and use the same backend API, data model, and authentication/authorization rules. Neither client is intended to be only a companion or partial system.
+---
 
-## Milestone-content rules
-- Show source attribution and intended age range for each milestone item.
-- Treat milestones as prompts for observation, not pass/fail judgments.
-- CDC milestone checklists may be educational references but must not be represented as a validated local screening instrument.
-- Do not imply that a single missed or observed behavior establishes a developmental condition.
-- Keep caregiver guidance cautious, non-diagnostic, and reviewed by an appropriate subject-matter adviser.
+## 2. System Scope Boundaries
 
-## AI boundaries
-Suggestions must be based on approved catalog items and may consider age band, interests, time, materials, and language. The helper must not diagnose, prescribe medical care, or infer a clinical condition. Do not send private journal entries or direct child identifiers to an external AI provider. Validate output against catalog IDs and a strict schema; provide a non-AI fallback and apply rate/cost limits.
+The table below defines the planned system scope. Inclusion does not mean a capability has been implemented or verified.
 
-## Initial acceptance criteria
-- Authentication is required for private child and caregiver data.
-- The server verifies Firebase ID tokens and derives identity from the verified token.
-- Every child-scoped operation enforces server-side ownership/authorization.
-- Inputs are validated on the server, not only in the browser.
-- Errors do not reveal stack traces, tokens, journal content, or internal details.
-- CORS allows only explicitly configured frontend origins.
-- Core paths have automated tests before they are described as working.
-- Local emulator development is the first integration target; deployment waits for billing and privacy review.
+| System Domain | In Scope (Planned or Required) | Out of Scope |
+| :--- | :--- | :--- |
+| **User Roles** | Single authenticated caregiver role (parent/guardian managing one or more child profiles). | Multi-tenant school/daycare administration, teacher-student rosters, public social profiles. |
+| **Developmental Guidance** | Educational milestone observation prompts sourced from DepEd ECCD / CDC milestones with clear attributions. | Automated clinical diagnoses, developmental quotient (DQ) scores, developmental delay categorizations. |
+| **Activity Catalog** | Curated Philippine rhymes, stories, motor, cognitive, and sensory activities spanning 7 age bands. | E-commerce purchasing of toys/materials, paid content paywalls, external ad networks. |
+| **Messaging & Social** | Private caregiver observation journal strictly isolated per user account. | In-app direct messaging, public forums, community comment threads, photo sharing with other users. |
+| **AI Integration** | Server-side semantic activity recommender constrained strictly to the reviewed catalog with deterministic fallback. | Unconstrained generative text models diagnosing symptoms, conversational AI roleplaying as a pediatrician. |
+| **Hardware & Sensors** | Standard responsive web browsers and mobile application touch interfaces. | Wearable biometric monitors, IoT camera streaming, automated video behavioral tracking. |
+
+---
+
+## 3. User Characteristics & Operating Context
+
+The intended users are parents, legal guardians, and home caregivers of children aged 0–5 years. The characteristics below are design considerations to validate, not established claims about all caregivers:
+
+- **Physical Multitasking:** Caregivers frequently operate devices one-handed while holding a child or managing household chores. The interface requires natural thumb-zone placement and large touch targets ($\ge$ 44px).
+- **Divided Attention & Cognitive Load:** Use short, scannable instructions and avoid clinical jargon or guilt-inducing streaks. The assumed time available for an activity has not been validated with intended users.
+- **Connectivity:** Intermittent connectivity and data costs are design considerations. The system should favor lightweight content and define offline behavior; the prevalence of these constraints among intended users remains to be validated.
+- **Shared Devices:** Shared-device use is a risk to consider. Authentication, session handling, and protection against accidental edits require usability and security validation.
+
+---
+
+## 4. Intended Age Bands
+
+The application organizes activities and milestone prompts across seven navigation categories spanning 0–71 months:
+
+| App Category | Age Range | Target Focus | Sourcing Guidance |
+| :--- | :---: | :--- | :--- |
+| **Young Infants** | 0–5 months | Sensory bonding, tummy time, visual tracking | ECCD / Early pediatric guidelines |
+| **Older Infants** | 6–11 months | Sitting, grasping, babbling, object permanence | ECCD Council Milestones |
+| **Young Toddlers** | 12–23 months | First steps, vocabulary explosion, exploratory play | ECCD / DepEd Early Learning Guidelines |
+| **Older Toddlers** | 24–35 months | Gross motor control, parallel play, two-word phrases | ECCD Council Milestones |
+| **Younger Preschoolers** | 36–47 months | Interactive play, fine motor skills, simple counting | DepEd Kindergarten Curriculum / ECCD |
+| **Older Preschoolers** | 48–59 months | Social cooperation, storytelling, pre-writing | DepEd Kindergarten Curriculum Framework |
+| **Kindergarten Transition** | 60–71 months | School readiness, structured routines, early literacy | DepEd Kindergarten Curriculum & RA 12199 |
+
+*Note: These categories are organizational navigation bands, not clinical developmental stages.*
+
+---
+
+## 5. General Assumptions & System Constraints
+
+- **Non-Diagnostic Assumption:** Caregivers use the platform for home routine support and observational prompts; the system assumes caregivers understand it does not replace pediatric consultations.
+- **Emulator-First Constraint:** Engineering and test execution utilize the local Firebase Emulator Suite (`demo-littlesteps`); production deployment remains gated on billing, security, and institutional privacy reviews.
+- **Shared Architecture Constraint:** A single unified Node.js Express API and Firestore schema must serve both React web (CIT 210) and Flutter mobile (CC 207B) frontends without divergent security rules.
+- **Mobile Boundary Constraint:** The `littlesteps-mobile` repository remains strictly frozen on `main` pending academic fork policies. Responsive mobile layouts in `littlesteps-web` are used for prototype validation (Docs Issue #15).
+- **Content Provenance Constraint:** Production deployment of real Philippine rhymes, traditional games, and milestone prompts remains gated on verified source locators and permissions review (Docs Issue #3). Synthetic fixtures are used for development.
+
+---
+
+## 6. Cross-Cutting System Prerequisites
+
+The following capabilities are mandatory architectural prerequisites supporting the entire application, but under CC 207B course rules they are cross-cutting infrastructure rather than standalone core features:
+
+- **PRQ-01: Caregiver Authentication & Account Management** — Secure sign-up, sign-in, and session management via Firebase Authentication (email/password).
+- **PRQ-02: Responsive Shell & Navigation** — Five-tab bottom navigation (Mobile) and persistent sidebar/header (Web) adhering to ergonomic standards and touch targets ($\ge$ 44px).
+- **PRQ-03: System Configuration & Informational Views** — Application settings, privacy policy notices, offline cache controls, and about views.
+
+---
+
+## 7. Functional Requirements Specification (Core Features)
+
+Per CC 207B requirements, a 5-member team must deliver at least 6 core features ($5 \rightarrow 6$). Each core feature is an interactive workflow that accepts input, modifies state, and produces an observable output across both Web (React) and Mobile (Flutter) clients using the shared API:
+
+### FR-01: Child Profile and Milestone Tracking
+- **Primary Actor:** Caregiver
+- **Preconditions:** Caregiver is securely authenticated.
+- **Inputs:** Child name, nickname, birth month/year (or age band), caregiver observations against milestone checklist items (observed / not yet observed, date observed, notes).
+- **Processing:** Server validates child ownership and payload; persists profile and milestone observation records in Cloud Firestore scoped to caregiver UID.
+- **Outputs:** Structured child profile view, categorized milestone checklist by developmental domain (Cognitive, Motor, Language, Socio-Emotional), and longitudinal observation timeline.
+- **Verification Method:** Unit tests for schema validation; API integration tests verifying caregiver isolation (BOLA defense); E2E test of profile creation and milestone check-off.
+
+### FR-02: Daily Activity Planning and Tracking
+- **Primary Actor:** Caregiver
+- **Preconditions:** Caregiver has at least one active child profile.
+- **Inputs:** Target activity identifier, scheduled date/time slot, completion status toggle, engagement notes, duration spent.
+- **Processing:** Updates child-scoped daily routine schedule state; marks activities complete; records completion timestamps and caregiver feedback.
+- **Outputs:** Interactive daily schedule view, progress checklist, visual completion badges, and active daily routine feed.
+- **Verification Method:** API route tests for CRUD on schedule items; Web/Mobile state management tests for schedule toggle and local optimistic updates.
+
+### FR-03: Private Observation Journal
+- **Primary Actor:** Caregiver
+- **Preconditions:** Caregiver is securely authenticated.
+- **Inputs:** Narrative text notes, date/time, optional associated milestone tag or activity link, privacy confirmation.
+- **Processing:** Server validates ownership; stores journal entry with strict field isolation; guarantees journal entries are never indexed by analytics, exposed in error logs, or passed to external AI services.
+- **Outputs:** Chronological reverse-ordered personal journal feed with search and date filters; full text view; edit/delete controls.
+- **Verification Method:** Automated API tests confirming non-leakage to AI endpoints; authorization tests verifying cross-user access denial (403/404).
+
+### FR-04: Story, Rhyme, and Learning Activity Library
+- **Primary Actor:** Caregiver
+- **Preconditions:** None for viewing public reviewed catalog; authenticated to save/schedule.
+- **Inputs:** Age-band filter (0–71 mos), domain filter (Cognitive, Motor, Language, Socio-Emotional), language filter (English, Filipino, Regional), required materials keyword search.
+- **Processing:** Query engine executes multi-factor filtering against reviewed catalog dataset; sorts by developmental relevance and material availability.
+- **Outputs:** Rich learning resource cards displaying activity title, source provenance attribution, age band, duration, instructions, materials list, and "Add to Daily Routine" action.
+- **Verification Method:** Integration tests verifying catalog search and filter criteria; validation that all returned items contain required provenance metadata.
+
+### FR-05: Weekly Progress Summary
+- **Primary Actor:** Caregiver
+- **Preconditions:** At least 1 recorded activity or milestone observation within the selected 7-day calendar window.
+- **Inputs:** Child profile selector, target calendar week selector.
+- **Processing:** Deterministic aggregation engine calculates completed activities, domain coverage distribution, and recorded milestone observations over the 7-day period. Strictly prohibits clinical scoring, percentile generation, or diagnostic labeling.
+- **Outputs:** Formatted weekly reflection dashboard showing activity counts by domain, celebrated milestones, reflection prompts, and empty/low-data guidance cards.
+- **Verification Method:** Deterministic unit tests comparing known activity logs against calculated summary statistics; tests ensuring absence of diagnostic phraseology.
+
+### FR-06: AI Activity Suggestion Helper
+- **Primary Actor:** Caregiver
+- **Preconditions:** Caregiver authenticated; selected child profile with age band; network connectivity (or fallback triggered).
+- **Inputs:** Available materials on hand (e.g., "paper, spoons, cardboard box"), available time (e.g., "15 minutes"), environment (indoor/outdoor), language preference.
+- **Processing:** Server-side Firebase Cloud Function invokes AI recommender with strict data minimization (no child PII or journal text); model matches constraints to valid reviewed catalog IDs; server validates response against catalog schema; if AI fails or times out (8s), server executes deterministic rule-based catalog fallback.
+- **Outputs:** Tailored activity suggestion card clearly stamped with AI badge and disclaimer: *"AI Suggestion — Always adapt to your child and ensure adult supervision,"* with one-click "Add to Routine" and "Generate Another" actions.
+- **Verification Method:** Unit tests for schema validation of AI outputs; timeout tests verifying deterministic fallback triggers reliably on provider error.
+
+---
+
+## 8. Milestone-Content & Provenance Rules
+
+1. **Source Attribution:** Every milestone item and library activity must display clear source attribution (e.g., ECCD Council Philippine Early Learning Standards, CDC Milestone Checklists).
+2. **Prompts Not Tests:** Milestones must be presented as prompts for parent-child engagement and caregiver observation, never as pass/fail tests.
+3. **Non-Diagnostic Language:** UI copy and system summaries must avoid diagnostic assertions (e.g., avoiding "delayed," "abnormal," or "behind schedule"; using "not yet observed" or "continue exploring").
+4. **Cultural Relevance:** Philippine rhymes, traditional games (e.g., *Bahay-Bahayan*, *Bulong-Pari*, fine-motor songs), and localized materials must be prioritized in catalog curation.
+
+---
+
+## 9. Quality & Acceptance Criteria
+
+- **Security & Identity:** All child-scoped data access requires valid Firebase ID token verification; identity is derived exclusively from the server-verified UID.
+- **Ownership Enforcement (BOLA Defense):** Every database mutation and read verifies that the target child profile belongs to the authenticated caregiver UID.
+- **Server-Side Validation:** All inputs (strings, dates, enum values, array bounds) are validated server-side via declarative schema validators.
+- **Information Protection:** Error responses return standardized error envelopes without stack traces, database schemas, or raw tokens.
+- **CORS Allowlist:** API endpoints restrict CORS headers to explicitly authorized web frontend origins.
+- **Automated Verification:** All core API paths and business logic must have passing automated test suites prior to release tagging.

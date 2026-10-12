@@ -1,12 +1,18 @@
-# Development Workflow
+# LittleSteps Development Workflow
+
+**Status:** Canonical Engineering Workflow Baseline  
+**Governing Standard:** ISO/IEC/IEEE 12207:2026 (Process Governance) & GitHub Flow  
+**Related Documents:** [Documentation Standards](documentation-standards.md), [Execution Plan](execution-plan.md)
+
+---
 
 ## Branch and pull-request policy
 
 ### Initial setup/foundation stage
 - Do not work directly on `main`; use focused branches and draft pull requests.
-- Mark is the reviewer and approval boundary for foundation/setup work. A separate teammate review is not a blocker during this stage.
+- The project lead acts as the reviewer and approval boundary during the foundation setup stage. A separate teammate review is not a blocker during this stage.
 - Keep changes narrow, describe limitations, and verify technical claims with actual local or GitHub Actions checks.
-- Do not merge a draft PR or claim a check passed unless the relevant result is available. Mark reviews and approves the foundation PRs before merging.
+- Do not merge a draft PR or claim a check passed unless the relevant result is available. The project lead reviews and approves foundation PRs before merging.
 
 ### Feature execution stage
 - Use focused branches such as `feat/activity-planning`, `fix/child-ownership-check`, or `docs/privacy-notice`.
@@ -56,15 +62,17 @@ Following the governance audit ([Docs Issue #2](https://github.com/Thesis-Titans
 3. **Required Status Checks:**
    - **`littlesteps-api`:** Strictly requires the `API CI/verify` GitHub Actions status check to pass before merging.
    - **`littlesteps-web`:** Strictly requires the `Web CI/verify` GitHub Actions status check to pass before merging.
-   - **`littlesteps-docs`:** No automated CI workflow is configured (`.github/workflows/` does not exist); status queries report `no checks reported`. PR review for documentation is purely a manual team process, not a server-enforced approval gate or automated CI check.
+   - **`littlesteps-docs`:** Strictly requires the `Docs CI/verify` GitHub Actions status check (`.github/workflows/ci.yml`) to pass before merging, running `npm test` (`verify-docs.mjs` and `verify-docs.test.mjs`) to validate relative internal links and issue template frontmatter.
 4. **Cross-Repository Work Queue & Coverage:**
    - [Thesis-Titans LittleSteps Project #2](https://github.com/orgs/Thesis-Titans/projects/2) is the organization-level board tracking active issues and pull requests across `littlesteps-docs`, `littlesteps-api`, and `littlesteps-web`.
-   - As verified by repository queries, `littlesteps-api` and `littlesteps-web` currently have 0 open issues and 0 open pull requests. All active organization items ([Docs Issue #2](https://github.com/Thesis-Titans/littlesteps-docs/issues/2), [Docs Issue #3](https://github.com/Thesis-Titans/littlesteps-docs/issues/3), [Docs PR #6](https://github.com/Thesis-Titans/littlesteps-docs/pull/6), and [Docs PR #7](https://github.com/Thesis-Titans/littlesteps-docs/pull/7)) are currently populated on the board.
+   - As verified by repository queries, active organization items are populated on the board.
    - Items are maintained manually or via Project workflows as new work is scheduled.
-5. **Mobile Repository Boundary:**
-   - `littlesteps-mobile` remains private and strictly untouched pending the CC 207B external fork requirement.
-6. **Synthetic Credentials & Exposure Verification:**
+5. **Academic Collaboration & Code Defense Governance (CC 207B):**
+   - **Teammate PR Reviews:** During the feature execution phase, every pull request must be reviewed and approved by at least one teammate prior to merging into `main`. Collaboration is a graded criterion assessed directly from Git commit and PR review history.
+   - **Continuous Contribution:** All 5 members must contribute commits throughout the project lifecycle, avoiding last-minute commits before the December 2, 2026 deadline.
+   - **Individual Code Defense Readiness:** Each member must personally author, understand, and explain their committed code during the mandatory 2–3 minute individual code defense, including the ability to perform small live code edits (e.g., adding form fields, adjusting navigation).
+   - **AI Usage Log Compliance:** Any AI-assisted code generation (allowed only for snippets, debugging, or sample fixtures) must be documented in the shared AI Usage Log. Wholesale generation of the app or unexplainable code is strictly prohibited.
+6. **Mobile Repository Boundary:**
+   - `littlesteps-mobile` remains strictly untouched on `main` pending the CC 207B external fork requirement.
+7. **Synthetic Credentials & Exposure Verification:**
    - The test suite in `littlesteps-api/test/auth-emulator.test.ts` uses mock keys (`fake-api-key`) and local test passwords (`LocalTestPassword123!`). These values are strictly synthetic throwaway inputs for the ephemeral in-memory Firebase Auth Emulator and must never be reused in production, deployed environments, or real account credentials.
-
-
-
