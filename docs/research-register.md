@@ -1,11 +1,12 @@
 # LittleSteps Research Register
 
-**Status:** Canonical Regulatory & Technical Evidence Baseline  
+**Status:** Canonical Research Reference  
+**Reference Basis:** Official statutory, regulatory, and technical sources listed in this register; source-specific claims require verification.  
 **Related Documents:** [Philippine Content Provenance](philippine-content-provenance.md), [Security, Privacy, and AI Safeguards](security-privacy-ai.md)
 
 ---
 
-Reviewed for the initial architecture baseline on 2026-10-11. Recheck official documentation before deployment because service behavior and pricing can change.
+Reviewed for the initial architecture baseline on 2026-10-11. Recheck official documentation before deployment because service behavior, legal interpretation, and pricing can change. Entries identify sources and intended use; they do not by themselves establish implementation or legal compliance.
 
 | Topic | Source | How it informs LittleSteps |
 |---|---|---|
