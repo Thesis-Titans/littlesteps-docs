@@ -1,12 +1,13 @@
 # LittleSteps Prototype Traceability, Storyboards, and Scope
 
 **Status:** Working Design Baseline  
+**Governing Reference:** ISO 9241 usability guidance; no claim of formal conformity  
 **Associated Gate:** [Docs Issue #15 — [M0] Plan and validate the LittleSteps UI prototype before implementation](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)  
 **Related Documents:** [UI/UX Design Specification](ui-ux-design-specification.md), [Traceability Matrix](traceability-matrix.md), [Research Register](research-register.md)
 
 ---
 
-**Boundary:** Planning and design artifact only. It does not authorize production API/Web implementation, real personal data, external AI processing, or changes to `littlesteps-mobile`.
+**Boundary:** This is a planning and design artifact. It does not authorize production API/Web implementation, use of real personal data, external AI processing, or changes to `littlesteps-mobile`.
 
 ---
 
