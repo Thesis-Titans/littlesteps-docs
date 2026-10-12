@@ -6,7 +6,7 @@
 
 ---
 
-This plan moves LittleSteps from repository setup into controlled delivery across our three coordinated courses:
+This plan defines the proposed delivery sequence for LittleSteps across three coordinated courses. Milestones describe intended outcomes; they do not indicate completion unless linked evidence confirms the exit criteria.
 - **CC 207B — Applications Development and Emerging Technologies:** Flutter mobile application with 6 core features, user-facing AI, live demo, and individual code defense.
 - **CIT 210 — Web Systems and Technologies:** React web client using shared API & database, local demo, and documentation.
 - **CIT 246 — IT Project Management Plan:** 25–40 page Project Management Plan governing the entire system, with Checkpoint 1 due October 14, 2026 and final defense on December 2, 2026.
@@ -63,7 +63,7 @@ Exit criteria:
 - A navigable UI prototype covering all six product capabilities (**FR-01** to **FR-06**) has been reviewed; findings and scope decisions are recorded.
 - API/Web feature implementation remains gated until prototype review, contract dependencies, and M0 exit criteria are complete.
 
-**Prototype-first gate:** Before feature implementation, create and review a navigable UI prototype covering both Web (desktop/tablet) and Mobile (responsive mobile-sized browser viewports, keeping `littlesteps-mobile` untouched) experiences using an AI-assisted rapid prototyping approach, guided by the [UI/UX design specification](ui-ux-design-specification.md), and operating on purely synthetic data / simulated services. Include key empty, loading, error, permission-denied, and deterministic AI fallback states, making privacy and non-diagnostic boundaries visible. Track this work in [Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15). The prototype is a validation artifact, not a substitute for API contract design or implementation tests.
+**Prototype-first gate:** Before feature implementation, create and review a navigable UI prototype covering desktop/tablet web and responsive mobile-sized browser views, while keeping `littlesteps-mobile` untouched. Follow the [UI/UX design specification](ui-ux-design-specification.md) and use synthetic data and simulated services. AI-assisted tooling is optional and does not replace design review or usability validation. Include key empty, loading, error, permission-denied, and deterministic AI fallback states, making privacy and non-diagnostic boundaries visible. Track this work in [Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15). The prototype is a validation artifact, not a substitute for API contract design or implementation tests.
 
 ### M1 — Secure end-to-end foundation
 **Scope Traceability:** Implements foundation for **FR-01** (Child Profile); enforces **NFR-SEC-01** (Token auth), **NFR-SEC-02** (BOLA defense), and **NFR-PRIV-01** (Data minimization).
@@ -192,7 +192,7 @@ An issue is done only when the acceptance criteria are met, relevant automated c
 
 ## 6. Board and monitoring
 
-Use one cross-repository board for Docs, API, and Web execution work. Keep governance/documentation maintenance separate from the product backlog once the standardization issue is completed.
+Use one cross-repository board for Docs, API, and Web execution work. Keep governance/documentation maintenance separate from the product backlog after the related work is accepted.
 
 Recommended columns:
 - **Backlog** — captured but not ready for a sprint.
