@@ -109,11 +109,10 @@ Lower bands (15, 10, 0–5) apply when, for example, justification is not quanti
 | Checkpoint 1 concept | The team's concept proposal in Google Drive is dated 13 October 2026. **Record when it was submitted, whether it was approved, and any feedback.** |
 | Checkpoint 2 and 3 dates | **Ask the instructor**; the brief leaves them blank |
 | Team of three | The brief's template mentions "all five members" on the title page and in the signed contribution statement. **Confirm with the instructor** that three names and three signatures are correct for this group. |
-| Client organization and sponsor | **Open:** no barangay ECCD center or child development worker supervisor contacted yet. The appendices require evidence of client contact. |
+| Client organization and sponsor | The client is the **CSWDO La Paz–Lapuz District office**, chosen from public sources as a realistic client. The team decided **not to contact** it; the plan uses sourced facts and labelled estimates, identifies the sponsor by role, and Appendix 17 states openly that there was no client contact. This may cost marks under the brief's evidence-of-contact requirement. |
 | Project scale | The plan must cover a 6–12 month project with a peso budget, not the one-month course build |
 | Scope narrowed to Flutter | The Checkpoint 1 concept described both the Flutter and React clients; the full plan covers only the Flutter app and its backend. **Mention this to the instructor** with the Checkpoint 2 submission. |
 | Reusable inputs | [Product scope](../../product-scope.md) (in and out of scope), [architecture decisions](../../architecture-decisions.md) (including the paid AI tier in ADR-008 as a cost line), [security, privacy and AI safeguards](../../security-privacy-ai.md) and the execution plan's work packages. Rewrite them in the course and Schwalbe formats. |
 
 ## Deliverables Index
 - [Checkpoint 1: One-Page Project Concept](checkpoint-1-concept.md)
-- Client contact: [request letter to the CSWDO La Paz–Lapuz District office](client-request-letter.md) and the [interview and walkthrough guide](../../client-interview-and-walkthrough-guide.md)

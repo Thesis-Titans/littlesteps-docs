@@ -100,7 +100,7 @@ CIT 246 is a separate deliverable from this execution plan. This plan schedules 
 - **No code:** the group plans the project and does not build it for this course.
 - **Structure:** the instructor's 17-section template, the 12 key deliverables and the course and Schwalbe formats, as listed in the [CIT 246 requirements](academic/cit246/README.md).
 - **Checkpoints:** Checkpoint 1 (concept) was due 14 October; its approval is not yet recorded. Checkpoint 2 (sections 3–6) and Checkpoint 3 (sections 7–9) dates are to be announced.
-- **Shared dependency:** both CIT 246 and CC 207B need a real client. The CIT 246 appendices require evidence of client contact (interview notes, correspondence or a letter).
+- **Client:** the plan's client is the CSWDO La Paz–Lapuz District office, researched from public sources and not contacted, by team decision. The plan says so openly in Appendix 17 instead of the evidence of contact the brief asks for, and uses sourced facts and labelled estimates.
 - **Reusable inputs:** product scope (in and out of scope), architecture decisions, the security and privacy safeguards, and the work packages in §4, rewritten in the course formats rather than copied.
 
 ## 2. Product Target & Team Sizing Derivation
@@ -327,7 +327,7 @@ Checked against GitHub on 23 October 2026.
 
 - **Flutter track:** planned in §1.3, with feature owners assigned. Milestones M1–M5 and issues #2–#13 exist in `littlesteps-flutter`. Next: ask the course instructor about the fork and review rules.
 - **Low-fidelity prototypes:** CC 207B documentation requires low- and high-fidelity prototypes, and the app's UI must follow those the group presented. Create low-fidelity wireframes for the main journeys and confirm with the instructor which prototypes count.
-- **Real client:** contact a barangay ECCD center or child development worker supervisor. CC 207B expects a real or realistic client, and the CIT 246 appendices require evidence of contact.
+- **Client and walkthrough:** no client contact is planned (team decision). The CIT 246 client is the researched CSWDO La Paz–Lapuz District office, which also serves as CC 207B's realistic client. The prototype is checked informally with three to five parents the team knows, using the [parent walkthrough guide](parent-walkthrough-guide.md) ([Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)).
 - **CIT 246 checkpoints:** record Checkpoint 1's submission and approval, get the Checkpoint 2 and 3 dates, and confirm that three names and signatures are correct for the three-member team (§1.4).
 - **Backlog readiness:** before each sprint, review its API and Web issues against the Definition of Ready, add blocking links where supported, and make sure each has testable acceptance criteria and verification steps. The Web issues predate the reviewed UI/UX specification; owners update them to match it before starting.
 - **Board hygiene:** verify that project-management setup work is kept separate from product-delivery work on the board.
