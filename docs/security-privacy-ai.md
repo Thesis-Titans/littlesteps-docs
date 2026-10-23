@@ -47,6 +47,7 @@ LittleSteps processes sensitive family and early-learning observations. System a
 - **Specification:**
   - Avoid collecting exact birth dates; birth month and year (or coarse age band) are sufficient for milestone and activity navigation.
   - No biometric data, national ID numbers, or precise GPS coordinates are ever collected or stored.
+  - The optional weather location is a city or municipality chosen by the caregiver, stored as a name and coordinates rounded to two decimal places, and sent only to Open-Meteo from the server ([ADR-009](architecture-decisions.md)). It is off by default and can be cleared.
   - A plain-language Privacy Notice must be presented to caregivers upon account registration, detailing data categories, processing purposes, retention periods, and deletion procedures.
 
 ### NFR-PRIV-02: Observation Journal Confidentiality & Isolation
@@ -74,7 +75,8 @@ To satisfy the **CC 207B AI-Powered Feature Requirement (Items 12–17)**, the A
 
 ### NFR-AI-02: Server-Side Execution & Credential Isolation (Item 14)
 - **Execution Boundary:** All AI model invocations (Gemini API / Firebase Vertex AI) execute exclusively server-side inside Cloud Functions.
-- **Data Minimization in Prompts:** Prompts contain only sanitized constraint keywords: coarse age band, duration, environment, and materials list. Zero child names, caregiver IDs, locations, or journal texts are ever included in prompts.
+- **Data Minimization in Prompts:** Prompts contain only sanitized constraint keywords: coarse age band, duration, environment, materials list and language. Zero child names, caregiver IDs, locations (including the weather city), or journal texts are ever included in prompts. The materials text is cleaned on the server before sending.
+- **Provider and free tier:** The provider is the Gemini API free tier, for development and the course demonstration only, with synthetic data. Google may use free-tier prompts to improve its products, which is why the minimization above is strict. Before any real caregiver uses the helper, move to the paid tier or Vertex AI. See [ADR-008](architecture-decisions.md).
 
 ### NFR-AI-03: Graceful Degradation & Deterministic Fallback (Item 15)
 - **Latency & Timeout:** AI calls are constrained to an 8-second execution timeout. Frontends render loading skeletons and progress indicators during inference.

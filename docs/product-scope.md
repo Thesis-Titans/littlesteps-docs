@@ -96,7 +96,7 @@ Per CC 207B requirements, a 5-member team must deliver at least 6 core features 
 - **Preconditions:** Caregiver has at least one active child profile.
 - **Inputs:** Target activity identifier, scheduled date/time slot, completion status toggle, engagement notes, duration spent.
 - **Processing:** Updates child-scoped daily routine schedule state; marks activities complete; records completion timestamps and caregiver feedback.
-- **Outputs:** Interactive daily schedule view, progress checklist, visual completion badges, and active daily routine feed.
+- **Outputs:** Interactive daily schedule view, progress checklist, visual completion badges, and active daily routine feed. When the optional weather hint is on, Today suggests indoor ideas if rain or strong heat is likely ([ADR-009](architecture-decisions.md)).
 - **Verification Method:** API route tests for CRUD on schedule items; Web/Mobile state management tests for schedule toggle and local optimistic updates.
 
 ### FR-03: Private Observation Journal
@@ -126,8 +126,8 @@ Per CC 207B requirements, a 5-member team must deliver at least 6 core features 
 ### FR-06: AI Activity Suggestion Helper
 - **Primary Actor:** Caregiver
 - **Preconditions:** Caregiver authenticated; selected child profile with age band; network connectivity (or fallback triggered).
-- **Inputs:** Available materials on hand (e.g., "paper, spoons, cardboard box"), available time (e.g., "15 minutes"), environment (indoor/outdoor), language preference.
-- **Processing:** Server-side Firebase Cloud Function invokes AI recommender with strict data minimization (no child PII or journal text); model matches constraints to valid reviewed catalog IDs; server validates response against catalog schema; if AI fails or times out (8s), server executes deterministic rule-based catalog fallback.
+- **Inputs:** Available materials on hand (e.g., "paper, spoons, cardboard box"), available time (e.g., "15 minutes"), environment (indoor/outdoor, preselected from the optional weather hint when it is on), language preference.
+- **Processing:** Server-side Firebase Cloud Function invokes the AI recommender (Gemini API, [ADR-008](architecture-decisions.md)) with strict data minimization (no child PII or journal text); model matches constraints to valid reviewed catalog IDs; server validates response against catalog schema; if AI fails or times out (8s), server executes deterministic rule-based catalog fallback.
 - **Outputs:** Tailored activity suggestion card clearly stamped with AI badge and disclaimer: *"AI Suggestion — Always adapt to your child and ensure adult supervision,"* with one-click "Add to Routine" and "Generate Another" actions.
 - **Verification Method:** Unit tests for schema validation of AI outputs; timeout tests verifying deterministic fallback triggers reliably on provider error.
 

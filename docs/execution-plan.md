@@ -164,7 +164,8 @@ Exit criteria:
 - Suggestions only reference approved catalog IDs.
 - No direct child identifiers or private journal entries are sent to the provider (**NFR-PRIV-01**, **NFR-PRIV-02**).
 - Failure paths fall back safely to deterministic catalog matching and are observable without logging sensitive content.
-- Provider terms, billing, and data processing are reviewed before activation.
+- The Gemini free-tier conditions in [ADR-008](architecture-decisions.md) hold; the terms are rechecked at M4 and before the demonstration, and only synthetic data is used.
+- If time allows: the optional Open-Meteo weather hint ([ADR-009](architecture-decisions.md)) on Today and in the AI helper, with attribution and silent failure. It is the first item dropped if the schedule slips.
 
 ### M5 — Release-readiness review
 **Scope Traceability:** Full cross-cutting verification of **FR-01** through **FR-06**, all **NFRs**, and coordinated deliverables for CC 207B, CIT 210, and CIT 246.
