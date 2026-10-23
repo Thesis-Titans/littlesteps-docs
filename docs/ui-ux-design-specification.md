@@ -14,7 +14,7 @@ Before establishing interface specifications, the technical boundaries are expli
 
 1. **Gated Validation Before Implementation:** This document establishes the interaction and interface specification for the **Figma prototype and usability evaluation**. Feature implementation in code remains gated under [Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15).
 2. **Mobile Experience as Responsive Web Frames:** Mobile is prototyped as **375px Figma frames** of the responsive browser layout, and desktop as **1280px frames**. `littlesteps-react` implements these layouts only after the prototype is approved. Tablet behavior (768px–1024px) is specified in §5.2 but does not need its own frames.
-3. **Flutter Outside This Prototype Gate:** The prototype covers responsive web layouts only; native Flutter screens are not prototyped in this gate.
+3. **Flutter Outside This Prototype Gate:** The prototype covers responsive web layouts only; native Flutter screens are not prototyped. The Flutter app adapts the reviewed 375px frames to Material 3 widgets as listed in §9.
 4. **Synthetic Data Only:** Frames use the synthetic profiles Maya (14 months) and Liam (48 months) and sample catalog entries. Loading, error, permission-denied, offline, and AI-fallback behavior are shown as separate frames or component variants linked by prototype interactions; nothing connects to Firestore, the API, or an AI provider.
 
 ---
@@ -270,3 +270,32 @@ When preparing the prototype for course instructor and faculty review, the team 
 - [ ] **Honest Offline States:** No offline frame claims data was saved or synced.
 - [ ] **Contrast Checked:** Text and button colors match §6.1 and meet WCAG 2.2 AA (4.5:1 for normal text).
 - [ ] **Zero Clinical Language:** UI audit verifies the absence of *"delayed"*, *"behind"*, *"late"*, *"on track"*, *"normal"*, *"should"*, *"at risk"*, *"red flag"*, *"score"*, *"pass/fail"*, *"screening"*, percentages and comparisons with other children. Filipino and Hiligaynon copy gets the same audit by a reviewer fluent in each language.
+
+---
+
+## 9. Flutter Adaptation of the 375px Frames
+
+The Flutter app (CC 207B) uses the reviewed 375px mobile-web frames as its design source and maps each element to the Material 3 widget below. Tokens, copy, states (§7) and the rules in §2.5 apply unchanged; only the widget changes.
+
+| Element in the 375px frames | Flutter (Material 3) | Notes |
+|---|---|---|
+| Design tokens (§6.1, §6.3) | `ThemeData` with a custom `ColorScheme`, plus a `ThemeExtension` for status colors | One source of truth; no hard-coded colors in widgets. |
+| Type styles (§6.2) | `TextTheme` using Inter bundled as an app asset | Bundle the font rather than downloading it at runtime, to avoid data cost. |
+| Bottom tab bar (5 tabs) | `NavigationBar` with five destinations | Labels always shown. |
+| Top bar with child chip | `AppBar` with the "For [child]" chip and the account avatar as actions | The system back gesture and the `AppBar` back button replace the "‹ Back" text links. |
+| Account menu | `showModalBottomSheet` | Same items, including Help and support. |
+| Cards | `Card.outlined` | Borders use `color/border/subtle`. |
+| Primary and secondary buttons | `FilledButton` and `OutlinedButton` | |
+| Filter and choice chips | `FilterChip` and `ChoiceChip` | Unselected outline uses `color/border/input`. |
+| Text fields | `TextFormField` with an outline border and a visible label | Error text through `InputDecoration.errorText`; error colors from the error tokens. |
+| Selects (age band, week, dates) | `DropdownMenu`; month and year pickers for the birth month | |
+| Inline error and offline alerts | A styled `Card` inside the scroll view | Not a `SnackBar`: these must stay until resolved. |
+| Undo toast | `SnackBar` with an action and a duration of at least 10 seconds | Follows the undo rule in §2.5. |
+| Confirmation for permanent deletes | `AlertDialog` whose confirm button names the action | |
+| Loading skeletons | Placeholder shapes that stop animating when `MediaQuery.disableAnimations` is true | Reduced-motion rule in §2.5. |
+| Status announcements | `Semantics(liveRegion: true)` on status and alert text | Screen-reader rule in §2.5. |
+| Focus ring | Theme `focusColor` and outline from `color/focus` | Visible on every interactive widget. |
+| Touch targets | `MaterialTapTargetSize.padded` (48dp) | Matches the 48px rule in §2.3. |
+| Text size | Respect the system text scale (`MediaQuery.textScaler`) up to 200% | Layouts must not clip or overlap. |
+
+Where a Flutter screen needs to differ from its 375px frame, record the difference and the reason in the Flutter pull request.
