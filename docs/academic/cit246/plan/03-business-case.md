@@ -29,10 +29,10 @@ How it handles the problem today: home observations live in paper notebooks and 
 
 ## 3.2 The Problem
 
-Caregivers of children aged 0–5 want to support their child's learning at home, but the tools they have are scattered, easy to lose and not made for their situation. Three problems follow:
+Parents of children aged 0–5, and the grandparents, relatives or guardians who help some of them, want to support their child's learning at home, but the tools they have are scattered, easy to lose and not made for their situation. Three problems follow:
 
-1. **Observation records are fragmented and get lost.** Notebooks and loose sheets are misplaced, damaged or left at home, so neither the caregiver nor the CDW has a continuous picture of what the child has been doing.
-2. **Caregivers run out of low-cost, screen-free ideas.** Without age-appropriate activities that use ordinary household materials, families fall back on passive phone or TV time.
+1. **Observation records are fragmented and get lost.** Notebooks and loose sheets are misplaced, damaged or left at home, so neither the parent nor the CDW has a continuous picture of what the child has been doing.
+2. **Parents run out of low-cost, screen-free ideas.** Without age-appropriate activities that use ordinary household materials, families fall back on passive phone or TV time.
 3. **Available apps are unsafe or misleading.** Popular baby-tracking apps are built for other countries, are rarely in Filipino or Hiligaynon, may monetize children's data, and often show pseudo-clinical scores or pass/fail labels that cause anxiety without being valid screening tools.
 
 ### Quantifying the problem
@@ -46,7 +46,7 @@ These are the measures the business case rests on. The center's own numbers repl
 | Home-learning notebooks lost or not brought back per school year | 1 in 4 families | CDW recollection, checked against the center's records |
 | CDW time spent preparing and sharing home-activity handouts | 2 hours a week | CDW interview |
 | Printing cost of home-activity handouts | ₱150 per family per school year | Center expense records or CDW estimate |
-| Caregivers who say they lack activity ideas at least once a week | 1 in 2 caregivers | Five to eight caregiver interviews during the walkthrough |
+| Parents who say they lack activity ideas at least once a week | 1 in 2 parents | Five to eight parent interviews during the walkthrough |
 
 At these estimates, one CDC loses the home record of about 8 children a year, a CDW spends about 80 hours a school year (40 weeks × 2 hours) on handouts, and printing costs about ₱4,500 a year per center. Across the district's estimated 37 centers, that is roughly 296 lost records, 2,960 CDW hours and ₱166,500 in printing every school year. If the app is later extended to the city's 200 or more centers, the same estimates add up to roughly 1,600 lost records, 16,000 CDW hours and ₱900,000 a year.
 
@@ -56,8 +56,8 @@ At these estimates, one CDC loses the home record of about 8 children a year, a 
 |---|---|---|---|
 | **A. Do nothing** | Keep paper notebooks, handouts and group chats | ₱0 | Every problem in §3.2 continues; lost records and CDW handout time recur every year |
 | **B. Improve the paper process** | A printed home-learning booklet with an activity bank and an observation log per family | About ₱40,000 to design once, plus about ₱4,500 a year per center to print (₱900,000 a year for 200 centers) | Still lost or damaged; no reminders or search; reprinting every year; no way to tailor ideas to the materials a family has |
-| **C. Recommend an existing commercial app** | Point caregivers to a free international baby-tracking app | ₱0 to the center | Not Philippine content or languages; unclear data use under the Data Privacy Act of 2012 (RA 10173); many show diagnostic-style scores |
-| **D. Build LittleSteps (recommended)** | A Flutter Android app for caregivers with a reviewed Philippine activity catalog, private observation journal and a constrained AI activity helper, on a small shared backend | About ₱1.17 million over 8 months (§3.5); refined bottom-up in Section 9 | Highest cost and needs a maintainer after handover |
+| **C. Recommend an existing commercial app** | Point parents to a free international baby-tracking app | ₱0 to the center | Not Philippine content or languages; unclear data use under the Data Privacy Act of 2012 (RA 10173); many show diagnostic-style scores |
+| **D. Build LittleSteps (recommended)** | A Flutter Android app for parents and other caregivers with a reviewed Philippine activity catalog, private observation journal and a constrained AI activity helper, on a small shared backend | About ₱1.17 million over 8 months (§3.5); refined bottom-up in Section 9 | Highest cost and needs a maintainer after handover |
 
 ### Weighted scoring
 
@@ -65,16 +65,16 @@ Each option is scored from 1 (poor) to 10 (strong) against criteria agreed with 
 
 | Criterion | Weight | A. Do nothing | B. Paper booklet | C. Commercial app | D. LittleSteps |
 |---|---|---|---|---|---|
-| Keeps a lasting, private record for each caregiver | 25% | 2 | 4 | 6 | 9 |
+| Keeps a lasting, private record for each family | 25% | 2 | 4 | 6 | 9 |
 | Philippine, low-cost, age-banded activity content | 20% | 3 | 7 | 3 | 9 |
 | Child data protection under RA 10173, no diagnostic labels | 20% | 6 | 8 | 3 | 9 |
 | Cost to the organization | 20% | 10 | 6 | 9 | 3 |
-| Fits caregivers' phones, time and languages | 15% | 4 | 6 | 5 | 8 |
+| Fits parents' phones, time and languages | 15% | 4 | 6 | 5 | 8 |
 | **Weighted score** | **100%** | **4.90** | **6.10** | **5.25** | **7.65** |
 
 ## 3.4 Recommendation
 
-**Build LittleSteps (Option D).** It scores highest because it is the only option that gives caregivers a record they keep, Philippine activity content they can search by the materials they already have, and explicit protection against diagnostic labelling and misuse of children's data. Option B is the strongest fallback: if the sponsor cannot fund Option D, the reviewed activity catalog prepared in this project can be printed as a booklet.
+**Build LittleSteps (Option D).** It scores highest because it is the only option that gives parents a record they keep, Philippine activity content they can search by the materials they already have, and explicit protection against diagnostic labelling and misuse of children's data. Option B is the strongest fallback: if the sponsor cannot fund Option D, the reviewed activity catalog prepared in this project can be printed as a booklet.
 
 The project is justified on cost-effectiveness rather than direct revenue, because the center earns nothing from home learning. The measures in §3.2 become the benefit baseline: the project succeeds if the pilot reduces lost records and CDW handout time, and caregivers use the app weekly (see the charter's success criteria).
 
@@ -92,7 +92,7 @@ The project is justified on cost-effectiveness rather than direct revenue, becau
 | Data privacy review | Privacy impact assessment support | ₱50,000 |
 | Cloud and AI services for testing and pilot | Firebase pay-as-you-go plan and paid Gemini tier, about ₱5,000 a month for 6 months | ₱30,000 |
 | Test devices | Three entry-level Android phones | ₱30,000 |
-| Pilot and training logistics | Printing, venue and snacks for caregiver and CDW sessions | ₱40,000 |
+| Pilot and training logistics | Printing, venue and snacks for parent and CDW sessions | ₱40,000 |
 | Google Play developer registration | One-time fee | ₱1,500 |
 | **Subtotal** | | **₱1,061,500** |
 | Contingency reserve | 10% of subtotal | ₱106,150 |
