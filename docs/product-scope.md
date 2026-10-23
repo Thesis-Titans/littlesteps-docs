@@ -8,7 +8,7 @@
 
 ## 1. System Purpose & Concept
 
-LittleSteps is a proposed early-childhood learning and development platform for parents and caregivers supporting children aged 0–5 years (0–71 months). The planned system covers age-aware activity discovery, routine planning, milestone observation prompts, a private observation journal, factual summaries of recorded activity, and an AI-assisted activity recommendation helper.
+LittleSteps is a proposed early-childhood learning and development platform for parents of children aged 0–5 years (0–71 months), and for other caregivers such as grandparents, relatives or guardians who look after the child at home. The planned system covers age-aware activity discovery, routine planning, milestone observation prompts, a private observation journal, factual summaries of recorded activity, and an AI-assisted activity recommendation helper.
 
 > [!IMPORTANT]
 > **Clinical Non-Diagnostic Boundary:** LittleSteps is explicitly an educational, reflective, and routine-support tool. It is **not** a clinical diagnostic, pediatric screening, medical treatment, or emergency-care system. All milestone and developmental information serves as prompts for caregiver observation, not diagnostic criteria.
@@ -32,9 +32,9 @@ The table below defines the planned system scope. Inclusion does not mean a capa
 
 ## 3. User Characteristics & Operating Context
 
-The intended users are parents, legal guardians, and home caregivers of children aged 0–5 years. The characteristics below are design considerations to validate, not established claims about all caregivers:
+The primary users are **parents** of children aged 0–5 years. Other caregivers, such as grandparents, relatives or legal guardians who look after the child at home, are secondary users; not every family has one. Throughout the requirements, "caregiver" is the name for the signed-in account holder, whether a parent or another caregiver. The characteristics below are design considerations to validate, not established claims about all parents:
 
-- **Physical Multitasking:** Caregivers frequently operate devices one-handed while holding a child or managing household chores. The interface requires natural thumb-zone placement and large touch targets ($\ge$ 48px for frequent controls, never below 44px).
+- **Physical Multitasking:** Parents frequently operate devices one-handed while holding a child or managing household chores. The interface requires natural thumb-zone placement and large touch targets ($\ge$ 48px for frequent controls, never below 44px).
 - **Divided Attention & Cognitive Load:** Use short, scannable instructions and avoid clinical jargon or guilt-inducing streaks. The assumed time available for an activity has not been validated with intended users.
 - **Connectivity:** Intermittent connectivity and data costs are design considerations. The system should favor lightweight content and define offline behavior; the prevalence of these constraints among intended users remains to be validated.
 - **Shared Devices:** Shared-device use is a risk to consider. Authentication, session handling, and protection against accidental edits require usability and security validation.
