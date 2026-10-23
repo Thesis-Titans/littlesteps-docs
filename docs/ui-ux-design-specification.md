@@ -179,7 +179,7 @@ The canonical values are the variables in the Figma file's **LittleSteps · Desi
   - *Non-Diagnostic Advisory:* `color/status/caution` (`#FAE8A8` bg) with primary text (12.1:1).
   - *Completed / Observed and Privacy Lock:* `color/surface/soft-green` (`#E0F2E5` bg) with Forest text (6.1:1).
   - *Source Attribution and AI Label:* `color/status/info` (`#D9E8F7` bg) with primary text (11.8:1).
-  - *Offline State:* Neutral slate badge (`#F1F5F9` bg, `#475569` text); not yet a Figma variable.
+  - *Offline State:* `color/status/offline` (`#F1F5F9` bg) with `color/text/offline` (`#475569`, 6.9:1).
 
 ### 6.2 Typography Hierarchy
 Use clean, highly readable modern sans-serif (**Inter** or **Plus Jakarta Sans**):
@@ -198,7 +198,7 @@ Every user journey in the Figma prototype must include all five interaction stat
 | Journey / Screen | 1. Populated (Default) | 2. Empty State | 3. Loading (Skeleton) | 4. Error / Permission-denied (`{ error: { code, message } }`) | 5. Offline (Simulated) / AI Fallback |
 |---|---|---|---|---|---|
 | **J1: Child Profile** | Maya (14m) & Liam (48m) with age-band badges. | "No children added yet. Add a profile to get age-tailored ideas." | Profile card pulse skeleton. | `INVALID_INPUT`: "Name must be 1–50 characters; age must be 0–71 months." | Last-viewed profile shown with offline badge; editing disabled with "Reconnect to save changes." |
-| **J2: Daily Plan** | 2 scheduled activities with completion toggles. | "No activities planned for today. Tap below to pick a 10-minute game!" | Activity card pulse skeleton. | `NOT_FOUND`: "Activity not found. Reverted to cached schedule." | "You're offline. This activity wasn't marked complete." with Retry. |
+| **J2: Daily Plan** | 2 scheduled activities with completion toggles. | "No activities planned for today. Tap below to pick a 10-minute game!" | Activity card pulse skeleton. | `NOT_FOUND`: "Activity not found. It may have been removed from the catalog. Your plan is shown as it was last loaded." | "You're offline. This activity wasn't marked complete." with Retry. |
 | **J3: Milestones** | Domain-grouped prompts with "Observed on [date]". | "No observations recorded yet. Look for small moments during play." | Milestone prompt pulse skeleton. | `INTERNAL_ERROR`: Safe error banner; zero stack traces exposed. | "You're offline. Your observation wasn't saved." Entered text stays on screen with Retry. |
 | **J4: Private Journal** | Date-stamped notes with `🔒 Private` badge. | "Your journal is private to you. Jot down a memory or funny moment." | Note list pulse skeleton. | `INVALID_INPUT`: "Notes can be up to 2,000 characters. Please shorten this entry." (The 2,000-character limit comes from the [Data Model](data-model.md); the API's separate 100KB request-body limit is never the user-facing note limit.) | "You're offline. Your note wasn't saved." Draft stays on screen with Retry; `🔒 Private` badge still visible. |
 | **J5: Learning Library** | Filterable catalog cards with provisional review chips. | "No activities found matching your filters. Try clearing 'Materials'." | Catalog grid pulse skeleton. | `SERVICE_UNAVAILABLE`: "Catalog temporarily unavailable. Tap to retry." | Only activities labeled "Available offline" open; others show "Needs a connection." |
