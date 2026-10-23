@@ -7,7 +7,7 @@
 
 ---
 
-**Boundary:** This is a planning and design artifact. It does not authorize production API/Web implementation, use of real personal data, external AI processing, or changes to `littlesteps-flutter`.
+**Boundary:** This is a planning and design artifact. It does not authorize production API, Web, or Mobile implementation, use of real personal data, or external AI processing.
 
 ---
 
@@ -17,7 +17,7 @@ Keep these evidence types distinct:
 
 - **P01 — exploratory caregiver pilot:** one caregiver interview. It illustrates one household's practices; it is not representative of Filipino caregivers. The participant's child was reported to be six years old, so current routines are outside the project's 0–71-month product range; retrospective accounts of ages four to five must be labeled as retrospective.
 - **Official and institutional sources:** WHO/UNICEF early-learning guidance, PSA household internet-access statistics, Philippine statutes, and NPC privacy guidance. These support general principles and national context, not LittleSteps demand or feature acceptance.
-- **Project constraints:** canonical six-feature scope, synthetic-only prototype data, non-diagnostic language, privacy safeguards, source provenance, simulated services, and an untouched mobile repository.
+- **Project constraints:** canonical six-feature scope, synthetic-only prototype data, non-diagnostic language, privacy safeguards, source provenance, and simulated services.
 - **Design hypotheses:** proposed responses to the above. Do not present them as confirmed user requirements until tested.
 
 A feature is not validated merely because it is consistent with published guidance. Preserve unanswered questions and contradictory evidence.
@@ -81,7 +81,7 @@ These are design scenarios, not observed journeys or claims about how most careg
 - Non-diagnostic observation entry and review.
 - Empty, loading, error, unauthorized/permission-denied, and simulated offline states.
 - Clear privacy boundary and content-source attribution.
-- Desktop/tablet and mobile-sized browser layouts. Do not implement the native mobile repository.
+- Desktop/tablet and mobile-sized browser layouts. The native Flutter client is outside this prototype.
 
 ### P1 — Secondary evaluation, only if the core flow remains coherent
 
