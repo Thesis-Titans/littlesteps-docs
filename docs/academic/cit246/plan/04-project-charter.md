@@ -12,7 +12,7 @@
 | Field | Entry |
 |---|---|
 | **Project title** | LittleSteps: Home Learning and Observation App for Barangay Child Development Centers |
-| **Client organization** | Iloilo City's network of more than 200 Child Development Centers, through the city ECCD office or the CSWDO district office that supervises the Child Development Workers; pilot at two barangay centers |
+| **Client organization** | Iloilo City Social Welfare and Development Office (CSWDO), La Paz–Lapuz District office, which supervises the Child Development Centers in 37 barangays; pilot at two Child Development Centers in La Paz |
 | **Authorization date** | On sponsor sign-off (target: 8 January 2027) |
 | **Project start date** | 4 January 2027 |
 | **Projected finish date** | 27 August 2027 (8 months) |
@@ -27,7 +27,7 @@
 | Requirements, design and privacy impact assessment approved | 19 February 2027 |
 | First 80 activity catalog items reviewed by the ECCD content reviewer | 9 April 2027 |
 | Beta app released for internal testing | 30 April 2027 |
-| Pilot starts at two Child Development Centers | 17 May 2027 |
+| Pilot starts at two Child Development Centers in La Paz | 17 May 2027 |
 | Pilot ends; evaluation report delivered | 9 July 2027 |
 | App published on Google Play | 30 July 2027 |
 | CDW training complete; system handed over to the maintainer | 20 August 2027 |
@@ -57,10 +57,10 @@ The project succeeds when all of the following are met by the finish date, withi
 
 ## 4.4 Approach
 
-- **Discover first.** Interview the CDW supervisor, CDWs and caregivers in the first two weeks to confirm the baseline in Section 3 and the requirements.
+- **Discover first.** Interview the OIC District Head, CDWs and caregivers in the first two weeks to confirm the baseline in Section 3 and the requirements.
 - **Privacy by design.** Complete a privacy impact assessment before any real data is collected. Store only a nickname, an age band or birth month and year, and caregiver-entered records. Never send journal text or child identifiers to the AI service.
 - **Reviewed content only.** An ECCD content reviewer approves every catalog item, with its source recorded, before caregivers can see it.
-- **Iterative build.** Build the Flutter app and backend in two-week iterations, each ending with a demo to the CDW supervisor. Test against local emulators with synthetic data until the pilot.
+- **Iterative build.** Build the Flutter app and backend in two-week iterations, each ending with a demo to the district office. Test against local emulators with synthetic data until the pilot.
 - **Pilot before launch.** Run an 8-week pilot at two centers, measure the success criteria, and fix the top issues before publishing on Google Play.
 - **Plan the handover from the start.** Name the maintainer by the midpoint and involve them in the last two iterations.
 
@@ -68,7 +68,7 @@ The project succeeds when all of the following are met by the finish date, withi
 
 | Role | Name | Organization or position | Responsibility |
 |---|---|---|---|
-| Project sponsor | To be confirmed | Head of the city ECCD office required by the RA 12199 implementing rules, or the CSWDO district head or CDW Supervisor who oversees the pilot centers | Approves the charter, budget and major changes; accepts the final deliverables |
+| Project sponsor | To be confirmed (named only with consent) | OIC District Head, CSWDO La Paz–Lapuz District office | Approves the charter, budget and major changes; accepts the final deliverables |
 | Project manager | Mark Alvin Cadangin | Project team, WVSU CICT | Plans and controls scope, schedule, cost and risk; reports to the sponsor; chairs the change control board |
 | Business analyst and quality lead | Mae Daniella Faith C. Benjamin | Project team, WVSU CICT | Requirements, acceptance criteria, test planning and usability evaluation |
 | Stakeholder and content coordinator | Nherie C. Acebuche | Project team, WVSU CICT | Stakeholder engagement, CDW and caregiver sessions, content review workflow, training materials |
@@ -77,7 +77,7 @@ The project succeeds when all of the following are met by the finish date, withi
 | QA tester | To be contracted | Part-time contractor | Functional, device and regression testing |
 | ECCD content reviewer | To be identified | ECCD specialist or early-childhood educator | Reviews and signs off every catalog item |
 | Data Protection Officer | To be identified | Barangay or city DPO | Reviews the privacy impact assessment and data handling |
-| Child Development Workers | Pilot center staff | Barangay Child Development Centers | Recommend the app to families, run caregiver onboarding, give feedback |
+| Child Development Workers | Pilot center staff | The two pilot Child Development Centers in La Paz | Recommend the app to families, run caregiver onboarding, give feedback |
 | Maintainer | To be named by the midpoint | Named in Section 15 | Runs and updates the system after handover |
 
 The three project-team roles are proposed for the team to confirm.

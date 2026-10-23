@@ -11,7 +11,7 @@
 
 **LittleSteps: Home Learning and Observation App for Barangay Child Development Centers**
 
-A Project Management Plan for **[client office, for example the Iloilo City ECCD office or the CSWDO district office]**, Iloilo City
+A Project Management Plan for the **Iloilo City Social Welfare and Development Office (CSWDO), La Paz–Lapuz District office**
 
 ---
 
@@ -26,7 +26,7 @@ A Project Management Plan for **[client office, for example the Iloilo City ECCD
 **Submitted to:**
 
 - [Instructor's name], CIT 246 IT Project Management, West Visayas State University, College of Information and Communications Technology
-- [Sponsor's name and position], [sponsor's office]
+- [Sponsor's name], OIC District Head, CSWDO La Paz–Lapuz District office
 
 **Date of submission:** 2 December 2026
 

@@ -13,8 +13,8 @@ Influence is how much the stakeholder can change the project's direction, fundin
 
 | # | Stakeholder | Internal or external | Relationship to the project | What they want from it | Influence | Why this influence level | Interest |
 |---|---|---|---|---|---|---|---|
-| 1 | CDW Supervisor or Barangay ECCD Committee head | Internal | **Project sponsor** | A tool that helps families continue learning at home without adding work for CDWs; evidence it works before wider rollout | High | Approves the charter, budget and changes, and decides whether centers take part in the pilot | High |
-| 2 | City Social Welfare and Development Office (district office supervising the pilot centers) | External | Oversees Child Development Centers through its district offices | Alignment with the city's ECCD program, data protection, and a sustainable cost after the project | High | Can approve or block the use of its centers and CDWs' time; its endorsement decides whether centers in other districts adopt the app | Medium |
+| 1 | OIC District Head, CSWDO La Paz–Lapuz District office | Internal | **Project sponsor**; supervises the district's Child Development Centers and CDWs | A tool that helps families continue learning at home without adding work for CDWs; evidence it works before taking it to the city | High | Approves the charter, budget and changes, chooses the two pilot centers, and assigns CDWs' time | High |
+| 2 | Iloilo City Social Welfare and Development Office, city head office | External | Oversees all district offices and the city's 200+ centers | Alignment with the city's ECCD program, data protection, and a sustainable cost after the project | High | Can overrule the district office on funds and policy; its endorsement decides whether other districts adopt the app | Medium |
 | 3 | Punong Barangay and Barangay Council | External | Funds and hosts the barangay center | Visible benefit to residents at low cost; no data or reputation problems for the barangay | High | Controls the barangay budget line for the center; can reprioritize funds | Low |
 | 4 | Child Development Workers at the pilot centers | Internal | Recommend the app and run caregiver onboarding | Less time preparing handouts; no extra reporting; content they trust | Medium | Do not control funding, but caregivers adopt what CDWs recommend, so they decide pilot uptake | High |
 | 5 | Parents and home caregivers of enrolled children | External | **Primary users** | Simple, free, private help in their language; ideas that use what they have at home; no judgement of their child | Medium | Individually low, but adoption (success criteria 1–3) depends entirely on them | High |
@@ -34,7 +34,7 @@ High influence means rated High in §5.1; lower influence means Medium or Low. H
 
 | | Low interest | Higher interest |
 |---|---|---|
-| **High influence** | **Keep satisfied:** Punong Barangay and Barangay Council (3) | **Manage closely:** CDW Supervisor (1), City Social Welfare and Development Office (2), Data Protection Officer (6), city ECCD office (13) |
+| **High influence** | **Keep satisfied:** Punong Barangay and Barangay Council (3) | **Manage closely:** OIC District Head (1), CSWDO city head office (2), Data Protection Officer (6), city ECCD office (13) |
 | **Lower influence** | **Monitor:** DILG city field office (14) | **Keep informed:** CDWs (4), caregivers (5), content reviewer (7), Barangay Health Workers (8), senior CDW (9), contractors (10), project team (11), CIT 246 faculty (12) |
 
 Within "keep informed", the CDWs (4), caregivers (5) and the senior CDW (9) are also involved directly, through interviews, co-review of content and onboarding sessions, because pilot adoption depends on them.
@@ -45,6 +45,6 @@ The senior CDW (stakeholder 9) has run home-learning support on paper for years 
 
 ## 5.4 Next Steps
 
-- Confirm the sponsor and the social welfare office contact during the client interview, and add names with their consent. Ask whether the city ECCD office (13) exists yet and who heads it.
+- Confirm with the OIC District Head that they will sponsor the project, and add names only with consent. Ask whether the city ECCD office (13) exists yet and who heads it.
 - Ask the sponsor whether a CDW at the pilot centers holds the view described for stakeholder 9, and adjust §5.3 to the real concerns.
 - Carry the engagement level of each stakeholder into the Communications Plan (Section 12).

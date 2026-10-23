@@ -48,7 +48,7 @@ Supporting functions: sign-in and sign-out, an account menu, settings, a plain-l
 | D6 | Flutter Android app | Runs on Android 10 and later on a phone with 3 GB of RAM; all six features pass their test cases; core screens load within 3 seconds on 4G; WCAG 2.2 AA contrast; touch targets of at least 48 pixels | Sponsor, after QA sign-off |
 | D7 | Test reports | Functional, device, security and usability test results; zero open high-severity defects at release | Quality lead |
 | D8 | Pilot evaluation report | Results of the 8-week pilot measured against the charter's success criteria 1–4 and 7 | Sponsor |
-| D9 | Training materials | A CDW guide and a caregiver quick-start sheet in English, Filipino and Hiligaynon; every pilot CDW trained | CDW Supervisor |
+| D9 | Training materials | A CDW guide and a caregiver quick-start sheet in English, Filipino and Hiligaynon; every pilot CDW trained | OIC District Head |
 | D10 | Google Play release | Published listing with the privacy notice; release signed with the client's key | Sponsor |
 | D11 | Handover package | Source code repositories, deployment runbook, admin guide and account credentials transferred; the maintainer deploys one update unaided | Maintainer and sponsor |
 
@@ -82,7 +82,7 @@ The following are explicitly **outside** the project:
 
 ## 6.6 Assumptions
 
-- The sponsor confirms two pilot Child Development Centers and their CDWs can attend two training sessions and the two-weekly demos.
+- The district office names two pilot Child Development Centers in La Paz, and their CDWs can attend two training sessions and the two-weekly demos.
 - At least 30 pilot households have an Android phone with mobile data or Wi-Fi at least weekly (to be confirmed by the survey in Section 3).
 - The ECCD Council and DepEd source materials can be adapted for the catalog with attribution, subject to the content reviewer's check.
 - A Data Protection Officer is available to review the privacy impact assessment within two weeks.
