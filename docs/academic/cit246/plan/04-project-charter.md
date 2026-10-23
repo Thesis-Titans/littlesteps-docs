@@ -68,7 +68,7 @@ The project succeeds when all of the following are met by the finish date, withi
 
 | Role | Name | Organization or position | Responsibility |
 |---|---|---|---|
-| Project sponsor | To be confirmed (named only with consent) | OIC District Head, CSWDO La Paz–Lapuz District office | Approves the charter, budget and major changes; accepts the final deliverables |
+| Project sponsor | Identified by role; not contacted for this plan | OIC District Head, CSWDO La Paz–Lapuz District office | Approves the charter, budget and major changes; accepts the final deliverables |
 | Project manager | Mark Alvin Cadangin | Project team, WVSU CICT | Plans and controls scope, schedule, cost and risk; reports to the sponsor; chairs the change control board |
 | Business analyst and quality lead | Mae Daniella Faith C. Benjamin | Project team, WVSU CICT | Requirements, acceptance criteria, test planning and usability evaluation |
 | Stakeholder and content coordinator | Nherie C. Acebuche | Project team, WVSU CICT | Stakeholder engagement, CDW and parent sessions, content review workflow, training materials |

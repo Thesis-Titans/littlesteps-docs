@@ -2,7 +2,7 @@
 
 **Plan section:** 3 ◆ (Checkpoint 2)  
 **Version:** 0.1 draft, 23 October 2026  
-**Status:** Draft for team review. Figures marked *planning estimate* are assumptions until the client interview confirms them (see §3.6).  
+**Status:** Draft for team review. The client was identified from public sources and was not contacted for this plan. City and district facts are sourced; figures marked *planning estimate* are the team's researched assumptions (see §3.6).  
 **Related Documents:** [Project Charter](04-project-charter.md), [Stakeholder Register](05-stakeholder-register.md), [Scope Statement](06-scope-statement.md), [Checkpoint 1 Concept](../checkpoint-1-concept.md)
 
 ---
@@ -37,9 +37,9 @@ Parents of children aged 0–5, and the grandparents, relatives or guardians who
 
 ### Quantifying the problem
 
-These are the measures the business case rests on. The center's own numbers replace the planning estimates after the client interview.
+These are the measures the business case rests on. City and district facts come from the public sources listed at the end of this section. Per-center figures are the team's planning estimates; the right-hand column says how the project would confirm each one in its first two weeks (the charter's "discover first" step).
 
-| Measure | Planning estimate | How the team will confirm it |
+| Measure | Planning estimate | How the project would confirm it |
 |---|---|---|
 | Children enrolled at each pilot CDC | 30 children across two sessions (60 across both pilot centers) | Enrollment list from the CDW (count only, no names) |
 | Families with an Android smartphone | 70% of enrolled families | Short show-of-hands survey at a parents' meeting |
@@ -102,12 +102,12 @@ The project is justified on cost-effectiveness rather than direct revenue, becau
 
 **Running cost after handover:** about ₱5,000 a month for cloud and AI services at pilot scale, plus a maintainer's time (named in Section 15).
 
-## 3.6 Evidence Still Needed
+## 3.6 Basis of This Case
 
-- Interview the OIC District Head and at least one CDW from each pilot center to replace every planning estimate in §3.2 with the centers' own numbers, and record the interview in Appendix 17.
-- Confirm that the OIC District Head agrees to act as sponsor and to be named, which two La Paz centers take part in the pilot, and whether funding would come from local funds, the Special Education Fund, the Gender and Development Fund or a grant.
-- Confirm the number of centers and CDWs the district office supervises, and how many families each pilot center serves.
-- Re-score the options in §3.3 with the sponsor's own weights.
+- **The client was researched, not contacted.** The CSWDO La Paz–Lapuz District office was chosen from public information as a realistic client for this course plan. No one at the office was interviewed, and the plan does not claim their agreement. Appendix 17 says so.
+- **What is sourced:** the size of the city and district, the number of ECCD centers, the legal setting and the national workforce figures (see Sources).
+- **What is estimated:** the per-center figures in §3.2, the number of centers in the district, the cost rates in §3.5 and the option scores in §3.3.
+- **How a real project would confirm them:** in its first two weeks, interview the OIC District Head and at least one CDW from each pilot center, confirm the sponsor, the two pilot centers and the funding source (local funds, the Special Education Fund, the Gender and Development Fund or a grant), and re-score the options with the sponsor's own weights.
 
 ## Sources
 
