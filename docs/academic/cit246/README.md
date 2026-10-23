@@ -4,7 +4,8 @@
 **Institution:** West Visayas State University — College of Information and Communications Technology  
 **Instructor Review:** Course Instructor & Academic Evaluators  
 **Key Deliverable:** 25–40 page Project Management Plan (Single PDF + Printed Copy at Faculty Office)  
-**Final Defense:** December 2, 2026 (15 min presentation + 5 min Q&A; all 5 members speak)  
+**CIT 246 Team:** Mark Alvin Cadangin (Lead), Nherie C. Acebuche, Mae Daniella Faith C. Benjamin. CIT 246 is taken by these three members, who share this track; the other two LittleSteps members are on a different track. CC 207B and CIT 210 involve all five members.  
+**Final Defense:** December 2, 2026 (15 min presentation + 5 min Q&A; all 3 CIT 246 team members speak)  
 
 ---
 

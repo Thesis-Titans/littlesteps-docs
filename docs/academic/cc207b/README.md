@@ -18,6 +18,7 @@
    - Data persistence via local storage or Firebase cloud services.
 2. **AI-Powered Feature:**
    - Direct end-user interaction (Activity suggestion helper).
+   - Service: Gemini API free tier, server-side, with the data conditions in [ADR-008](../../architecture-decisions.md).
    - Graceful failure with deterministic catalog fallback and strict RA 10173 data minimization.
 3. **Software Documentation Package:**
    - Overview & Introduction (Stack with specific versions).

@@ -15,6 +15,7 @@
 2. **API & Database Integration:**
    - Unified Node.js Express API with token-verified authorization.
    - Local integration testing via the Firebase Emulator Suite.
+   - Third-party services, called only from the API: the Gemini API for the AI helper ([ADR-008](../../architecture-decisions.md)) and Open-Meteo for optional weather-aware ideas ([ADR-009](../../architecture-decisions.md)).
 3. **Documentation:**
    - Shared documentation hierarchy with CC 207B.
    - Canonical OpenAPI contract maintained at [`openapi/openapi.yaml`](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml).

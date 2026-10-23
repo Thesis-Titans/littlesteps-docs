@@ -36,7 +36,8 @@ graph TD
     subgraph Persistence["Data & External Services Layer"]
         Firestore["Cloud Firestore<br/>(Caregiver-Scoped Collections)"]
         ReviewedCatalog["Static Reviewed Catalog<br/>(Verified Milestones & Activities)"]
-        ExternalAI["External AI Provider API<br/>(Sanitized Prompts Only)"]
+        ExternalAI["Gemini API, free tier<br/>(Sanitized Prompts Only · ADR-008)"]
+        Weather["Open-Meteo Forecast API<br/>(Rounded City Coordinates Only · ADR-009)"]
     end
 
     %% Client auth flows
@@ -56,6 +57,7 @@ graph TD
     %% AI Recommendation flow
     BOLAAuth -->|"Request Suggestion"| AIService
     AIService -->|"Sanitized Constraints"| ExternalAI
+    BOLAAuth -->|"Weather Hint (optional, cached 1h)"| Weather
     ExternalAI -.->|"Timeout / Error"| FallbackService
     FallbackService -->|"Approved Items"| ReviewedCatalog
     AIService -->|"Validated Catalog IDs"| ReviewedCatalog
@@ -158,3 +160,44 @@ graph TD
 - **Consequences:**
   - *Positive:* Clean git audit trail; satisfies CC 207B collaboration and peer review criteria.
   - *Trade-off:* Requires team discipline in opening PRs and conducting timely code reviews.
+
+---
+
+### ADR-008: Gemini API as the AI Provider, and the Free-Tier Data Decision
+- **Status:** Accepted (23 October 2026)
+- **Context:** ADR-006 needs a model provider for the AI helper (FR-06). The team has no budget for paid AI usage during the course. The Gemini API free tier (Google AI Studio) costs nothing, but under Google's terms for unpaid services, prompts and responses may be used to improve Google's products and may be read by human reviewers. On the paid tier they are not.
+- **Options Considered:**
+  1. *Gemini API paid tier or Vertex AI:* prompts are not used for training. (Deferred: needs billing the course project does not have.)
+  2. *Gemini API free tier with strict prompt minimization:* no cost; Google may use prompt content. (Chosen for the course.)
+  3. *No external model; deterministic matching only:* no data leaves the system, but it would not meet the CC 207B AI-powered feature requirement.
+- **Decision:** Use the Gemini API free tier, called only server-side, for development, testing and the 2 December 2026 course demonstration, under these conditions:
+  - Prompts carry only the coarse age band, time available, indoor or outdoor setting, a cleaned materials list and the language. Never a child's name, caregiver identifiers, location (including the weather city in ADR-009), observation notes or journal text (NFR-AI-02, NFR-PRIV-02).
+  - The materials text is cleaned on the server before it is sent: it is cut to a short length and reduced to recognized household-material words, so anything else a caregiver types (such as a name) is dropped.
+  - Only synthetic accounts and data are used while the free tier is in place (NFR-PRIV-03).
+  - The API key stays in server configuration (emulator environment or Functions secrets), never in a client.
+  - Free-tier rate limits are low, so a rate-limited or failed call uses the deterministic fallback (NFR-AI-03, UI/UX spec §7 J6).
+  - The model is a current Gemini Flash-class model, chosen and pinned in configuration at M4.
+- **Revisit trigger:** Before any real caregiver uses the AI helper (a pilot or production), move to the paid tier or Vertex AI, whose terms exclude training on prompts, and repeat the provider review.
+- **Consequences:**
+  - *Positive:* Meets the CC 207B AI requirement at no cost; the data at risk is limited to non-identifying activity constraints.
+  - *Trade-off:* Google may retain and review those constraints. Free-tier limits and terms can change, so recheck the terms at M4 and before the demonstration.
+
+---
+
+### ADR-009: Open-Meteo for Weather-Aware Indoor and Outdoor Ideas
+- **Status:** Accepted (23 October 2026)
+- **Context:** Rain and heat in Iloilo often decide whether an activity can happen outdoors. FR-02 (Today) and FR-06 (AI helper) already use an indoor or outdoor setting. A free weather source can suggest the right setting without the caregiver checking separately.
+- **Options Considered:**
+  1. *No weather data:* simplest; the caregiver always chooses the setting.
+  2. *Open-Meteo forecast and geocoding APIs:* open source, no API key, free for non-commercial use (limit 10,000 calls a day), data licensed CC BY 4.0. (Chosen.)
+  3. *Commercial weather APIs:* need keys and paid plans or accounts. (Rejected for the course.)
+- **Decision:** Use Open-Meteo for an optional weather hint, under these conditions:
+  - **Optional and coarse:** off by default. A caregiver can choose a city or municipality in Settings (looked up with Open-Meteo's geocoding API). The app stores only the place name and coordinates rounded to two decimal places. No device GPS is ever used, and the setting can be cleared at any time.
+  - **Server-side only:** our API calls Open-Meteo, so caregiver devices never contact it directly. Open-Meteo receives only the rounded coordinates, never account or child data. Responses are cached per rounded location for one hour to stay far below the daily limit.
+  - **What it changes:** on Today, when rain or strong heat is likely in the next few hours, a hint such as "Rain likely this afternoon · Indoor ideas" applies the Indoor filter. The AI helper preselects the matching setting, and the caregiver can change it. It is an enhancement to FR-02 and FR-06, not a seventh core feature.
+  - **Failure:** if Open-Meteo is slow (3-second timeout) or unavailable, the hint is simply not shown. No error state.
+  - **Attribution and terms:** wherever the hint appears, show "Weather data by Open-Meteo.com" with a link (CC BY 4.0). Use stays non-commercial; revisit if the project becomes commercial.
+  - **Scope:** planned in M4 and the first item dropped if the schedule slips.
+- **Consequences:**
+  - *Positive:* A visible, privacy-respecting third-party integration that fits the caregiver's real constraint.
+  - *Trade-off:* One more external dependency. Deployed Cloud Functions need the Firebase Blaze plan to make outbound calls; local emulator use is unaffected, and deployment is already gated on the billing review.

@@ -163,7 +163,7 @@ graph TD
     D4 --> Mod5["New Note Entry Form"]
     Root --> Acct["Account (header avatar menu, not a tab)"]
     Acct --> A1["Sign-in / Sign-out"]
-    Acct --> A2["Settings, Privacy Notice & About"]
+    Acct --> A2["Settings (incl. weather hint), Privacy Notice & About"]
     Acct --> A3["Help & Support"]
 ```
 
@@ -179,6 +179,11 @@ Sign-in and the settings, privacy-notice, about and help views cover PRQ-01 and 
 | **Touch Targets** | Standard interactive buttons (min 36px height). | **48 × 48px for frequent and primary controls**, 44 × 44px floor for secondary links (§2.3). |
 | **Advisory Banner** | Shown in full, in the neutral advisory style (§6.3), on the first visit to Today and Milestones. After it is dismissed, a persistent "Not a diagnostic tool" link stays in the page header and reopens it. | Same behavior; the link sits under the page title. |
 | **Page Titles** | The H1 repeats the tab or menu label (Today, Explore, Milestones, Journal, This week); slogans such as "Notice, don't score" become the subtitle. | Same. |
+
+
+### 5.3 Weather Hint (Optional)
+
+Off by default. When a caregiver chooses a city in Settings ("Weather for activity ideas"), Today shows a hint such as "Rain likely this afternoon · Indoor ideas" that applies the Indoor filter, and the AI helper preselects the matching setting. It carries the attribution "Weather data by Open-Meteo.com" and disappears silently when weather data is unavailable. See [ADR-009](architecture-decisions.md).
 
 ---
 

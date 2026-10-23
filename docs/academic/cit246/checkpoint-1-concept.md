@@ -3,7 +3,7 @@
 **Course:** CIT 246 — IT Project Management Plan  
 **Due Date:** October 14, 2026  
 **Format Specifications:** One page, A4, Arial 11  
-**Project Team:** Mark Alvin Cadangin (Lead) & LittleSteps Team (5 Members Total)  
+**Project Team:** Mark Alvin Cadangin (Lead), Nherie C. Acebuche, Mae Daniella Faith C. Benjamin (CIT 246 team of three)  
 **Academic Institution:** West Visayas State University — College of Information and Communications Technology  
 
 ---

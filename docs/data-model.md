@@ -37,6 +37,7 @@ Represents the authenticated parent or guardian account.
 | `uid` | string | Yes | Firebase Authentication UID (Primary Key). |
 | `email` | string | Yes | Account contact email from verified Firebase token. |
 | `displayName` | string | No | Optional caregiver display name (max 60 chars). |
+| `weatherLocation` | map | No | Optional weather-hint place: `{ name, latitude, longitude }`, coordinates rounded to 2 decimal places. Chosen by the caregiver; never from GPS ([ADR-009](architecture-decisions.md)). |
 | `createdAt` | timestamp | Yes | UTC creation timestamp. |
 | `updatedAt` | timestamp | Yes | UTC last update timestamp. |
 
