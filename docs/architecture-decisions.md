@@ -156,5 +156,5 @@ graph TD
   2. *Feature Branching with Mandatory Peer Review & CI Verification:* All work occurs on topic branches (`feat/*`, `docs/*`, `fix/*`), requires passing automated CI checks, and requires at least one teammate review.
 - **Decision:** Enforce branch protection on `main` across all repositories. Changes require a pull request, passing CI checks, and peer approval.
 - **Consequences:**
-  - *Positive:* Clean git audit trail; satisfies CC 207B collaboration and peer review criteria; protects frozen `littlesteps-flutter` repository from unintentional mutations.
+  - *Positive:* Clean git audit trail; satisfies CC 207B collaboration and peer review criteria.
   - *Trade-off:* Requires team discipline in opening PRs and conducting timely code reviews.

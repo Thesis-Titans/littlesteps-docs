@@ -13,8 +13,8 @@ LittleSteps is under active academic development. Only the latest commit on the 
 | **`littlesteps-docs`** | `main` | :white_check_mark: |
 | **`littlesteps-api`** | `main` | :white_check_mark: |
 | **`littlesteps-react`** | `main` | :white_check_mark: |
+| **`littlesteps-flutter`** | `main` | :white_check_mark: |
 | All other branches / forks / historical tags | Older revisions | :x: |
-| **`littlesteps-flutter`** | Pending external CC 207B course fork | *Isolated / Out of scope* |
 
 ---
 

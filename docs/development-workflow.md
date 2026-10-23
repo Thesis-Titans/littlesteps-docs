@@ -72,7 +72,7 @@ Following the governance audit ([Docs Issue #2](https://github.com/Thesis-Titans
    - **Continuous Contribution:** All 5 members must contribute commits throughout the project lifecycle, avoiding last-minute commits before the December 2, 2026 deadline.
    - **Individual Code Defense Readiness:** Each member must personally author, understand, and explain their committed code during the mandatory 2–3 minute individual code defense, including the ability to perform small live code edits (e.g., adding form fields, adjusting navigation).
    - **AI Usage Log Compliance:** Any AI-assisted code generation (allowed only for snippets, debugging, or sample fixtures) must be documented in the shared AI Usage Log. Wholesale generation of the app or unexplainable code is strictly prohibited.
-6. **Mobile Repository Boundary:**
-   - `littlesteps-flutter` remains strictly untouched on `main` pending the CC 207B external fork requirement.
+6. **Mobile Repository:**
+   - `littlesteps-flutter` is open for changes. It is private, so the branch protection, required status checks, and project-board coverage above are not yet configured there.
 7. **Synthetic Credentials & Exposure Verification:**
    - The test suite in `littlesteps-api/test/auth-emulator.test.ts` uses mock keys (`fake-api-key`) and local test passwords (`LocalTestPassword123!`). These values are strictly synthetic throwaway inputs for the ephemeral in-memory Firebase Auth Emulator and must never be reused in production, deployed environments, or real account credentials.

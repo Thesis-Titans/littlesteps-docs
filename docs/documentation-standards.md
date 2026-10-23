@@ -42,7 +42,7 @@ Level 3: Repository-Specific Documentation (`littlesteps-api`, `littlesteps-reac
 ### Hierarchy Rules:
 - **Canonical Source of Truth:** `littlesteps-docs` is the sole canonical authority for overall system architecture, product scope, cross-repo development workflows, data privacy, and legal/curriculum provenance.
 - **Repository READMEs:** Focused strictly on their specific codebase. They must link to the canonical documentation in `littlesteps-docs` rather than copying full workflow policies or system descriptions.
-- **Strict Mobile Isolation:** `littlesteps-flutter` remains private and strictly untouched pending the required CC 207B external fork. Community health files, workflows, and templates must **not** be applied to the mobile repository.
+- **Mobile Repository:** `littlesteps-flutter` is open for changes. Community health files, workflows, and templates have not yet been added to it.
 
 ---
 
@@ -129,7 +129,7 @@ These are intended locations for information, not a claim that every linked docu
 ### 6.2 Multi-Repository Community Health File Placement
 
 - **Location:** Maintain community health files as **explicit files within each active repository** (`littlesteps-docs`, `littlesteps-api`, and `littlesteps-react`).
-- **Rationale:** An organization-level `Thesis-Titans/.github` repository is intentionally **not used** so that default templates and policies do not inadvertently apply to `littlesteps-flutter`.
+- **Rationale:** An organization-level `Thesis-Titans/.github` repository is intentionally **not used**; each repository keeps explicit, stack-specific files. (This was originally chosen to keep defaults off `littlesteps-flutter` while it was frozen; that restriction has since been lifted.)
 
 ---
 
@@ -169,7 +169,7 @@ The table records the observed baseline at the time of this Stage 1 draft and th
 | | `CONTRIBUTING.md` | Web-specific test/lint commands and PR rules | Present on main (Stage 3) |
 | | `SECURITY.md` | Web security reporting pointer | Present on main (Stage 3; Private Vulnerability Reporting enabled) |
 | | PR / Issue Templates | Web UI change and test evidence templates | Present on main (Stage 3) |
-| **`littlesteps-flutter`** | All files | **Untouched** pending CC 207B fork | Preserved by scope; do not modify or audit for implementation changes in this workstream |
+| **`littlesteps-flutter`** | All files | Open for changes (restriction lifted) | Initial commit only; no community health files, templates, or CI yet |
 
 ---
 

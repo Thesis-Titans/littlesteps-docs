@@ -26,7 +26,7 @@ Canonical product requirements remain in [Product Scope](product-scope.md), arch
 Use **lightweight Scrum with a visible GitHub issue backlog**. Avoid fixed sprint dates until the group confirms availability and capacity.
 
 - **Product scope:** The six features in Product Scope remain the target scope. This plan orders delivery; it does not silently remove features.
-- **Initial execution focus:** API and Web. Keep the API contract client-neutral so the untouched Mobile repository can integrate later. Do not modify `littlesteps-flutter` while the CC 207B external-fork constraint remains.
+- **Initial execution focus:** API and Web. Keep the API contract client-neutral so the Mobile client can integrate later. `littlesteps-flutter` is no longer restricted.
 - **Iteration length:** Propose one-week sprints after backlog refinement and capacity confirmation. Do not assign dates or people yet.
 - **Planning unit:** Small, independently reviewable issues with a clear outcome, acceptance criteria, dependencies, and verification steps. Split issues further only when implementation details are known.
 - **Review:** Every change goes through a pull request. At least one teammate must review each PR (graded in CC 207B collaboration criteria). API/Web checks must pass; security and privacy acceptance criteria apply to child-scoped features.
@@ -63,7 +63,7 @@ Exit criteria:
 - A navigable UI prototype covering all six product capabilities (**FR-01** to **FR-06**) has been reviewed; findings and scope decisions are recorded.
 - API/Web feature implementation remains gated until prototype review, contract dependencies, and M0 exit criteria are complete.
 
-**Prototype-first gate:** Before feature implementation, create and review a navigable UI prototype covering desktop/tablet web and responsive mobile-sized browser views, while keeping `littlesteps-flutter` untouched. Follow the [UI/UX design specification](ui-ux-design-specification.md) and use synthetic data and simulated services. AI-assisted tooling is optional and does not replace design review or usability validation. Include key empty, loading, error, permission-denied, and deterministic AI fallback states, making privacy and non-diagnostic boundaries visible. Track this work in [Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15). The prototype is a validation artifact, not a substitute for API contract design or implementation tests.
+**Prototype-first gate:** Before feature implementation, create and review a navigable UI prototype covering desktop/tablet web and responsive mobile-sized browser views. Follow the [UI/UX design specification](ui-ux-design-specification.md) and use synthetic data and simulated services. AI-assisted tooling is optional and does not replace design review or usability validation. Include key empty, loading, error, permission-denied, and deterministic AI fallback states, making privacy and non-diagnostic boundaries visible. Track this work in [Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15). The prototype is a validation artifact, not a substitute for API contract design or implementation tests.
 
 ### M1 — Secure end-to-end foundation
 **Scope Traceability:** Implements foundation for **FR-01** (Child Profile); enforces **NFR-SEC-01** (Token auth), **NFR-SEC-02** (BOLA defense), and **NFR-PRIV-01** (Data minimization).
@@ -217,7 +217,7 @@ Keep work in progress small. Do not start dependent feature work while a key con
 - **Data model and privacy lifecycle:** Agree on caregiver-child ownership, required profile fields, deletion behavior, and retention before implementing persistent child/journal records.
 - **Authentication:** Firebase token verification exists in the API scaffold, but Web sign-in and child-level authorization are not complete.
 - **Deployment:** Local emulator work comes first. Deployment is gated on billing, privacy, security, and configuration review.
-- **Mobile:** Keep the repository untouched. Preserve a shared, client-neutral API contract for future integration.
+- **Mobile:** The restriction on `littlesteps-flutter` has been lifted, but when Flutter work starts is not yet decided. Preserve a shared, client-neutral API contract for its integration.
 - **Schedule and assignments:** No dates, sprint commitments, or assignees are set by this plan. Confirm team availability and review the refined backlog first.
 
 ## 8. Project setup cleanup and execution handoff
