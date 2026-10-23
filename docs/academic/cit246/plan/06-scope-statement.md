@@ -20,7 +20,7 @@
 
 ## 6.2 Product Scope Description
 
-LittleSteps is a free **Flutter app for Android phones** used mainly by parents, and by other caregivers such as grandparents where a family has them, backed by a small **Node.js/TypeScript API** with **Firebase Authentication** and the **Cloud Firestore** database. It has six features:
+LittleSteps is a free **Flutter app**, built from one cross-platform codebase that runs on Android, iOS and the web, used mainly by parents, and by other caregivers such as grandparents where a family has them, backed by a small **Node.js/TypeScript API** with **Firebase Authentication** and the **Cloud Firestore** database. It has six features:
 
 | # | Feature | What the parent can do |
 |---|---|---|
@@ -48,7 +48,7 @@ Supporting functions: sign-in and sign-out, an account menu, settings, a plain-l
 | D3 | Privacy impact assessment | Lists every data item, its purpose and retention; consent and deletion flows defined; approved before the pilot | Data Protection Officer |
 | D4 | Reviewed activity catalog | At least 80 items across all four domains (cognitive, motor, language, social-emotional) and every age band; each with a source, reviewer and review date | ECCD content reviewer |
 | D5 | Backend API and database | Every request is authenticated; a caregiver can never read or change another caregiver's data (tested); automated tests pass | Project manager and QA tester |
-| D6 | Flutter Android app | Runs on Android 10 and later on a phone with 3 GB of RAM; all six features pass their test cases; core screens load within 3 seconds on 4G; WCAG 2.2 AA contrast; touch targets of at least 48 pixels | Sponsor, after QA sign-off |
+| D6 | Flutter app (Android release for the pilot) | Runs on Android 10 and later on a phone with 3 GB of RAM; all six features pass their test cases; core screens load within 3 seconds on 4G; WCAG 2.2 AA contrast; touch targets of at least 48 pixels | Sponsor, after QA sign-off |
 | D7 | Test reports | Functional, device, security and usability test results; zero open high-severity defects at release | Quality lead |
 | D8 | Pilot evaluation report | Results of the 8-week pilot measured against the charter's success criteria 1–4 and 7 | Sponsor |
 | D9 | Training materials | A CDW guide and a parent quick-start sheet in English, Filipino and Hiligaynon; every pilot CDW trained | OIC District Head |
@@ -59,7 +59,7 @@ Supporting functions: sign-in and sign-out, an account menu, settings, a plain-l
 
 The following are explicitly **outside** the project:
 
-- An iPhone (iOS) app or a web app. The CIT 210 React web client built for coursework is not part of this project.
+- Publishing on the Apple App Store or hosting a public web version during this project; the same Flutter code can produce these later.
 - Any dashboard or report for CDWs, the barangay or the social welfare office that shows individual families' data.
 - Developmental screening, diagnosis, scores, percentiles, pass/fail labels or comparisons between children.
 - Replacing or digitizing the official ECCD Checklist used by CDWs.
@@ -78,7 +78,7 @@ The following are explicitly **outside** the project:
 - **Budget:** ₱1,083,185 including a 10% contingency reserve (charter and Section 9); changes above ₱50,000 need the sponsor's approval (Section 15).
 - **Duration:** 8 months, 4 January to 27 August 2027.
 - **Law and policy:** the Data Privacy Act of 2012 (RA 10173) and its implementing rules; the ECCD System Act of 2025 (RA 12199) and its implementing rules signed on 5 August 2026, which set up city ECCD offices and govern how the app relates to the official ECCD program.
-- **Platform:** Android only, on entry-level phones with limited storage and intermittent mobile data.
+- **Platform:** one Flutter codebase for Android, iOS and the web; the pilot is tested and released on Android, which most parents use, on entry-level phones with limited storage and intermittent mobile data.
 - **Content:** no catalog item is shown to parents until the content reviewer approves it with a recorded source and reuse permission.
 - **AI service:** the paid Gemini tier or Vertex AI is required before real parents use the AI helper, because the free tier's terms allow Google to use prompts; prompts carry only non-identifying constraints.
 - **Team:** two contracted developers and part-time design and QA support; the core team of three has no full-time Flutter developer of its own.

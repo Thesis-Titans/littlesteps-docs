@@ -57,7 +57,7 @@ At these estimates, one CDC loses the home record of about 8 children a year, a 
 | **A. Do nothing** | Keep paper notebooks, handouts and group chats | ₱0 | Every problem in §3.2 continues; lost records and CDW handout time recur every year |
 | **B. Improve the paper process** | A printed home-learning booklet with an activity bank and an observation log per family | About ₱40,000 to design once, plus about ₱4,500 a year per center to print (₱900,000 a year for 200 centers) | Still lost or damaged; no reminders or search; reprinting every year; no way to tailor ideas to the materials a family has |
 | **C. Recommend an existing commercial app** | Point parents to a free international baby-tracking app | ₱0 to the center | Not Philippine content or languages; unclear data use under the Data Privacy Act of 2012 (RA 10173); many show diagnostic-style scores |
-| **D. Build LittleSteps (recommended)** | A Flutter Android app for parents and other caregivers with a reviewed Philippine activity catalog, private observation journal and a constrained AI activity helper, on a small shared backend | About ₱1.17 million over 8 months (§3.5); refined bottom-up in Section 9 | Highest cost and needs a maintainer after handover |
+| **D. Build LittleSteps (recommended)** | A cross-platform Flutter app for parents and other caregivers with a reviewed Philippine activity catalog, private observation journal and a constrained AI activity helper, on a small shared backend | About ₱1.17 million over 8 months (§3.5); refined bottom-up in Section 9 | Highest cost and needs a maintainer after handover |
 
 ### Weighted scoring
 

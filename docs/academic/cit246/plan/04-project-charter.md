@@ -38,7 +38,7 @@ The dates come from the schedule in Section 8.
 
 ## 4.2 Project Objectives
 
-1. Give parents of children aged 0–5, and other caregivers who look after them at home, a free Android app that keeps a private record of what they observe at home and suggests low-cost, screen-free activities matched to their child's age.
+1. Give parents of children aged 0–5, and other caregivers who look after them at home, a free Flutter app, released on Android for the pilot, that keeps a private record of what they observe at home and suggests low-cost, screen-free activities matched to their child's age.
 2. Build a reviewed catalog of Philippine early-learning activities, stories and rhymes that CDWs can recommend with confidence.
 3. Protect children's and parents' data under the Data Privacy Act of 2012 (RA 10173), with no diagnostic scores or pass/fail labels.
 4. Hand over a running system, trained CDWs and a named maintainer so the app keeps working after the project ends.

@@ -93,7 +93,7 @@ flowchart TB
 | Project management (scope, schedule, cost, risk) | 1.0 | Yes (CIT 246) | — |
 | Requirements and usability testing | 2.1, 6.4 | Partly | Quality lead uses the course's UI/UX specification and walkthrough guide |
 | Flutter and Dart | 5.0 | Partly (CC 207B) | Contract experienced Flutter developers (Section 14) |
-| Node.js, TypeScript and Firebase | 4.0 | Partly (CIT 210) | Contracted developers; team reviews the code |
+| Node.js, TypeScript and Firebase | 4.0 | Partly | Contracted developers; team reviews the code |
 | Early-childhood development content | 3.0 | **No** | Contract an ECCD content reviewer |
 | Filipino and Hiligaynon translation | 3.2.2, 8.1 | Partly | Contract a translator; team checks for plain language |
 | Data privacy law (RA 10173) | 2.3 | **No** | Contract a privacy consultant; client's DPO approves |

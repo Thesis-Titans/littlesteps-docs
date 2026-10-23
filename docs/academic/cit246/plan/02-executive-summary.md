@@ -9,7 +9,7 @@
 
 **The problem.** Parents of young children in Iloilo City's La Paz and Lapuz districts get learning-at-home ideas from their Child Development Center through printed handouts, notebooks and group chats. Home records get lost, parents run out of low-cost activity ideas, and the popular baby apps are foreign, rarely in Filipino or Hiligaynon, and often show diagnostic-style scores. In our estimates, each center loses about 8 children's home records a year, and each Child Development Worker (CDW) spends about 80 hours a school year preparing handouts.
 
-**The proposed system.** LittleSteps is a free Android app for parents and other caregivers of children aged 0–5. They can keep a private record of what they notice, plan short, screen-free activities from a catalog of 80 reviewed Philippine activities, stories and rhymes, see a factual weekly summary, and ask an AI helper for ideas that match the time and materials they have. It never scores or labels a child, and journal notes never leave the parent's account.
+**The proposed system.** LittleSteps is a free Flutter app (one codebase for Android, iOS and the web, piloted on Android) for parents and other caregivers of children aged 0–5. They can keep a private record of what they notice, plan short, screen-free activities from a catalog of 80 reviewed Philippine activities, stories and rhymes, see a factual weekly summary, and ask an AI helper for ideas that match the time and materials they have. It never scores or labels a child, and journal notes never leave the parent's account.
 
 **The cost.** **₱1,083,185**, including a 10% contingency reserve of ₱98,471, estimated bottom-up from 49 work packages. Running costs after handover are about ₱5,000 a month.
 
