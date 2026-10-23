@@ -127,7 +127,18 @@ SUS ≥80 may be recorded as an aspirational usability benchmark if used, but it
 5. The responsible school/team authority must review privacy notice, lawful basis/consent, access, retention/deletion, withdrawal, vendor processing, and incident handling before collecting real data.
 6. Keep the prototype synthetic and simulated. No production implementation should begin as a side effect of this design artifact.
 
-## 7. Decisions to record during walkthrough
+## 7. Walkthrough questions from the design review
+
+The design system review of 23 October 2026 left these open on purpose. Ask them in the walkthrough and record the answers as findings:
+
+1. **Where to write:** "You noticed Maya stacking cups. Where would you record that?" Watch whether participants choose Milestones or the Journal, and whether they expect to find it in the other place later.
+2. **Shared phones:** "Does anyone else use this phone?" Only design a lock or other shared-device control if this comes up.
+3. **"Not sure":** When recording an observation, would a "Not sure" answer help alongside "Observed" and "Not yet observed"? Adding it would change the data model's `status` values.
+4. **The weekly tab:** Is "This week" clear as the name for the weekly reflection?
+5. **Evening use:** When do participants usually use their phone for this, and is the screen comfortable in dim light? A dark theme is decided after this.
+6. **Filipino text:** If any participant prefers Filipino or Hiligaynon, check that labels, tabs and chips still fit and read naturally.
+
+## 8. Decisions to record during walkthrough
 
 For each finding, record: observation, task/context, evidence excerpt or event, interpretation, alternative explanation, severity, confidence, proposed change, and whether the change is a usability fix or a scope decision. Keep observed facts separate from interpretations.
 
