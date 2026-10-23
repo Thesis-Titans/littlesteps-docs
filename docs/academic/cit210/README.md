@@ -4,6 +4,7 @@
 **Institution:** West Visayas State University — College of Information and Communications Technology  
 **Core Technologies:** React + TypeScript Web Application (Vite), Express Node.js API, Firebase Auth & Firestore  
 **Evaluation:** Presentation & Local Demonstration (December 2, 2026; no individual code defense)  
+**Source:** No instructor brief is on file yet. This page reflects the team's understanding of the course; check it against the brief when it is available.  
 
 ---
 
