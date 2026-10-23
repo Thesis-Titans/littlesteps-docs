@@ -116,6 +116,9 @@ Lower bands (15, 10, 0–5) apply when, for example, justification is not quanti
 
 ## Deliverables Index
 - [Checkpoint 1: One-Page Project Concept](checkpoint-1-concept.md)
+- Placeholders, completed last:
+  - [1. Title Page](plan/01-title-page.md)
+  - [2. Executive Summary](plan/02-executive-summary.md)
 - Checkpoint 2 drafts (version 0.1):
   - [3. Project Background and Business Case](plan/03-business-case.md)
   - [4. Project Charter](plan/04-project-charter.md)

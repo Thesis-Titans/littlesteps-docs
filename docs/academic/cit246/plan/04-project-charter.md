@@ -12,7 +12,7 @@
 | Field | Entry |
 |---|---|
 | **Project title** | LittleSteps: Home Learning and Observation App for Barangay Child Development Centers |
-| **Client organization** | Barangay Child Development Center and Child Development Worker network, Iloilo City |
+| **Client organization** | Iloilo City's network of more than 200 Child Development Centers, through the city ECCD office or the CSWDO district office that supervises the Child Development Workers; pilot at two barangay centers |
 | **Authorization date** | On sponsor sign-off (target: 8 January 2027) |
 | **Project start date** | 4 January 2027 |
 | **Projected finish date** | 27 August 2027 (8 months) |
@@ -68,7 +68,7 @@ The project succeeds when all of the following are met by the finish date, withi
 
 | Role | Name | Organization or position | Responsibility |
 |---|---|---|---|
-| Project sponsor | To be confirmed | CDW Supervisor or Barangay ECCD Committee head | Approves the charter, budget and major changes; accepts the final deliverables |
+| Project sponsor | To be confirmed | Head of the city ECCD office required by the RA 12199 implementing rules, or the CSWDO district head or CDW Supervisor who oversees the pilot centers | Approves the charter, budget and major changes; accepts the final deliverables |
 | Project manager | Mark Alvin Cadangin | Project team, WVSU CICT | Plans and controls scope, schedule, cost and risk; reports to the sponsor; chairs the change control board |
 | Business analyst and quality lead | Mae Daniella Faith C. Benjamin | Project team, WVSU CICT | Requirements, acceptance criteria, test planning and usability evaluation |
 | Stakeholder and content coordinator | Nherie C. Acebuche | Project team, WVSU CICT | Stakeholder engagement, CDW and caregiver sessions, content review workflow, training materials |

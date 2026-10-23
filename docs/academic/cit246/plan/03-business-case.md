@@ -9,7 +9,13 @@
 
 ## 3.1 The Organization
 
-The client is a **barangay Child Development Center (CDC)** in Iloilo City and the **Child Development Worker (CDW) network** that supervises it. CDCs run the community-based early childhood care and development (ECCD) program for children below five years old, under the oversight of the city's social welfare office and within the national ECCD system set by Republic Act No. 12199, the ECCD System Act of 2025.
+The client is a **barangay Child Development Center (CDC)** in Iloilo City and the **Child Development Worker (CDW) network** that supervises it. CDCs run the community-based early childhood care and development (ECCD) program for children below five years old, within the national ECCD system set by Republic Act No. 12199, the ECCD System Act of 2025.
+
+**The network in Iloilo City.** The city has 7 districts and 180 barangays, with a population of about 474,000 (2024, as reported from Philippine Statistics Authority figures). The city government reports **more than 200 operating ECCD centers** (January 2026), roughly one per barangay, and it is still building new ones. The City Social Welfare and Development Office (CSWDO) works through district offices; which office supervises the CDWs is to be confirmed with the client.
+
+**A changing legal setting.** The implementing rules of RA 12199, signed on 5 August 2026, require every city to set up a local **ECCD office** and to keep its child care facilities running. ECCD may be funded from local funds, the Special Education Fund and the Gender and Development Fund, and the Department of the Interior and Local Government (DILG) monitors compliance through the Seal of Good Local Governance. This makes ECCD a funded, monitored priority for the city, and gives the project a likely sponsor in the new city ECCD office.
+
+**The workforce.** Nationally there are about 89,000 child development workers against an estimated need of 240,000 for universal access. Their pay varies by local government, and many lack up-to-date training. A tool that saves CDWs time on home-learning handouts, without adding reporting work, fits that situation.
 
 What the center does:
 
@@ -40,14 +46,14 @@ These are the measures the business case rests on. The center's own numbers repl
 | Printing cost of home-activity handouts | ₱150 per family per school year | Center expense records or CDW estimate |
 | Caregivers who say they lack activity ideas at least once a week | 1 in 2 caregivers | Five to eight caregiver interviews during the walkthrough |
 
-At these estimates, one CDC loses the home record of about 8 children a year, a CDW spends about 80 hours a school year (40 weeks × 2 hours) on handouts, and printing costs about ₱4,500 a year per center. Across a network of 10 centers, that is roughly 80 lost records, 800 CDW hours and ₱45,000 in printing every school year.
+At these estimates, one CDC loses the home record of about 8 children a year, a CDW spends about 80 hours a school year (40 weeks × 2 hours) on handouts, and printing costs about ₱4,500 a year per center. The project pilots at 2 centers, but the app is designed for the whole city network: across the city's 200 or more centers, the same estimates add up to roughly 1,600 lost records, 16,000 CDW hours and ₱900,000 in printing every school year.
 
 ## 3.3 Options Considered
 
 | Option | What it means | One-time cost (rough order of magnitude) | Main drawback |
 |---|---|---|---|
 | **A. Do nothing** | Keep paper notebooks, handouts and group chats | ₱0 | Every problem in §3.2 continues; lost records and CDW handout time recur every year |
-| **B. Improve the paper process** | A printed home-learning booklet with an activity bank and an observation log per family | About ₱60,000 to design and print for 10 centers | Still lost or damaged; no reminders or search; reprinting every year; no way to tailor ideas to the materials a family has |
+| **B. Improve the paper process** | A printed home-learning booklet with an activity bank and an observation log per family | About ₱40,000 to design once, plus about ₱4,500 a year per center to print (₱900,000 a year for 200 centers) | Still lost or damaged; no reminders or search; reprinting every year; no way to tailor ideas to the materials a family has |
 | **C. Recommend an existing commercial app** | Point caregivers to a free international baby-tracking app | ₱0 to the center | Not Philippine content or languages; unclear data use under the Data Privacy Act of 2012 (RA 10173); many show diagnostic-style scores |
 | **D. Build LittleSteps (recommended)** | A Flutter Android app for caregivers with a reviewed Philippine activity catalog, private observation journal and a constrained AI activity helper, on a small shared backend | About ₱1.17 million over 8 months (§3.5); refined bottom-up in Section 9 | Highest cost and needs a maintainer after handover |
 
@@ -60,9 +66,9 @@ Each option is scored from 1 (poor) to 10 (strong) against criteria agreed with 
 | Keeps a lasting, private record for each caregiver | 25% | 2 | 4 | 6 | 9 |
 | Philippine, low-cost, age-banded activity content | 20% | 3 | 7 | 3 | 9 |
 | Child data protection under RA 10173, no diagnostic labels | 20% | 6 | 8 | 3 | 9 |
-| Cost to the organization | 20% | 10 | 7 | 9 | 3 |
+| Cost to the organization | 20% | 10 | 6 | 9 | 3 |
 | Fits caregivers' phones, time and languages | 15% | 4 | 6 | 5 | 8 |
-| **Weighted score** | **100%** | **4.90** | **6.30** | **5.25** | **7.65** |
+| **Weighted score** | **100%** | **4.90** | **6.10** | **5.25** | **7.65** |
 
 ## 3.4 Recommendation
 
@@ -90,12 +96,22 @@ The project is justified on cost-effectiveness rather than direct revenue, becau
 | Contingency reserve | 10% of subtotal | ₱106,150 |
 | **Total** | | **₱1,167,650** |
 
-**Benefits, at the planning estimates for a 10-center network:** about 800 CDW hours a year freed from preparing handouts, ₱45,000 a year in printing avoided, and about 80 fewer lost home records a year. These benefits are mostly non-financial: caregivers keep a continuous record, children get more screen-free play, and families avoid apps that misuse data or mislabel their child.
+**Benefits, at the planning estimates:** per center, about 80 CDW hours a year freed from preparing handouts, ₱4,500 a year in printing avoided, and about 8 fewer lost home records a year. If the city extends the app to all of its 200 or more centers after the pilot, that is about 16,000 CDW hours and ₱900,000 a year. Printing savings alone would cover the project cost in under two years of citywide use, before the running cost at that scale, which Section 9 estimates. These benefits are mostly non-financial: caregivers keep a continuous record, children get more screen-free play, and families avoid apps that misuse data or mislabel their child.
 
 **Running cost after handover:** about ₱5,000 a month for cloud and AI services at pilot scale, plus a maintainer's time (named in Section 15).
 
 ## 3.6 Evidence Still Needed
 
 - Interview the CDW supervisor and at least one CDW to replace every planning estimate in §3.2 with the center's own numbers, and record the interview in Appendix 17.
-- Confirm the sponsor's name and office, and whether funding would come from the barangay, the city social welfare office or a grant.
+- Confirm the sponsor's name and office (the new city ECCD office, the CSWDO district office or the barangay), and whether funding would come from local funds, the Special Education Fund, the Gender and Development Fund or a grant.
+- Confirm the current number of ECCD centers and CDWs in the city, and how many families each center serves.
 - Re-score the options in §3.3 with the sponsor's own weights.
+
+## Sources
+
+- Iloilo Today, "Iloilo City implements numerous programs, projects for Ilonggo children," 1 January 2026: https://www.iloilotoday.com/iloilo-city-programs-projects-for-ilonggo-children/
+- Districts and barangays of Iloilo City: https://en.wikipedia.org/wiki/Districts_of_Iloilo_City
+- Iloilo City 2024 population as reported from Philippine Statistics Authority figures: https://www.citypopulation.de/en/philippines/iloilo/
+- Daily Tribune, "DILG, DepEd set nationwide standards for early childhood care," 10 August 2026: https://tribune.net.ph/2026/08/10/dilg-deped-set-nationwide-standards-for-early-childhood-care
+- Philippine Institute for Development Studies, "PHL faces shortage of 33K daycare centers: study": https://pids.gov.ph/details/news/in-the-news/phl-faces-shortage-of-33k-daycare-centers-study
+- Republic Act No. 12199, ECCD System Act of 2025: https://lawphil.net/statutes/repacts/ra2025/ra_12199_2025.html

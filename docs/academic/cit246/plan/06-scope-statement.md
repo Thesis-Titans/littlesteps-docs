@@ -74,7 +74,7 @@ The following are explicitly **outside** the project:
 
 - **Budget:** ₱1,167,650 including contingency (charter); changes above ₱50,000 need sponsor approval.
 - **Duration:** 8 months, 4 January to 27 August 2027.
-- **Law and policy:** the Data Privacy Act of 2012 (RA 10173) and its implementing rules; the ECCD System Act of 2025 (RA 12199) for how the app relates to the official ECCD program.
+- **Law and policy:** the Data Privacy Act of 2012 (RA 10173) and its implementing rules; the ECCD System Act of 2025 (RA 12199) and its implementing rules signed on 5 August 2026, which set up city ECCD offices and govern how the app relates to the official ECCD program.
 - **Platform:** Android only, on entry-level phones with limited storage and intermittent mobile data.
 - **Content:** no catalog item is shown to caregivers until the content reviewer approves it with a recorded source and reuse permission.
 - **AI service:** the paid Gemini tier or Vertex AI is required before real caregivers use the AI helper, because the free tier's terms allow Google to use prompts; prompts carry only non-identifying constraints.
