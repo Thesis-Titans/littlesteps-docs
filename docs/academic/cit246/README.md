@@ -16,7 +16,11 @@
 - The project must be for an organization or business with a **real problem** that the group has access to (for example a barangay, LGU office, school, clinic, cooperative, small business, NGO, or a CICT or WVSU office).
 - It must be large enough to need managing, **roughly six to twelve months of work with a budget the group can defend**, but small enough that the group could plausibly deliver it.
 
-For LittleSteps this means the plan describes a 6–12 month project for the proposed client (a barangay Early Childhood Care and Development center or child development network in Iloilo City), covering build, pilot, training and handover, with peso costs. It is a separate document from the [execution plan](../../execution-plan.md), which schedules the six-week course build.
+For LittleSteps this means the plan describes a 6–12 month project for the proposed client (a barangay Early Childhood Care and Development center or child development network in Iloilo City), covering build, pilot, training and handover, with peso costs. It is a separate document from the [execution plan](../../execution-plan.md), which schedules the real one-month course build (October 26 to November 25, 2026).
+
+- **The timeline is a practice plan.** The 6–12 month schedule exercises the course's planning methods; it does not describe how the team actually builds the course project. The plan's risk, stakeholder, quality and communication work is still used in the real build.
+- **The planned system is the Flutter app.** CIT 246 is coupled with CC 207B, so the plan describes the Flutter Android app on the shared Node.js/TypeScript API with Firebase Authentication and Firestore. The React web client from CIT 210 is not part of this plan. The [Checkpoint 1 concept](checkpoint-1-concept.md) mentioned both clients; the full plan narrows the scope to the Flutter app and its backend.
+- **Where it is written:** each template section is a Markdown file in this folder, reviewed through pull requests, then exported to one A4, Arial 11 PDF.
 
 ## 2. Checkpoints
 
@@ -106,7 +110,8 @@ Lower bands (15, 10, 0–5) apply when, for example, justification is not quanti
 | Checkpoint 2 and 3 dates | **Ask the instructor**; the brief leaves them blank |
 | Team of three | The brief's template mentions "all five members" on the title page and in the signed contribution statement. **Confirm with the instructor** that three names and three signatures are correct for this group. |
 | Client organization and sponsor | **Open:** no barangay ECCD center or child development worker supervisor contacted yet. The appendices require evidence of client contact. |
-| Project scale | The plan must cover a 6–12 month project with a peso budget, not the six-week course build |
+| Project scale | The plan must cover a 6–12 month project with a peso budget, not the one-month course build |
+| Scope narrowed to Flutter | The Checkpoint 1 concept described both the Flutter and React clients; the full plan covers only the Flutter app and its backend. **Mention this to the instructor** with the Checkpoint 2 submission. |
 | Reusable inputs | [Product scope](../../product-scope.md) (in and out of scope), [architecture decisions](../../architecture-decisions.md) (including the paid AI tier in ADR-008 as a cost line), [security, privacy and AI safeguards](../../security-privacy-ai.md) and the execution plan's work packages. Rewrite them in the course and Schwalbe formats. |
 
 ## Deliverables Index
