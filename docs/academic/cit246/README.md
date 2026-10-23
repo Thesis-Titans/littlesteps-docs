@@ -116,3 +116,4 @@ Lower bands (15, 10, 0–5) apply when, for example, justification is not quanti
 
 ## Deliverables Index
 - [Checkpoint 1: One-Page Project Concept](checkpoint-1-concept.md)
+- Client contact: [request letter to the CSWDO La Paz–Lapuz District office](client-request-letter.md) and the [interview and walkthrough guide](../../client-interview-and-walkthrough-guide.md)
