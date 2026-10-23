@@ -29,7 +29,7 @@ The checkpoints are not optional and are not graded separately. A group that ski
 | Checkpoint | Deliverable | Due | Status |
 |---|---|---|---|
 | **Checkpoint 1** | One-page project concept: the organization, the problem, the proposed system and the possible sponsor (Arial 11, A4). Must be approved before the full document is started. | October 14, 2026 | Drafted (see [Checkpoint 1 Concept](checkpoint-1-concept.md)); **submission and approval not yet recorded** |
-| **Checkpoint 2** | Charter, stakeholder register and scope statement (template sections 3–6) | To be announced | Not started |
+| **Checkpoint 2** | Charter, stakeholder register and scope statement (template sections 3–6) | To be announced | Drafted for team review (see the [plan sections](#deliverables-index)); client interview figures still needed |
 | **Checkpoint 3** | WBS, schedule and cost baseline (template sections 7–9) | To be announced | Not started |
 | **Final submission** | Complete Project Management Plan (PDF, Google Drive, printed copy) | December 2, 2026 | Not started |
 | **Presentation** | 15 minutes per group plus 5 minutes of questions | December 2, 2026 | Not started |
@@ -116,3 +116,8 @@ Lower bands (15, 10, 0–5) apply when, for example, justification is not quanti
 
 ## Deliverables Index
 - [Checkpoint 1: One-Page Project Concept](checkpoint-1-concept.md)
+- Checkpoint 2 drafts (version 0.1):
+  - [3. Project Background and Business Case](plan/03-business-case.md)
+  - [4. Project Charter](plan/04-project-charter.md)
+  - [5. Stakeholder Register and Analysis](plan/05-stakeholder-register.md)
+  - [6. Scope Statement](plan/06-scope-statement.md)
