@@ -104,7 +104,7 @@ Per CC 207B requirements, a 5-member team must deliver at least 6 core features 
 - **Preconditions:** Caregiver is securely authenticated.
 - **Inputs:** Narrative text notes, date/time, optional associated milestone tag or activity link, privacy confirmation.
 - **Processing:** The server validates ownership and stores journal entries with access controls. The implementation must prevent journal text from entering analytics, error logs, or external AI requests; verify this with tests and payload/log inspection.
-- **Outputs:** Chronological reverse-ordered personal journal feed with search and date filters; full text view; edit/delete controls.
+- **Outputs:** Chronological reverse-ordered personal journal feed with search and date filters; full text view; edit/delete controls. Search covers only the caregiver's own entries and does not use a search index (see [Data Model](data-model.md) §2.5).
 - **Verification Method:** Automated API tests confirming non-leakage to AI endpoints; authorization tests verifying cross-user access denial (403/404).
 
 ### FR-04: Story, Rhyme, and Learning Activity Library
