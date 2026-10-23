@@ -103,7 +103,7 @@ This prototype treatment should be compared against the canonical six-feature sc
 
 ## 5. Prototype walkthrough acceptance criteria
 
-Record evidence for each criterion rather than relying only on a participant saying they like the design.
+Record evidence for each criterion rather than relying only on a participant saying they like the design. Recruit mainly parents, since they are the primary users; include one or two other caregivers, such as a grandparent, if available.
 
 - [ ] A reviewer can navigate the core caregiver flow at desktop/tablet and mobile-sized browser widths.
 - [ ] All six canonical capabilities are represented. Any omission needs a scope decision recorded in Docs Issue #15 before the walkthrough.

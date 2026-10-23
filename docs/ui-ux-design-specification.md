@@ -102,17 +102,17 @@ These rules come from the design system review of 23 October 2026 and apply to e
 
 ## 3. Illustrative Personas and Research Limitations
 
-These personas are design aids, not validated user profiles. They combine secondary sources, project assumptions, and limited preliminary fieldwork (`P01`). P01 is one exploratory interview and does not support population-level conclusions. Do not attribute a persona detail to P01 unless the interview record directly supports it.
+These personas are design aids, not validated user profiles. The primary users are parents, so the main personas are a mother and a father; other caregivers such as grandparents are secondary users. They combine secondary sources, project assumptions, and limited preliminary fieldwork (`P01`). P01 is one exploratory interview and does not support population-level conclusions. Do not attribute a persona detail to P01 unless the interview record directly supports it.
 
-### Persona 1: "Maricel" — Working Mother / Primary Caregiver
-- **Illustrative scenario:** A working caregiver in Western Visayas caring for a 14-month-old child. Demographic details are fictional and are not findings from P01.
+### Persona 1: "Maricel" — Working Mother (parent)
+- **Illustrative scenario:** A working mother in Western Visayas caring for a 14-month-old child. Demographic details are fictional and are not findings from P01.
 - **Device & Environment:** Assumes a mid-range Android phone and prepaid mobile data as a design scenario; validate device-sharing and connectivity needs with intended users.
 - **Possible Practices:** Storybooks, household-item play, and family discussion are examples for design exploration, not established facts about a representative caregiver.
 - **Design Hypotheses to Validate:** Limited time, conflicting online advice, and data costs may affect activity selection; test these assumptions with intended users.
 - **Design Response to Test:** Offer short activity filters, household-material options, and low-data browsing. Offline availability must be verified in the prototype and implementation.
 
-### Persona 2: "Tatay Jun" — Solo / Hands-On Father
-- **Illustrative scenario:** A hands-on caregiver with daytime responsibility for a four-year-old child. Details are fictional design assumptions.
+### Persona 2: "Tatay Jun" — Solo / Hands-On Father (parent)
+- **Illustrative scenario:** A hands-on father with daytime responsibility for a four-year-old child. Details are fictional design assumptions.
 - **Device & Environment:** Assumes a budget Android phone and a preference for limited child screen time; validate these assumptions.
 - **Possible Practices:** A kitchen whiteboard, outdoor play, and board games are illustrative examples, not validated observations.
 - **Design Hypotheses to Validate:** Some caregivers may find milestone checklists judgmental or have concerns about school readiness and advertising; validate these concerns directly.
