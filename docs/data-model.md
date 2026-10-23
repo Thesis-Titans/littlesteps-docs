@@ -100,7 +100,9 @@ Confidential qualitative reflections by the caregiver.
 | `updatedAt` | timestamp | Yes | UTC last update timestamp. |
 
 > [!CAUTION]
-> **AI Isolation:** The `content` field is strictly excluded from telemetry, search indexing, and external AI prompts (NFR-PRIV-02).
+> **AI Isolation:** The `content` field is strictly excluded from telemetry, search indexes, and external AI prompts (NFR-PRIV-02).
+>
+> **Journal search (FR-03):** Search runs only over the signed-in caregiver's own entries, as an ownership-checked filter at request time. No search index or third-party search service stores journal text.
 
 ---
 
