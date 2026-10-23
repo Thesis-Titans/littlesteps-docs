@@ -34,7 +34,7 @@ The table below defines the planned system scope. Inclusion does not mean a capa
 
 The intended users are parents, legal guardians, and home caregivers of children aged 0–5 years. The characteristics below are design considerations to validate, not established claims about all caregivers:
 
-- **Physical Multitasking:** Caregivers frequently operate devices one-handed while holding a child or managing household chores. The interface requires natural thumb-zone placement and large touch targets ($\ge$ 44px).
+- **Physical Multitasking:** Caregivers frequently operate devices one-handed while holding a child or managing household chores. The interface requires natural thumb-zone placement and large touch targets ($\ge$ 48px for frequent controls, never below 44px).
 - **Divided Attention & Cognitive Load:** Use short, scannable instructions and avoid clinical jargon or guilt-inducing streaks. The assumed time available for an activity has not been validated with intended users.
 - **Connectivity:** Intermittent connectivity and data costs are design considerations. The system should favor lightweight content and define offline behavior; the prevalence of these constraints among intended users remains to be validated.
 - **Shared Devices:** Shared-device use is a risk to consider. Authentication, session handling, and protection against accidental edits require usability and security validation.
@@ -74,7 +74,7 @@ The application organizes activities and milestone prompts across seven navigati
 The following capabilities are mandatory architectural prerequisites supporting the entire application, but under CC 207B course rules they are cross-cutting infrastructure rather than standalone core features:
 
 - **PRQ-01: Caregiver Authentication & Account Management** — Secure sign-up, sign-in, and session management via Firebase Authentication (email/password).
-- **PRQ-02: Responsive Shell & Navigation** — Five-tab bottom navigation (Mobile) and persistent sidebar/header (Web) adhering to ergonomic standards and touch targets ($\ge$ 44px).
+- **PRQ-02: Responsive Shell & Navigation** — Five-tab bottom navigation (Mobile) and persistent sidebar/header (Web) adhering to ergonomic standards and touch targets ($\ge$ 48px for frequent controls, never below 44px).
 - **PRQ-03: System Configuration & Informational Views** — Application settings, privacy policy notices, offline cache controls, and about views.
 
 ---
