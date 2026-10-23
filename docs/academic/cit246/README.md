@@ -29,10 +29,10 @@ The checkpoints are not optional and are not graded separately. A group that ski
 | Checkpoint | Deliverable | Due | Status |
 |---|---|---|---|
 | **Checkpoint 1** | One-page project concept: the organization, the problem, the proposed system and the possible sponsor (Arial 11, A4). Must be approved before the full document is started. | October 14, 2026 | Drafted (see [Checkpoint 1 Concept](checkpoint-1-concept.md)); **submission and approval not yet recorded** |
-| **Checkpoint 2** | Charter, stakeholder register and scope statement (template sections 3–6) | To be announced | Not started |
-| **Checkpoint 3** | WBS, schedule and cost baseline (template sections 7–9) | To be announced | Not started |
-| **Final submission** | Complete Project Management Plan (PDF, Google Drive, printed copy) | December 2, 2026 | Not started |
-| **Presentation** | 15 minutes per group plus 5 minutes of questions | December 2, 2026 | Not started |
+| **Checkpoint 2** | Charter, stakeholder register and scope statement (template sections 3–6) | To be announced | Drafted for team review (see the [plan sections](#deliverables-index)); per-center figures are researched estimates, since the client was not contacted |
+| **Checkpoint 3** | WBS, schedule and cost baseline (template sections 7–9) | To be announced | Drafted for team review (see the [plan sections](#deliverables-index)) |
+| **Final submission** | Complete Project Management Plan (PDF, Google Drive, printed copy) | December 2, 2026 | All 17 sections drafted (version 1.0 draft); team review, PDF export and printing still to do |
+| **Presentation** | 15 minutes per group plus 5 minutes of questions | December 2, 2026 | [Outline](plan/presentation-outline.md) drafted; slides still to make |
 
 ## 3. Key Deliverables
 
@@ -116,3 +116,23 @@ Lower bands (15, 10, 0–5) apply when, for example, justification is not quanti
 
 ## Deliverables Index
 - [Checkpoint 1: One-Page Project Concept](checkpoint-1-concept.md)
+- Project Management Plan (version 1.0 draft):
+  - [1. Title Page](plan/01-title-page.md)
+  - [2. Executive Summary](plan/02-executive-summary.md)
+  - [3. Project Background and Business Case](plan/03-business-case.md) ◆
+  - [4. Project Charter](plan/04-project-charter.md) ◆
+  - [5. Stakeholder Register and Analysis](plan/05-stakeholder-register.md)
+  - [6. Scope Statement](plan/06-scope-statement.md) ◆
+  - [7. Work Breakdown Structure](plan/07-work-breakdown-structure.md) ◆
+  - [8. Schedule](plan/08-schedule.md) ◆
+  - [9. Cost Estimate and Budget](plan/09-cost-estimate-and-budget.md) ◆
+  - [10. Quality Management Plan](plan/10-quality-management-plan.md)
+  - [11. Resource and Responsibility Plan](plan/11-resource-and-responsibility-plan.md)
+  - [12. Communications Plan](plan/12-communications-plan.md)
+  - [13. Risk Register](plan/13-risk-register.md) ◆
+  - [14. Procurement Plan](plan/14-procurement-plan.md)
+  - [15. Change Control and Closing Plan](plan/15-change-control-and-closing-plan.md)
+  - [16. Conclusion](plan/16-conclusion.md)
+  - [17. Appendices](plan/17-appendices.md)
+  - Data: [schedule and cost (CSV)](plan/data/schedule-and-cost.csv), [monthly cost baseline (CSV)](plan/data/cost-baseline-by-month.csv)
+- [Presentation outline](plan/presentation-outline.md)
