@@ -60,10 +60,10 @@ Exit criteria:
 - Each execution issue has acceptance criteria, dependencies, and a verification approach.
 - No tasks are assigned until the team has reviewed the backlog and confirmed capacity.
 - The OpenAPI contract and product-scope documents are identified as the requirements sources of truth.
-- A navigable UI prototype covering all six product capabilities (**FR-01** to **FR-06**) has been reviewed; findings and scope decisions are recorded.
+- A navigable Figma prototype covering all six product capabilities (**FR-01** to **FR-06**) has been reviewed; findings and scope decisions are recorded.
 - API/Web feature implementation remains gated until prototype review, contract dependencies, and M0 exit criteria are complete.
 
-**Prototype-first gate:** Before feature implementation, create and review a navigable UI prototype covering desktop/tablet web and responsive mobile-sized browser views. Follow the [UI/UX design specification](ui-ux-design-specification.md) and use synthetic data and simulated services. AI-assisted tooling is optional and does not replace design review or usability validation. Include key empty, loading, error, permission-denied, and deterministic AI fallback states, making privacy and non-diagnostic boundaries visible. Track this work in [Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15). The prototype is a validation artifact, not a substitute for API contract design or implementation tests.
+**Prototype-first gate:** Before feature implementation, create and review a navigable **Figma** prototype covering desktop (1280px) and mobile-browser (375px) views. Because the prototype is built in Figma rather than code, React development starts only after the prototype is approved. Follow the [UI/UX design specification](ui-ux-design-specification.md) and use synthetic data and simulated services. AI-assisted tooling is optional and does not replace design review or usability validation. Include key empty, loading, error, permission-denied, and deterministic AI fallback states, making privacy and non-diagnostic boundaries visible. Track this work in [Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15). The prototype is a validation artifact, not a substitute for API contract design or implementation tests.
 
 ### M1 — Secure end-to-end foundation
 **Scope Traceability:** Implements foundation for **FR-01** (Child Profile); enforces **NFR-SEC-01** (Token auth), **NFR-SEC-02** (BOLA defense), and **NFR-PRIV-01** (Data minimization).
@@ -159,7 +159,7 @@ Use epics/work packages to group work. Create implementation issues only after t
 | Work package | Main deliverables | Traceability (Standards & Scope) | Depends on |
 |---|---|---|---|
 | **WP-0: Execution readiness** | Reconciled governance work, agreed backlog and board conventions | PMBOK Scope Baseline, M0 | Existing documentation PRs/issues |
-| **WP-0.5: Prototype and journey validation** | Navigable prototype, reviewed caregiver journeys, documented findings | ISO 9241, FR-01–FR-06 validation | Product scope, architecture, privacy; M0 |
+| **WP-0.5: Prototype and journey validation** | Navigable Figma prototype, reviewed caregiver journeys, documented findings | ISO 9241, FR-01–FR-06 validation | Product scope, architecture, privacy; M0 |
 | **WP-1: Shared contract and data model** | API schema, ownership model, validation/error conventions | IEEE 1016 Interface View, NFR-SEC-02 | M0 and prototype review |
 | **WP-2: Authenticated child-profile slice** | API endpoints, ownership tests, Web auth/profile flow, emulator | FR-01, PRQ-01, NFR-SEC-01, NFR-PRIV-01 | WP-1 |
 | **WP-3: Learning catalog** | Catalog schema/API and Web discovery | FR-04, Philippine content provenance | Content metadata decision; Issue #3 |
@@ -234,7 +234,7 @@ Keep work in progress small. Do not start dependent feature work while a key con
 
 - Review and approve or revise this execution plan before treating it as the delivery baseline.
 - Configure and verify the shared GitHub Project board, including cross-repository issue visibility and the agreed workflow fields/statuses.
-- Plan, create, and review the navigable UI prototype tracked in [Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15); do not start API/Web feature implementation until prototype review findings are recorded.
+- Plan, create, and review the navigable Figma prototype tracked in [Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15); do not start API/Web feature implementation until prototype review findings are recorded.
 - Create native GitHub milestones aligned with the agreed milestone outcomes and associate execution issues with them.
 - Review all API/Web backlog issues against the Definition of Ready, add explicit blocking links where supported, and ensure each issue has testable acceptance criteria and verification steps.
 - Verify that project-management setup work is separated from product-delivery work on the board.

@@ -74,6 +74,9 @@ These are design scenarios, not observed journeys or claims about how most careg
 
 ### P0 — Core walkthrough
 
+All six canonical capabilities are P0. The weekly summary and the AI helper are core features in the product scope, and an AI-powered feature is a CC 207B requirement, so they are not optional.
+
+- Sign-in, plus settings, privacy notice, and about views reachable from the header avatar.
 - Responsive caregiver home/dashboard with synthetic data.
 - Child switcher/profile and age-band context.
 - Learning library with source/provisional-review metadata.
@@ -81,17 +84,17 @@ These are design scenarios, not observed journeys or claims about how most careg
 - Non-diagnostic observation entry and review.
 - Empty, loading, error, unauthorized/permission-denied, and simulated offline states.
 - Clear privacy boundary and content-source attribution.
-- Desktop/tablet and mobile-sized browser layouts. The native Flutter client is outside this prototype.
+- Factual weekly participation summary based solely on synthetic records.
+- Constrained suggestion-helper simulation with catalog-grounded options and deterministic fallback.
+- Figma frames at 1280px (desktop) and 375px (mobile browser), following the coverage rule in [UI/UX Design Specification §7](ui-ux-design-specification.md). The native Flutter client is outside this prototype.
 
 ### P1 — Secondary evaluation, only if the core flow remains coherent
 
-- Factual weekly participation summary based solely on synthetic records.
 - Language selection/alternate-language samples.
-- Constrained suggestion-helper simulation with catalog-grounded options and deterministic fallback.
 
 ### Out of scope for this prototype
 
-- Production backend/API integration, migrations, live database writes, cloud billing, real child/caregiver data, real external AI calls, or native mobile implementation.
+- Any code. The prototype is built in Figma; production backend/API integration, migrations, live database writes, cloud billing, real child/caregiver data, real external AI calls, and native mobile implementation are all excluded.
 - Clinical scores, diagnosis, pass/fail milestone labels, or unsupported developmental claims.
 - Public child profiles, social feeds, or open child-to-child messaging.
 - Claims of validated demand, developmental efficacy, or sustained adoption.
@@ -103,7 +106,7 @@ This prototype treatment should be compared against the canonical six-feature sc
 Record evidence for each criterion rather than relying only on a participant saying they like the design.
 
 - [ ] A reviewer can navigate the core caregiver flow at desktop/tablet and mobile-sized browser widths.
-- [ ] All six canonical capabilities are represented or any omission is explicitly logged as a scope decision.
+- [ ] All six canonical capabilities are represented. Any omission needs a scope decision recorded in Docs Issue #15 before the walkthrough.
 - [ ] A reviewer can find an activity and explain the displayed instructions.
 - [ ] A reviewer can add/review a non-diagnostic observation without confusing it with a clinical assessment.
 - [ ] The interface visibly distinguishes source-attributed content from placeholder or not-yet-reviewed content.

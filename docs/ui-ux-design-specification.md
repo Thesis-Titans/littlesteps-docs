@@ -4,7 +4,7 @@
 **Governing Standard:** ISO 9241 (Ergonomics of Human-System Interaction) & WCAG 2.2 AA  
 **Associated Gate:** [Docs Issue #15 — [M0] Plan and validate the LittleSteps UI prototype before implementation](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)  
 **Related Documents:** [Product Scope](product-scope.md), [Traceability Matrix](traceability-matrix.md), [Prototype Traceability & Storyboards](prototype-traceability-storyboards.md), [Philippine Content Provenance](philippine-content-provenance.md)  
-**Repository Boundaries:** `littlesteps-api` remains strictly untouched.
+**Prototype Medium:** Figma. This gate changes no code in `littlesteps-api`, `littlesteps-react`, or `littlesteps-flutter`.
 
 ---
 
@@ -13,9 +13,9 @@
 Before establishing interface specifications, the technical boundaries are explicitly affirmed:
 
 1. **Gated Validation Before Implementation:** This document establishes the interaction and interface specification for the **Figma prototype and usability evaluation**. Feature implementation in code remains gated under [Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15).
-2. **Mobile Experience via Responsive Web:** The mobile prototype experience is delivered exclusively via **responsive mobile browser layouts (375px–414px viewports) inside `littlesteps-react` (React + TypeScript)**.
-3. **Flutter Outside This Prototype Gate:** The prototype covers responsive web layouts only, so no Flutter code is part of this gate. The earlier freeze on `littlesteps-flutter` has been lifted.
-4. **Synthetic Data & Simulated Services Only:** The prototype operates entirely on in-memory mock client state and simulated latencies (`demo-littlesteps`). Zero live Firestore database writes or cloud billing.
+2. **Mobile Experience as Responsive Web Frames:** Mobile is prototyped as **375px Figma frames** of the responsive browser layout, and desktop as **1280px frames**. `littlesteps-react` implements these layouts only after the prototype is approved. Tablet behavior (768px–1024px) is specified in §5.2 but does not need its own frames.
+3. **Flutter Outside This Prototype Gate:** The prototype covers responsive web layouts only; native Flutter screens are not prototyped in this gate.
+4. **Synthetic Data Only:** Frames use the synthetic profiles Maya (14 months) and Liam (48 months) and sample catalog entries. Loading, error, permission-denied, offline, and AI-fallback behavior are shown as separate frames or component variants linked by prototype interactions; nothing connects to Firestore, the API, or an AI provider.
 
 ---
 
@@ -37,7 +37,7 @@ graph TD
 
 | Heuristic | Caregiver Context & Friction | LittleSteps UI/UX Implementation |
 |---|---|---|
-| **1. Visibility of System Status** | Caregivers operating on spotty mobile data need immediate certainty that their observations are safe. | **Optimistic UI Updates:** 1-tap completion marks items immediately with a subtle status indicator (*"Saved locally ✓"* or *"Pending sync"*). Never freeze the screen or block interaction with full-page spinners. |
+| **1. Visibility of System Status** | Caregivers operating on spotty mobile data need immediate certainty about whether their observations were saved. | **Clear Save Status:** 1-tap completion shows an immediate, non-blocking status (*"Saved ✓"*, or *"Not saved — you're offline"* with Retry). Never freeze the screen or block interaction with full-page spinners. Offline queuing of changes is not yet in scope (see §7). |
 | **2. Match System with Real World** | Parents think in terms of daily family rhythms (morning playtime, naptime, wind-down), not database entities. | Information architecture mirrors household realities: *"Quick 10-min games"*, *"Kitchen items"*, *"Living room floor play"*. Avoid clinical terminology. |
 | **3. User Control & Freedom** | Distracted caregivers holding infants frequently tap the wrong button. | **5-Second Undo Toast:** Destructive or state-changing actions (completing an activity, deleting a journal draft) trigger a floating, non-blocking undo toast rather than jarring modal confirmations. |
 | **4. Consistency & Standards** | Caregivers must not re-learn interaction models between desktop and mobile. | Unified color semantics (Terracotta = primary actions; Amber = non-diagnostic advisory; Sage = outdoor/nature; Indigo = private lock). Standard bottom tab bar on mobile; persistent sidebar on desktop. |
@@ -45,7 +45,7 @@ graph TD
 | **6. Recognition Over Recall** | Sleep-deprived caregivers have diminished working memory capacity. | Activity cards display required household items as visual pill tags at the top of the card. Step-by-step instructions chunked into a maximum of 3–4 concise bullet points. |
 | **7. Flexibility & Efficiency** | Caregiver time availability varies wildly from day to day (5 minutes vs 30 minutes). | 1-tap quick filters on the home dashboard: *"Under 10 mins"*, *"No materials needed"*, *"Indoor"*. |
 | **8. Aesthetic & Minimalist Design** | Visual clutter and dense text exacerbate parental stress. | Clean, spacious layouts with high whitespace. Soft neutral backgrounds (`#F8F7F4`, `#FFFFFF`). **Strictly zero gamification streaks, countdown timers, or guilt-inducing badges.** |
-| **9. Help Recognize & Recover from Errors** | Technical error codes alienate non-technical caregivers. | Non-technical, reassuring error copy: *"We couldn't connect right now. Your note is safely stored on this phone and will save once you're back online."* |
+| **9. Help Recognize & Recover from Errors** | Technical error codes alienate non-technical caregivers. | Non-technical, reassuring error copy that never overstates what was saved: *"We couldn't connect right now. Your note hasn't been saved yet. Keep this screen open and tap Retry when you're back online."* |
 | **10. Contextual Coaching & Help** | Parents need guidance on *how* to facilitate play, not just instructions. | Embedded **Caregiver Coaching Tips** on activity cards (*"Tip: Follow your child's lead. If they look away, it's okay to stop or switch games."*). |
 
 ---
@@ -69,13 +69,13 @@ graph TD
     end
 ```
 
-- **Natural Thumb Zone Optimization:** The bottom 35% of the mobile screen contains all primary triggers: the 4-tab bottom navigation bar and sticky action sheets.
+- **Natural Thumb Zone Optimization:** The bottom 35% of the mobile screen contains all primary triggers: the 5-tab bottom navigation bar and sticky action sheets.
 - **Fitts’s Law Touch Targets:** All primary mobile interactive elements have a **minimum touch target size of 44 × 44 CSS pixels** with at least 8px spacing between adjacent targets, preventing mis-taps.
 
 ---
 
 ### 2.4 Accessibility (WCAG 2.2 AA) & Calm Technology
-- **Contrast Ratios:** Primary slate body text (`#1E293B`) against white cards (`#FFFFFF`) achieves a contrast ratio of **12.6:1**, significantly exceeding the WCAG 4.5:1 requirement. Secondary text (`#64748B`) achieves **4.6:1**.
+- **Contrast Ratios:** Primary slate body text (`#1E293B`) against white cards (`#FFFFFF`) achieves **14.6:1**, exceeding the WCAG 4.5:1 requirement. Secondary text (`#475569`) achieves **7.6:1** on white and **7.1:1** on Warm Cloud. White button text on Terracotta (`#BF4828`) achieves **5.0:1**.
 - **Readable Typography:** Body text is constrained to a **minimum of 16px** with 1.5 line-height (`line-height: 24px`) to ensure rapid readability in low-light evening environments.
 - **Calm Technology Principles (Weiser & Brown):**
   - No ambient push alerts that demand urgent attention.
@@ -146,13 +146,18 @@ graph TD
     D2 --> Mod3["Constrained AI Activity Helper"]
     D3 --> Mod4["Observation Record Action Sheet"]
     D4 --> Mod5["New Note Entry Form"]
+    Root --> Acct["Account (header avatar menu, not a tab)"]
+    Acct --> A1["Sign-in / Sign-out"]
+    Acct --> A2["Settings, Privacy Notice & About"]
 ```
+
+Sign-in and the settings, privacy-notice, and about views cover PRQ-01 and PRQ-03 from the [Traceability Matrix](traceability-matrix.md); they sit behind the header avatar so the navigation stays at five tabs. Offline-cache controls appear in Settings only if offline storage is adopted (see §7).
 
 ### 5.2 Responsive Layout Adaptations
 
 | Screen Element | Desktop / Tablet Web (1200px+ / 768px–1024px) | Mobile Viewport (375px–414px) |
 |---|---|---|
-| **Primary Navigation** | Fixed left sidebar (240px) with brand mark, child switcher, and 5 navigation tabs. | Sticky top bar (brand + child avatar) + **Fixed bottom tab bar** (4 primary icons). |
+| **Primary Navigation** | Fixed left sidebar (240px) with brand mark, child switcher, and 5 navigation tabs. | Sticky top bar (brand + child avatar) + **Fixed bottom tab bar** with the same 5 tabs (Today, Explore, Milestones, Journal, Insights), each at least 44 × 44px. |
 | **Child Switcher** | Dropdown menu in sidebar showing Maya (14m) and Liam (48m). | Compact horizontal pills or header avatar toggle with active age band badge. |
 | **Dashboard Layout** | 2-column grid: Left = Today's Plan & AI Helper; Right = Weekly Summary & Milestones. | Single-column stacked cards optimized for vertical thumb scrolling. |
 | **Touch Targets** | Standard interactive buttons (min 36px height). | **Strict touch ergonomics: Minimum 44px × 44px touch targets** for one-handed operation. |
@@ -162,13 +167,13 @@ graph TD
 
 ## 6. Design System Tokens & Foundations
 
-### 6.1 Color Palette (Calm, Approachable, WCAG 2.1 AA Compliant)
-- **Primary / Brand:** Warm Terracotta (`#D9532F`) — warm, reassuring, non-clinical.
+### 6.1 Color Palette (Calm, Approachable, WCAG 2.2 AA Contrast)
+- **Primary / Brand:** Warm Terracotta (`#BF4828`) — warm, reassuring, non-clinical. White text on it measures 5.0:1. The earlier `#D9532F` measured 4.0:1 with white text and failed AA for normal-size text.
 - **Secondary / Nature Accent:** Gentle Sage (`#4A7C59`) — for activity tags and outdoor play.
 - **Neutral Background:** Warm Cloud (`#F8F7F4`) — soft on caregiver eyes in dim evening light.
 - **Surface / Card Background:** Pure White (`#FFFFFF`) with subtle border (`#E5E7EB`).
-- **Primary Text:** Deep Slate (`#1E293B`) — high contrast (**12.6:1** ratio against white).
-- **Secondary Text:** Slate Neutral (`#64748B`) — for timestamps and helper labels (**4.6:1** ratio).
+- **Primary Text:** Deep Slate (`#1E293B`) — high contrast (**14.6:1** ratio against white).
+- **Secondary Text:** Slate (`#475569`) — for timestamps and helper labels (**7.6:1** on white, **7.1:1** on Warm Cloud). The earlier `#64748B` measured 4.4:1 on Warm Cloud and failed AA.
 - **Status Accents:**
   - *Non-Diagnostic Advisory:* Warm Amber (`#FEF3C7` bg, `#92400E` text/border).
   - *Completed / Observed:* Olive Soft (`#DCFCE7` bg, `#166534` text).
@@ -187,16 +192,20 @@ Use clean, highly readable modern sans-serif (**Inter** or **Plus Jakarta Sans**
 
 ## 7. Mandatory 5-State Interaction Matrix
 
-Every user journey in the Figma prototype must include all five interaction states:
+Every user journey in the Figma prototype must include all five interaction states. **Frame coverage:** the populated state is required at both 1280px and 375px for every journey; the other states are required at 375px and may be reused at desktop width when only the layout container changes.
 
-| Journey / Screen | 1. Populated (Default) | 2. Empty State | 3. Loading (Skeleton) | 4. Error / Blocked (`{ error: { code, message } }`) | 5. Offline / AI Fallback |
+| Journey / Screen | 1. Populated (Default) | 2. Empty State | 3. Loading (Skeleton) | 4. Error / Permission-denied (`{ error: { code, message } }`) | 5. Offline (Simulated) / AI Fallback |
 |---|---|---|---|---|---|
-| **J1: Child Profile** | Maya (14m) & Liam (48m) with age-band badges. | "No children added yet. Add a profile to get age-tailored ideas." | Profile card pulse skeleton. | `INVALID_INPUT`: "Name must be 1–50 characters; age must be 0–71 months." | Profile data retrieved from local cache; offline badge shown. |
-| **J2: Daily Plan** | 2 scheduled activities with completion toggles. | "No activities planned for today. Tap below to pick a 10-minute game!" | Activity card pulse skeleton. | `NOT_FOUND`: "Activity not found. Reverted to cached schedule." | "Working offline: Activity marked complete. Will sync when connected." |
-| **J3: Milestones** | Domain-grouped prompts with "Observed on [date]". | "No observations recorded yet. Look for small moments during play." | Milestone prompt pulse skeleton. | `INTERNAL_ERROR`: Safe error banner; zero stack traces exposed. | Observation saved to client storage; local checkmark displayed. |
-| **J4: Private Journal** | Date-stamped notes with `🔒 Private` badge. | "Your journal is private to you. Jot down a memory or funny moment." | Note list pulse skeleton. | `PAYLOAD_TOO_LARGE`: "Note exceeds 100kb limit. Please shorten entry." | Note saved locally with pending sync icon; encrypted lock badge visible. |
-| **J5: Learning Library** | Filterable catalog cards with provisional review chips. | "No activities found matching your filters. Try clearing 'Materials'." | Catalog grid pulse skeleton. | `SERVICE_UNAVAILABLE`: "Catalog temporarily unavailable. Tap to retry." | Offline catalog loaded from cache; full activity instructions accessible. |
+| **J1: Child Profile** | Maya (14m) & Liam (48m) with age-band badges. | "No children added yet. Add a profile to get age-tailored ideas." | Profile card pulse skeleton. | `INVALID_INPUT`: "Name must be 1–50 characters; age must be 0–71 months." | Last-viewed profile shown with offline badge; editing disabled with "Reconnect to save changes." |
+| **J2: Daily Plan** | 2 scheduled activities with completion toggles. | "No activities planned for today. Tap below to pick a 10-minute game!" | Activity card pulse skeleton. | `NOT_FOUND`: "Activity not found. Reverted to cached schedule." | "You're offline. This activity wasn't marked complete." with Retry. |
+| **J3: Milestones** | Domain-grouped prompts with "Observed on [date]". | "No observations recorded yet. Look for small moments during play." | Milestone prompt pulse skeleton. | `INTERNAL_ERROR`: Safe error banner; zero stack traces exposed. | "You're offline. Your observation wasn't saved." Entered text stays on screen with Retry. |
+| **J4: Private Journal** | Date-stamped notes with `🔒 Private` badge. | "Your journal is private to you. Jot down a memory or funny moment." | Note list pulse skeleton. | `PAYLOAD_TOO_LARGE`: "Note exceeds 100kb limit. Please shorten entry." | "You're offline. Your note wasn't saved." Draft stays on screen with Retry; `🔒 Private` badge still visible. |
+| **J5: Learning Library** | Filterable catalog cards with provisional review chips. | "No activities found matching your filters. Try clearing 'Materials'." | Catalog grid pulse skeleton. | `SERVICE_UNAVAILABLE`: "Catalog temporarily unavailable. Tap to retry." | Only activities labeled "Available offline" open; others show "Needs a connection." |
 | **J6: AI Activity Helper** | Tailored suggestion grounded in catalog ID #104. | Form with time, materials, and setting inputs. | Animated shimmering helper card. | `RATE_LIMITED`: "Suggestion limit reached. Please wait a moment." | **Deterministic Fallback:** "AI helper offline. Here are top recommended activities for Maya's age group." |
+
+**Permission-denied frames:** J1 also includes a signed-out frame (`UNAUTHENTICATED`: "Please sign in again to continue."), and J4 includes an access-denied frame for a profile or note that belongs to another caregiver (API returns 403/404 per NFR-SEC-02: "This item isn't available to your account.").
+
+**Offline frames are simulated.** They must never claim that data was saved or synced while offline. Whether the React app will store or queue changes offline is an open implementation decision; the prototype shows the no-queue behavior above until that decision is recorded.
 
 ---
 
@@ -204,10 +213,15 @@ Every user journey in the Figma prototype must include all five interaction stat
 
 When preparing the prototype for course instructor and faculty review, the team must verify:
 
-- [ ] **Viewport Parity:** Both Desktop (1280px) and Mobile (375px) frames are synchronized across all 6 core capabilities.
+- [ ] **Figma Link Recorded:** The Figma file link, with view access for reviewers, is posted in Docs Issue #15.
+- [ ] **Viewport Coverage:** Populated frames exist at 1280px and 375px for all 6 core capabilities; other state frames follow the §7 coverage rule.
+- [ ] **Navigation Consistency:** The same five tabs appear in the desktop sidebar and the mobile bottom bar; sign-in, settings, privacy notice, and about are reachable from the header avatar.
+- [ ] **Permission-denied Frames:** J1 signed-out and J4 access-denied frames are present.
 - [ ] **Ergonomic Verification:** All primary buttons and tabs in mobile frames meet minimum **44 × 44 CSS pixels**.
 - [ ] **Advisory Banner Visible:** Global non-diagnostic disclaimer prominently displayed on Home and Profile screens.
 - [ ] **Provisional Attribution Displayed:** Sourced catalog cards include *"Provisional Academic Reference — Pending Review"*.
 - [ ] **Private Journal Isolation Demonstrated:** Visual lock icon and privacy notice confirm notes are excluded from AI prompts.
 - [ ] **Deterministic Fallback Clickable:** Walkthrough demonstrates what occurs when the AI helper is offline.
+- [ ] **Honest Offline States:** No offline frame claims data was saved or synced.
+- [ ] **Contrast Checked:** Text and button colors match §6.1 and meet WCAG 2.2 AA (4.5:1 for normal text).
 - [ ] **Zero Clinical Language:** UI audit verifies absence of words like *"delayed"*, *"score"*, *"pass/fail"*, or *"screening"*.

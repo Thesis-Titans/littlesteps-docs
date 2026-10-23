@@ -64,7 +64,7 @@ The application organizes activities and milestone prompts across seven navigati
 - **Non-Diagnostic Assumption:** Caregivers use the platform for home routine support and observational prompts; the system assumes caregivers understand it does not replace pediatric consultations.
 - **Emulator-First Constraint:** Engineering and test execution utilize the local Firebase Emulator Suite (`demo-littlesteps`); production deployment remains gated on billing, security, and institutional privacy reviews.
 - **Shared Architecture Constraint:** A single unified Node.js Express API and Firestore schema must serve both React web (CIT 210) and Flutter mobile (CC 207B) frontends without divergent security rules.
-- **Prototype Validation Constraint:** Responsive mobile layouts in `littlesteps-react` are used for prototype validation (Docs Issue #15).
+- **Prototype Validation Constraint:** Figma frames of the responsive web layout (1280px desktop, 375px mobile browser) are used for prototype validation (Docs Issue #15); `littlesteps-react` implements them after approval.
 - **Content Provenance Constraint:** Production deployment of real Philippine rhymes, traditional games, and milestone prompts remains gated on verified source locators and permissions review (Docs Issue #3). Synthetic fixtures are used for development.
 
 ---
