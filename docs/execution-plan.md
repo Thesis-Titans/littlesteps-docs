@@ -18,9 +18,9 @@ Canonical product requirements remain in [Product Scope](product-scope.md), arch
 ### 1.1 Hard Academic Deadlines
 - **October 14, 2026:** **CIT 246 Checkpoint 1** (One-page project concept covering Organization, Problem, Proposed System, and Possible Sponsor; A4, Arial 11). Documented in [CIT 246 Checkpoint 1 Concept](academic/cit246/checkpoint-1-concept.md).
 - **December 2, 2026:** **Final Submission & Demonstrations for All Three Courses:**
-  - **CC 207B:** LMS submission, 5–10 min presentation, live demo + backup video, and **Individual Code Defense** (2–3 min/member with live code modification).
+  - **CC 207B:** LMS submission, 5–10 min presentation, live demo + backup video, and **Individual Code Defense** (2–3 min/member with live code modification). Self and peer assessment follows the day after. See the [CC 207B requirements](academic/cc207b/README.md).
   - **CIT 210:** Presentation, local live demo of React app reading/writing shared data, and shared documentation.
-  - **CIT 246:** Final 25–40 page IT Project Management Plan (PDF + printed copy), 15 min presentation + 5 min Q&A.
+  - **CIT 246:** Final 25–40 page Project Management Plan for a 6–12 month project (one PDF on Google Drive plus a printed copy), 15 min presentation + 5 min Q&A by the three-member CIT 246 team. Checkpoint 2 and 3 dates are still to be announced. See §1.4.
 
 ### 1.2 Delivery Approach
 Use **lightweight Scrum with a visible GitHub issue backlog**. Avoid fixed sprint dates until the group confirms availability and capacity.
@@ -40,6 +40,9 @@ CC 207B grades a Flutter application built on the same API and data as the web c
 - **Repository:** Flutter work happens in `Thesis-Titans/littlesteps-flutter` for now. If the course instructor provides a repository to fork, move the work there by pushing the full Git history (all branches and tags), never by copying files, so each member's commits survive. Pull-request reviews do not move with Git history, so ask the instructor early whether reviews in `littlesteps-flutter` count, or start using the course repository as soon as it exists.
 - **Platform:** Android phones (the [architecture](architecture-decisions.md) targets Dart on Android, and the personas use Android). Flutter stable channel with Material 3.
 - **Design source:** the reviewed 375px mobile-web frames, adapted to Material 3 widgets as listed in the [UI/UX Design Specification](ui-ux-design-specification.md) §9. Flutter screens are not prototyped separately.
+- **Collaboration is graded from history.** CC 207B grades the commit and pull-request history, and peer ratings (20% of each member's score) must cite contributions visible in GitHub. From now on each member commits their own work from their own account, including docs and planning, and reviews teammates' pull requests.
+- **AI Use Policy.** Members write their own code. AI-generated code snippets, text content and image assets must be recorded in the AI Usage Log; generating the application wholesale is not allowed; reflections and self and peer assessments are written without AI. See [CC 207B requirements](academic/cc207b/README.md) §3.
+- **UI must follow the presented prototypes.** CC 207B requires the app's UI to follow most of the low- and high-fidelity prototypes the group presented in class. Confirm with the instructor which prototypes count. The Figma file has high-fidelity frames but no low-fidelity wireframes yet (see §8).
 - **Course requirements mapped to the plan:**
 
 | CC 207B requirement | Where it is met |
@@ -47,12 +50,28 @@ CC 207B grades a Flutter application built on the same API and data as the web c
 | Six core user-facing features (sign-in, splash, About and Settings do not count) | FR-01 to FR-06, delivered in M1–M4 |
 | Async operations with visible loading, empty and error states | UI/UX spec §7 state matrix, built in every Flutter screen |
 | At least one validated form with clear error feedback | Child profile form (J1), plus the observation and journal forms |
-| Data persistence (local storage or Firebase) | The shared API and Firestore |
+| Data persistence (local storage or Firebase) | The shared API and Firestore, plus local storage for drafts and the dismissed advisory |
 | User-facing AI feature with graceful failure and data minimization | FR-06 AI helper, M4 |
-| Documentation package (stack versions, prototypes and screenshots, topic coverage matrix, AI feature specification, AI usage log, individual reflections) | Prepared during M5 |
+| Folders organized by purpose, with comments on significant code | littlesteps-flutter #2: `lib/screens`, `lib/widgets`, `lib/models`, `lib/services`, `assets/` and the comment convention |
+| README with setup and run steps; secrets excluded through `.gitignore` | littlesteps-flutter #2 |
+| Libraries and packages with their purpose; technology stack with versions | The README packages table from littlesteps-flutter #2, compiled into the documentation in M5 |
+| Low- and high-fidelity prototypes | High-fidelity Figma frames exist; low-fidelity wireframes still to create (§8) |
+| Documentation package (overview, functional requirements, Topic Coverage Matrix, AI Feature Specification, future enhancements and roadmap, AI Usage Log, individual reflections) | Prepared during M5 (littlesteps-flutter #13) |
+| Self and peer assessment (30% of each member's score) | Contributions visible in the commit and pull-request history |
 | Forked repository, feature branches, teammate-reviewed pull requests | This section and §5 |
 
-- **Repository setup still needed:** `littlesteps-flutter` has only a README. It needs a contributor guide, PR and issue templates, a CI check (`flutter analyze` and `flutter test`), and native milestones M1–M5. It is private, and branch protection on a private repository needs a paid GitHub plan, so either make it public like the other repositories or enforce teammate review by team agreement until it moves.
+- **Repository setup:** tracked in littlesteps-flutter #2 (folders, comment convention, `.gitignore`, README, packages list, contributor guide, templates and a CI check running `flutter analyze` and `flutter test`). Milestones M1–M5 exist. The repository is private, and branch protection on a private repository needs a paid GitHub plan, so either make it public like the other repositories or enforce teammate review by team agreement until it moves.
+
+### 1.4 CIT 246 Project Management Plan
+
+CIT 246 is a separate deliverable from this execution plan. This plan schedules the six-week course build; the CIT 246 plan is the document the three-member CIT 246 team writes as the project management team for a proposed IT project.
+
+- **What it plans:** a **6–12 month** project for the proposed client (a barangay Early Childhood Care and Development center or child development network in Iloilo City), covering build, pilot, training and handover, with a defensible budget **in pesos**. Production costs that the course build avoids belong there, for example the paid Gemini tier or Vertex AI required before real caregivers use the AI helper ([ADR-008](architecture-decisions.md)) and the Firebase Blaze plan for deployment.
+- **No code:** the group plans the project and does not build it for this course.
+- **Structure:** the instructor's 17-section template, the 12 key deliverables and the course and Schwalbe formats, as listed in the [CIT 246 requirements](academic/cit246/README.md).
+- **Checkpoints:** Checkpoint 1 (concept) was due 14 October; its approval is not yet recorded. Checkpoint 2 (sections 3–6) and Checkpoint 3 (sections 7–9) dates are to be announced.
+- **Shared dependency:** both CIT 246 and CC 207B need a real client. The CIT 246 appendices require evidence of client contact (interview notes, correspondence or a letter).
+- **Reusable inputs:** product scope (in and out of scope), architecture decisions, the security and privacy safeguards, and the work packages in §4, rewritten in the course formats rather than copied.
 
 ## 2. Product Target & Team Sizing Derivation
 
@@ -85,7 +104,7 @@ Exit criteria:
 - A navigable Figma prototype covering all six product capabilities (**FR-01** to **FR-06**) has been reviewed; findings and scope decisions are recorded.
 - API/Web feature implementation remains gated until prototype review, contract dependencies, and M0 exit criteria are complete.
 
-**Prototype-first gate:** Before feature implementation, create and review a navigable **Figma** prototype covering desktop (1280px) and mobile-browser (375px) views. Because the prototype is built in Figma rather than code, React development starts only after the prototype is approved. Follow the [UI/UX design specification](ui-ux-design-specification.md) and use synthetic data and simulated services. AI-assisted tooling is optional and does not replace design review or usability validation. Include key empty, loading, error, permission-denied, and deterministic AI fallback states, making privacy and non-diagnostic boundaries visible. Track this work in [Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15). The prototype is a validation artifact, not a substitute for API contract design or implementation tests.
+**Prototype-first gate:** Before feature implementation, create and review a navigable **Figma** prototype covering desktop (1280px) and mobile-browser (375px) views. Because the prototype is built in Figma rather than code, React development starts only after the prototype is approved. Follow the [UI/UX design specification](ui-ux-design-specification.md) and use synthetic data and simulated services. AI-assisted tooling is optional and does not replace design review or usability validation. Include key empty, loading, error, permission-denied, and deterministic AI fallback states, making privacy and non-diagnostic boundaries visible. Track this work in [Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15). The prototype is a validation artifact, not a substitute for API contract design or implementation tests. CC 207B also requires low-fidelity prototypes in its documentation, so sketch or wireframe the main journeys alongside the Figma prototype.
 
 ### M1 — Secure end-to-end foundation
 **Scope Traceability:** Implements foundation for **FR-01** (Child Profile); enforces **NFR-SEC-01** (Token auth), **NFR-SEC-02** (BOLA defense), and **NFR-PRIV-01** (Data minimization).
@@ -276,7 +295,10 @@ Checked against GitHub on 23 October 2026.
 
 **Still open**
 
-- **Flutter track:** planned in §1.3 and in each milestone. Next: create `littlesteps-flutter` milestones (M1–M5) and issues, set up the repository (contributor guide, templates, CI), and ask the course instructor about the fork and review rules.
+- **Flutter track:** planned in §1.3. Milestones M1–M5 and issues #2–#13 exist in `littlesteps-flutter`. Next: assign slices so every member owns Flutter code, and ask the course instructor about the fork and review rules.
+- **Low-fidelity prototypes:** CC 207B documentation requires low- and high-fidelity prototypes, and the app's UI must follow those the group presented. Create low-fidelity wireframes for the main journeys and confirm with the instructor which prototypes count.
+- **Real client:** contact a barangay ECCD center or child development worker supervisor. CC 207B expects a real or realistic client, and the CIT 246 appendices require evidence of contact.
+- **CIT 246 checkpoints:** record Checkpoint 1's submission and approval, get the Checkpoint 2 and 3 dates, and confirm that three names and signatures are correct for the three-member team (§1.4).
 - **Backlog readiness:** review all API and Web backlog issues against the Definition of Ready after the walkthrough, add blocking links where supported, and make sure each has testable acceptance criteria and verification steps. The Web issues predate the reviewed UI/UX specification and need updating to match it.
 - **Board hygiene:** verify that project-management setup work is kept separate from product-delivery work on the board.
 - **Team capacity:** confirm availability before creating sprint dates or assigning people.
