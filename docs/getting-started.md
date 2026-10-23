@@ -37,16 +37,16 @@ cd littlesteps
 # Clone the three active repositories:
 git clone https://github.com/Thesis-Titans/littlesteps-docs.git
 git clone https://github.com/Thesis-Titans/littlesteps-api.git
-git clone https://github.com/Thesis-Titans/littlesteps-web.git
+git clone https://github.com/Thesis-Titans/littlesteps-react.git
 ```
 
 Resulting directory tree:
 ```text
 littlesteps/
-├── littlesteps-docs/     # Canonical architecture, scope, research, and provenance
-├── littlesteps-api/      # TypeScript Express backend on Firebase Functions v2
-├── littlesteps-web/      # React + TypeScript + Vite frontend
-└── (littlesteps-mobile/) # Preserved and untouched pending CC 207B fork; do not modify
+├── littlesteps-docs/       # Canonical architecture, scope, research, and provenance
+├── littlesteps-api/        # TypeScript Express backend on Firebase Functions v2
+├── littlesteps-react/      # React + TypeScript + Vite frontend
+└── (littlesteps-flutter/)  # Preserved and untouched pending CC 207B fork; do not modify
 ```
 
 ---
@@ -118,14 +118,14 @@ This boots:
 
 ---
 
-## 4. Frontend Setup: `littlesteps-web`
+## 4. Frontend Setup: `littlesteps-react`
 
 The frontend is a React 19 application bundled with Vite.
 
 ### A. Environment Configuration
 Open a second terminal window, navigate to the web directory, and configure local variables:
 ```bash
-cd ../littlesteps-web
+cd ../littlesteps-react
 cp .env.example .env.local
 ```
 Configure `VITE_API_BASE_URL` to point to your local Functions emulator endpoint:
@@ -183,7 +183,7 @@ To verify that the frontend and backend communicate properly:
    ```
 2. **Terminal 2**: Start web dev server:
    ```bash
-   cd littlesteps-web
+   cd littlesteps-react
    npm run dev
    ```
 3. Open `http://localhost:5173` in your browser.
@@ -207,7 +207,7 @@ To verify that the frontend and backend communicate properly:
 4. **Milestone Content Provenance**:
    - Before drafting or adapting milestone or activity catalog entries, consult [docs/philippine-content-provenance.md](philippine-content-provenance.md) for required ECCD Council / DepEd citations, metadata fields, and non-diagnostic review boundaries.
 5. **Mobile Repository Preservation**:
-   - `Thesis-Titans/littlesteps-mobile` is off-limits and must not be modified during this stage.
+   - `Thesis-Titans/littlesteps-flutter` is off-limits and must not be modified during this stage.
 
 ---
 

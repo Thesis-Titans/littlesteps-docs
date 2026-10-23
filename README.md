@@ -66,7 +66,7 @@ This repository is the canonical home for product scope, decisions, research pro
 ## Repositories
 - [Documentation](https://github.com/Thesis-Titans/littlesteps-docs)
 - [API](https://github.com/Thesis-Titans/littlesteps-api)
-- [Web](https://github.com/Thesis-Titans/littlesteps-web)
+- [Web](https://github.com/Thesis-Titans/littlesteps-react)
 
 The mobile repository is outside this implementation pass and must not be changed.
 

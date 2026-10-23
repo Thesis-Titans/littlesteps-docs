@@ -49,7 +49,7 @@ For web changes:
 Following the governance audit ([Docs Issue #2](https://github.com/Thesis-Titans/littlesteps-docs/issues/2)), repository settings are configured and enforced in GitHub across the active repositories:
 
 1. **Visibility & Branch Protection Enforcement:**
-   - Repositories (`littlesteps-docs`, `littlesteps-api`, and `littlesteps-web`) are set to public to enable GitHub's native branch protection and ruleset enforcement.
+   - Repositories (`littlesteps-docs`, `littlesteps-api`, and `littlesteps-react`) are set to public to enable GitHub's native branch protection and ruleset enforcement.
    - The `main` branch across all three repositories is protected:
      - Direct pushes to `main` are blocked for standard contributors.
      - Force pushes (`allow_force_pushes: false`) and branch deletions (`allow_deletions: false`) are strictly prohibited.
@@ -61,10 +61,10 @@ Following the governance audit ([Docs Issue #2](https://github.com/Thesis-Titans
    - **Feature Execution Transition:** For subsequent feature execution, stricter server-side review requirements (e.g., `required_approving_review_count: 1` or CODEOWNERS) will be evaluated and configured by team agreement once multiple collaborators are submitting PRs.
 3. **Required Status Checks:**
    - **`littlesteps-api`:** Strictly requires the `API CI/verify` GitHub Actions status check to pass before merging.
-   - **`littlesteps-web`:** Strictly requires the `Web CI/verify` GitHub Actions status check to pass before merging.
+   - **`littlesteps-react`:** Strictly requires the `Web CI/verify` GitHub Actions status check to pass before merging.
    - **`littlesteps-docs`:** Strictly requires the `Docs CI/verify` GitHub Actions status check (`.github/workflows/ci.yml`) to pass before merging, running `npm test` (`verify-docs.mjs` and `verify-docs.test.mjs`) to validate relative internal links and issue template frontmatter.
 4. **Cross-Repository Work Queue & Coverage:**
-   - [Thesis-Titans LittleSteps Project #2](https://github.com/orgs/Thesis-Titans/projects/2) is the organization-level board tracking active issues and pull requests across `littlesteps-docs`, `littlesteps-api`, and `littlesteps-web`.
+   - [Thesis-Titans LittleSteps Project #2](https://github.com/orgs/Thesis-Titans/projects/2) is the organization-level board tracking active issues and pull requests across `littlesteps-docs`, `littlesteps-api`, and `littlesteps-react`.
    - As verified by repository queries, active organization items are populated on the board.
    - Items are maintained manually or via Project workflows as new work is scheduled.
 5. **Academic Collaboration & Code Defense Governance (CC 207B):**
@@ -73,6 +73,6 @@ Following the governance audit ([Docs Issue #2](https://github.com/Thesis-Titans
    - **Individual Code Defense Readiness:** Each member must personally author, understand, and explain their committed code during the mandatory 2–3 minute individual code defense, including the ability to perform small live code edits (e.g., adding form fields, adjusting navigation).
    - **AI Usage Log Compliance:** Any AI-assisted code generation (allowed only for snippets, debugging, or sample fixtures) must be documented in the shared AI Usage Log. Wholesale generation of the app or unexplainable code is strictly prohibited.
 6. **Mobile Repository Boundary:**
-   - `littlesteps-mobile` remains strictly untouched on `main` pending the CC 207B external fork requirement.
+   - `littlesteps-flutter` remains strictly untouched on `main` pending the CC 207B external fork requirement.
 7. **Synthetic Credentials & Exposure Verification:**
    - The test suite in `littlesteps-api/test/auth-emulator.test.ts` uses mock keys (`fake-api-key`) and local test passwords (`LocalTestPassword123!`). These values are strictly synthetic throwaway inputs for the ephemeral in-memory Firebase Auth Emulator and must never be reused in production, deployed environments, or real account credentials.
