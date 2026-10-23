@@ -230,19 +230,28 @@ Keep work in progress small. Do not start dependent feature work while a key con
 - [Web Issue #12](https://github.com/Thesis-Titans/littlesteps-react/issues/12) is closed after correcting the emulator region in the Web README.
 - [Docs Issue #3](https://github.com/Thesis-Titans/littlesteps-docs/issues/3) remains open intentionally as the evidence, reuse-rights, and subject-matter review gate for real content. It is not a general repository-setup issue.
 
-### Remaining M0 work — do not start feature implementation yet
+### M0 status — do not start feature implementation yet
 
-- Review and approve or revise this execution plan before treating it as the delivery baseline.
-- Configure and verify the shared GitHub Project board, including cross-repository issue visibility and the agreed workflow fields/statuses.
-- Plan, create, and review the navigable Figma prototype tracked in [Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15); do not start API/Web feature implementation until prototype review findings are recorded.
-- Create native GitHub milestones aligned with the agreed milestone outcomes and associate execution issues with them.
-- Review all API/Web backlog issues against the Definition of Ready, add explicit blocking links where supported, and ensure each issue has testable acceptance criteria and verification steps.
-- Verify that project-management setup work is separated from product-delivery work on the board.
-- Confirm team availability and capacity before creating sprint dates or assigning people.
+Checked against GitHub on 23 October 2026.
 
-The coordination tracker is [Docs Issue #14](https://github.com/Thesis-Titans/littlesteps-docs/issues/14). Keep it open until the remaining M0 work above is verified. The issue should then be closed with evidence and product execution can begin through normal backlog refinement and sprint planning.
+**Done**
 
-Do not claim the board or native milestones are configured until they are visible and verified in GitHub. If the connected tooling cannot create or edit these Project features, record that as a tooling blocker and complete the setup through an authorized Projects-capable interface rather than treating the proposed workflow as already operational.
+- **Execution plan:** reviewed and merged in [Docs PR #13](https://github.com/Thesis-Titans/littlesteps-docs/pull/13), then revised in Docs PRs #29–#32 (repository renames, the Flutter restriction lifted, the Figma prototype gate and the design system review).
+- **Project board:** [Thesis-Titans LittleSteps Project #2](https://github.com/orgs/Thesis-Titans/projects/2) holds 30 items from `littlesteps-docs`, `littlesteps-api` and `littlesteps-react`, with a Status field of Backlog, Ready, In Progress, Blocked, In Review and Done.
+- **Native milestones:** `littlesteps-docs` has M0–M5; `littlesteps-api` and `littlesteps-react` each have M1–M5, and their execution issues are assigned to them.
+
+**In progress**
+
+- **Figma prototype ([Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)):** every screen and state frame is built. Still to do: update the Figma file to match the reviewed UI/UX specification, wire the prototype links, and run the walkthrough with recorded findings. Do not start API or Web feature implementation until those findings are recorded.
+
+**Still open**
+
+- **Flutter track:** the edit restriction on `littlesteps-flutter` is lifted, and CC 207B grades a Flutter application, but the repository has no milestones, issues or plan yet. Plan it before sprint planning.
+- **Backlog readiness:** review all API and Web backlog issues against the Definition of Ready after the walkthrough, add blocking links where supported, and make sure each has testable acceptance criteria and verification steps. The Web issues predate the reviewed UI/UX specification and need updating to match it.
+- **Board hygiene:** verify that project-management setup work is kept separate from product-delivery work on the board.
+- **Team capacity:** confirm availability before creating sprint dates or assigning people.
+
+The coordination tracker is [Docs Issue #14](https://github.com/Thesis-Titans/littlesteps-docs/issues/14). Keep it open until the open items above are verified, then close it with evidence and begin product execution through normal backlog refinement and sprint planning.
 
 ## 9. Change control
 

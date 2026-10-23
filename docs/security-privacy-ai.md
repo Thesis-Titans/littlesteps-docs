@@ -78,7 +78,8 @@ To satisfy the **CC 207B AI-Powered Feature Requirement (Items 12–17)**, the A
 
 ### NFR-AI-03: Graceful Degradation & Deterministic Fallback (Item 15)
 - **Latency & Timeout:** AI calls are constrained to an 8-second execution timeout. Frontends render loading skeletons and progress indicators during inference.
-- **Deterministic Fallback:** If the external AI service times out, experiences rate limiting, returns an invalid schema, or the client is operating offline, the backend immediately executes a deterministic rule-based catalog filter. The caregiver receives valid activities from the catalog without service interruption or application errors.
+- **Deterministic Fallback:** If the external AI service times out, experiences rate limiting, returns an invalid schema, or cannot be reached, the backend immediately executes a deterministic rule-based catalog filter. The caregiver receives valid activities from the catalog without service interruption or application errors.
+- **Device offline:** If the caregiver's device is offline, it cannot reach the backend, so neither the AI helper nor the fallback can run. The app shows the offline state described in the [UI/UX Design Specification](ui-ux-design-specification.md) §7 instead of an error.
 
 ### NFR-AI-04: Ethical Transparency, Labeling & Non-Diagnostic Boundary (Item 16)
 - **Visual Labeling:** Every AI-generated suggestion must display an explicit AI badge and disclaimer: *"AI Suggestion — Always adapt to your child and ensure adult supervision."*
