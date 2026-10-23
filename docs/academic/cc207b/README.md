@@ -4,6 +4,7 @@
 **Institution:** West Visayas State University — College of Information and Communications Technology  
 **Base Framework:** Flutter (Mobile Client)  
 **Team Composition:** 5 Members $\rightarrow$ 6 Core Features (including user-facing AI)  
+**Repository:** `Thesis-Titans/littlesteps-flutter` until the course instructor provides a repository to fork; the work then moves with its full Git history. See the [execution plan](../../execution-plan.md) §1.3.  
 **Submission & Defense:** December 2, 2026 (5–10 min presentation + live demo + recorded backup video + 2–3 min/member Individual Code Defense)  
 
 ---

@@ -26,11 +26,33 @@ Canonical product requirements remain in [Product Scope](product-scope.md), arch
 Use **lightweight Scrum with a visible GitHub issue backlog**. Avoid fixed sprint dates until the group confirms availability and capacity.
 
 - **Product scope:** The six features in Product Scope remain the target scope. This plan orders delivery; it does not silently remove features.
-- **Initial execution focus:** API and Web. Keep the API contract client-neutral so the Mobile client can integrate later. `littlesteps-flutter` is no longer restricted.
+- **Execution order:** API first. Each milestone (M1–M4) delivers its feature through the shared API, then through the React web client (CIT 210) and the Flutter mobile client (CC 207B) together. Keep the API contract client-neutral so both clients use the same endpoints and error shapes. See §1.3 for the Flutter track.
 - **Iteration length:** Propose one-week sprints after backlog refinement and capacity confirmation. Do not assign dates or people yet.
 - **Planning unit:** Small, independently reviewable issues with a clear outcome, acceptance criteria, dependencies, and verification steps. Split issues further only when implementation details are known.
-- **Review:** Every change goes through a pull request. At least one teammate must review each PR (graded in CC 207B collaboration criteria). API/Web checks must pass; security and privacy acceptance criteria apply to child-scoped features.
+- **Review:** Every change goes through a pull request. At least one teammate must review each PR (graded in CC 207B collaboration criteria). API, Web and Flutter checks must pass; security and privacy acceptance criteria apply to child-scoped features.
 - **No speculative implementation:** Resolve product/data-contract questions before coding dependent features. Use synthetic fixtures for engineering work when reviewed catalog content is unavailable.
+
+### 1.3 Flutter track (CC 207B)
+
+CC 207B grades a Flutter application built on the same API and data as the web client. Its rules shape how the whole team works:
+
+- **Everyone writes Flutter.** CC 207B requires meaningful commits from all five members and a 2–3 minute individual code defense with a live edit. Every member therefore owns at least one Flutter feature slice end to end (screen, state, API calls, validation and tests) in addition to API or React work.
+- **Repository:** Flutter work happens in `Thesis-Titans/littlesteps-flutter` for now. If the course instructor provides a repository to fork, move the work there by pushing the full Git history (all branches and tags), never by copying files, so each member's commits survive. Pull-request reviews do not move with Git history, so ask the instructor early whether reviews in `littlesteps-flutter` count, or start using the course repository as soon as it exists.
+- **Platform:** Android phones (the [architecture](architecture-decisions.md) targets Dart on Android, and the personas use Android). Flutter stable channel with Material 3.
+- **Design source:** the reviewed 375px mobile-web frames, adapted to Material 3 widgets as listed in the [UI/UX Design Specification](ui-ux-design-specification.md) §9. Flutter screens are not prototyped separately.
+- **Course requirements mapped to the plan:**
+
+| CC 207B requirement | Where it is met |
+|---|---|
+| Six core user-facing features (sign-in, splash, About and Settings do not count) | FR-01 to FR-06, delivered in M1–M4 |
+| Async operations with visible loading, empty and error states | UI/UX spec §7 state matrix, built in every Flutter screen |
+| At least one validated form with clear error feedback | Child profile form (J1), plus the observation and journal forms |
+| Data persistence (local storage or Firebase) | The shared API and Firestore |
+| User-facing AI feature with graceful failure and data minimization | FR-06 AI helper, M4 |
+| Documentation package (stack versions, prototypes and screenshots, topic coverage matrix, AI feature specification, AI usage log, individual reflections) | Prepared during M5 |
+| Forked repository, feature branches, teammate-reviewed pull requests | This section and §5 |
+
+- **Repository setup still needed:** `littlesteps-flutter` has only a README. It needs a contributor guide, PR and issue templates, a CI check (`flutter analyze` and `flutter test`), and native milestones M1–M5. It is private, and branch protection on a private repository needs a paid GitHub plan, so either make it public like the other repositories or enforce teammate review by team agreement until it moves.
 
 ## 2. Product Target & Team Sizing Derivation
 
@@ -68,21 +90,23 @@ Exit criteria:
 ### M1 — Secure end-to-end foundation
 **Scope Traceability:** Implements foundation for **FR-01** (Child Profile); enforces **NFR-SEC-01** (Token auth), **NFR-SEC-02** (BOLA defense), and **NFR-PRIV-01** (Data minimization).
 
-**Outcome:** A signed-in caregiver can use the Web client to work with a child profile through the shared API and local Firebase emulators.
+**Outcome:** A signed-in caregiver can use the Web and Flutter clients to work with a child profile through the shared API and local Firebase emulators.
 
 Planned work:
 - Agree on the minimum caregiver/child data model, ownership relationship, validation rules, and deletion/retention questions.
 - Extend the OpenAPI contract before implementing new endpoints.
 - Implement and test child-scoped API operations with server-side ownership checks (**NFR-SEC-02**).
 - Integrate Web sign-in, token handling, API error/loading states, and protected routes.
+- Set up the Flutter project (Android target, Material 3 theme from the design tokens, lint, tests and CI), then integrate Firebase sign-in, token handling and the shared API client with the same loading and error states.
+- Build the child profile form in both clients with birth month and year pickers and field-level validation (CC 207B validated form).
 - Verify the end-to-end path with synthetic users/data using the emulator-first workflow.
 
 Exit criteria:
 - Requests without valid authentication are rejected (**NFR-SEC-01**).
 - A caregiver cannot read or mutate another caregiver's child data, including by changing an identifier (**NFR-SEC-02**).
 - Input validation and safe error responses are tested (**NFR-SEC-04**).
-- API contract, implementation, and Web client agree.
-- Relevant API and Web CI checks pass.
+- API contract, implementation, and the Web and Flutter clients agree.
+- Relevant API, Web and Flutter CI checks pass.
 
 ### M2 — Reviewed learning content and core activity loop
 **Scope Traceability:** Implements **FR-02** (Activity Planning), **FR-04** (Learning Library), and observation prompts for **FR-01**; enforces **NFR-PRIV-03** (Synthetic fixtures).
@@ -91,8 +115,8 @@ Exit criteria:
 
 Planned work:
 - Define catalog item fields, age-band filtering, content lifecycle/status, and source metadata.
-- Implement catalog read/list behavior and Web browsing/filtering (**FR-04**).
-- Implement activity planning, scheduling/recording, and completion history (**FR-02**).
+- Implement catalog read/list behavior and Web and Flutter browsing/filtering (**FR-04**).
+- Implement activity planning, scheduling/recording, and completion history in the API and both clients (**FR-02**).
 - Add milestone observation prompts (**FR-01**) only when the source and review gate permits their use.
 - Cover empty, loading, error, invalid-input, and authorization states.
 
@@ -115,6 +139,7 @@ Planned work:
 - Implement private journal create/read/update/delete behavior with ownership tests (**FR-03**).
 - Define the summary calculation from recorded events before designing summary UI (**FR-05**).
 - Implement weekly summaries that describe recorded activity without diagnostic scores or unsupported developmental conclusions.
+- Build the journal and the "This week" summary in both clients.
 
 Exit criteria:
 - Unauthorized journal access is tested and denied (**NFR-SEC-02**).
@@ -133,6 +158,7 @@ Planned work:
 - Validate every result against the schema and approved catalog.
 - Provide a deterministic fallback for provider errors or invalid responses.
 - Add tests for prompt-data minimization, invalid outputs, provider failures, and rate limits.
+- Build the AI helper in both clients with all of its states: form, loading, suggestion, rate-limited and fallback.
 
 Exit criteria:
 - Suggestions only reference approved catalog IDs.
@@ -143,7 +169,7 @@ Exit criteria:
 ### M5 — Release-readiness review
 **Scope Traceability:** Full cross-cutting verification of **FR-01** through **FR-06**, all **NFRs**, and coordinated deliverables for CC 207B, CIT 210, and CIT 246.
 
-**Outcome:** The team can demonstrate a coherent, tested API/Web release without claiming production readiness prematurely.
+**Outcome:** The team can demonstrate a coherent, tested API, Web and Flutter release without claiming production readiness prematurely.
 
 Exit criteria:
 - Cross-feature authorization and regression tests pass across all six core features.
@@ -151,6 +177,8 @@ Exit criteria:
 - Privacy notice, retention/deletion approach, and appropriate faculty/course instructor review are addressed.
 - Firebase billing, budget alerts, environment configuration, provider settings, and rollback are reviewed before any deployment.
 - Known limitations are documented and accepted by the team and course instructor.
+- The Flutter app runs on an Android phone for the CC 207B live demo, with a recorded backup video, and each member can explain and modify their own Flutter code.
+- If the instructor provided a course repository, the Flutter work has been moved there with its full commit history.
 
 ## 4. Backlog structure
 
@@ -161,11 +189,12 @@ Use epics/work packages to group work. Create implementation issues only after t
 | **WP-0: Execution readiness** | Reconciled governance work, agreed backlog and board conventions | PMBOK Scope Baseline, M0 | Existing documentation PRs/issues |
 | **WP-0.5: Prototype and journey validation** | Navigable Figma prototype, reviewed caregiver journeys, documented findings | ISO 9241, FR-01–FR-06 validation | Product scope, architecture, privacy; M0 |
 | **WP-1: Shared contract and data model** | API schema, ownership model, validation/error conventions | IEEE 1016 Interface View, NFR-SEC-02 | M0 and prototype review |
-| **WP-2: Authenticated child-profile slice** | API endpoints, ownership tests, Web auth/profile flow, emulator | FR-01, PRQ-01, NFR-SEC-01, NFR-PRIV-01 | WP-1 |
-| **WP-3: Learning catalog** | Catalog schema/API and Web discovery | FR-04, Philippine content provenance | Content metadata decision; Issue #3 |
+| **WP-F: Flutter foundation** | Flutter project and repository setup, Material 3 theme from the design tokens, shared API client, sign-in | CC 207B, PRQ-01–PRQ-03 | WP-1 |
+| **WP-2: Authenticated child-profile slice** | API endpoints, ownership tests, Web and Flutter auth/profile flows, emulator | FR-01, PRQ-01, NFR-SEC-01, NFR-PRIV-01 | WP-1 |
+| **WP-3: Learning catalog** | Catalog schema/API and Web and Flutter discovery | FR-04, Philippine content provenance | Content metadata decision; Issue #3 |
 | **WP-4: Activity planning and observations** | Planning, completion history, safe observation records | FR-02, FR-01 milestones | WP-2, WP-3 |
 | **WP-5: Private journal** | Private notes and retention/deletion behavior | FR-03, NFR-PRIV-02 | WP-2, privacy decisions |
-| **WP-6: Weekly summary** | Defined summary rules, API output, Web presentation | FR-05 (deterministic aggregation) | WP-4; journal data only if approved |
+| **WP-6: Weekly summary** | Defined summary rules, API output, Web and Flutter presentation | FR-05 (deterministic aggregation) | WP-4; journal data only if approved |
 | **WP-7: AI helper** | Catalog-grounded suggestions, validation, fallback, cost controls | FR-06, NFR-AI-01..05, NFR-REL-01 | WP-3, WP-4, privacy/provider review |
 | **WP-8: Release readiness** | Cross-feature regression, accessibility, security/deployment gates | All FR-01–FR-06, all NFRs, Course Deliverables | Relevant feature work |
 
@@ -217,7 +246,7 @@ Keep work in progress small. Do not start dependent feature work while a key con
 - **Data model and privacy lifecycle:** Agree on caregiver-child ownership, required profile fields, deletion behavior, and retention before implementing persistent child/journal records.
 - **Authentication:** Firebase token verification exists in the API scaffold, but Web sign-in and child-level authorization are not complete.
 - **Deployment:** Local emulator work comes first. Deployment is gated on billing, privacy, security, and configuration review.
-- **Mobile:** The restriction on `littlesteps-flutter` has been lifted, but when Flutter work starts is not yet decided. Preserve a shared, client-neutral API contract for its integration.
+- **Mobile:** Flutter work follows the API milestone by milestone, alongside the Web client (§1.3). Open: whether the course instructor will provide a repository to fork, and whether reviews in `littlesteps-flutter` count toward CC 207B.
 - **Schedule and assignments:** No dates, sprint commitments, or assignees are set by this plan. Confirm team availability and review the refined backlog first.
 
 ## 8. Project setup cleanup and execution handoff
@@ -246,7 +275,7 @@ Checked against GitHub on 23 October 2026.
 
 **Still open**
 
-- **Flutter track:** the edit restriction on `littlesteps-flutter` is lifted, and CC 207B grades a Flutter application, but the repository has no milestones, issues or plan yet. Plan it before sprint planning.
+- **Flutter track:** planned in §1.3 and in each milestone. Next: create `littlesteps-flutter` milestones (M1–M5) and issues, set up the repository (contributor guide, templates, CI), and ask the course instructor about the fork and review rules.
 - **Backlog readiness:** review all API and Web backlog issues against the Definition of Ready after the walkthrough, add blocking links where supported, and make sure each has testable acceptance criteria and verification steps. The Web issues predate the reviewed UI/UX specification and need updating to match it.
 - **Board hygiene:** verify that project-management setup work is kept separate from product-delivery work on the board.
 - **Team capacity:** confirm availability before creating sprint dates or assigning people.
