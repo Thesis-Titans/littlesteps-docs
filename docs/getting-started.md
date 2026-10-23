@@ -46,7 +46,7 @@ littlesteps/
 ├── littlesteps-docs/       # Canonical architecture, scope, research, and provenance
 ├── littlesteps-api/        # TypeScript Express backend on Firebase Functions v2
 ├── littlesteps-react/      # React + TypeScript + Vite frontend
-└── (littlesteps-flutter/)  # Preserved and untouched pending CC 207B fork; do not modify
+└── littlesteps-flutter/    # Flutter mobile client (private; initial commit only)
 ```
 
 ---
@@ -206,8 +206,6 @@ To verify that the frontend and backend communicate properly:
    - The web client must consume endpoints defined in this contract rather than inventing ad-hoc response structures.
 4. **Milestone Content Provenance**:
    - Before drafting or adapting milestone or activity catalog entries, consult [docs/philippine-content-provenance.md](philippine-content-provenance.md) for required ECCD Council / DepEd citations, metadata fields, and non-diagnostic review boundaries.
-5. **Mobile Repository Preservation**:
-   - `Thesis-Titans/littlesteps-flutter` is off-limits and must not be modified during this stage.
 
 ---
 

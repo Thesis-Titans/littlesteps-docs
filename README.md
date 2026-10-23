@@ -67,8 +67,7 @@ This repository is the canonical home for product scope, decisions, research pro
 - [Documentation](https://github.com/Thesis-Titans/littlesteps-docs)
 - [API](https://github.com/Thesis-Titans/littlesteps-api)
 - [Web](https://github.com/Thesis-Titans/littlesteps-react)
-
-The mobile repository is outside this implementation pass and must not be changed.
+- [Mobile](https://github.com/Thesis-Titans/littlesteps-flutter) (private)
 
 ## Community & Contribution
 - [Contribution guidelines](CONTRIBUTING.md): branch conventions, verification expectations, synthetic data rules, and PR review workflow.
