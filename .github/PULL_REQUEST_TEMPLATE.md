@@ -14,7 +14,7 @@
 <!-- List the verification steps executed (e.g., relative link checks, markdown linting, preview). -->
 - [ ] Relative markdown links verified
 - [ ] File formatting and consistency confirmed
-- [ ] Scope boundaries respected (e.g., littlesteps-mobile untouched, synthetic data only)
+- [ ] Scope boundaries respected (e.g., littlesteps-flutter untouched, synthetic data only)
 
 ## Security, Privacy & Data Handling
 - [ ] Confirmed zero real child or caregiver data included

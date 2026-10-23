@@ -32,7 +32,7 @@ Level 2: Canonical Project Documentation (`littlesteps-docs`)
    │      ├── Research Register & Content Provenance
    │      └── Full-Stack Onboarding Tutorial
    ▼
-Level 3: Repository-Specific Documentation (`littlesteps-api`, `littlesteps-web`)
+Level 3: Repository-Specific Documentation (`littlesteps-api`, `littlesteps-react`)
           ├── Quickstart & Local Dev Commands
           ├── Local Environment Variables (.env.example)
           ├── Test & Verification Scripts
@@ -42,7 +42,7 @@ Level 3: Repository-Specific Documentation (`littlesteps-api`, `littlesteps-web`
 ### Hierarchy Rules:
 - **Canonical Source of Truth:** `littlesteps-docs` is the sole canonical authority for overall system architecture, product scope, cross-repo development workflows, data privacy, and legal/curriculum provenance.
 - **Repository READMEs:** Focused strictly on their specific codebase. They must link to the canonical documentation in `littlesteps-docs` rather than copying full workflow policies or system descriptions.
-- **Strict Mobile Isolation:** `littlesteps-mobile` remains private and strictly untouched pending the required CC 207B external fork. Community health files, workflows, and templates must **not** be applied to the mobile repository.
+- **Strict Mobile Isolation:** `littlesteps-flutter` remains private and strictly untouched pending the required CC 207B external fork. Community health files, workflows, and templates must **not** be applied to the mobile repository.
 
 ---
 
@@ -128,8 +128,8 @@ These are intended locations for information, not a claim that every linked docu
 
 ### 6.2 Multi-Repository Community Health File Placement
 
-- **Location:** Maintain community health files as **explicit files within each active repository** (`littlesteps-docs`, `littlesteps-api`, and `littlesteps-web`).
-- **Rationale:** An organization-level `Thesis-Titans/.github` repository is intentionally **not used** so that default templates and policies do not inadvertently apply to `littlesteps-mobile`.
+- **Location:** Maintain community health files as **explicit files within each active repository** (`littlesteps-docs`, `littlesteps-api`, and `littlesteps-react`).
+- **Rationale:** An organization-level `Thesis-Titans/.github` repository is intentionally **not used** so that default templates and policies do not inadvertently apply to `littlesteps-flutter`.
 
 ---
 
@@ -165,11 +165,11 @@ The table records the observed baseline at the time of this Stage 1 draft and th
 | | `CONTRIBUTING.md` | API-specific test/lint commands and PR rules | Present on main (Stage 3) |
 | | `SECURITY.md` | API security reporting pointer | Present on main (Stage 3; Private Vulnerability Reporting enabled) |
 | | PR / Issue Templates | API change and test evidence templates | Present on main (Stage 3) |
-| **`littlesteps-web`** | `README.md` | Web overview linking to canonical docs and rights notice | Aligned on main (Stage 3) |
+| **`littlesteps-react`** | `README.md` | Web overview linking to canonical docs and rights notice | Aligned on main (Stage 3) |
 | | `CONTRIBUTING.md` | Web-specific test/lint commands and PR rules | Present on main (Stage 3) |
 | | `SECURITY.md` | Web security reporting pointer | Present on main (Stage 3; Private Vulnerability Reporting enabled) |
 | | PR / Issue Templates | Web UI change and test evidence templates | Present on main (Stage 3) |
-| **`littlesteps-mobile`** | All files | **Untouched** pending CC 207B fork | Preserved by scope; do not modify or audit for implementation changes in this workstream |
+| **`littlesteps-flutter`** | All files | **Untouched** pending CC 207B fork | Preserved by scope; do not modify or audit for implementation changes in this workstream |
 
 ---
 
@@ -179,6 +179,6 @@ Work is tracked on [Thesis-Titans LittleSteps Project #2](https://github.com/org
 
 1. **Stage 1 — Standards Baseline (Complete):** Established and merged canonical documentation standard (`docs/documentation-standards.md`, PR #9).
 2. **Stage 2 — Contributor & Security Policies (Complete):** Drafted and merged canonical `CONTRIBUTING.md`, `SECURITY.md`, and `CODE_OF_CONDUCT.md` in `littlesteps-docs` (PR #10); enabled GitHub Private Vulnerability Reporting.
-3. **Stage 3 — Repository Alignment & Templates (Complete):** Added PR and issue templates across active repositories; aligned READMEs and added repo-specific contributor/security guidance in `littlesteps-api` (PR #6) and `littlesteps-web` (PR #4).
+3. **Stage 3 — Repository Alignment & Templates (Complete):** Added PR and issue templates across active repositories; aligned READMEs and added repo-specific contributor/security guidance in `littlesteps-api` (PR #6) and `littlesteps-react` (PR #4).
 4. **Stage 4 — Docs Quality CI (Complete):** Added automated relative-link, image-path, and issue-template frontmatter verification workflow in `littlesteps-docs` (PR #12); branch protection enabled with strict required status check (`verify`).
 5. **Stage 5 — System-Wide Verification (Complete):** Verified cross-repository links, setup commands, branch protection, and consistency across Docs, API, and Web.

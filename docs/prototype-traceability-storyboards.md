@@ -7,7 +7,7 @@
 
 ---
 
-**Boundary:** This is a planning and design artifact. It does not authorize production API/Web implementation, use of real personal data, external AI processing, or changes to `littlesteps-mobile`.
+**Boundary:** This is a planning and design artifact. It does not authorize production API/Web implementation, use of real personal data, external AI processing, or changes to `littlesteps-flutter`.
 
 ---
 

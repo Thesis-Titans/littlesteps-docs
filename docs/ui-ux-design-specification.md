@@ -4,7 +4,7 @@
 **Governing Standard:** ISO 9241 (Ergonomics of Human-System Interaction) & WCAG 2.2 AA  
 **Associated Gate:** [Docs Issue #15 — [M0] Plan and validate the LittleSteps UI prototype before implementation](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)  
 **Related Documents:** [Product Scope](product-scope.md), [Traceability Matrix](traceability-matrix.md), [Prototype Traceability & Storyboards](prototype-traceability-storyboards.md), [Philippine Content Provenance](philippine-content-provenance.md)  
-**Repository Boundaries:** `littlesteps-mobile` (Flutter) and `littlesteps-api` remain strictly untouched.
+**Repository Boundaries:** `littlesteps-flutter` (Flutter) and `littlesteps-api` remain strictly untouched.
 
 ---
 
@@ -13,8 +13,8 @@
 Before establishing interface specifications, the technical boundaries are explicitly affirmed:
 
 1. **Gated Validation Before Implementation:** This document establishes the interaction and interface specification for the **Figma prototype and usability evaluation**. Feature implementation in code remains gated under [Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15).
-2. **Mobile Experience via Responsive Web:** The mobile prototype experience is delivered exclusively via **responsive mobile browser layouts (375px–414px viewports) inside `littlesteps-web` (React + TypeScript)**.
-3. **`littlesteps-mobile` (Flutter) is Strictly Frozen:** Under our agreed project boundary (CC 207B external course fork), `littlesteps-mobile` remains untouched on `main`. No Flutter code is planned or permitted for this prototype gate.
+2. **Mobile Experience via Responsive Web:** The mobile prototype experience is delivered exclusively via **responsive mobile browser layouts (375px–414px viewports) inside `littlesteps-react` (React + TypeScript)**.
+3. **`littlesteps-flutter` (Flutter) is Strictly Frozen:** Under our agreed project boundary (CC 207B external course fork), `littlesteps-flutter` remains untouched on `main`. No Flutter code is planned or permitted for this prototype gate.
 4. **Synthetic Data & Simulated Services Only:** The prototype operates entirely on in-memory mock client state and simulated latencies (`demo-littlesteps`). Zero live Firestore database writes or cloud billing.
 
 ---
