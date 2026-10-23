@@ -40,11 +40,11 @@ graph TD
 | **1. Visibility of System Status** | Caregivers operating on spotty mobile data need immediate certainty about whether their observations were saved. | **Clear Save Status:** 1-tap completion shows an immediate, non-blocking status (*"Saved ✓"*, or *"Not saved — you're offline"* with Retry). Never freeze the screen or block interaction with full-page spinners. Offline queuing of changes is not yet in scope (see §7). |
 | **2. Match System with Real World** | Parents think in terms of daily family rhythms (morning playtime, naptime, wind-down), not database entities. | Information architecture mirrors household realities: *"Quick 10-min games"*, *"Kitchen items"*, *"Living room floor play"*. Avoid clinical terminology. |
 | **3. User Control & Freedom** | Distracted caregivers holding infants frequently tap the wrong button. | **5-Second Undo Toast:** Destructive or state-changing actions (completing an activity, deleting a journal draft) trigger a floating, non-blocking undo toast rather than jarring modal confirmations. |
-| **4. Consistency & Standards** | Caregivers must not re-learn interaction models between desktop and mobile. | Unified color semantics (Terracotta = primary actions; Amber = non-diagnostic advisory; Sage = outdoor/nature; Indigo = private lock). Standard bottom tab bar on mobile; persistent sidebar on desktop. |
+| **4. Consistency & Standards** | Caregivers must not re-learn interaction models between desktop and mobile. | Unified color semantics (Forest green = primary actions; Pale yellow = non-diagnostic advisory; Soft green = completed and private; Pale blue = source attribution and AI labels). Standard bottom tab bar on mobile; persistent sidebar on desktop. |
 | **5. Error Prevention** | Typing long notes while supervising toddlers leads to errors and frustration. | Constrained UI inputs: pickers and multi-select chips for materials and age bands. Simple **Parental Lock PIN** on mobile to prevent accidental toddler edits on shared family phones [P01 Evidence]. |
 | **6. Recognition Over Recall** | Sleep-deprived caregivers have diminished working memory capacity. | Activity cards display required household items as visual pill tags at the top of the card. Step-by-step instructions chunked into a maximum of 3–4 concise bullet points. |
 | **7. Flexibility & Efficiency** | Caregiver time availability varies wildly from day to day (5 minutes vs 30 minutes). | 1-tap quick filters on the home dashboard: *"Under 10 mins"*, *"No materials needed"*, *"Indoor"*. |
-| **8. Aesthetic & Minimalist Design** | Visual clutter and dense text exacerbate parental stress. | Clean, spacious layouts with high whitespace. Soft neutral backgrounds (`#F8F7F4`, `#FFFFFF`). **Strictly zero gamification streaks, countdown timers, or guilt-inducing badges.** |
+| **8. Aesthetic & Minimalist Design** | Visual clutter and dense text exacerbate parental stress. | Clean, spacious layouts with high whitespace. Soft neutral backgrounds (`#F7F7ED`, `#FFFFFF`). **Strictly zero gamification streaks, countdown timers, or guilt-inducing badges.** |
 | **9. Help Recognize & Recover from Errors** | Technical error codes alienate non-technical caregivers. | Non-technical, reassuring error copy that never overstates what was saved: *"We couldn't connect right now. Your note hasn't been saved yet. Keep this screen open and tap Retry when you're back online."* |
 | **10. Contextual Coaching & Help** | Parents need guidance on *how* to facilitate play, not just instructions. | Embedded **Caregiver Coaching Tips** on activity cards (*"Tip: Follow your child's lead. If they look away, it's okay to stop or switch games."*). |
 
@@ -75,7 +75,7 @@ graph TD
 ---
 
 ### 2.4 Accessibility (WCAG 2.2 AA) & Calm Technology
-- **Contrast Ratios:** Primary slate body text (`#1E293B`) against white cards (`#FFFFFF`) achieves **14.6:1**, exceeding the WCAG 4.5:1 requirement. Secondary text (`#475569`) achieves **7.6:1** on white and **7.1:1** on Warm Cloud. White button text on Terracotta (`#BF4828`) achieves **5.0:1**.
+- **Contrast Ratios:** Primary text (`#1A2B29`) against white cards (`#FFFFFF`) achieves **14.8:1**, exceeding the WCAG 4.5:1 requirement. Secondary text (`#63756E`) achieves **4.9:1** on white and **4.5:1** on the canvas; do not place it on Soft Green (4.2:1). White button text on Forest (`#1F634D`) achieves **7.1:1**.
 - **Readable Typography:** Body text is constrained to a **minimum of 16px** with 1.5 line-height (`line-height: 24px`) to ensure rapid readability in low-light evening environments.
 - **Calm Technology Principles (Weiser & Brown):**
   - No ambient push alerts that demand urgent attention.
@@ -168,17 +168,18 @@ Sign-in and the settings, privacy-notice, and about views cover PRQ-01 and PRQ-0
 ## 6. Design System Tokens & Foundations
 
 ### 6.1 Color Palette (Calm, Approachable, WCAG 2.2 AA Contrast)
-- **Primary / Brand:** Warm Terracotta (`#BF4828`) — warm, reassuring, non-clinical. White text on it measures 5.0:1. The earlier `#D9532F` measured 4.0:1 with white text and failed AA for normal-size text.
-- **Secondary / Nature Accent:** Gentle Sage (`#4A7C59`) — for activity tags and outdoor play.
-- **Neutral Background:** Warm Cloud (`#F8F7F4`) — soft on caregiver eyes in dim evening light.
-- **Surface / Card Background:** Pure White (`#FFFFFF`) with subtle border (`#E5E7EB`).
-- **Primary Text:** Deep Slate (`#1E293B`) — high contrast (**14.6:1** ratio against white).
-- **Secondary Text:** Slate (`#475569`) — for timestamps and helper labels (**7.6:1** on white, **7.1:1** on Warm Cloud). The earlier `#64748B` measured 4.4:1 on Warm Cloud and failed AA.
+The canonical values are the variables in the Figma file's **LittleSteps · Design Tokens** collection; the names below are those variable names.
+
+- **Primary / Brand:** Forest (`color/brand/forest`, `#1F634D`) — calm, reassuring, non-clinical. White text on it measures 7.1:1. (An earlier draft specified terracotta `#D9532F`, which measured 4.0:1 with white text and failed AA.)
+- **Neutral Background:** Canvas (`color/surface/canvas`, `#F7F7ED`) — soft on caregiver eyes in dim evening light.
+- **Surface / Card Background:** White (`color/surface/card`, `#FFFFFF`) with subtle border (`color/border/subtle`, `#E0E5DB`).
+- **Primary Text:** `color/text/primary` (`#1A2B29`) — high contrast (**14.8:1** against white, **13.7:1** on canvas).
+- **Secondary Text:** `color/text/secondary` (`#63756E`) — for timestamps and helper labels (**4.9:1** on white, **4.5:1** on canvas). Do not use it on Soft Green.
 - **Status Accents:**
-  - *Non-Diagnostic Advisory:* Warm Amber (`#FEF3C7` bg, `#92400E` text/border).
-  - *Completed / Observed:* Olive Soft (`#DCFCE7` bg, `#166534` text).
-  - *Privacy Lock Indicator:* Muted Indigo (`#EEF2FF` bg, `#4338CA` text).
-  - *Offline / Local State:* Neutral Slate Badge (`#F1F5F9` bg, `#475569` text).
+  - *Non-Diagnostic Advisory:* `color/status/caution` (`#FAE8A8` bg) with primary text (12.1:1).
+  - *Completed / Observed and Privacy Lock:* `color/surface/soft-green` (`#E0F2E5` bg) with Forest text (6.1:1).
+  - *Source Attribution and AI Label:* `color/status/info` (`#D9E8F7` bg) with primary text (11.8:1).
+  - *Offline State:* Neutral slate badge (`#F1F5F9` bg, `#475569` text); not yet a Figma variable.
 
 ### 6.2 Typography Hierarchy
 Use clean, highly readable modern sans-serif (**Inter** or **Plus Jakarta Sans**):
@@ -213,7 +214,7 @@ Every user journey in the Figma prototype must include all five interaction stat
 
 When preparing the prototype for course instructor and faculty review, the team must verify:
 
-- [ ] **Figma Link Recorded:** The Figma file link, with view access for reviewers, is posted in Docs Issue #15.
+- [ ] **Figma Link Recorded:** The [Figma file](https://www.figma.com/design/yqUHW4lOuuly4jDPNMkMVI/LittleSteps-%E2%80%94-Responsive-Caregiver-Prototype) is linked in Docs Issue #15, with view access for reviewers.
 - [ ] **Viewport Coverage:** Populated frames exist at 1280px and 375px for all 6 core capabilities; other state frames follow the §7 coverage rule.
 - [ ] **Navigation Consistency:** The same five tabs appear in the desktop sidebar and the mobile bottom bar; sign-in, settings, privacy notice, and about are reachable from the header avatar.
 - [ ] **Permission-denied Frames:** J1 signed-out and J4 access-denied frames are present.
