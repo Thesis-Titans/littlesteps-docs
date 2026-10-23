@@ -1,7 +1,7 @@
 # 5. Stakeholder Register and Analysis
 
 **Plan section:** 5 (Checkpoint 2)  
-**Version:** 0.1 draft, 23 October 2026  
+**Version:** 1.0 draft, 23 October 2026  
 **Status:** Draft for team review. Names are added once each person agrees to be listed; until then stakeholders are identified by role. The format follows Schwalbe, *Information Technology Project Management*, Chapter 3 (stakeholder register) and Chapter 13 (power/interest grid).  
 **Related Documents:** [Business Case](03-business-case.md), [Project Charter](04-project-charter.md), [Scope Statement](06-scope-statement.md)
 

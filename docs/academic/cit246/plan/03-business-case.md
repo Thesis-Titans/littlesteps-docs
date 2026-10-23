@@ -1,7 +1,7 @@
 # 3. Project Background and Business Case
 
 **Plan section:** 3 ◆ (Checkpoint 2)  
-**Version:** 0.1 draft, 23 October 2026  
+**Version:** 1.0 draft, 23 October 2026  
 **Status:** Draft for team review. The client was identified from public sources and was not contacted for this plan. City and district facts are sourced; figures marked *planning estimate* are the team's researched assumptions (see §3.6).  
 **Related Documents:** [Project Charter](04-project-charter.md), [Stakeholder Register](05-stakeholder-register.md), [Scope Statement](06-scope-statement.md), [Checkpoint 1 Concept](../checkpoint-1-concept.md)
 
@@ -80,7 +80,7 @@ The project is justified on cost-effectiveness rather than direct revenue, becau
 
 ## 3.5 Cost and Benefit Summary
 
-**Rough order-of-magnitude estimate (−25% to +75%)**, refined bottom-up by WBS item in Section 9:
+**Rough order-of-magnitude estimate (−25% to +75%)**, made before the WBS existed. Section 9 replaces it with a bottom-up estimate of **₱1,083,185**, 7.2% lower and inside this range.
 
 | Cost item | Basis | Amount |
 |---|---|---|

@@ -1,8 +1,8 @@
 # 1. Title Page
 
 **Plan section:** 1  
-**Version:** 0.1 placeholder, 23 October 2026  
-**Status:** Placeholder. Complete it once each member's sections are settled. The sponsor is identified by role only, because the client was researched and not contacted. Items in square brackets are still to be filled in.  
+**Version:** 1.0 draft, 23 October 2026  
+**Status:** Draft. The section leads below are proposed; each member confirms theirs. The sponsor is identified by role only, because the client was researched and not contacted. Items in square brackets are still to be filled in.  
 **Related Documents:** [Executive Summary](02-executive-summary.md), [Project Charter](04-project-charter.md)
 
 ---
@@ -15,13 +15,13 @@ A Project Management Plan for the **Iloilo City Social Welfare and Development O
 
 ---
 
-**Submitted by:** [group name, for example Thesis Titans], [section]
+**Submitted by:** Thesis Titans, [section]
 
 | Member | Sections led |
 |---|---|
-| Mark Alvin Cadangin (project manager) | [for example 3. Business Case, 4. Project Charter] |
-| Mae Daniella Faith C. Benjamin | [for example 6. Scope Statement] |
-| Nherie C. Acebuche | [for example 5. Stakeholder Register] |
+| Mark Alvin Cadangin (project manager) | 2. Executive Summary, 3. Business Case, 4. Project Charter, 7. WBS, 8. Schedule, 9. Cost Estimate, 13. Risk Register, 16. Conclusion |
+| Mae Daniella Faith C. Benjamin | 6. Scope Statement, 10. Quality Management Plan, 15. Change Control and Closing Plan |
+| Nherie C. Acebuche | 5. Stakeholder Register, 11. Resource and Responsibility Plan, 12. Communications Plan, 14. Procurement Plan |
 
 **Submitted to:**
 

@@ -1,7 +1,7 @@
 # 6. Scope Statement
 
 **Plan section:** 6 ◆ (Checkpoint 2)  
-**Version:** 0.1 draft, 23 October 2026  
+**Version:** 1.0 draft, 23 October 2026  
 **Status:** Draft for team review, then for sponsor approval. The format follows Schwalbe, *Information Technology Project Management*, Chapter 5.  
 **Related Documents:** [Business Case](03-business-case.md), [Project Charter](04-project-charter.md), [Stakeholder Register](05-stakeholder-register.md), [Product Scope](../../../product-scope.md)
 
@@ -12,6 +12,7 @@
 | Version | Date | Author | Change |
 |---|---|---|---|
 | 0.1 | 23 October 2026 | Project team | First draft for Checkpoint 2 |
+| 1.0 | 23 October 2026 | Project team | Budget aligned with the bottom-up cost baseline; client and users confirmed |
 
 ## 6.1 Project Title and Justification
 
@@ -74,7 +75,7 @@ The following are explicitly **outside** the project:
 
 ## 6.5 Constraints
 
-- **Budget:** ₱1,167,650 including contingency (charter); changes above ₱50,000 need sponsor approval.
+- **Budget:** ₱1,083,185 including a 10% contingency reserve (charter and Section 9); changes above ₱50,000 need the sponsor's approval (Section 15).
 - **Duration:** 8 months, 4 January to 27 August 2027.
 - **Law and policy:** the Data Privacy Act of 2012 (RA 10173) and its implementing rules; the ECCD System Act of 2025 (RA 12199) and its implementing rules signed on 5 August 2026, which set up city ECCD offices and govern how the app relates to the official ECCD program.
 - **Platform:** Android only, on entry-level phones with limited storage and intermittent mobile data.

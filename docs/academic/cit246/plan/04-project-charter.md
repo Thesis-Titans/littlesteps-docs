@@ -1,7 +1,7 @@
 # 4. Project Charter
 
 **Plan section:** 4 ◆ (Checkpoint 2)  
-**Version:** 0.1 draft, 23 October 2026  
+**Version:** 1.0 draft, 23 October 2026  
 **Status:** Draft for team review, then for sponsor sign-off. The format follows Schwalbe, *Information Technology Project Management*, Table 4-1.  
 **Related Documents:** [Business Case](03-business-case.md), [Stakeholder Register](05-stakeholder-register.md), [Scope Statement](06-scope-statement.md)
 
@@ -16,7 +16,7 @@
 | **Authorization date** | On sponsor sign-off (target: 8 January 2027) |
 | **Project start date** | 4 January 2027 |
 | **Projected finish date** | 27 August 2027 (8 months) |
-| **Budget** | ₱1,167,650, including a 10% contingency reserve of ₱106,150 (rough order of magnitude; the cost baseline in Section 9 replaces it) |
+| **Budget** | ₱1,083,185, including a 10% contingency reserve of ₱98,471 (bottom-up cost baseline, Section 9) |
 | **Project manager** | Mark Alvin Cadangin |
 
 ## 4.1 Key Schedule Milestones
@@ -24,14 +24,17 @@
 | Milestone | Target date |
 |---|---|
 | Charter signed by the sponsor | 8 January 2027 |
-| Requirements, design and privacy impact assessment approved | 19 February 2027 |
-| First 80 activity catalog items reviewed by the ECCD content reviewer | 9 April 2027 |
-| Beta app released for internal testing | 30 April 2027 |
-| Pilot starts at two Child Development Centers in La Paz | 17 May 2027 |
-| Pilot ends; evaluation report delivered | 9 July 2027 |
-| App published on Google Play | 30 July 2027 |
-| CDW training complete; system handed over to the maintainer | 20 August 2027 |
+| Design approved and privacy impact assessment approved by the DPO | 5 March 2027 |
+| 80 activity catalog items reviewed by the ECCD content reviewer | 6 April 2027 |
+| All features built; system testing starts | 4 May 2027 |
+| Pilot onboarding done; pilot starts at two Child Development Centers in La Paz | 3 June 2027 |
+| Pilot ends | 28 July 2027 |
+| Pilot evaluation report delivered | 4 August 2027 |
+| App published on Google Play | 16 August 2027 |
+| CDW training complete; system handed over to the maintainer | 19 August 2027 |
 | Project closed; lessons learned recorded | 27 August 2027 |
+
+The dates come from the schedule in Section 8.
 
 ## 4.2 Project Objectives
 
