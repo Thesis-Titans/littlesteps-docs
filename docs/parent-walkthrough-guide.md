@@ -1,7 +1,10 @@
-# Parent Walkthrough Guide
+# LittleSteps Parent Walkthrough Guide
 
-**Status:** Draft field guide for Sprint 1 (26 October – 1 November 2026)  
-**Used for:** the informal prototype walkthrough in [Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)  
+**Status:** Canonical Field Protocol Baseline  
+**Governing Standard:** ISO 9241-11:2018 (Usability: Definitions and Concepts)  
+**Owner:** Faith (Frontend & Usability Lead)  
+**Last Reviewed:** 2026-10-26  
+**Associated Gate:** [Docs Issue #15 — [M0] Plan and validate the LittleSteps UI prototype before implementation](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)  
 **Related Documents:** [Prototype Traceability and Storyboards](prototype-traceability-storyboards.md), [UI/UX Design Specification](ui-ux-design-specification.md), [Security, Privacy, and AI Safeguards](security-privacy-ai.md)
 
 ---

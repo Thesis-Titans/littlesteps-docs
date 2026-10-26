@@ -1,7 +1,9 @@
 # LittleSteps Research Register
 
-**Status:** Canonical Research Reference  
-**Reference Basis:** Official statutory, regulatory, and technical sources listed in this register; source-specific claims require verification.  
+**Status:** Canonical Research Reference Baseline  
+**Governing Standard:** PMBOK (Benchmarking) & ISO/IEC/IEEE 29148:2018  
+**Owner:** Vincent (Backend & Research Lead)  
+**Last Reviewed:** 2026-10-26  
 **Related Documents:** [Philippine Content Provenance](philippine-content-provenance.md), [Security, Privacy, and AI Safeguards](security-privacy-ai.md)
 
 ---

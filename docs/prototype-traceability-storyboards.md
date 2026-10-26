@@ -1,7 +1,9 @@
 # LittleSteps Prototype Traceability, Storyboards, and Scope
 
-**Status:** Working Design Baseline  
-**Governing Reference:** ISO 9241 usability guidance; no claim of formal conformity  
+**Status:** Canonical Design Baseline  
+**Governing Standard:** ISO 9241-11:2018 (Usability Ergonomics)  
+**Owner:** Nherie (Frontend Lead) & Faith (Usability Lead)  
+**Last Reviewed:** 2026-10-26  
 **Associated Gate:** [Docs Issue #15 — [M0] Plan and validate the LittleSteps UI prototype before implementation](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)  
 **Related Documents:** [UI/UX Design Specification](ui-ux-design-specification.md), [Traceability Matrix](traceability-matrix.md), [Research Register](research-register.md)
 

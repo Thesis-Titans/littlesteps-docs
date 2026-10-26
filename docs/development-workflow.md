@@ -2,7 +2,9 @@
 
 **Status:** Canonical Engineering Workflow Baseline  
 **Governing Standard:** ISO/IEC/IEEE 12207:2017 (Software Life Cycle Processes) & GitHub Flow  
-**Related Documents:** [Documentation Standards](documentation-standards.md), [Execution Plan](execution-plan.md)
+**Owner:** Mark Alvin Cadangin (Technical Lead)  
+**Last Reviewed:** 2026-10-26  
+**Related Documents:** [Documentation Standards](documentation-standards.md), [Execution Plan](execution-plan.md), [API Reference & Integration Guide](api-reference.md)
 
 ---
 
@@ -55,9 +57,8 @@ Following the governance audit ([Docs Issue #2](https://github.com/Thesis-Titans
      - Pull requests are required before merging into `main`.
    - **Administrator Bypass Retained (`enforce_admins: false`):** Branch protection deliberately retains the administrator bypass. Repository administrators are technically permitted by GitHub to bypass branch rules. The restriction against direct pushes to `main` is therefore enforced on administrators procedurally through team discipline, rather than through server-enforced administrator lockouts.
 2. **Review & Approval Policy (Technical Enforcement vs. Procedural Boundary):**
-   - **Technical GitHub Configuration:** Pull requests are strictly required before merging to `main`, but GitHub's `required_approving_review_count` is set to `0`. This technically prohibits direct git pushes to `main` while avoiding owner/author self-review deadlocks during solo setup tasks. GitHub's branch rule alone does not enforce an approval before merge under this configuration.
-   - **Procedural Team Enforcement:** The team operates under an agreed procedural rule that Mark serves as the reviewer and approval boundary during the setup stage. No pull request may be merged into `main` without Mark's explicit human review and approval, even though GitHub's technical setting permits merges without an approval.
-   - **Feature Execution Transition:** For subsequent feature execution, stricter server-side review requirements (e.g., `required_approving_review_count: 1` or CODEOWNERS) will be evaluated and configured by team agreement once multiple collaborators are submitting PRs.
+   - **Feature Execution Transition (Active):** With the initial repository foundation complete and Sprint 1 active, feature execution operates under mandatory teammate peer reviews. Pull requests require at least 1 approving teammate review prior to merging into `main`. For core architecture, data contracts, and security rules, Mark provides an additional review.
+   - **Procedural Team Enforcement:** The administrator bypass is retained (`enforce_admins: false`) solely to prevent author deadlocks on emergency hotfixes. Under team policy, all regular pull requests must be approved by a peer before merging.
 3. **Required Status Checks:**
    - **`littlesteps-api`:** Strictly requires the `API CI/verify` GitHub Actions status check to pass before merging.
    - **`littlesteps-react`:** Strictly requires the `Web CI/verify` GitHub Actions status check to pass before merging.

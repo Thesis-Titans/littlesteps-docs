@@ -29,10 +29,15 @@ The course evaluates the final project through two primary categories:
 ## Technical Mapping to LittleSteps Components
 
 ### 1. API Integration (25 pts)
-- **Custom REST API:** Express + TypeScript backend in `littlesteps-api` implementing the [OpenAPI 3.1 specification](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml).
-- **Third-Party API Integration:**
-  - **Primary:** Gemini API free tier for the activity recommendation helper ([ADR-008](../../architecture-decisions.md); server-side Cloud Function, synthetic prompts only).
-  - **Optional Stretch:** Open-Meteo forecast API for weather-aware outdoor suggestions ([ADR-009](../../architecture-decisions.md); optional enhancement, first item dropped if schedule slips).
+- **Custom REST API:** Express + TypeScript backend in `littlesteps-api` implementing the canonical [API Reference & Integration Guide](../../api-reference.md) and [OpenAPI 3.1 specification](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml).
+- **External Data API Integration (Open Library REST API):**
+  - Live query integration with the **Internet Archive's Open Library REST API** (`openlibrary.org/subjects/picture_books.json`) to dynamically search, paginate, and render real-world children's literature and book cover images ([ADR-010](../../architecture-decisions.md)).
+  - Server-side in-memory caching (60-minute TTL) to optimize network efficiency and protect against upstream rate limits.
+- **External AI Augmentation (Google Gemini API with 3-Tier Fallback):**
+  - **Tier 1 (Cloud Primary):** Google Gemini 1.5 Flash for the activity recommendation helper and storybook companion activity generator ([ADR-008](../../architecture-decisions.md), [ADR-010](../../architecture-decisions.md); server-side Cloud Function, synthetic non-PII prompts only, 8-second execution timeout).
+  - **Tier 2 (Local Edge AI Fallback):** Local Ollama (`qwen2.5-coder:7b`) on `localhost:11434` for 100% offline development and live presentation resilience.
+  - **Tier 3 (Deterministic Rule-Based Catalog):** Instant fallback to verified Philippine curriculum activities if external APIs time out, rate limit, or fail ([ADR-006](../../architecture-decisions.md)).
+- **Optional Stretch:** Open-Meteo forecast API for weather-aware outdoor suggestions ([ADR-009](../../architecture-decisions.md); optional enhancement, first item dropped if schedule slips).
 - **Dynamic Data Flow:** Bidirectional client-server communication with JSON payloads and bearer-token authentication.
 
 ### 2. Client-Side Interface & Usability (20 pts)
@@ -46,12 +51,12 @@ The course evaluates the final project through two primary categories:
 ### 3. Server-Side Logic & Data Processing (15 pts)
 - **Modular Controllers:** Express route handlers with controller abstraction and service layers.
 - **Data Persistence:** Cloud Firestore document storage with caregiver-scoped subcollections ([Data Model](../../data-model.md)).
-- **Authorization & Multi-Tenancy:** Application-level Broken Object Level Authorization (BOLA) verification for child-scoped resources ([ADR-003](../../architecture-decisions.md)).
-- **Deterministic Fallbacks:** Immediate rule-based catalog fallback when external AI services fail, time out, or rate limit ([ADR-006](../../architecture-decisions.md), [ADR-008](../../architecture-decisions.md)).
+- **Authorization & Multi-Tenancy:** Application-level Broken Object Level Authorization (BOLA) verification for child-scoped resources, strictly returning HTTP 404 on unowned resources to prevent metadata leakage ([ADR-003](../../architecture-decisions.md), [Security Safeguards](../../security-privacy-ai.md)).
+- **3-Tier Fallback Execution:** Server-orchestrated multi-tier resilience ensuring zero client crashes ([ADR-010](../../architecture-decisions.md)).
 
 ### 4. Error Handling & Data Validation (5 pts)
-- **Input Validation:** Bounded validation schemas for child profiles (0–71 months age bands), dates, and journal lengths.
-- **Consistent Error Envelopes:** Standardized `{ error: { code, message } }` JSON responses.
+- **Input Validation:** Bounded schema validation (Zod) for child profiles (0–71 months age bands), dates, and journal lengths.
+- **Consistent Error Envelopes:** Standardized `{ error: { code, message, details } }` JSON responses mapped to standard HTTP statuses (400, 401, 404, 422, 429).
 - **Client Resilience:** 5-state interaction matrix (empty, loading skeleton, error banner, permission-denied, offline/fallback).
 
 ---
@@ -62,11 +67,13 @@ The class presentation accounts for **35 points (35%)** of the total grade and w
 
 1. **Clarity & Structure (10 pts):**
    - **Introduction:** Client context (CSWDO La Paz–Lapuz District office; researched as realistic client without formal live contact) and problem statement.
-   - **System Overview:** Architecture of the coordinated system (React web client + shared API + Cloud Firestore).
+   - **System Overview:** Architecture of the coordinated system (React web client + shared Express API on Firebase Functions + Cloud Firestore).
    - **Conclusion:** Summary of findings, current constraints, and future work.
 2. **Explanation of API Integration (10 pts):**
-   - Walkthrough of core endpoints (`/children`, `/activities`, `/recommendations`).
-   - Demonstration of request/response headers, token decoding (using local emulator tokens during development and demo), and third-party API integration.
+   - Walkthrough of core endpoints documented in the [API Reference](../../api-reference.md) (`/api/v1/children`, `/api/v1/catalog/books`, `/api/v1/ai/story-activity`).
+   - In-depth explanation of external REST integration: querying Open Library with query parameters, response deserialization, and server-side caching.
+   - Explanation of AI augmentation: prompt sanitization (zero child PII), 8s timeout bounding, and the 3-tier fallback architecture (Gemini $\to$ Local Ollama $\to$ Deterministic Catalog).
+   - Demonstration of request/response headers, token decoding (using local emulator tokens without exposing real credentials on screen), and error envelope propagation.
 3. **Demo & Functionality (15 pts):**
    - Live demonstration of the working React web application against local Firebase emulators.
    - Verification of live child profile creation, routine planning, private journal recording, and catalog search.

@@ -2,7 +2,9 @@
 
 **Status:** Canonical Security & Non-Functional Requirements Baseline  
 **Governing Standard:** ISO/IEC/IEEE 29148:2018 (Non-Functional Requirements) & RA 10173  
-**Related Documents:** [Product Scope](product-scope.md), [Data Model Specification](data-model.md), [Traceability Matrix](traceability-matrix.md)
+**Owner:** Mark Alvin Cadangin (Technical Lead)  
+**Last Reviewed:** 2026-10-26  
+**Related Documents:** [API Reference & Integration Guide](api-reference.md), [Product Scope](product-scope.md), [Data Model Specification](data-model.md), [Traceability Matrix](traceability-matrix.md)
 
 ---
 
@@ -28,7 +30,7 @@ LittleSteps processes sensitive family and early-learning observations. System a
 
 ### NFR-SEC-02: Broken Object Level Authorization (BOLA) Defense
 - **Requirement:** Every child-scoped operation (child profiles, activity history, milestone observations, journal entries, progress summaries) must execute server-side authorization checks prior to performing any database read, mutation, or deletion.
-- **Verification Rule:** The API checks that `child.caregiverId === authenticatedUid`. Any attempt to access, modify, or delete a resource belonging to another caregiver must result in a safe `403 Forbidden` or `404 Not Found` response without leaking resource existence or metadata.
+- **Verification Rule:** The API checks that `child.caregiverId === authenticatedUid`. Any attempt to access, modify, or delete a resource belonging to another caregiver must result in a safe `404 Not Found` response with error code `RESOURCE_NOT_FOUND`. A `403 Forbidden` response must not be returned for cross-caregiver resource lookups because returning 403 confirms that the resource ID exists, leaking metadata to potential attackers.
 - **Firestore Direct Access Boundary:** Firebase Admin SDK calls within Cloud Functions bypass Firestore Security Rules. Authorization checks must be implemented in API application code, while restrictive Firestore Security Rules must be deployed to block unauthorized direct client-SDK database access.
 
 ### NFR-SEC-03: Zero Secret Exposure & Credential Isolation
@@ -79,9 +81,12 @@ To satisfy the **CC 207B AI-Powered Feature Requirements (§2a–d, §3)**, the 
 - **Data Minimization in Prompts:** Prompts contain only sanitized constraint keywords: coarse age band, duration, environment, materials list and language. Zero child names, caregiver IDs, locations (including the weather city), or journal texts are ever included in prompts. The materials text is cleaned on the server before sending.
 - **Provider and free tier:** The provider is the Gemini API free tier, for development and the course demonstration only, with synthetic data. Google may use free-tier prompts to improve its products, which is why the minimization above is strict. Before any real caregiver uses the helper, move to the paid tier or Vertex AI. See [ADR-008](architecture-decisions.md).
 
-### NFR-AI-03: Graceful Degradation & Deterministic Fallback (CC 207B §2c Graceful failure)
+### NFR-AI-03: Graceful Degradation & 3-Tier Fallback Hierarchy (CC 207B §2c Graceful failure)
 - **Latency & Timeout:** AI calls are constrained to an 8-second execution timeout. Frontends render loading skeletons and progress indicators during inference.
-- **Deterministic Fallback:** If the external AI service times out, experiences rate limiting, returns an invalid schema, or cannot be reached, the backend immediately executes a deterministic rule-based catalog filter. The caregiver receives valid activities from the catalog without service interruption or application errors when the backend API and catalog are available ([ADR-006](architecture-decisions.md)).
+- **3-Tier Fallback Hierarchy ([ADR-010](architecture-decisions.md)):**
+  1. *Tier 1 (Cloud Primary):* Google Gemini API free tier with an 8-second bounded timeout.
+  2. *Tier 2 (Local Edge AI Fallback):* Local Ollama (`http://localhost:11434/api/generate`) active in local dev/demo environments for network-independent demonstration.
+  3. *Tier 3 (Deterministic Rule-Based Catalog):* If both cloud and local AI fail, timeout, or hit rate limits, the backend immediately executes deterministic rule-based catalog matching. The caregiver receives approved activities from the verified curriculum catalog without service interruption or application crashes.
 - **Device offline:** If the caregiver's device is offline, it cannot reach the backend, so neither the AI helper nor the fallback can run. The app shows the offline state described in the [UI/UX Design Specification](ui-ux-design-specification.md) §7 instead of an error.
 
 ### NFR-AI-04: Ethical Transparency, Labeling & Non-Diagnostic Boundary (CC 207B §2d Responsible use)
@@ -100,7 +105,7 @@ To satisfy the **CC 207B AI-Powered Feature Requirements (§2a–d, §3)**, the 
 
 ### NFR-REL-01: Performance & Operational Limits
 - **API Response Latency:** Standard CRUD operations (profiles, activities, journal, summaries) must respond within 500ms under local emulator conditions.
-- **Rate & Cost Limiting:** AI suggestion endpoints must enforce per-caregiver rate limits (e.g., maximum 10 requests per hour) to prevent API quota exhaustion and denial-of-wallet attacks.
+- **Rate & Cost Limiting:** AI suggestion endpoints must enforce per-caregiver rate limits (e.g., maximum 10 requests per hour) to prevent API quota exhaustion and denial-of-wallet attacks. When rate limits are reached, the API responds with HTTP 429 `RATE_LIMITED` and a `Retry-After: 3600` header, and the client automatically triggers the Tier 3 deterministic catalog fallback.
 - **Payload Constraints:** Request body parsers enforce a 100KB payload limit to prevent memory exhaustion attacks.
 
 ---

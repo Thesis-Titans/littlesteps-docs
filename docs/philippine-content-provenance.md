@@ -1,8 +1,10 @@
 # LittleSteps Philippine Content Provenance
 
-**Status:** Canonical Content Sourcing and Review Protocol  
-**Reference Basis:** Philippine statutory context and source-level provenance review.  
-**Related Documents:** [Research Register](research-register.md), [Product Scope](product-scope.md)
+**Status:** Canonical Content Sourcing Baseline  
+**Governing Standard:** Republic Act No. 12199 (ECCD System Act) & RA 10173  
+**Owner:** Vincent (Backend & Content Lead)  
+**Last Reviewed:** 2026-10-26  
+**Related Documents:** [Research Register](research-register.md), [Product Scope](product-scope.md), [API Reference & Integration Guide](api-reference.md)
 
 ---
 
