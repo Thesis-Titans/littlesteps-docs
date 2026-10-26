@@ -24,12 +24,12 @@
 | 5 | R5 | The Data Protection Officer's approval of the privacy impact assessment is late or needs major changes, delaying the AI service on the critical path | Legal | 3 | 4 | 12 | Business analyst | **Mitigate:** start the assessment as soon as the requirements are done; a pre-review meeting with the DPO; the privacy consultant reviews it first. **Contingency:** release without the AI helper, using only the rule-based catalog picks, and add AI in an update. |
 | 6 | R6 | A contracted developer leaves or underperforms, delaying critical-path work | **People** | 2 | 5 | 10 | Project manager | **Mitigate:** each developer reviews the other's code; all code in a shared repository from day one; a replacement clause in the contract (Section 14). **Contingency:** use the contingency reserve for a replacement at short notice. |
 | 7 | R7 | Typhoons or heavy rain during the June–August pilot close centers or cancel sessions | Environment | 3 | 3 | 9 | Stakeholder and content coordinator | **Mitigate:** onboarding in late May before the peak of the rainy season; check-ins by phone or chat when centers are closed. **Accept:** a week's closure is absorbed by the pilot's length. |
-| 8 | R8 | Fewer than 80 catalog items are approved, because of reuse permissions or reviewer availability | Content | 3 | 3 | 9 | Stakeholder and content coordinator | **Mitigate:** identify two possible reviewers; start sourcing in January; use the 16 days of float on the catalog path. **Contingency:** launch with at least 60 approved items, with the sponsor's agreement. |
+| 8 | R8 | Fewer than 80 catalog items are approved, because of reuse permissions or reviewer availability | Content | 3 | 3 | 9 | Stakeholder and content coordinator | **Mitigate:** identify two possible reviewers; start sourcing in January; use the 9–11 days of float on the catalog path. **Contingency:** launch with at least 60 approved items, with the sponsor's agreement. |
 | 9 | R9 | The app runs slowly on entry-level phones | Technical | 2 | 3 | 6 | Developer B | **Mitigate:** test on three entry-level phones from the start of 5.0; set a 3-second screen-load target (Section 10). |
 | 10 | R10 | The AI provider changes its prices or terms, or has an outage | Technical | 2 | 3 | 6 | Developer A | **Mitigate:** the rule-based fallback keeps the helper working; check prices monthly. **Accept:** small price changes are covered by the reserve. |
 | 11 | R11 | A security flaw exposes children's or parents' data | Security | 1 | 5 | 5 | Project manager, with the DPO | **Avoid:** store only a nickname, an age band or birth month and year, and parents' own entries; a security review before release (6.3.1). **Contingency:** the incident process in Section 12.2: DPO informed within 24 hours. |
 
-Six of the eleven risks are about people or the organization, not technology: R1, R2, R3, R4, R6 and R7.
+Five of the eleven risks are about people or the organization (R1, R2, R3, R4, R6), and one is environmental (R7). This exceeds the course requirement of at least three non-technical risks.
 
 ## 13.3 Top Risk
 
@@ -37,4 +37,4 @@ Six of the eleven risks are about people or the organization, not technology: R1
 
 ## 13.4 Reserves
 
-The 10% contingency reserve (₱98,471, Section 9) covers the contingency responses above, such as replacing a developer (R6) or printing the booklet (R2). The project manager may spend up to ₱20,000 of it on a single risk; larger amounts need the sponsor's approval through change control (Section 15).
+The 10% contingency reserve (₱98,471, Section 9) covers the contingency responses above, such as replacing a developer (R6) or printing the booklet (R2). The project manager may spend under ₱10,000 of it on a single risk without affecting a milestone; larger amounts (₱10,000–₱50,000) go to the change control board, and amounts over ₱50,000 need the sponsor's approval through change control (Section 15).

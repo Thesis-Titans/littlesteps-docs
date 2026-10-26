@@ -2,7 +2,7 @@
 
 **Course:** CIT 246 IT Project Management  
 **Institution:** West Visayas State University — College of Information and Communications Technology  
-**Source:** Summarized from the instructor's *Final Project: IT Project Management Plan* brief. The instructor's brief is the authority wherever this page differs from it.  
+**Source:** Summarized from the instructor's [Final Project: IT Project Management Plan](CIT246_Final_Project_IT_Project_Management_Plan.md) brief. The instructor's brief is the authority wherever this page differs from it.  
 **Key Deliverable:** One Project Management Plan, 25–40 pages including appendices, as a single PDF plus a printed copy, followed by a class presentation  
 **CIT 246 Team:** Mark Alvin Cadangin (Lead), Nherie C. Acebuche, Mae Daniella Faith C. Benjamin. CIT 246 is taken by these three members, who share this track; the other two LittleSteps members are on a different track. CC 207B and CIT 210 involve all five members.  
 **Final Presentation:** December 2, 2026 (15 minutes plus 5 minutes of questions; every CIT 246 team member speaks)
@@ -16,7 +16,7 @@
 - The project must be for an organization or business with a **real problem** that the group has access to (for example a barangay, LGU office, school, clinic, cooperative, small business, NGO, or a CICT or WVSU office).
 - It must be large enough to need managing, **roughly six to twelve months of work with a budget the group can defend**, but small enough that the group could plausibly deliver it.
 
-For LittleSteps this means the plan describes a 6–12 month project for the proposed client (a barangay Early Childhood Care and Development center or child development network in Iloilo City), covering build, pilot, training and handover, with peso costs. It is a separate document from the [execution plan](../../execution-plan.md), which schedules the real one-month course build (October 26 to November 25, 2026).
+For LittleSteps this means the plan describes a 6–12 month project for the proposed client (the City Social Welfare and Development Office [CSWDO] La Paz–Lapuz District office in Iloilo City), covering build, pilot, training and handover, with peso costs. It is a separate document from the [execution plan](../../execution-plan.md), which schedules the real one-month course build (October 26 to November 25, 2026).
 
 - **The timeline is a practice plan.** The 6–12 month schedule exercises the course's planning methods; it does not describe how the team actually builds the course project. The plan's risk, stakeholder, quality and communication work is still used in the real build.
 - **The planned system is the Flutter app.** CIT 246 is coupled with CC 207B, so the plan describes the Flutter Android app on the shared Node.js/TypeScript API with Firebase Authentication and Firestore. The React web client from CIT 210 is not part of this plan. The [Checkpoint 1 concept](checkpoint-1-concept.md) mentioned both clients; the full plan narrows the scope to the Flutter app and its backend.

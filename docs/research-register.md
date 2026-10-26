@@ -6,7 +6,7 @@
 
 ---
 
-Reviewed for the initial architecture baseline on 2026-10-11. Recheck official documentation before deployment because service behavior, legal interpretation, and pricing can change. Entries identify sources and intended use; they do not by themselves establish implementation or legal compliance.
+Reviewed for the initial architecture baseline on 2026-10-11, with additional research entries incorporated on 2026-10-23 and 2026-10-26. Recheck official documentation before deployment because service behavior, legal interpretation, and pricing can change. Entries identify sources and intended use; they do not by themselves establish implementation or legal compliance.
 
 | Topic | Source | How it informs LittleSteps |
 |---|---|---|

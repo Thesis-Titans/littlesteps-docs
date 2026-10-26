@@ -14,8 +14,9 @@ This document defines proposed non-functional requirements (NFRs) and security/p
 
 LittleSteps processes sensitive family and early-learning observations. System architecture and data management are designed to adhere to:
 - **Republic Act No. 10173 (Data Privacy Act of 2012 / DPA):** Principles of transparency, legitimate purpose, proportionality, and strict data minimization.
-- **Republic Act No. 12199 (Basic Education Mental Health and Well-Being Promotion Act):** Ensuring developmental and emotional well-being activities are non-stigmatizing, age-appropriate, and non-clinical.
-- **CC 207B AI & Security Criteria (Items 12–17):** Strict academic constraints governing server-side AI execution, zero client credential exposure, deterministic fallbacks, and ethical code authorship.
+- **Republic Act No. 12199 (Early Childhood Care and Development System Act of 2025 / ECCD System Act):** Amending and updating the national ECCD framework (previously RA 10410) for holistic child development, age-appropriate learning, and community-based support.
+- **Republic Act No. 12080 (Basic Education Mental Health and Well-Being Promotion Act):** Ensuring developmental and emotional well-being activities are non-stigmatizing, age-appropriate, and non-clinical.
+- **CC 207B AI & Security Criteria (§2a–d, §3):** Strict academic constraints governing server-side AI execution, zero client credential exposure, deterministic fallbacks, and ethical code authorship.
 
 ---
 
@@ -67,31 +68,31 @@ LittleSteps processes sensitive family and early-learning observations. System a
 
 ## 4. Artificial Intelligence Safeguards & Governance (NFR-AI)
 
-To satisfy the **CC 207B AI-Powered Feature Requirement (Items 12–17)**, the AI Activity Suggestion Helper (FR-06) operates under strict architectural and ethical constraints:
+To satisfy the **CC 207B AI-Powered Feature Requirements (§2a–d, §3)**, the AI Activity Suggestion Helper (FR-06) operates under strict architectural and ethical constraints:
 
-### NFR-AI-01: Relevance & Problem Fit (Item 13)
+### NFR-AI-01: Relevance & Problem Fit (CC 207B §2a Relevance)
 - **Caregiver Need:** Caregivers often have limited time, diverse home settings, and arbitrary materials on hand (e.g., "recycled boxes, plastic cups, spoons").
-- **Technical Rationale:** Keyword matching fails when processing unstructured natural-language descriptions of household materials. The semantic helper matches caregiver constraints to eligible activity IDs from the reviewed catalog without rigid query rules.
+- **Technical Rationale:** Simple keyword matching often matches poorly when processing unstructured natural-language descriptions of household materials. The semantic helper matches caregiver constraints to eligible activity IDs from the reviewed catalog without rigid query rules.
 
-### NFR-AI-02: Server-Side Execution & Credential Isolation (Item 14)
-- **Execution Boundary:** All AI model invocations (Gemini API / Firebase Vertex AI) execute exclusively server-side inside Cloud Functions.
+### NFR-AI-02: Server-Side Execution & Credential Isolation (CC 207B §2b Security)
+- **Execution Boundary:** All AI model invocations (Gemini API free tier under [ADR-008](architecture-decisions.md), deferring Vertex AI / paid tiers) execute exclusively server-side inside Cloud Functions.
 - **Data Minimization in Prompts:** Prompts contain only sanitized constraint keywords: coarse age band, duration, environment, materials list and language. Zero child names, caregiver IDs, locations (including the weather city), or journal texts are ever included in prompts. The materials text is cleaned on the server before sending.
 - **Provider and free tier:** The provider is the Gemini API free tier, for development and the course demonstration only, with synthetic data. Google may use free-tier prompts to improve its products, which is why the minimization above is strict. Before any real caregiver uses the helper, move to the paid tier or Vertex AI. See [ADR-008](architecture-decisions.md).
 
-### NFR-AI-03: Graceful Degradation & Deterministic Fallback (Item 15)
+### NFR-AI-03: Graceful Degradation & Deterministic Fallback (CC 207B §2c Graceful failure)
 - **Latency & Timeout:** AI calls are constrained to an 8-second execution timeout. Frontends render loading skeletons and progress indicators during inference.
-- **Deterministic Fallback:** If the external AI service times out, experiences rate limiting, returns an invalid schema, or cannot be reached, the backend immediately executes a deterministic rule-based catalog filter. The caregiver receives valid activities from the catalog without service interruption or application errors.
+- **Deterministic Fallback:** If the external AI service times out, experiences rate limiting, returns an invalid schema, or cannot be reached, the backend immediately executes a deterministic rule-based catalog filter. The caregiver receives valid activities from the catalog without service interruption or application errors when the backend API and catalog are available ([ADR-006](architecture-decisions.md)).
 - **Device offline:** If the caregiver's device is offline, it cannot reach the backend, so neither the AI helper nor the fallback can run. The app shows the offline state described in the [UI/UX Design Specification](ui-ux-design-specification.md) §7 instead of an error.
 
-### NFR-AI-04: Ethical Transparency, Labeling & Non-Diagnostic Boundary (Item 16)
+### NFR-AI-04: Ethical Transparency, Labeling & Non-Diagnostic Boundary (CC 207B §2d Responsible use)
 - **Visual Labeling:** Every AI-generated suggestion must display an explicit AI badge and disclaimer: *"AI Suggestion — Always adapt to your child and ensure adult supervision."*
 - **Caregiver Autonomy:** Caregivers can reject, regenerate, customize, or manually replace any suggestion.
 - **Non-Diagnostic Rule:** The AI prompt system instructions strictly prohibit medical diagnosis, clinical developmental delay scoring, or pediatric treatment recommendations.
 
-### NFR-AI-05: Team Authorship & Code Defense Governance (Item 17)
-- Using generative AI to write the application wholesale without comprehension is prohibited.
-- AI-assisted development tools (e.g., IDE copilots for boilerplate or testing) must be recorded in the team's internal **AI Usage Log**.
-- Every team member must personally understand and be prepared to explain and modify their codebase contributions during the **CC 207B Individual Code Defense**.
+### NFR-AI-05: Team Authorship & Code Defense Governance (CC 207B §3 AI Use Policy)
+- Using generative AI to write the application wholesale without comprehension is strictly prohibited.
+- AI-assisted development tools (e.g., IDE copilots for boilerplate or debugging) must adhere to course guidelines. For CC 207B (`littlesteps-flutter`), all AI use must be documented in the internal **AI Usage Log** per course requirement.
+- Across all codebases, every team member must personally understand, explain, and defend their committed contributions during code reviews and the **CC 207B Individual Code Defense**.
 
 ---
 

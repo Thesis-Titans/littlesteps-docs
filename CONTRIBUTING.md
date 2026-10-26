@@ -16,7 +16,7 @@ LittleSteps is organized across multiple repositories under the [`Thesis-Titans`
 > **Mobile Repository:** `littlesteps-flutter` is private and open for changes through the same branch-and-PR workflow. It does not yet have its own contributor guide, templates, CI, or branch protection.
 
 ### Rights & Licensing Notice
-LittleSteps is a course project for Application Development and Web Development. The project's intended policy is **All Rights Reserved (Academic Evaluation Only)**. While active repositories are public for academic course evaluation and faculty review, public visibility does not grant an open-source license for general reuse, modification, or redistribution. Do not introduce open-source licenses (MIT, Apache, GPL) without explicit review and approval from the project lead and course instructor.
+LittleSteps is a coordinated academic course project across Applications Development (CC 207B), Web Systems and Technologies (CIT 210), and IT Project Management (CIT 246). The project's intended policy is **All Rights Reserved (Academic Evaluation Only)**. While active repositories are public for academic course evaluation and faculty review, public visibility does not grant an open-source license for general reuse, modification, or redistribution. Do not introduce open-source licenses (MIT, Apache, GPL) without explicit review and approval from the project lead and course instructor.
 
 ---
 
@@ -61,6 +61,7 @@ Always run local checks using committed lockfiles before requesting review:
 - **API (`littlesteps-api`):**
   ```bash
   npm ci
+  npm run typecheck
   npm run lint
   npm run build
   npm test
@@ -69,6 +70,7 @@ Always run local checks using committed lockfiles before requesting review:
 - **Web (`littlesteps-react`):**
   ```bash
   npm ci
+  npm run typecheck
   npm run lint
   npm run build
   npm test
@@ -108,10 +110,9 @@ Because LittleSteps serves caregivers and early childhood learners, contributors
 ## 7. Review & Merge Governance
 
 - **Setup & Foundation Stage:**
-  - Branch protection on `main` requires pull requests. While GitHub's technical setting has `required_approving_review_count: 0` to prevent author deadlocks during solo setup, the team enforces a **procedural approval rule**.
-  - **Mark Alvin Cadangin** serves as the reviewer and approval boundary. No pull request may be merged into `main` without Mark's explicit human review and approval.
-- **Feature Execution Stage:**
-  - As collaborative feature development begins, pull requests will transition to required peer reviews and formal approvals.
+  - Initial foundation setup was reviewed and merged through the project lead boundary.
+- **Feature Execution Stage (Active):**
+  - In the active feature execution phase, every pull request requires review and approval from at least one teammate. Pull requests modifying data contracts, authentication, security rules, or AI prompts/fallbacks require an additional review from Mark.
 
 ---
 

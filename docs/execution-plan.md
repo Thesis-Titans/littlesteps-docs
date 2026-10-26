@@ -9,7 +9,7 @@
 This plan defines the proposed delivery sequence for LittleSteps across three coordinated courses. Milestones describe intended outcomes; they do not indicate completion unless linked evidence confirms the exit criteria.
 - **CC 207B — Applications Development and Emerging Technologies:** Flutter mobile application with 6 core features, user-facing AI, live demo, and individual code defense.
 - **CIT 210 — Web Systems and Technologies:** React web client using shared API & database, local demo, and documentation.
-- **CIT 246 — IT Project Management Plan:** 25–40 page Project Management Plan governing the entire system, with Checkpoint 1 due October 14, 2026 and final defense on December 2, 2026.
+- **CIT 246 — IT Project Management Plan:** 25–40 page Project Management Plan governing the proposed production delivery of the Flutter mobile client and shared backend infrastructure, with Checkpoint 1 due October 14, 2026 and final defense on December 2, 2026.
 
 Canonical product requirements remain in [Product Scope](product-scope.md), architecture decisions in [Architecture Decisions](architecture-decisions.md), security requirements in [Security, Privacy, and AI Safeguards](security-privacy-ai.md), and the client/server contract in the API repository's [OpenAPI specification](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml).
 
@@ -102,7 +102,7 @@ CIT 246 is a separate deliverable from this execution plan. This plan schedules 
 - **Practice timeline:** the 6–12 month schedule in the CIT 246 plan is a planning exercise, not the team's real schedule. The real build is compressed into the one month above. The CIT 246 work still feeds this project: its risk register, stakeholder analysis, quality plan and communication plan are used here.
 - **What system it plans:** because CIT 246 is coupled with CC 207B, the plan describes the **Flutter Android app** on the shared Node.js/TypeScript API with Firebase Authentication and Firestore. The React web client (CIT 210) is not part of the CIT 246 plan.
 - **Where it is written:** Markdown in [`docs/academic/cit246/`](academic/cit246/README.md), reviewed through pull requests so each member's work is visible, then exported to the A4, Arial 11 PDF for submission.
-- **What it plans:** a **6–12 month** project for the proposed client (a barangay Early Childhood Care and Development center or child development network in Iloilo City), covering build, pilot, training and handover, with a defensible budget **in pesos**. Production costs that the course build avoids belong there, for example the paid Gemini tier or Vertex AI required before real caregivers use the AI helper ([ADR-008](architecture-decisions.md)) and the Firebase Blaze plan for deployment.
+- **What it plans:** a **6–12 month** project for the proposed client (the City Social Welfare and Development Office [CSWDO] La Paz–Lapuz District office in Iloilo City), covering build, pilot, training and handover, with a defensible budget **in pesos**. Production costs that the course build avoids belong there, for example the paid Gemini tier or Vertex AI required before real caregivers use the AI helper ([ADR-008](architecture-decisions.md)) and the Firebase Blaze plan for deployment.
 - **No code:** the group plans the project and does not build it for this course.
 - **Structure:** the instructor's 17-section template, the 12 key deliverables and the course and Schwalbe formats, as listed in the [CIT 246 requirements](academic/cit246/README.md).
 - **Checkpoints:** Checkpoint 1 (concept) was due 14 October; its approval is not yet recorded. Checkpoint 2 (sections 3–6) and Checkpoint 3 (sections 7–9) dates are to be announced.
@@ -117,7 +117,7 @@ The six core capabilities (formally specified in [Product Scope](product-scope.m
 
 1. **FR-01: Child Profile and Milestone Tracking** (Caregiver input $\rightarrow$ profile persistence $\rightarrow$ observation display).
 2. **FR-02: Daily Activity Planning and Tracking** (Activity selection $\rightarrow$ scheduling/completion state $\rightarrow$ calendar/timeline update).
-3. **FR-03: Private Observation Journal** (Encrypted note input $\rightarrow$ secure storage $\rightarrow$ chronological journal display).
+3. **FR-03: Private Observation Journal** (Caregiver observation input $\rightarrow$ secure storage with encryption at rest and BOLA access control $\rightarrow$ chronological journal display).
 4. **FR-04: Story, Rhyme, and Learning Activity Library** (Search/filter criteria $\rightarrow$ catalog query $\rightarrow$ filtered learning resource view).
 5. **FR-05: Weekly Progress Summary** (Activity/milestone records $\rightarrow$ non-diagnostic aggregation $\rightarrow$ weekly reflection report).
 6. **FR-06: AI Activity Suggestion Helper** (Caregiver constraints $\rightarrow$ constrained catalog match $\rightarrow$ recommended activities with fallback).
@@ -234,6 +234,7 @@ Exit criteria:
 - Firebase billing, budget alerts, environment configuration, provider settings, and rollback are reviewed before any deployment.
 - Known limitations are documented and accepted by the team and course instructor.
 - The Flutter app runs on an Android phone for the CC 207B live demo, with a recorded backup video, and each member can explain and modify their own Flutter code.
+- The React web client executes complete, stable live user journeys on local Firebase emulators for the CIT 210 demo (profile CRUD, routine plan, journal, catalog search, AI fallback), with API integration explanations rehearsed and a backup demo recording prepared.
 - If the instructor provided a course repository, the Flutter work has been moved there with its full commit history.
 
 ## 4. Backlog structure
@@ -317,7 +318,7 @@ Keep work in progress small. Do not start dependent feature work while a key con
 
 ### M0 status — Sprint 1 starts October 26
 
-Checked against GitHub on 23 October 2026.
+Checked against GitHub on 26 October 2026 (Sprint 1 kickoff).
 
 **Done**
 

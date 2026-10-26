@@ -29,7 +29,7 @@ graph TD
         CloudFunctions["Firebase Cloud Functions (2nd Gen)<br/>Node.js 22 / Express / TypeScript"]
         AuthMiddleware["Token Verification Middleware<br/>(Firebase Admin SDK)"]
         BOLAAuth["Ownership & BOLA Authorization Engine<br/>(child.caregiverId === uid)"]
-        AIService["AI Recommender Service<br/>(Server-side Gemini / Vertex AI)"]
+        AIService["AI Recommender Service<br/>(Server-side Gemini API free tier · ADR-008)"]
         FallbackService["Deterministic Fallback Engine<br/>(Rule-based Catalog Matcher)"]
     end
 
@@ -138,9 +138,9 @@ graph TD
 
 ### ADR-006: Server-Side AI Recommender with Deterministic Fallback
 - **Status:** Accepted
-- **Context:** CC 207B requires an AI-powered core feature (Item 12). However, generative AI introduces hallucination risks, non-deterministic outputs, latency spikes, and potential child privacy violations if unconstrained.
+- **Context:** CC 207B requires an AI-powered core feature (§2a–d). However, generative AI introduces hallucination risks, non-deterministic outputs, latency spikes, and potential child privacy violations if unconstrained.
 - **Options Considered:**
-  1. *Client-Direct AI SDK Calls:* Client calls Gemini directly using client-side API keys. (Rejected: violates CC 207B Item 14 credential isolation; exposes keys).
+  1. *Client-Direct AI SDK Calls:* Client calls Gemini directly using client-side API keys. (Rejected: violates CC 207B §2b credential isolation; exposes keys).
   2. *Open-Ended Child Diagnostic Chatbot:* Conversational bot answering questions about developmental milestones. (Rejected: high liability, violates clinical non-diagnostic boundary).
   3. *Constrained Server-Side Activity Recommender with Deterministic Fallback:* Cloud Function maps caregiver constraints to approved catalog item IDs, sanitizes prompts, labels outputs with AI badges, and falls back to deterministic rule matching on provider failure.
 - **Decision:** Implement the AI helper exclusively server-side, constrained strictly to approved catalog IDs, with an 8-second timeout and automatic deterministic catalog fallback.
@@ -152,14 +152,14 @@ graph TD
 
 ### ADR-007: Docs-as-Code & PR-Gated Change Control
 - **Status:** Accepted
-- **Context:** Coordinating five team members across three repositories requires strict change control and branch management to prevent merge conflicts and preserve codebase integrity.
+- **Context:** Coordinating five team members across four repositories (`littlesteps-docs`, `littlesteps-api`, `littlesteps-react`, `littlesteps-flutter`) requires strict change control and branch management to prevent merge conflicts and preserve codebase integrity.
 - **Options Considered:**
   1. *Direct Commits to Main:* Fast, but high risk of breaking shared builds and introducing unreviewed code.
   2. *Feature Branching with Mandatory Peer Review & CI Verification:* All work occurs on topic branches (`feat/*`, `docs/*`, `fix/*`), requires passing automated CI checks, and requires at least one teammate review.
 - **Decision:** Enforce branch protection on `main` across all repositories. Changes require a pull request, passing CI checks, and peer approval.
 - **Consequences:**
   - *Positive:* Clean git audit trail; satisfies CC 207B collaboration and peer review criteria.
-  - *Trade-off:* Requires team discipline in opening PRs and conducting timely code reviews.
+  - *Trade-off:* Requires team discipline in opening PRs and conducting timely code reviews. Branch protection is active on `littlesteps-docs`, `littlesteps-api`, and `littlesteps-react`. `littlesteps-flutter` operates under procedural peer review prior to official course fork setup.
 
 ---
 

@@ -2,7 +2,7 @@
 
 **Course:** CC 207B Applications Development and Emerging Technologies  
 **Institution:** West Visayas State University — College of Information and Communications Technology  
-**Source:** Summarized from the instructor's *CC 207B Final Project Requirements*. The instructor's brief is the authority wherever this page differs from it.  
+**Source:** Summarized from the instructor's [CC 207B Final Project Requirements](CC207B_Final_Project_Requirements.md). The instructor's brief is the authority wherever this page differs from it.  
 **Base Framework:** Flutter. The brief allows a web or mobile application; LittleSteps builds an Android mobile app.  
 **Team Composition:** 5 members, so at least 6 core features (the AI-powered feature counts as one)  
 **Repository:** `Thesis-Titans/littlesteps-flutter` until the course instructor creates the course repository to fork; the work then moves with its full Git history. See the [execution plan](../../execution-plan.md) §1.3.  
@@ -113,9 +113,9 @@ Five points are deducted from the project score raw for each calendar day late, 
 | Item | Status |
 |---|---|
 | Six core features, technical requirements, AI criteria | Specified: product scope FR-01 to FR-06, UI/UX spec, Flutter issues #2–#13 |
-| Real or realistic client | **Open:** no ECCD center or child development worker contacted yet |
+| Real or realistic client | **Decided:** CSWDO La Paz–Lapuz District office as a realistic client; no direct contact by team decision, informal parent walkthrough conducted instead (trade-off accepted per execution-plan §8.1) |
 | UI follows the prototypes presented earlier | **Open:** confirm with the instructor which prototypes count. The Figma file has high-fidelity frames but no low-fidelity wireframes yet. |
 | Course repository to fork | **Open:** not yet created by the instructor |
 | Collaboration history | **At risk:** every commit so far is from one account. Members should commit and review their own work from now on. |
-| AI Usage Log | Not started. The policy above requires logging AI-generated code, text content and image assets. |
+| AI Usage Log | **Planned:** Mark to initialize AI Usage Log template in `littlesteps-flutter` under issue flutter #14; logging required for all AI-generated code, text, and assets in Flutter. |
 | Documentation package, presentation, reflections | Planned for M5 (littlesteps-flutter #13) |

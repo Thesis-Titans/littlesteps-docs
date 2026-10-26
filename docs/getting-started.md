@@ -46,7 +46,7 @@ littlesteps/
 ├── littlesteps-docs/       # Canonical architecture, scope, research, and provenance
 ├── littlesteps-api/        # TypeScript Express backend on Firebase Functions v2
 ├── littlesteps-react/      # React + TypeScript + Vite frontend
-└── littlesteps-flutter/    # Flutter mobile client (private; initial commit only)
+└── littlesteps-flutter/    # Flutter mobile client (Dart / Android; Sprint 3–4)
 ```
 
 ---

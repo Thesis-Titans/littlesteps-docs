@@ -58,7 +58,7 @@ LittleSteps uses a **docs-as-code** workflow: Markdown documents are version-con
 | **IEEE 29148 / ISO 9241** | Human-Centered Design & Ergonomics Specification | [`docs/ui-ux-design-specification.md`](ui-ux-design-specification.md) | Usability heuristics, cognitive load principles, touch ergonomics ($\ge$ 44px), WCAG 2.2 AA contrast, and 5-state interaction matrices. |
 | **ISO 9241 / Usability** | Prototype Traceability & Storyboards | [`docs/prototype-traceability-storyboards.md`](prototype-traceability-storyboards.md) | Provisional caregiver storyboards, minimal prototype scope (P0/P1), and 10-point walkthrough acceptance checklist for Docs Issue #15. |
 | **IEEE 29148 / Statutory** | Domain Sourcing & Legislative Foundations | [`docs/philippine-content-provenance.md`](philippine-content-provenance.md) & [`docs/research-register.md`](research-register.md) | Statutory frameworks (RA 12199, RA 10173), official curriculum references, item-level citation schemas, and external regulatory registers. |
-| **ISO/IEC/IEEE 42010:2022** | Architecture Description | [`docs/architecture-decisions.md`](architecture-decisions.md) | Architecture Decision Records (ADRs 001–007), a component topology, and selected architecture views. This is a lightweight architecture description informed by ISO/IEC/IEEE 42010, not a claim of full conformity. |
+| **ISO/IEC/IEEE 42010:2022** | Architecture Description | [`docs/architecture-decisions.md`](architecture-decisions.md) | Architecture Decision Records (ADRs 001–009), a component topology, and selected architecture views. This is a lightweight architecture description informed by ISO/IEC/IEEE 42010, not a claim of full conformity. |
 | **IEEE 1016** | Software Design Description (**SDD**) — Data Model Detail | [`docs/data-model.md`](data-model.md) | Proposed Cloud Firestore collection hierarchies, entity schemas, caregiver ownership paths, and data lifecycle requirements. This is a project data specification, not a declaration of conformity with IEEE 1016 or legal compliance. |
 | **OpenAPI 3.1** | Software Design Description (**SDD**) — Interface View | [`littlesteps-api/openapi/openapi.yaml`](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml) | Machine-readable technical contract: request/response envelopes, HTTP statuses, and data schemas. |
 | **PMBOK / ISO 21500** | Project Management Plan (**PMP**) — Scope & Schedule Baseline | [`docs/execution-plan.md`](execution-plan.md) | Delivery milestones (M0–M5), academic dates, work packages, dependencies, and the prototype validation gate. |
@@ -88,9 +88,19 @@ To satisfy the specific submission requirements of all three coordinated courses
    - Preparation for individual code defense (2–3 min/member).
 
 ### 4.2 CIT 210: Web Systems and Technologies
-1. **Web System Documentation:** Shared documentation package covering React web client, API endpoints, and database integration.
-2. **Technical Contract:** Canonical OpenAPI specification maintained in the API repository (`openapi/openapi.yaml`).
-3. **Reproducible Local Setup:** Step-by-step developer onboarding tutorial in [`docs/getting-started.md`](getting-started.md) for local emulator and full-stack execution.
+Evaluated under the [Official CIT 210 Final Project Evaluation Rubric](academic/cit210/CIT210_Final_Project_Requirements.md) (100 Points Total):
+1. **Application Development (65%):**
+   - **API Integration (25 pts):** Custom Express REST API implementing the [OpenAPI contract](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml) and third-party Gemini API integration ([ADR-008](architecture-decisions.md)) with optional Open-Meteo weather integration ([ADR-009](architecture-decisions.md)).
+   - **Client-Side Interface & Usability (20 pts):** Responsive React 19 web application (`littlesteps-react`) with multi-factor search/filtering, quick filter chips, and 5-state interaction resilience.
+   - **Server-Side Logic & Data Processing (15 pts):** Express routing controllers, Cloud Firestore caregiver-scoped subcollections ([Data Model](data-model.md)), BOLA authorization checks ([ADR-003](architecture-decisions.md)), and deterministic fallbacks ([ADR-006](architecture-decisions.md)).
+   - **Error Handling & Data Validation (5 pts):** Bounded schema validation, standardized JSON error envelopes, and safe error propagation.
+2. **Presentation & Live Demo (35%):**
+   - **Clarity & Structure (10 pts):** Logical project narrative, problem context, and system architecture.
+   - **Explanation of API Integration (10 pts):** Detailed explanation of endpoints, request/response headers, and data flow.
+   - **Demo & Functionality (15 pts):** Stable live demonstration of core user journeys against local emulators with a rehearsed backup video.
+3. **Supporting Documentation:**
+   - [Developer Onboarding Guide](getting-started.md) for reproducible full-stack local execution.
+   - Architecture decision records ([ADRs 001–009](architecture-decisions.md)) and [Traceability Matrix](traceability-matrix.md).
 
 ### 4.3 CIT 246: IT Project Management Plan
 1. **Checkpoint 1 Proposal (Due October 14, 2026):** One-page project concept covering Organization, Problem, Proposed System, and Possible Sponsor (A4, Arial 11), documented in [`docs/academic/cit246/checkpoint-1-concept.md`](academic/cit246/checkpoint-1-concept.md).
