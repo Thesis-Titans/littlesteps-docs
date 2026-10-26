@@ -12,16 +12,27 @@
 
 The planned datastore is **Cloud Firestore**. Private records are organized under caregiver-scoped paths to support tenant isolation. Path structure alone does not enforce authorization: every API operation must verify the authenticated caregiver's ownership, and tests must cover cross-caregiver access.
 
-```text
-caregivers/{caregiverUid}/                      <-- Caregiver root record
-  └── children/{childId}/                       <-- Child profile record
-        ├── milestone_observations/{obsId}      <-- Qualitative milestone checks (FR-01)
-        ├── scheduled_activities/{schedId}      <-- Routine planning & completion logs (FR-02)
-        ├── journal_entries/{entryId}           <-- Private qualitative notes (FR-03)
-        └── weekly_summaries/{summaryId}        <-- Calculated reflection recaps (FR-05)
+```mermaid
+flowchart TD
+    subgraph CaregiverTenant["Caregiver Multi-Tenant Isolation (Firestore)"]
+        CG["<b>caregivers/{caregiverUid}</b><br/><i>(Root Account Record)</i>"]
+        CH["<b>children/{childId}</b><br/><i>(Child Profile Record)</i>"]
+        MO["<b>milestone_observations/{obsId}</b><br/><i>(Qualitative Milestone Checks · FR-01)</i>"]
+        SA["<b>scheduled_activities/{schedId}</b><br/><i>(Daily Routine Planning & Logs · FR-02)</i>"]
+        JE["<b>journal_entries/{entryId}</b><br/><i>(Private Qualitative Notes · FR-03)</i>"]
+        WS["<b>weekly_summaries/{summaryId}</b><br/><i>(Calculated Reflection Recaps · FR-05)</i>"]
 
-catalog_activities/{activityId}                 <-- Static, reviewed activity catalog (FR-04)
-catalog_milestones/{milestoneId}                 <-- Static, reviewed milestone prompts (FR-01)
+        CG -->|1:N| CH
+        CH -->|1:N| MO
+        CH -->|1:N| SA
+        CH -->|1:N| JE
+        CH -->|1:N| WS
+    end
+
+    subgraph GlobalCatalogs["Global Reviewed Catalogs (Read-Only)"]
+        CA["<b>catalog_activities/{activityId}</b><br/><i>(Curated Activity Skeletons · FR-04)</i>"]
+        CM["<b>catalog_milestones/{milestoneId}</b><br/><i>(ECCD / DepEd Observational Prompts · FR-01)</i>"]
+    end
 ```
 
 > [!SECURITY]

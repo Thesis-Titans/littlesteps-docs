@@ -20,7 +20,7 @@ Component layout and request flow across clients, backend services, and datastor
 graph TD
     subgraph Clients["Presentation Layer (Clients)"]
         WebClient["React Web Client<br/>(CIT 210 — TypeScript / Vite)"]
-        MobileClient["Flutter Mobile Client<br/>(CC 207B — Dart / Android)"]
+        MobileClient["Flutter Client<br/>(CC 207B — Dart / Android & Multiplatform)"]
     end
 
     subgraph Identity["Identity & Access"]
@@ -31,14 +31,16 @@ graph TD
         CloudFunctions["Firebase Cloud Functions (2nd Gen)<br/>Node.js 22 / Express / TypeScript"]
         AuthMiddleware["Token Verification Middleware<br/>(Firebase Admin SDK)"]
         BOLAAuth["Ownership & BOLA Authorization Engine<br/>(child.caregiverId === uid)"]
-        AIService["AI Recommender Service<br/>(Server-side Gemini API free tier · ADR-008)"]
+        AIService["AI Recommender & Companion Service<br/>(Server-side Gemini 1.5 Flash · ADR-008/010)"]
+        OllamaLocal["Local Edge Ollama Engine<br/>(Tier 2 Offline Fallback · ADR-010)"]
         FallbackService["Deterministic Fallback Engine<br/>(Rule-based Catalog Matcher)"]
     end
 
     subgraph Persistence["Data & External Services Layer"]
         Firestore["Cloud Firestore<br/>(Caregiver-Scoped Collections)"]
         ReviewedCatalog["Static Reviewed Catalog<br/>(Verified Milestones & Activities)"]
-        ExternalAI["Gemini API, free tier<br/>(Sanitized Prompts Only · ADR-008)"]
+        OpenLibrary["Open Library REST API<br/>(Picture Books & Covers · ADR-010)"]
+        ExternalAI["Cloud Gemini 1.5 Flash<br/>(Tier 1 AI · Sanitized Prompts · ADR-008)"]
         Weather["Open-Meteo Forecast API<br/>(Rounded City Coordinates Only · ADR-009)"]
     end
 
@@ -55,14 +57,16 @@ graph TD
     AuthMiddleware --> BOLAAuth
     BOLAAuth -->|"Authorized CRUD"| Firestore
     BOLAAuth -->|"Query Activities"| ReviewedCatalog
+    BOLAAuth -->|"Fetch Books"| OpenLibrary
 
     %% AI Recommendation flow
     BOLAAuth -->|"Request Suggestion"| AIService
     AIService -->|"Sanitized Constraints"| ExternalAI
-    BOLAAuth -->|"Weather Hint (optional, cached 1h)"| Weather
-    ExternalAI -.->|"Timeout / Error"| FallbackService
+    ExternalAI -.->|"Timeout / Error"| OllamaLocal
+    OllamaLocal -.->|"Offline / Error"| FallbackService
     FallbackService -->|"Approved Items"| ReviewedCatalog
     AIService -->|"Validated Catalog IDs"| ReviewedCatalog
+    BOLAAuth -->|"Weather Hint (optional, cached 1h)"| Weather
 ```
 
 ---

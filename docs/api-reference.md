@@ -12,29 +12,22 @@
 
 The LittleSteps backend API (`littlesteps-api`) is an Express application written in TypeScript and hosted on **Google Firebase Cloud Functions (2nd Gen)**, backed by **Google Cloud Firestore** and **Firebase Authentication**.
 
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│                        CLIENT LAYER (CIT 210 / CC 207B)                │
-│   React 19 Web App (`littlesteps-react`) | Flutter App (`littlesteps-flutter`)│
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │ HTTPS (JSON + Bearer ID Token)
-                                    ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│                      LITTLESTEPS API GATEWAY (Express)                 │
-│                                                                        │
-│   • Auth Verification: Cryptographically decodes Firebase JWT          │
-│   • BOLA Defense: Verifies caregiver ownership before child access     │
-│   • Zod Schema Validation: Rejects malformed requests with standard 400│
-│   • Response Caching: In-memory 1-hour cache for external public data  │
-└───────┬───────────────────────────┬────────────────────────────┬───────┘
-        │                           │                            │
-        ▼                           ▼                            ▼
-┌───────────────┐          ┌───────────────────┐        ┌────────────────┐
-│Cloud Firestore│          │ Open Library REST │        │ 3-Tier AI Engine│
-│(/caregivers/  │          │ (Children's Books │        │ 1. Gemini Cloud│
-│ {uid}/...)    │          │  & Cover Images)  │        │ 2. Local Ollama│
-│               │          │                   │        │ 3. Catalog Rule│
-└───────────────┘          └───────────────────┘        └────────────────┘
+```mermaid
+flowchart TD
+    subgraph ClientLayer["Presentation Layer (Clients)"]
+        ReactApp["React 19 Web App<br/><code>littlesteps-react</code> (CIT 210)"]
+        FlutterApp["Cross-Platform Client<br/><code>littlesteps-flutter</code> (CC 207B)"]
+    end
+
+    ClientLayer -->|"HTTPS (JSON + Bearer ID Token)"| APIGateway
+
+    subgraph GatewayLayer["LittleSteps API Gateway (Express on Cloud Functions v2)"]
+        APIGateway["<b>API Gateway Router</b><br/>• Token Verification (Firebase Admin JWT)<br/>• BOLA Ownership Guard (child.caregiverId === uid)<br/>• Zod Schema Validation (Standard 400 Bad Request)<br/>• Response Caching (1-Hour In-Memory Public Cache)"]
+    end
+
+    APIGateway -->|"Caregiver-Scoped CRUD"| Firestore[("Cloud Firestore<br/><code>/caregivers/{uid}/...</code>")]
+    APIGateway -->|"Books & Covers Proxy"| OpenLibrary["Open Library REST API<br/>(Picture Books Catalog)"]
+    APIGateway -->|"AI Suggestion & Cascade"| AIEngine["<b>3-Tier AI Fallback Engine</b><br/>1. Cloud Gemini 1.5 Flash (8s timeout)<br/>2. Local Edge Ollama (qwen2.5-coder:7b)<br/>3. Deterministic ECCD Catalog Matcher"]
 ```
 
 ### Why This Architecture Enhances Efficiency & Security (CIT 210 Presentation Focus)

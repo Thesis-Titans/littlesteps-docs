@@ -41,6 +41,36 @@ Use **lightweight Scrum with a visible GitHub issue backlog** and one-week sprin
 | 4 | Nov 16 – Nov 25 | Flutter | M3, M4, M5 audits | Flutter journal, "This week" and AI helper; API, React and Flutter release audits. |
 | Wrap-up | Nov 26 – Dec 1 | All | M5 | Android demo build and backup video, CC 207B documentation package, CIT 210 documentation, code-defense practice, CIT 246 final PDF. |
 
+```mermaid
+gantt
+    title LittleSteps One-Month Agile Delivery Timeline (2026)
+    dateFormat  YYYY-MM-DD
+    axisFormat  %b %d
+
+    section Sprint 1 (API & React)
+    M1 Auth, Child Profile & Shell (API & React)     :done, s1_1, 2026-10-26, 2026-11-01
+    M0 Caregiver Walkthrough Protocol Validation      :active, s1_2, 2026-10-26, 2026-11-01
+    Flutter Project & AI Log Setup (WP-F)            :done, s1_3, 2026-10-26, 2026-11-01
+
+    section Sprint 2 (API & React)
+    M2 Activities & Milestone Prompts (React)        :s2_1, 2026-11-02, 2026-11-08
+    M3 Offline Journal & Storage Sync (React)        :s2_2, 2026-11-02, 2026-11-08
+    M4 AI Companion & 3-Tier Fallback (React)        :s2_3, 2026-11-02, 2026-11-08
+
+    section Sprint 3 (Flutter Track)
+    M1 Profile & Navigation (Flutter)                :s3_1, 2026-11-09, 2026-11-15
+    M2 Activities & Milestones (Flutter)             :s3_2, 2026-11-09, 2026-11-15
+
+    section Sprint 4 (Flutter Track)
+    M3 Journal & Offline Storage (Flutter)           :s4_1, 2026-11-16, 2026-11-25
+    M4 AI Helper & Fallback Engine (Flutter)         :s4_2, 2026-11-16, 2026-11-25
+    M5 Release Audits & Security Checks              :s4_3, 2026-11-20, 2026-11-25
+
+    section Wrap-Up & Finals
+    Demo Video & Rehearsals                          :w1, 2026-11-26, 2026-12-01
+    Final Defense & Submissions (All 3 Courses)      :milestone, m_final, 2026-12-02, 0d
+```
+
 - **AI use:** AI tools may assist engineering workflows on the API and React client for scaffolding, test generation, and debugging. Flutter code is authored by team members, and any AI-generated code snippets, text content or assets used in the Flutter app are recorded in the AI Usage Log per CC 207B requirements (§1.3). Every member must understand and be prepared to defend all logic during the individual code defense.
 - **Planning unit:** Small, independently reviewable issues with a clear outcome, acceptance criteria, dependencies, and verification steps. Split issues further only when implementation details are known.
 - **Review:** Every change goes through a pull request. At least one teammate must review each PR (graded in CC 207B collaboration criteria). API, Web and Flutter checks must pass; security and privacy acceptance criteria apply to child-scoped features.
