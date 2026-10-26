@@ -2,7 +2,9 @@
 
 **Status:** Canonical System Scope Baseline  
 **Governing Standard:** ISO/IEC/IEEE 29148:2018 (Software Requirements Specification)  
-**Related Documents:** [Data Model Specification](data-model.md), [Security, Privacy, and AI Safeguards](security-privacy-ai.md), [Traceability Matrix](traceability-matrix.md)
+**Owner:** Mark Alvin Cadangin (Technical Lead)  
+**Last Reviewed:** 2026-10-26  
+**Related Documents:** [API Reference & Integration Guide](api-reference.md), [Data Model Specification](data-model.md), [Security, Privacy, and AI Safeguards](security-privacy-ai.md), [Traceability Matrix](traceability-matrix.md)
 
 ---
 
@@ -105,15 +107,15 @@ Per CC 207B requirements, a 5-member team must deliver at least 6 core features 
 - **Inputs:** Narrative text notes, date/time, optional associated milestone tag or activity link, privacy confirmation.
 - **Processing:** The server validates ownership and stores journal entries with access controls. The implementation must prevent journal text from entering analytics, error logs, or external AI requests; verify this with tests and payload/log inspection.
 - **Outputs:** Chronological reverse-ordered personal journal feed with search and date filters; full text view; edit/delete controls. Search covers only the caregiver's own entries and does not use a search index (see [Data Model](data-model.md) §2.5).
-- **Verification Method:** Automated API tests confirming non-leakage to AI endpoints; authorization tests verifying cross-user access denial (403/404).
+- **Verification Method:** Automated API tests confirming non-leakage to AI endpoints; authorization tests verifying cross-user access denial (HTTP 404).
 
 ### FR-04: Story, Rhyme, and Learning Activity Library
 - **Primary Actor:** Caregiver
 - **Preconditions:** None for viewing public reviewed catalog; authenticated to save/schedule.
-- **Inputs:** Age-band filter (0–71 mos), domain filter (Cognitive, Motor, Language, Socio-Emotional), language filter (English, Filipino, Regional), required materials keyword search.
-- **Processing:** Query engine executes multi-factor filtering against reviewed catalog dataset; sorts by developmental relevance and material availability.
-- **Outputs:** Rich learning resource cards displaying activity title, source provenance attribution, age band, duration, instructions, materials list, and "Add to Daily Routine" action.
-- **Verification Method:** Integration tests verifying catalog search and filter criteria; validation that all returned items contain required provenance metadata.
+- **Inputs:** Age-band filter (0–71 mos), domain filter (Cognitive, Motor, Language, Socio-Emotional), language filter (English, Filipino, Regional), required materials keyword search, storybook subject tags.
+- **Processing:** Query engine executes multi-factor filtering against the reviewed activity catalog and queries the Open Library REST API for children's literature with server-side caching ([ADR-010](architecture-decisions.md)).
+- **Outputs:** Rich learning resource cards displaying activity title, source provenance attribution, age band, duration, instructions, materials list, and "Add to Daily Routine" action, plus dynamic children's book cards with covers.
+- **Verification Method:** Integration tests verifying catalog search, Open Library proxy responses, and provenance metadata validation.
 
 ### FR-05: Weekly Progress Summary
 - **Primary Actor:** Caregiver

@@ -1,8 +1,10 @@
 # LittleSteps Developer Onboarding Guide
 
 **Status:** Canonical Developer Tutorial Baseline  
-**Diátaxis Category:** Tutorial  
-**Related Documents:** [Development Workflow](development-workflow.md), [Architecture Decisions](architecture-decisions.md)
+**Governing Standard:** Diátaxis Framework (Learning-Oriented Tutorial)  
+**Owner:** Mark Alvin Cadangin (Technical Lead)  
+**Last Reviewed:** 2026-10-26  
+**Related Documents:** [API Reference & Integration Guide](api-reference.md), [Development Workflow](development-workflow.md), [Architecture Decisions](architecture-decisions.md)
 
 ---
 
@@ -188,7 +190,7 @@ To verify that the frontend and backend communicate properly:
    ```
 3. Open `http://localhost:5173` in your browser.
 4. In the **API connection** card on the landing page, click **"Check local API"**.
-5. The status indicator will transition to **"Connected"** with the message:
+5. The status indicator will transition to **"Connected"** by querying the public liveness endpoint (`GET /health`), returning:
    > *"The API health endpoint responded successfully."*
 
 ---
@@ -197,23 +199,31 @@ To verify that the frontend and backend communicate properly:
 
 1. **Never Commit Directly to `main`**:
    - Always branch off `main` (e.g., `git checkout -b feat/<name>` or `chore/<name>`).
-   - Submit changes via draft Pull Requests on GitHub.
+   - Submit changes via draft Pull Requests on GitHub with at least one teammate review.
 2. **Emulator-First & Synthetic Data**:
    - All local development and tests must use `demo-littlesteps` and synthetic identities.
    - Never commit API keys, service account credentials, or real personal information.
 3. **API Contract Single Source of Truth**:
-   - The canonical REST contract is defined in `littlesteps-api/openapi/openapi.yaml`.
+   - The canonical REST contract is defined in [`docs/api-reference.md`](api-reference.md) and `littlesteps-api/openapi/openapi.yaml`.
    - The web client must consume endpoints defined in this contract rather than inventing ad-hoc response structures.
 4. **Milestone Content Provenance**:
-   - Before drafting or adapting milestone or activity catalog entries, consult [docs/philippine-content-provenance.md](philippine-content-provenance.md) for required ECCD Council / DepEd citations, metadata fields, and non-diagnostic review boundaries.
+   - Before drafting or adapting milestone or activity catalog entries, consult [Philippine Content Provenance](philippine-content-provenance.md) for required ECCD Council / DepEd citations, metadata fields, and non-diagnostic review boundaries.
 
 ---
 
 ## 7. Canonical Documentation Index
 
+- [API Reference & Integration Guide](api-reference.md) — Canonical OpenAPI endpoints, Open Library REST integration, 3-tier AI fallback, and error envelopes.
 - [Product Scope](product-scope.md) — 6 core features, app navigation age bands (0–71 months), non-diagnostic boundaries.
 - [Architecture Decisions](architecture-decisions.md) — ADRs covering shared backend, Express on Firebase Functions, Firebase Auth, and Firestore.
-- [Security, Privacy, and AI Guardrails](security-privacy-ai.md) — Philippine Data Privacy Act (RA 10173), OWASP REST guidelines, and AI safety controls.
+- [Data Model Specification](data-model.md) — Firestore collections, caregiver-scoped paths, and entity schemas.
+- [Security, Privacy, and AI Safeguards](security-privacy-ai.md) — Philippine Data Privacy Act (RA 10173), BOLA defenses, and AI safety controls.
+- [Traceability Matrix](traceability-matrix.md) — Requirements-to-tests and CIT 210 rubric mapping.
+- [UI/UX Design Specification](ui-ux-design-specification.md) — Human-computer interaction principles and responsive layout frames.
+- [Prototype Traceability & Storyboards](prototype-traceability-storyboards.md) — Provisional caregiver scenarios and walkthrough acceptance checklist.
+- [Parent Walkthrough Guide](parent-walkthrough-guide.md) — Informal caregiver usability protocol and consent script.
 - [Development Workflow](development-workflow.md) — Branch and review policies, testing gates, and verification standards.
+- [Execution Plan](execution-plan.md) — Milestone delivery schedule, sprint allocations, and academic dates.
+- [Documentation Standards](documentation-standards.md) — 3-tier hierarchy and Diátaxis governance framework.
 - [Philippine Content Provenance](philippine-content-provenance.md) — ECCD Council and DepEd source candidates, per-item citation fields, and review protocol.
 - [Research Register](research-register.md) — External technical, legal, and educational references.

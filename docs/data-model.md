@@ -2,7 +2,9 @@
 
 **Status:** Canonical Data Architecture Baseline  
 **Governing Standard:** ISO/IEC/IEEE 42010:2022 (Data Viewpoint) & RA 10173 (Data Privacy Act of 2012)  
-**Related Documents:** [Architecture Decisions](architecture-decisions.md) (ADR-003, ADR-004), [Security, Privacy, and AI Safeguards](security-privacy-ai.md) (NFR-SEC-02, NFR-PRIV-01..03)
+**Owner:** Mark Alvin Cadangin (Technical Lead) & Justin (Backend Lead)  
+**Last Reviewed:** 2026-10-26  
+**Related Documents:** [API Reference & Integration Guide](api-reference.md), [Architecture Decisions](architecture-decisions.md) (ADR-003, ADR-004, ADR-010), [Security, Privacy, and AI Safeguards](security-privacy-ai.md) (NFR-SEC-02, NFR-PRIV-01..03)
 
 ---
 
@@ -129,14 +131,35 @@ Curated learning activities available to all caregivers.
 | Field | Type | Required | Description & Constraints |
 | :--- | :--- | :---: | :--- |
 | `id` | string | Yes | Canonical slug (e.g., `act-ph-bahay-bahayan-01`). |
-| `title` | string | Yes | Title in Filipino/English (max 100 chars). |
+| `title` | string | Yes | Title in Filipino/English/Hiligaynon (max 100 chars). |
+| `type` | string (enum) | Yes | `activity`, `story`, `rhyme`, `game`. Supports FR-04 library type filtering. |
+| `language` | string (enum) | Yes | `en`, `fil`, `hil`. Supports FR-04 language filter. |
+| `setting` | string (enum) | Yes | `indoor`, `outdoor`, `either`. Supports weather hint & AI helper constraint. |
 | `ageBand` | string (enum) | Yes | Target navigation age band (`0-5m` to `60-71m`). |
-| `domain` | string (enum) | Yes | `cognitive`, `motor`, `language`, `socio_emotional`. |
+| `domain` | string (enum) | Yes | `cognitive`, `motor`, `language`, `socioEmotional`. |
+| `durationMinutes` | number | Yes | Integer duration in minutes (e.g., `10`) for query filtering (`<= 10`). |
 | `durationEstimate` | string | Yes | Human-readable duration (e.g., `10-15 mins`). |
 | `materials` | array of str | Yes | Required household items (e.g., `["blanket", "cushions"]`). |
 | `instructions` | array of str | Yes | 3–4 step-by-step guidance points. |
 | `provenanceSource` | string | Yes | Official curriculum citation locator (Issue #3). |
 | `status` | string (enum) | Yes | `reviewed_approved`, `synthetic_fixture`. |
+
+---
+
+### 2.8 Reviewed Milestone Prompts (`catalog_milestones/{milestoneId}`)
+Authoritative developmental observation prompts derived from Philippine Early Learning standards (ECCD / RA 12199).
+
+| Field | Type | Required | Description & Constraints |
+| :--- | :--- | :---: | :--- |
+| `id` | string | Yes | Canonical milestone ID (e.g., `ms-mot-12-23m-01`). |
+| `domain` | string (enum) | Yes | `cognitive`, `motor`, `language`, `socioEmotional`. |
+| `ageBand` | string (enum) | Yes | Target observation age band (`0-5m` to `60-71m`). |
+| `title` | string | Yes | Observable milestone skill statement (e.g., "Pulls self up to stand"). |
+| `indicators` | array of str | Yes | 2–3 observable everyday indicators for caregivers. |
+| `guidanceText` | string | Yes | Supportive, non-clinical caregiver guidance explaining that development happens across ranges. |
+| `provenanceSource` | string | Yes | ECCD Checklist / DepEd Kindergarten Curriculum citation. |
+| `status` | string (enum) | Yes | `reviewed_approved`, `synthetic_fixture`. |
+
 
 ---
 

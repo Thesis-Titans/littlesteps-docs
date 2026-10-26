@@ -1,8 +1,10 @@
 # LittleSteps Architecture Decisions
 
-**Status:** Canonical Architecture Description Baseline  
+**Status:** Canonical Architecture Baseline  
 **Governing Standard:** ISO/IEC/IEEE 42010:2022 (Software Architecture Description)  
-**Related Documents:** [Data Model Specification](data-model.md), [OpenAPI Specification](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml), [Product Scope](product-scope.md)
+**Owner:** Mark Alvin Cadangin (Technical Lead)  
+**Last Reviewed:** 2026-10-26  
+**Related Documents:** [API Reference & Integration Guide](api-reference.md), [Data Model Specification](data-model.md), [OpenAPI Specification](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml), [Product Scope](product-scope.md)
 
 ---
 
@@ -201,3 +203,23 @@ graph TD
 - **Consequences:**
   - *Positive:* A visible, privacy-respecting third-party integration that fits the caregiver's real constraint.
   - *Trade-off:* One more external dependency. Deployed Cloud Functions need the Firebase Blaze plan to make outbound calls; local emulator use is unaffected, and deployment is already gated on the billing review.
+
+---
+
+### ADR-010: Open Library REST Integration and 3-Tier AI Fallback Engine
+- **Status:** Accepted (26 October 2026)
+- **Context:** CIT 210 evaluation criteria require integrating an external REST Data API that demonstrates real-world query parameters, pagination, JSON deserialization, and error handling, rather than relying solely on a generative LLM prompt. Additionally, CC 207B (§56c) requires resilient, graceful AI degradation under network failure or rate limits.
+- **Options Considered:**
+  1. *Generative AI Only (Gemini):* Vulnerable to rate limits, internet drops during live presentations, and criticized in web development evaluations for lacking structured REST data querying.
+  2. *Gutendex (Project Gutenberg REST API):* Public domain literature, but tests showed high latency and connection timeouts under load.
+  3. *Open Library Subject API + 3-Tier AI Fallback (Chosen):*
+     - Use Open Library REST API (`openlibrary.org/subjects/picture_books.json`) to dynamically fetch children's picture books and covers.
+     - Implement a 3-tier fallback engine: Cloud Gemini 1.5 Flash (Tier 1) -> Local Ollama (`localhost:11434`, Tier 2 offline dev/demo fallback) -> Deterministic Curriculum Catalog (Tier 3 safety net).
+- **Decision:**
+  - Implement `GET /api/v1/catalog/books` in `littlesteps-api` as a server-side proxy to Open Library with an in-memory 1-hour cache.
+  - Implement `POST /api/v1/ai/story-activity` to generate screen-free play ideas based on the fetched book metadata.
+  - Standardize 3-tier AI fallback: if Gemini fails or times out (8 seconds), fall back to local Ollama (if running) or immediately to the verified deterministic curriculum activity catalog.
+- **Consequences:**
+  - *Positive:* Fully satisfies CIT 210's 25-pt API integration requirement by demonstrating real REST data integration alongside modern AI augmentation; guarantees 100% offline demo resilience via Ollama and deterministic catalog fallback.
+  - *Trade-off:* Requires maintaining the proxy endpoint and mapping Open Library book schemas into LittleSteps card formats.
+

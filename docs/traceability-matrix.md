@@ -2,7 +2,9 @@
 
 **Status:** Canonical Verification & Requirements Baseline  
 **Governing Standard:** ISO/IEC/IEEE 29148:2018 (Traceability) & PMBOK (Scope & Quality Management)  
-**Related Documents:** [Product Scope](product-scope.md), [Execution Plan](execution-plan.md), [Security, Privacy, and AI Safeguards](security-privacy-ai.md)
+**Owner:** Mark Alvin Cadangin (Technical Lead)  
+**Last Reviewed:** 2026-10-26  
+**Related Documents:** [API Reference & Integration Guide](api-reference.md), [Product Scope](product-scope.md), [Execution Plan](execution-plan.md), [Security, Privacy, and AI Safeguards](security-privacy-ai.md)
 
 ---
 
@@ -64,12 +66,12 @@ Maps each criterion of the [Official CIT 210 Evaluation Rubric](academic/cit210/
 
 | Category | Rubric Criteria | Weight | Mapped System Components | Verification Method |
 | :--- | :--- | :---: | :--- | :--- |
-| **Application Development** | **API Integration** | 25 pts | `littlesteps-api` OpenAPI 3.1 endpoints; Gemini API helper ([ADR-008](architecture-decisions.md)); optional Open-Meteo ([ADR-009](architecture-decisions.md)) | Async JSON integration tests; token verification middleware; zero API keys in client bundles |
-| | **Client-Side Interface & Usability** | 20 pts | `littlesteps-react` web client; PRQ-02 responsive shell; quick filters; catalog search; 5-state UI resilience | Viewport tests (375px–1440px); interactive filtering/search tests; loading skeleton and error alert checks |
-| | **Server-Side Logic & Data Processing** | 15 pts | Express controllers; Cloud Firestore subcollections; BOLA ownership checks (NFR-SEC-02); deterministic fallback ([ADR-006](architecture-decisions.md)) | Route controller unit tests; BOLA negative authorization tests; fallback execution tests |
-| | **Error Handling & Data Validation** | 5 pts | Bounded schema validators (Zod/express-validator); standard `{ error: { code, message } }` envelope | Form boundary validation tests; network failure/timeout error handling without client crashes |
+| **Application Development** | **API Integration** | 25 pts | `littlesteps-api` endpoints ([API Reference](api-reference.md)); Open Library REST integration for storybooks ([ADR-010](architecture-decisions.md)); Google Gemini AI helper with 3-tier fallback ([ADR-008](architecture-decisions.md), [ADR-010](architecture-decisions.md)); optional Open-Meteo ([ADR-009](architecture-decisions.md)) | Async JSON integration tests; token verification middleware; zero API keys in client bundles; Open Library proxy caching |
+| | **Client-Side Interface & Usability** | 20 pts | `littlesteps-react` web client; PRQ-02 responsive shell; quick filters; storybook/catalog search; 5-state UI resilience | Viewport tests (375px–1440px); interactive filtering/search tests; loading skeleton and error alert checks |
+| | **Server-Side Logic & Data Processing** | 15 pts | Express controllers; Cloud Firestore subcollections; BOLA ownership checks (NFR-SEC-02); 3-tier fallback engine ([ADR-010](architecture-decisions.md)) | Route controller unit tests; BOLA negative authorization tests; fallback execution tests |
+| | **Error Handling & Data Validation** | 5 pts | Bounded schema validators (Zod); standard `{ error: { code, message } }` envelope | Form boundary validation tests; network failure/timeout error handling without client crashes |
 | **Presentation** | **Clarity and Structure** | 10 pts | Presentation slides covering introduction, client context (CSWDO), system architecture, and conclusion | Rehearsed slide presentation adhering to rubric structure |
-| | **Explanation of API Integration** | 10 pts | API endpoint walkthrough (`/children`, `/activities`, `/recommendations`), request/response headers, token decoding | Technical presentation section explaining API design and data flow |
+| | **Explanation of API Integration** | 10 pts | Detailed API design walkthrough documented in [API Reference](api-reference.md) (`/children`, `/catalog/books`, `/ai/story-activity`), request/response headers, token decoding | Technical presentation section explaining API design, Open Library integration, and 3-tier fallback |
 | | **Demo & Functionality** | 15 pts | Live local demonstration of `littlesteps-react` on Firebase emulators; recorded backup video | Verification of stable live user journeys (profile CRUD, routine plan, journal, catalog, fallback) |
 
 ---

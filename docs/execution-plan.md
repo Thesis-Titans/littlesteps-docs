@@ -2,7 +2,9 @@
 
 **Status:** Canonical Delivery Baseline & Work Breakdown Structure  
 **Governing Standard:** PMBOK 7th Edition / ISO 21500 & Agile Scrum Baseline  
-**Related Documents:** [Product Scope](product-scope.md), [Traceability Matrix](traceability-matrix.md), [Academic Deliverables](academic/README.md)
+**Owner:** Mark Alvin Cadangin (Technical Lead)  
+**Last Reviewed:** 2026-10-26  
+**Related Documents:** [API Reference & Integration Guide](api-reference.md), [Product Scope](product-scope.md), [Traceability Matrix](traceability-matrix.md), [Academic Deliverables](academic/README.md)
 
 ---
 
@@ -39,7 +41,7 @@ Use **lightweight Scrum with a visible GitHub issue backlog** and one-week sprin
 | 4 | Nov 16 – Nov 25 | Flutter | M3, M4, M5 audits | Flutter journal, "This week" and AI helper; API, React and Flutter release audits. |
 | Wrap-up | Nov 26 – Dec 1 | All | M5 | Android demo build and backup video, CC 207B documentation package, CIT 210 documentation, code-defense practice, CIT 246 final PDF. |
 
-- **AI use:** AI tools may be used freely on the API and the React client. Flutter code is written by the members themselves, and any AI-generated code, text or images used in the Flutter app are recorded in the AI Usage Log, as the CC 207B AI Use Policy requires (§1.3).
+- **AI use:** AI tools may assist engineering workflows on the API and React client for scaffolding, test generation, and debugging. Flutter code is authored by team members, and any AI-generated code snippets, text content or assets used in the Flutter app are recorded in the AI Usage Log per CC 207B requirements (§1.3). Every member must understand and be prepared to defend all logic during the individual code defense.
 - **Planning unit:** Small, independently reviewable issues with a clear outcome, acceptance criteria, dependencies, and verification steps. Split issues further only when implementation details are known.
 - **Review:** Every change goes through a pull request. At least one teammate must review each PR (graded in CC 207B collaboration criteria). API, Web and Flutter checks must pass; security and privacy acceptance criteria apply to child-scoped features.
 - **No speculative implementation:** Resolve product/data-contract questions before coding dependent features. Use synthetic fixtures for engineering work when reviewed catalog content is unavailable.

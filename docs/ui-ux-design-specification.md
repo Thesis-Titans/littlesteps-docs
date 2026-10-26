@@ -2,6 +2,8 @@
 
 **Status:** Canonical Design Specification for Prototype Validation  
 **Governing Standard:** ISO 9241 (Ergonomics of Human-System Interaction) & WCAG 2.2 AA  
+**Owner:** Nherie (Frontend Lead) & Faith (Usability Lead)  
+**Last Reviewed:** 2026-10-26  
 **Associated Gate:** [Docs Issue #15 — [M0] Plan and validate the LittleSteps UI prototype before implementation](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)  
 **Related Documents:** [Product Scope](product-scope.md), [Traceability Matrix](traceability-matrix.md), [Prototype Traceability & Storyboards](prototype-traceability-storyboards.md), [Philippine Content Provenance](philippine-content-provenance.md)  
 **Prototype Medium:** Figma. This gate changes no code in `littlesteps-api`, `littlesteps-react`, or `littlesteps-flutter`.
@@ -125,7 +127,7 @@ These personas are design aids, not validated user profiles. The primary users a
 
 ---
 
-## 4. Requirements Traceability Matrix
+## 4. UI/UX Design Evidence & Traceability Matrix
 
 This matrix records the evidence or policy that informs each design choice. Published guidance, statutory context, project constraints, and preliminary interview observations are different evidence types; the matrix does not establish that caregiver needs or design hypotheses have been validated.
 

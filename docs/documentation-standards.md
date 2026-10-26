@@ -1,8 +1,10 @@
 # LittleSteps Documentation Standards
 
 **Status:** Canonical Governance Baseline  
-**Diátaxis Category:** Governance & Information Architecture  
-**Related Documents:** [Development Workflow](development-workflow.md), [Academic Deliverables](academic/README.md)
+**Governing Standard:** Diátaxis Framework (Information Architecture) & ISO/IEC/IEEE 26515:2018  
+**Owner:** Mark Alvin Cadangin (Technical Lead)  
+**Last Reviewed:** 2026-10-26  
+**Related Documents:** [Development Workflow](development-workflow.md), [Academic Deliverables](academic/README.md), [API Reference & Integration Guide](api-reference.md)
 
 ---
 
@@ -27,7 +29,8 @@ Level 1: Organization Principles (Shared conventions, review boundaries, academi
    ▼
 Level 2: Canonical Project Documentation (`littlesteps-docs`)
    │      ├── Product Scope & Boundaries
-   │      ├── Architecture & ADRs
+   │      ├── Architecture & ADRs (ADRs 001–010)
+   │      ├── API Reference & Open Library REST Integration
    │      ├── Security, Privacy & AI Guardrails
    │      ├── Research Register & Content Provenance
    │      └── Full-Stack Onboarding Tutorial
@@ -53,16 +56,17 @@ LittleSteps uses a **docs-as-code** workflow: Markdown documents are version-con
 | Industry Standard | Specification Domain | LittleSteps Canonical Document | Standard Description & Coverage |
 | :--- | :--- | :--- | :--- |
 | **ISO/IEC/IEEE 29148:2018** | Software Requirements Specification (**SRS**) — Functional Scope | [`docs/product-scope.md`](product-scope.md) | Functional Requirements (**FR-01** to **FR-06**), single caregiver actor, age-band classifications, and strict IN/OUT boundaries. |
-| **ISO/IEC/IEEE 29148:2018** | Software Requirements Specification (**SRS**) — Non-Functional Scope | [`docs/security-privacy-ai.md`](security-privacy-ai.md) | Non-Functional Requirements: **NFR-SEC** (Token auth, BOLA defense), **NFR-PRIV** (RA 10173 data minimization), **NFR-AI** (Catalog constraints, fallbacks). |
-| **IEEE 29148 / PMBOK** | Requirements Traceability Matrix (**RTM**) & Quality Control | [`docs/traceability-matrix.md`](traceability-matrix.md) | Mapping connecting FR-01..06, PRQs, and NFRs to planned verification, work packages, and GitHub tracking issues. Update evidence and status as tests are implemented and run. |
+| **ISO/IEC/IEEE 29148:2018** | Software Requirements Specification (**SRS**) — Non-Functional Scope | [`docs/security-privacy-ai.md`](security-privacy-ai.md) | Non-Functional Requirements: **NFR-SEC** (Token auth, BOLA defense), **NFR-PRIV** (RA 10173 data minimization), **NFR-AI** (Catalog constraints, 3-tier fallbacks). |
+| **IEEE 29148 / PMBOK** | Requirements Traceability Matrix (**RTM**) & Quality Control | [`docs/traceability-matrix.md`](traceability-matrix.md) | Mapping connecting FR-01..06, PRQs, NFRs, and CIT 210 rubric items to planned verification, work packages, and GitHub tracking issues. |
 | **IEEE 29148 / ISO 9241** | Human-Centered Design & Ergonomics Specification | [`docs/ui-ux-design-specification.md`](ui-ux-design-specification.md) | Usability heuristics, cognitive load principles, touch ergonomics ($\ge$ 44px), WCAG 2.2 AA contrast, and 5-state interaction matrices. |
 | **ISO 9241 / Usability** | Prototype Traceability & Storyboards | [`docs/prototype-traceability-storyboards.md`](prototype-traceability-storyboards.md) | Provisional caregiver storyboards, minimal prototype scope (P0/P1), and 10-point walkthrough acceptance checklist for Docs Issue #15. |
+| **ISO 9241-11:2018** | Usability Field Protocol & User Research Guide | [`docs/parent-walkthrough-guide.md`](parent-walkthrough-guide.md) | Informal caregiver testing protocol, ethical consent script, task matrix, and findings template for M0 prototype evaluation. |
 | **IEEE 29148 / Statutory** | Domain Sourcing & Legislative Foundations | [`docs/philippine-content-provenance.md`](philippine-content-provenance.md) & [`docs/research-register.md`](research-register.md) | Statutory frameworks (RA 12199, RA 10173), official curriculum references, item-level citation schemas, and external regulatory registers. |
-| **ISO/IEC/IEEE 42010:2022** | Architecture Description | [`docs/architecture-decisions.md`](architecture-decisions.md) | Architecture Decision Records (ADRs 001–009), a component topology, and selected architecture views. This is a lightweight architecture description informed by ISO/IEC/IEEE 42010, not a claim of full conformity. |
-| **IEEE 1016** | Software Design Description (**SDD**) — Data Model Detail | [`docs/data-model.md`](data-model.md) | Proposed Cloud Firestore collection hierarchies, entity schemas, caregiver ownership paths, and data lifecycle requirements. This is a project data specification, not a declaration of conformity with IEEE 1016 or legal compliance. |
-| **OpenAPI 3.1** | Software Design Description (**SDD**) — Interface View | [`littlesteps-api/openapi/openapi.yaml`](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml) | Machine-readable technical contract: request/response envelopes, HTTP statuses, and data schemas. |
+| **ISO/IEC/IEEE 42010:2022** | Architecture Description | [`docs/architecture-decisions.md`](architecture-decisions.md) | Architecture Decision Records (ADRs 001–010), component topology, and selected architecture views. |
+| **IEEE 1016** | Software Design Description (**SDD**) — Data Model Detail | [`docs/data-model.md`](data-model.md) | Proposed Cloud Firestore collection hierarchies, entity schemas, caregiver ownership paths, and data lifecycle requirements. |
+| **OpenAPI 3.1 & ISO 42010** | Software Design Description (**SDD**) — Interface View | [`docs/api-reference.md`](api-reference.md) & [`littlesteps-api/openapi/openapi.yaml`](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml) | Machine-readable technical contract, Open Library REST integration, 3-tier AI fallback engine, request/response envelopes, and error codes. |
 | **PMBOK / ISO 21500** | Project Management Plan (**PMP**) — Scope & Schedule Baseline | [`docs/execution-plan.md`](execution-plan.md) | Delivery milestones (M0–M5), academic dates, work packages, dependencies, and the prototype validation gate. |
-| **PMBOK / ISO 21500** | Project Management Plan (**PMP**) — Quality & Change Control | [`docs/development-workflow.md`](development-workflow.md) | Branch protection, PR peer reviews, GitHub status checks (`Docs CI`, `API CI`, `Web CI`), and code defense criteria. |
+| **PMBOK / ISO 21500** | Project Management Plan (**PMP**) — Quality & Change Control | [`docs/development-workflow.md`](development-workflow.md) | Branch protection, PR peer reviews, GitHub status checks (`Docs CI/verify`, `API CI/verify`, `Web CI/verify`), and code defense criteria. |
 | **Diátaxis Framework** | Learning-Oriented Tutorial | [`docs/getting-started.md`](getting-started.md) | Reproducible full-stack local setup guide for Node.js 22, Java 21, and Firebase Emulator Suite. |
 | **Diátaxis Framework** | Quality & Information Architecture | [`docs/documentation-standards.md`](documentation-standards.md) | Documentation governance, three-tier hierarchy, Diátaxis quadrant mapping, and repository consistency audits. |
 
@@ -90,17 +94,17 @@ To satisfy the specific submission requirements of all three coordinated courses
 ### 4.2 CIT 210: Web Systems and Technologies
 Evaluated under the [Official CIT 210 Final Project Evaluation Rubric](academic/cit210/CIT210_Final_Project_Requirements.md) (100 Points Total):
 1. **Application Development (65%):**
-   - **API Integration (25 pts):** Custom Express REST API implementing the [OpenAPI contract](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml) and third-party Gemini API integration ([ADR-008](architecture-decisions.md)) with optional Open-Meteo weather integration ([ADR-009](architecture-decisions.md)).
+   - **API Integration (25 pts):** Custom Express REST API ([API Reference](api-reference.md)) implementing the [OpenAPI contract](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml); external **Open Library REST API** integration for children's literature ([ADR-010](architecture-decisions.md)); and **Google Gemini API** integration with a 3-tier fallback engine ([ADR-008](architecture-decisions.md), [ADR-010](architecture-decisions.md)) alongside optional Open-Meteo weather integration ([ADR-009](architecture-decisions.md)).
    - **Client-Side Interface & Usability (20 pts):** Responsive React 19 web application (`littlesteps-react`) with multi-factor search/filtering, quick filter chips, and 5-state interaction resilience.
-   - **Server-Side Logic & Data Processing (15 pts):** Express routing controllers, Cloud Firestore caregiver-scoped subcollections ([Data Model](data-model.md)), BOLA authorization checks ([ADR-003](architecture-decisions.md)), and deterministic fallbacks ([ADR-006](architecture-decisions.md)).
-   - **Error Handling & Data Validation (5 pts):** Bounded schema validation, standardized JSON error envelopes, and safe error propagation.
+   - **Server-Side Logic & Data Processing (15 pts):** Express routing controllers, Cloud Firestore caregiver-scoped subcollections ([Data Model](data-model.md)), BOLA authorization checks ([ADR-003](architecture-decisions.md)), and 3-tier fallback execution ([ADR-010](architecture-decisions.md)).
+   - **Error Handling & Data Validation (5 pts):** Bounded schema validation (Zod), standardized JSON error envelopes, and safe error propagation.
 2. **Presentation & Live Demo (35%):**
    - **Clarity & Structure (10 pts):** Logical project narrative, problem context, and system architecture.
-   - **Explanation of API Integration (10 pts):** Detailed explanation of endpoints, request/response headers, and data flow.
+   - **Explanation of API Integration (10 pts):** Detailed explanation of endpoints, request/response headers, token decoding, Open Library REST proxying, and AI prompt sanitization per [`docs/api-reference.md`](api-reference.md).
    - **Demo & Functionality (15 pts):** Stable live demonstration of core user journeys against local emulators with a rehearsed backup video.
 3. **Supporting Documentation:**
    - [Developer Onboarding Guide](getting-started.md) for reproducible full-stack local execution.
-   - Architecture decision records ([ADRs 001–009](architecture-decisions.md)) and [Traceability Matrix](traceability-matrix.md).
+   - [API Reference & Integration Guide](api-reference.md), Architecture decision records ([ADRs 001–010](architecture-decisions.md)), and [Traceability Matrix](traceability-matrix.md).
 
 ### 4.3 CIT 246: IT Project Management Plan
 1. **Checkpoint 1 Proposal (Due October 14, 2026):** One-page project concept covering Organization, Problem, Proposed System, and Possible Sponsor (A4, Arial 11), documented in [`docs/academic/cit246/checkpoint-1-concept.md`](academic/cit246/checkpoint-1-concept.md).
@@ -118,9 +122,9 @@ Documentation in `littlesteps-docs` aligns with the Diátaxis documentation fram
 | Type | Reader's Question | Focus | LittleSteps Document |
 | :--- | :--- | :--- | :--- |
 | **Tutorial** | *"Help me get started from scratch."* | Learning-oriented step-by-step guidance | [Developer onboarding guide](getting-started.md) |
-| **How-To Guide** | *"How do I complete a specific operational task?"* | Task-oriented problem solving | [Development workflow](development-workflow.md) |
-| **Reference** | *"What is the exact technical contract or specification?"* | Information-oriented technical facts | [OpenAPI contract in the API repository](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml), [Data model specification](data-model.md), [Verification & traceability matrix](traceability-matrix.md), [UI/UX design specification](ui-ux-design-specification.md), environment variables, and provenance schemas |
-| **Explanation** | *"Why is the system designed this way?"* | Understanding-oriented rationale and context | [Product scope](product-scope.md), [architecture decisions](architecture-decisions.md), [security, privacy, and AI guardrails](security-privacy-ai.md), [Philippine content provenance](philippine-content-provenance.md) |
+| **How-To Guide** | *"How do I complete a specific operational task?"* | Task-oriented problem solving | [Development workflow](development-workflow.md), [Parent walkthrough field guide](parent-walkthrough-guide.md) |
+| **Reference** | *"What is the exact technical contract or specification?"* | Information-oriented technical facts | [API reference & integration guide](api-reference.md), [OpenAPI contract in the API repository](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml), [Data model specification](data-model.md), [Verification & traceability matrix](traceability-matrix.md), [UI/UX design specification](ui-ux-design-specification.md), and provenance schemas |
+| **Explanation** | *"Why is the system designed this way?"* | Understanding-oriented rationale and context | [Product scope](product-scope.md), [Architecture decisions](architecture-decisions.md), [Security, privacy, and AI safeguards](security-privacy-ai.md), [Philippine content provenance](philippine-content-provenance.md), [Prototype storyboards](prototype-traceability-storyboards.md) |
 
 These are intended locations for information, not a claim that every linked document or contract is complete or production-ready. Check each resource's status before relying on it.
 

@@ -43,19 +43,33 @@ This repository is the canonical home for product scope, decisions, research pro
 ## Getting started
 - [Developer onboarding guide](docs/getting-started.md): step-by-step tutorial for Node.js 22, Java 21, Firebase Emulators, and local full-stack development. Verify the guide against the current code before relying on it.
 
-## Source of truth
-- [Product scope](docs/product-scope.md): six core features and boundaries.
-- [Architecture decisions](docs/architecture-decisions.md): current technical direction and ADRs.
-- [Data model specification](docs/data-model.md): Firestore entities, relationships, ownership, and retention.
-- [Security, privacy, and AI guardrails](docs/security-privacy-ai.md): required safeguards and statutory baselines.
-- [Verification and traceability matrix](docs/traceability-matrix.md): requirements-to-tests and delivery traceability.
-- [UI/UX design specification](docs/ui-ux-design-specification.md): human-computer interaction principles, responsive design system, and prototype validation requirements.
-- [Prototype traceability and storyboards](docs/prototype-traceability-storyboards.md): provisional caregiver scenarios, minimal prototype scope, and walkthrough acceptance criteria.
-- [Execution plan](docs/execution-plan.md): delivery approach, milestones, and academic calendar.
-- [Development workflow](docs/development-workflow.md): branch, review, and verification expectations.
-- [Documentation standards](docs/documentation-standards.md): canonical documentation hierarchy, academic deliverables mapping, and repository consistency.
-- [Research register](docs/research-register.md): external sources and their design implications.
-- [Philippine content provenance](docs/philippine-content-provenance.md): source candidates, item-level citation fields, and content-review gates.
+## Canonical Documentation Suite (15 Specifications)
+
+All system-wide specifications live centrally in `docs/` and adhere to ISO/IEC/IEEE, PMBOK, and Diátaxis standards:
+
+### 1. Requirements & System Scope
+- [Product scope](docs/product-scope.md) (ISO/IEC/IEEE 29148): six core functional requirements (FR-01..06), single-caregiver actor boundary, and IN/OUT scope definitions.
+- [Verification and traceability matrix](docs/traceability-matrix.md) (ISO 29148 / PMBOK): end-to-end traceability linking requirements and CIT 210 rubric items to test suites, tracking issues, and evidence.
+
+### 2. Architecture, API & Security
+- [Architecture decisions](docs/architecture-decisions.md) (ISO/IEC/IEEE 42010): Architecture Decision Records (ADRs 001–010) detailing system topology, Firebase Cloud Functions, and Gemini AI integration.
+- [API reference and integration guide](docs/api-reference.md) (OpenAPI 3.1 & ISO 42010): REST endpoints catalog, Open Library data integration, 3-tier AI fallback engine, error codes, and sequence diagrams.
+- [Data model specification](docs/data-model.md) (IEEE 1016): Cloud Firestore collection hierarchies, entity schemas, and data lifecycle requirements.
+- [Security, privacy, and AI safeguards](docs/security-privacy-ai.md) (RA 10173 / RA 12199): mandatory token verification, BOLA non-leakage defenses, and child privacy guardrails.
+
+### 3. UI/UX Design & User Research
+- [UI/UX design specification](docs/ui-ux-design-specification.md) (ISO 9241 / WCAG 2.2 AA): human-computer interaction principles, responsive design system, and prototype validation requirements.
+- [Prototype traceability and storyboards](docs/prototype-traceability-storyboards.md) (ISO 9241): provisional caregiver scenarios, minimal prototype scope (P0/P1), and walkthrough acceptance criteria.
+- [Parent walkthrough guide](docs/parent-walkthrough-guide.md) (ISO 9241-11:2018): practical field protocol, ethical consent script, task matrix, and findings template for caregiver usability evaluation.
+
+### 4. Content Research & Philippine Provenance
+- [Philippine content provenance](docs/philippine-content-provenance.md) (RA 12199 / ECCD): source candidates, item-level citation fields, and content-review gates.
+- [Research register](docs/research-register.md): external statutory, regulatory, and public health sources informing product design.
+
+### 5. Engineering, Governance & Delivery
+- [Development workflow](docs/development-workflow.md) (ISO/IEC/IEEE 12207): branch, review, and verification expectations.
+- [Execution plan](docs/execution-plan.md) (PMBOK / ISO 21500): delivery milestones (M0–M5), work breakdown structure, and synchronized academic deadlines.
+- [Documentation standards](docs/documentation-standards.md) (Diátaxis Governance): canonical documentation hierarchy, academic deliverables mapping, and repository consistency.
 
 ## Academic Course Deliverables
 - [Academic Deliverables Index](docs/academic/README.md): centralized directory for course-specific evaluation packages.
