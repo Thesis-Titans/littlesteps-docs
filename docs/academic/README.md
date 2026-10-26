@@ -12,7 +12,7 @@ This directory contains the academic course evaluation packages and deliverables
 |---|---|---|---|
 | CIT 246 — IT Project Management | 3 members | Yes | December 2, 2026 |
 | CC 207B — Applications Development and Emerging Technologies | 5 members | Yes | December 2, 2026 |
-| CIT 210 — Web Systems and Technologies | 5 members | Not yet; the page reflects the team's understanding | December 2, 2026 |
+| CIT 210 — Web Systems and Technologies | 5 members | Yes (Official Rubric on file) | December 2, 2026 |
 
 ---
 
@@ -34,6 +34,6 @@ A Flutter application with at least six core features (including one user-facing
 - **AI Use Policy:** AI-generated code, text content and image assets must be recorded in the AI Usage Log; generating the application wholesale is not allowed.
 
 ### 3. [CIT 210 — Web Systems and Technologies](cit210/README.md)
-Covers the React web client, shared Node.js/TypeScript API, and database integration. No instructor brief is on file yet; confirm the page against it when available.
+Covers the React web client, shared Node.js/TypeScript API, and database integration. Evaluated on a 100-point rubric: Application Development (65%) and Presentation & Live Demo (35%).
 - **Technical Contract:** Canonical OpenAPI contract maintained in the [API repository OpenAPI specification](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml).
 - **Local Onboarding:** Step-by-step full-stack local setup in [Developer Onboarding Guide](../getting-started.md).
