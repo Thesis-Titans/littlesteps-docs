@@ -50,20 +50,26 @@ CC 207B grades a Flutter application built on the same API and data as the web c
 
 - **Everyone writes Flutter.** CC 207B requires meaningful commits from all five members and a 2–3 minute individual code defense with a live edit. Every member therefore owns at least one Flutter feature slice end to end (screen, state, API calls, validation and tests). Each member owns the same feature in the API, React and Flutter, so the Flutter slice mirrors React work they already understand:
 
-| Feature slice | Owner | API | React | Flutter |
-|---|---|---|---|---|
-| Flutter project setup, sign-in and protected API client | Mark Alvin Cadangin (`markalvincadangin`) | — | react #5 | flutter #2, #3 |
-| Child profile (FR-01) | Justin Ace Ardeña (`Justin-Ardena`) | api #7, #8 | react #6 | flutter #5 |
-| Learning catalog (FR-04) | Vincent John Tamaño (`vincenttamano`) | api #9 | react #7 | flutter #6 |
-| Activity planning (FR-02) | Vincent John Tamaño | api #10 | react #8 | flutter #7 |
-| Milestone observations (FR-01) | Nherie C. Acebuche (`Lovelly143`) | api #16 | react #17 | flutter #8 |
-| Private journal (FR-03) | Mae Daniella Faith C. Benjamin (`faithbn`) | api #11 | react #9 | flutter #9 |
-| "This week" summary (FR-05) | Nherie C. Acebuche | api #12 | react #10 | flutter #10 |
-| AI helper (FR-06) | Justin Ace Ardeña | api #13 | react #11 | flutter #11 |
-| Account, settings, privacy notice, about and help | Mae Daniella Faith C. Benjamin | — | react #16 | flutter #4 |
-| Release audits and submission | Vincent (api #14), Justin (react #13), Faith (flutter #12), Mark (flutter #13) | | | |
+| Feature | Backend (API) | Frontend (React) | Flutter (Sprints 3–4) |
+|---|---|---|---|
+| App shell, design tokens, navigation | — | Nherie (react #18) | Mark (flutter #2, project setup) |
+| Sign-in and protected API client | Mark | Mark (react #5) | Justin (flutter #3) |
+| Account, settings, privacy, help, your data | Justin (api #17) | Faith (react #16) | Faith (flutter #4) |
+| Child profile (FR-01) | Justin (api #7, #8) | Nherie (react #6) | Vincent (flutter #5) |
+| Learning catalog (FR-04) | Vincent (api #9) | Faith (react #7) | Vincent (flutter #6) |
+| Activity planning (FR-02) | Vincent (api #10) | Nherie (react #8) | Nherie (flutter #7) |
+| Milestone observations (FR-01) | Justin (api #16) | Faith (react #17) | Faith (flutter #8) |
+| Private journal (FR-03) | Faith (api #11) | Nherie (react #9) | Nherie (flutter #9) |
+| "This week" summary (FR-05) | Vincent (api #12) | Nherie (react #10) | Justin (flutter #10) |
+| AI helper (FR-06) | Mark (api #13) | Justin (react #11) | Mark (flutter #11) |
+| Weather hint (optional stretch) | — | Unassigned (react #19) | — |
+| Release checks and submission | Justin (api #14) | Vincent (react #13) | Faith (flutter #12), Mark (flutter #13) |
 
-  Mark, Faith and Nherie also carry the CIT 246 plan, so their build slices are smaller. Review pairs: Justin and Vincent review each other; Faith and Nherie review each other; Mark reviews across both pairs and reviews the docs.
+  Each member owns **two Flutter screens of similar size**, matched to their strengths, built after the React work on the finished API. Docs: Vincent (content sources docs #3, CIT 210 docs and demo docs #56), Nherie (wireframes docs #44), Faith (parent walkthrough docs #15), Mark (AI Usage Log flutter #14). Agreed by the team on 26 October 2026 (docs #55).
+
+  **Roles.** Everyone is full-stack; these are leanings. **Mark:** project lead and **technical lead**, owning the API contract, data model, sign-in, security rules and the AI service; reviews across features and merges. **Justin:** backend lead. **Nherie:** frontend lead. **Vincent:** backend and docs lead. **Faith:** frontend, backend support and QA. Mark, Faith and Nherie also carry CIT 246. GitHub teams: `@Thesis-Titans/littlesteps` (everyone), with `littlesteps-backend`, `littlesteps-frontend` and `littlesteps-docs` under it, plus `@Thesis-Titans/cit246`.
+
+  **Feature pairs.** The backend and frontend owners of a feature agree the API request and response shape in the feature issue first, and Mark approves it. Partners review each other's pull requests; changes to the API contract, sign-in or the AI service also need Mark's review.
 - **Repository:** Flutter work happens in `Thesis-Titans/littlesteps-flutter` for now. If the course instructor provides a repository to fork, move the work there by pushing the full Git history (all branches and tags), never by copying files, so each member's commits survive. Pull-request reviews do not move with Git history, so ask the instructor early whether reviews in `littlesteps-flutter` count, or start using the course repository as soon as it exists.
 - **Platform:** Android phones (the [architecture](architecture-decisions.md) targets Dart on Android, and the personas use Android). Flutter stable channel with Material 3.
 - **Design source:** the reviewed 375px mobile-web frames, adapted to Material 3 widgets as listed in the [UI/UX Design Specification](ui-ux-design-specification.md) §9. Flutter screens are not prototyped separately.
