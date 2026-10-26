@@ -67,6 +67,7 @@ All system-wide specifications live centrally in `docs/` and adhere to ISO/IEC/I
 - [Research register](docs/research-register.md): external statutory, regulatory, and public health sources informing product design.
 
 ### 5. Engineering, Governance & Delivery
+- [Developer onboarding guide](docs/getting-started.md) (Diátaxis Tutorial): step-by-step local setup for Node.js 22, Java 21, and Firebase Local Emulator Suite.
 - [Development workflow](docs/development-workflow.md) (ISO/IEC/IEEE 12207): branch, review, and verification expectations.
 - [Execution plan](docs/execution-plan.md) (PMBOK / ISO 21500): delivery milestones (M0–M5), work breakdown structure, and synchronized academic deadlines.
 - [Documentation standards](docs/documentation-standards.md) (Diátaxis Governance): canonical documentation hierarchy, academic deliverables mapping, and repository consistency.
