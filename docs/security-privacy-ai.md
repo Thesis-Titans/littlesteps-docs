@@ -89,6 +89,30 @@ To satisfy the **CC 207B AI-Powered Feature Requirements (§2a–d, §3)**, the 
   3. *Tier 3 (Deterministic Rule-Based Catalog):* If both cloud and local AI fail, timeout, or hit rate limits, the backend immediately executes deterministic rule-based catalog matching. The caregiver receives approved activities from the verified curriculum catalog without service interruption or application crashes.
 - **Device offline:** If the caregiver's device is offline, it cannot reach the backend, so neither the AI helper nor the fallback can run. The app shows the offline state described in the [UI/UX Design Specification](ui-ux-design-specification.md) §7 instead of an error.
 
+```mermaid
+flowchart TD
+    Req["Caregiver Play Request<br/><i>(age band, home materials, duration)</i>"]
+    
+    subgraph PrivacyFilter["Server-Side Privacy & Minimization Boundary"]
+        Sanitize["Sanitize & Strip PII<br/><i>(Remove child names, caregiver IDs, locations)</i>"]
+    end
+    
+    Req --> Sanitize
+
+    subgraph FallbackEngine["3-Tier AI Fallback Engine (ADR-010)"]
+        T1{"<b>Tier 1: Cloud Gemini</b><br/>Gemini 1.5 Flash (8s timeout)"}
+        T2{"<b>Tier 2: Local Edge AI</b><br/>Ollama (qwen2.5-coder:7b)"}
+        T3["<b>Tier 3: Deterministic Catalog</b><br/>Pre-Reviewed ECCD Activity Matcher"]
+    end
+
+    Sanitize --> T1
+    T1 -- "Success (200 OK)" --> Response["Return Play Ideas<br/><i>+ Mandatory AI Transparency Badge</i>"]
+    T1 -- "Timeout / Error / 429" --> T2
+    T2 -- "Success (Local OK)" --> Response
+    T2 -- "Offline / Disabled / Error" --> T3
+    T3 --> Response
+```
+
 ### NFR-AI-04: Ethical Transparency, Labeling & Non-Diagnostic Boundary (CC 207B §2d Responsible use)
 - **Visual Labeling:** Every AI-generated suggestion must display an explicit AI badge and disclaimer: *"AI Suggestion — Always adapt to your child and ensure adult supervision."*
 - **Caregiver Autonomy:** Caregivers can reject, regenerate, customize, or manually replace any suggestion.
