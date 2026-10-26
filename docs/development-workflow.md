@@ -1,7 +1,7 @@
 # LittleSteps Development Workflow
 
 **Status:** Canonical Engineering Workflow Baseline  
-**Governing Standard:** ISO/IEC/IEEE 12207:2026 (Process Governance) & GitHub Flow  
+**Governing Standard:** ISO/IEC/IEEE 12207:2017 (Software Life Cycle Processes) & GitHub Flow  
 **Related Documents:** [Documentation Standards](documentation-standards.md), [Execution Plan](execution-plan.md)
 
 ---
@@ -10,15 +10,14 @@
 
 ### Initial setup/foundation stage
 - Do not work directly on `main`; use focused branches and draft pull requests.
-- The project lead acts as the reviewer and approval boundary during the foundation setup stage. A separate teammate review is not a blocker during this stage.
-- Keep changes narrow, describe limitations, and verify technical claims with actual local or GitHub Actions checks.
-- Do not merge a draft PR or claim a check passed unless the relevant result is available. The project lead reviews and approves foundation PRs before merging.
+- The project lead acted as the reviewer and approval boundary during the initial setup stage to establish baselines without author deadlocks.
 
-### Feature execution stage
+### Feature execution stage (Active)
+- The initial setup is complete; work proceeds in feature pairs across active repositories.
 - Use focused branches such as `feat/activity-planning`, `fix/child-ownership-check`, or `docs/privacy-notice`.
 - Define acceptance criteria and relevant tests before implementing a feature.
 - Require relevant automated checks and security/privacy verification before merging.
-- Seek teammate review where feasible; do not treat the setup-stage review exception as a general feature-development policy.
+- **Teammate PR Reviews:** Every feature pull request must be reviewed and approved by at least one teammate. For core architecture, data contracts, security rules, and AI prompts/fallbacks, Mark provides an additional review.
 - Never force-push or delete protected shared branches without team agreement.
 - Do not mark checks as passed unless they ran and the results are recorded.
 
@@ -71,7 +70,7 @@ Following the governance audit ([Docs Issue #2](https://github.com/Thesis-Titans
    - **Teammate PR Reviews:** During the feature execution phase, every pull request must be reviewed and approved by at least one teammate prior to merging into `main`. Collaboration is a graded criterion assessed directly from Git commit and PR review history.
    - **Continuous Contribution:** All 5 members must contribute commits throughout the project lifecycle, avoiding last-minute commits before the December 2, 2026 deadline.
    - **Individual Code Defense Readiness:** Each member must personally author, understand, and explain their committed code during the mandatory 2–3 minute individual code defense, including the ability to perform small live code edits (e.g., adding form fields, adjusting navigation).
-   - **AI Usage Log Compliance:** Any AI-assisted code generation (allowed only for snippets, debugging, or sample fixtures) must be documented in the shared AI Usage Log. Wholesale generation of the app or unexplainable code is strictly prohibited.
+   - **AI Usage Log Compliance:** Any AI-assisted code generation (allowed only for snippets, debugging, or sample fixtures) must follow project AI governance. For CC 207B (`littlesteps-flutter`), all AI use must be documented in the shared AI Usage Log per course requirement. Wholesale generation of the app or unexplainable code is strictly prohibited.
 6. **Mobile Repository:**
    - `littlesteps-flutter` is open for changes. It is private, so the branch protection, required status checks, and project-board coverage above are not yet configured there.
 7. **Synthetic Credentials & Exposure Verification:**

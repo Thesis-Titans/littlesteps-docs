@@ -6,6 +6,9 @@
 **Project Team:** Mark Alvin Cadangin (Lead), Nherie C. Acebuche, Mae Daniella Faith C. Benjamin (CIT 246 team of three)  
 **Academic Institution:** West Visayas State University — College of Information and Communications Technology  
 
+> [!NOTE]
+> **Historical Submission Context:** This document preserves the concept proposal submitted on October 14, 2026. The subsequent Project Management Plan narrowed the realistic client to the City Social Welfare and Development Office (CSWDO) La Paz–Lapuz District office (§3.1), clarified standard Firestore encryption at rest with BOLA access control in place of "strict encryption", and refined the AI fallback mechanism to server-side deterministic catalog matching ([ADR-006](../../architecture-decisions.md)).
+
 ---
 
 ## 1. The Organization

@@ -6,9 +6,9 @@ LittleSteps is an academic software development project focused on helping paren
 
 ### Courses Involved
 
-- **CC 207B — Application Development and Emerging Technologies:** Flutter application development.
+- **CC 207B — Applications Development and Emerging Technologies:** Flutter application development.
 - **CIT 210 — Web Systems and Technologies:** React web application, API, and database integration.
-- **CIT 246 — IT Project Management Plan:** Project planning, documentation, scheduling, and management.
+- **CIT 246 — IT Project Management:** Project planning, documentation, scheduling, and management.
 
 ### What the System Does
 
@@ -23,14 +23,14 @@ The application has six core features:
 
 ### Technical Direction
 
-- **Frontend:** React for the web and Flutter for mobile.
-- **Backend:** A shared API and data model.
-- **Database and services:** Firebase is included in the recorded initial technology scope.
+- **Frontend:** React for the web (`littlesteps-react`) and Flutter for mobile (`littlesteps-flutter`).
+- **Backend:** A shared API and data model (`littlesteps-api`).
+- **Database and services:** Firebase Authentication, Cloud Functions (2nd Gen), and Cloud Firestore.
 - **AI:** A constrained helper for activity suggestions, not a diagnostic tool.
 
 ### Project Context and Current Status
 
-The project is currently focused on requirements, project documentation, UI/UX design, and prototype preparation before full implementation.
+The project has initiated Sprint 1 foundation implementation on the API and React web client, with the prototype walkthrough running alongside the foundation build.
 
 The work must remain evidence-based: the initial caregiver research is limited, so user needs and design assumptions still require further validation. The prototype is intended to demonstrate the planned screens and workflows; it should not be mistaken for a fully functioning application.
 

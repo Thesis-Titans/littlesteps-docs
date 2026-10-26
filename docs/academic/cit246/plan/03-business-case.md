@@ -61,7 +61,7 @@ At these estimates, one CDC loses the home record of about 8 children a year, a 
 
 ### Weighted scoring
 
-Each option is scored from 1 (poor) to 10 (strong) against criteria agreed with the sponsor. Weights add up to 100%.
+Each option is scored from 1 (poor) to 10 (strong) against evaluation criteria proposed by the project team (to be re-weighted with the sponsor upon formal consultation, §3.6). Weights add up to 100%.
 
 | Criterion | Weight | A. Do nothing | B. Paper booklet | C. Commercial app | D. LittleSteps |
 |---|---|---|---|---|---|

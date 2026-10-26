@@ -12,8 +12,8 @@
 
 Before establishing interface specifications, the technical boundaries are explicitly affirmed:
 
-1. **Gated Validation Before Implementation:** This document establishes the interaction and interface specification for the **Figma prototype and usability evaluation**. Feature implementation in code remains gated under [Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15).
-2. **Mobile Experience as Responsive Web Frames:** Mobile is prototyped as **375px Figma frames** of the responsive browser layout, and desktop as **1280px frames**. `littlesteps-react` implements these layouts only after the prototype is approved. Tablet behavior (768px–1024px) is specified in §5.2 but does not need its own frames.
+1. **Prototype Validation & Parallel Execution:** This document establishes the interaction and interface specification for the **Figma prototype and usability evaluation**. Per the execution plan (§1.2, §3), Sprint 1 engineering (M1 foundation) runs alongside the prototype walkthrough, with usability findings iteratively incorporated into M2–M4 screens ([Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)).
+2. **Mobile Experience as Responsive Web Frames:** Mobile is prototyped as **375px Figma frames** of the responsive browser layout, and desktop as **1280px frames**. `littlesteps-react` implements these responsive layouts, with caregiver walkthrough feedback feeding iterative refinements. Tablet behavior (768px–1024px) is specified in §5.2 but does not need its own frames.
 3. **Flutter Outside This Prototype Gate:** The prototype covers responsive web layouts only; native Flutter screens are not prototyped. The Flutter app adapts the reviewed 375px frames to Material 3 widgets as listed in §9.
 4. **Synthetic Data Only:** Frames use the synthetic profiles Maya (14 months) and Liam (48 months) and sample catalog entries. Loading, error, permission-denied, offline, and AI-fallback behavior are shown as separate frames or component variants linked by prototype interactions; nothing connects to Firestore, the API, or an AI provider.
 
@@ -70,7 +70,7 @@ graph TD
 ```
 
 - **Natural Thumb Zone Optimization:** The bottom 35% of the mobile screen contains all primary triggers: the 5-tab bottom navigation bar and sticky action sheets.
-- **Fitts’s Law Touch Targets:** Frequent and primary mobile controls (tabs, chips, list rows, back links, form buttons) have a **touch target of at least 48 × 48 CSS pixels**, following Material Design for the Android phones most caregivers in the Philippines use. Secondary links may go down to **44 × 44**, never lower. Adjacent targets keep at least 8px apart. (WCAG 2.5.8 requires only 24 × 24; these larger sizes are for one-handed comfort.)
+- **Fitts’s Law Touch Targets:** Frequent and primary mobile controls (tabs, chips, list rows, back links, form buttons) have a **touch target of at least 48 × 48 CSS pixels**, following Material Design for representative Android mobile devices commonly used by caregivers in community settings. Secondary links may go down to **44 × 44**, never lower. Adjacent targets keep at least 8px apart. (WCAG 2.5.8 requires only 24 × 24; these larger sizes are for one-handed comfort.)
 
 ---
 

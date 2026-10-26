@@ -1,6 +1,6 @@
 # Security Policy
 
-LittleSteps is an early learning and caregiver support system developed as a course project for Application Development and Web Development by Thesis-Titans. This policy outlines our vulnerability disclosure process and response expectations.
+LittleSteps is an early learning and caregiver support system developed as a coordinated course project across Applications Development (CC 207B), Web Systems and Technologies (CIT 210), and IT Project Management (CIT 246) by Thesis-Titans. This policy outlines our vulnerability disclosure process and response expectations.
 
 ---
 
@@ -20,7 +20,7 @@ LittleSteps is under active academic development. Only the latest commit on the 
 
 ## 2. Realistic Academic Response Expectations
 
-LittleSteps is maintained by undergraduate students for academic research and capstone evaluation:
+LittleSteps is maintained by undergraduate students for academic coursework and project evaluation:
 - **No Commercial SLA:** We do not operate a commercial 24/7 security operations center (SOC) or guarantee formal turnaround times.
 - **Best-Effort Handling:** The project maintainers review incoming vulnerability reports on a best-effort basis during academic terms.
 - **Responsible Coordination:** We ask researchers and reviewers to coordinate responsibly with us before publicly discussing any unpatched vulnerabilities.
@@ -42,7 +42,7 @@ Please submit vulnerability details through either of the following private chan
 
 ### Information to Include in Your Report
 To help us triage and verify the issue efficiently, please provide:
-- **Repository & Component:** Affected repository (`littlesteps-api`, `littlesteps-react`, or `littlesteps-docs`) and specific file paths or endpoints.
+- **Repository & Component:** Affected repository (`littlesteps-api`, `littlesteps-react`, `littlesteps-flutter`, or `littlesteps-docs`) and specific file paths or endpoints.
 - **Vulnerability Category:** Description of the weakness (e.g., authorization bypass, broken access control, synthetic credential exposure, injection flaw, or sensitive data leak).
 - **Reproduction Steps:** Step-by-step instructions or proof-of-concept (POC) using **strictly synthetic test data**.
 - **Impact Assessment:** Potential consequence of the vulnerability if exploited.

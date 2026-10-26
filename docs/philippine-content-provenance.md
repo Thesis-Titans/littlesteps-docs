@@ -31,7 +31,7 @@ The sourcing framework and review protocol are defined; item-level catalog revie
 Statutory age allocations and LittleSteps product navigation categories are strictly distinct:
 
 1. **Statutory jurisdiction** establishes government agency legal authority under RA 12199 (ECCD Council for <5 years; DepEd for 5–8 years).
-2. **LittleSteps navigation categories** are internal UX categories created to help parents discover age-appropriate activities and record private observations. They are **not** statutory jurisdictions, legal definitions, or medical/developmental developmental milestones.
+2. **LittleSteps navigation categories** are internal UX categories created to help parents discover age-appropriate activities and record private observations. They are **not** statutory jurisdictions, legal definitions, or medical or developmental milestones.
 3. Specifically, the **60–71 month band ("Kindergarten Transition") is solely a LittleSteps product UX category** designed as a bridge for children entering Kindergarten, referencing DepEd Kindergarten competencies. It is **not** a separate statutory category under Philippine law.
 4. **All LRP-to-age-band mappings are provisional:** Because the complete Learning Resource Packages have not been inspected, their detailed contents, exact age brackets, and mappings to LittleSteps navigation bands remain provisional candidates pending physical/digital examination of the actual packages.
 
