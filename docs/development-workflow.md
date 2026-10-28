@@ -53,11 +53,13 @@ For Flutter (cross-platform) changes:
 - **Feature-Modular Layout:** Code is strictly organized into domain modules to isolate feature work and eliminate file merge conflicts:
   - `src/services/`: External integrations (`firebase.ts`, `api.ts`, and contract tests).
   - `src/features/<feature-name>/`: Co-located UI components, hooks, domain types, and unit tests for each core feature (`auth/`, `profile/`, `activities/`, `journal/`, `reflections/`, `ai-helper/`).
-  - `src/components/`: Shared design system atoms (`common/`) and global navigation shell (`layout/`).
+  - `src/components/`: Shared design system components (`common/`, documented in `src/components/README.md` with a live showcase at `/dev/components`) and the app shell (`layout/`).
+  - `src/assets/`: Brand, icon and illustration SVGs exported from Figma.
   - `src/styles/`: Central design tokens (`tokens.css`) and global styling (`main.css`).
 - **Styling Architecture (Vanilla CSS, No Tailwind):**
   - **TailwindCSS is not used.**
-  - All components use **Vanilla CSS** referencing design tokens (`--forest`, `--canvas`, `--card`, `--input-border`) bound to the canonical Figma design system.
+  - All components use **Vanilla CSS** referencing design tokens named after the Figma variables (`--color-brand-forest`, `--color-surface-canvas`, `--color-surface-card`, `--color-border-input`).
+  - Build screens from the shared components and follow the wording rules in the [UI/UX Design Specification](ui-ux-design-specification.md) §2.6.
   - Color contrast must adhere to WCAG 2.2 AA (minimum 4.5:1 for body text, 7.1:1 for primary buttons).
 - **Public Barrel Interfaces:** Feature internals are accessed only through the feature's `index.ts` barrel.
 
@@ -65,7 +67,7 @@ For Flutter (cross-platform) changes:
 - **Multiplatform Capability:** Engineered with Flutter / Dart for cross-platform portability across Android, iOS, Web, and Desktop. Android serves as the primary evaluation and live demo device for CC 207B.
 - **Layered Architecture (CC 207B Requirement f):** Code is organized strictly by role:
   - `lib/screens/`: Top-level page views corresponding to the 6 core features.
-  - `lib/widgets/`: Reusable, atomic UI widgets.
+  - `lib/widgets/`: Reusable, atomic UI widgets, documented in `lib/widgets/README.md` with a debug-only widget gallery. Build screens from these widgets and follow the wording rules in the UI/UX Design Specification §2.6.
   - `lib/models/`: Strongly-typed data entities with `fromJson` / `toJson` serialization.
   - `lib/services/`: HTTP REST client and local storage persistence.
   - `lib/theme/`: Material 3 theme (`useMaterial3: true`), Inter typography, and `ThemeExtension` for status colors.
