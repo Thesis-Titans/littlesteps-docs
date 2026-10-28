@@ -121,7 +121,7 @@ Base URL (Local Emulator): `http://127.0.0.1:5001/{projectId}/asia-southeast1/ap
 | Method | Path | Auth | Purpose | Success (Status / Body) | Error Codes |
 | :--- | :--- | :---: | :--- | :--- | :--- |
 | `GET` | `/api/v1/children/:childId/milestones` | Bearer | List caregiver observations for child | `200 OK`<br/>`{ "observations": [ { "milestoneId": "m1", "status": "observed" } ] }` | `401`<br/>`404` |
-| `POST` | `/api/v1/children/:childId/milestones` | Bearer | Record milestone observation (observed, emerging, not_yet) | `201 Created`<br/>`{ "observationId": "o1", ... }` | `400 INVALID_INPUT`<br/>`401`<br/>`404` |
+| `POST` | `/api/v1/children/:childId/milestones` | Bearer | Record milestone observation (`observed` or `not_yet_observed`) | `201 Created`<br/>`{ "observationId": "o1", ... }` | `400 INVALID_INPUT`<br/>`401`<br/>`404` |
 
 ### 4.4 Activity Planning & Scheduling (FR-02)
 
@@ -238,6 +238,7 @@ Google Gemini API                                            Ollama (localhost:1
 3. **Tier 3 (Deterministic Rule-Based Catalog - Guaranteed Safety Net):**
    - If Tier 1 and Tier 2 fail, the backend matches the domain and age group to pre-reviewed activities in [`docs/philippine-content-provenance.md`](philippine-content-provenance.md).
    - Zero latency, 100% deterministic, never crashes.
+   - For `/ai/story-activity`, Tier 3 returns a reviewed catalog activity matched on age band and the book's subjects, with `"tier": 3`, `"source": "catalog"` and no AI badge. A Tier 1 or 2 response that fails schema or non-diagnostic validation is also replaced this way.
 
 ---
 

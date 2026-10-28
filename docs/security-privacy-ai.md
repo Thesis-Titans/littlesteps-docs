@@ -74,11 +74,11 @@ To satisfy the **CC 207B AI-Powered Feature Requirements (§2a–d, §3)**, the 
 
 ### NFR-AI-01: Relevance & Problem Fit (CC 207B §2a Relevance)
 - **Caregiver Need:** Caregivers often have limited time, diverse home settings, and arbitrary materials on hand (e.g., "recycled boxes, plastic cups, spoons").
-- **Technical Rationale:** Simple keyword matching often matches poorly when processing unstructured natural-language descriptions of household materials. The semantic helper matches caregiver constraints to eligible activity IDs from the reviewed catalog without rigid query rules.
+- **Technical Rationale:** Simple keyword matching often matches poorly when processing unstructured natural-language descriptions of household materials. The semantic helper matches caregiver constraints to eligible activity IDs from the reviewed catalog without rigid query rules. The storybook companion ([ADR-010](architecture-decisions.md)) is the one place the model writes new text: a short play idea for a public book, which the server validates before showing (NFR-AI-04).
 
 ### NFR-AI-02: Server-Side Execution & Credential Isolation (CC 207B §2b Security)
 - **Execution Boundary:** All AI model invocations (Gemini API free tier under [ADR-008](architecture-decisions.md), deferring Vertex AI / paid tiers) execute exclusively server-side inside Cloud Functions.
-- **Data Minimization in Prompts:** Prompts contain only sanitized constraint keywords: coarse age band, duration, environment, materials list and language. Zero child names, caregiver IDs, locations (including the weather city), or journal texts are ever included in prompts. The materials text is cleaned on the server before sending.
+- **Data Minimization in Prompts:** Prompts contain only sanitized constraint keywords: coarse age band, duration, environment, materials list and language. Zero child names, caregiver IDs, locations (including the weather city), or journal texts are ever included in prompts. The materials text is cleaned on the server before sending. Storybook companion prompts contain only the book title, its public subject tags and the age band.
 - **Provider and free tier:** The provider is the Gemini API free tier, for development and the course demonstration only, with synthetic data. Google may use free-tier prompts to improve its products, which is why the minimization above is strict. Before any real caregiver uses the helper, move to the paid tier or Vertex AI. See [ADR-008](architecture-decisions.md).
 
 ### NFR-AI-03: Graceful Degradation & 3-Tier Fallback Hierarchy (CC 207B §2c Graceful failure)
@@ -117,6 +117,7 @@ flowchart TD
 - **Visual Labeling:** Every AI-generated suggestion must display an explicit AI badge and disclaimer: *"AI Suggestion — Always adapt to your child and ensure adult supervision."*
 - **Caregiver Autonomy:** Caregivers can reject, regenerate, customize, or manually replace any suggestion.
 - **Non-Diagnostic Rule:** The AI prompt system instructions strictly prohibit medical diagnosis, clinical developmental delay scoring, or pediatric treatment recommendations.
+- **Generated Storybook Ideas:** Because storybook companion ideas are newly written rather than picked from the catalog, the server rejects any response that fails the schema, exceeds its length limits or contains a term from the non-diagnostic list (UI/UX Specification §8), and falls back to a reviewed catalog activity. Every generated idea shows its safety notice and the adult-supervision disclaimer.
 
 ### NFR-AI-05: Team Authorship & Code Defense Governance (CC 207B §3 AI Use Policy)
 - Using generative AI to write the application wholesale without comprehension is strictly prohibited.

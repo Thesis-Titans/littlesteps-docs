@@ -6,7 +6,7 @@
 **Last Reviewed:** 2026-10-26  
 **Associated Gate:** [Docs Issue #15 — [M0] Plan and validate the LittleSteps UI prototype before implementation](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)  
 **Related Documents:** [Product Scope](product-scope.md), [Traceability Matrix](traceability-matrix.md), [Prototype Traceability & Storyboards](prototype-traceability-storyboards.md), [Philippine Content Provenance](philippine-content-provenance.md)  
-**Prototype Medium:** Figma. This gate changes no code in `littlesteps-api`, `littlesteps-react`, or `littlesteps-flutter`.
+**Prototype Medium:** Figma, shared by the React and Flutter clients (§1, §9). This gate changes no code in `littlesteps-api`, `littlesteps-react`, or `littlesteps-flutter`.
 
 ---
 
@@ -16,7 +16,7 @@ Before establishing interface specifications, the technical boundaries are expli
 
 1. **Prototype Validation & Parallel Execution:** This document establishes the interaction and interface specification for the **Figma prototype and usability evaluation**. Per the execution plan (§1.2, §3), Sprint 1 engineering (M1 foundation) runs alongside the prototype walkthrough, with usability findings iteratively incorporated into M2–M4 screens ([Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)).
 2. **Mobile Experience as Responsive Web Frames:** Mobile is prototyped as **375px Figma frames** of the responsive browser layout, and desktop as **1280px frames**. `littlesteps-react` implements these responsive layouts, with caregiver walkthrough feedback feeding iterative refinements. Tablet behavior (768px–1024px) is specified in §5.2 but does not need its own frames.
-3. **Flutter Outside This Prototype Gate:** The prototype covers responsive web layouts only; native Flutter screens are not prototyped. The Flutter app adapts the reviewed 375px frames to Material 3 widgets as listed in §9.
+3. **One Prototype for Both Clients:** The Figma frames are the design source for **both** `littlesteps-react` and `littlesteps-flutter`. React implements the 1280px and 375px layouts; Flutter implements the reviewed **375px frames**, mapping each element to a Material 3 widget as listed in §9. There is no separate set of Flutter frames, so a change to a 375px frame applies to both apps.
 4. **Synthetic Data Only:** Frames use the synthetic profiles Maya (14 months) and Liam (48 months) and sample catalog entries. Loading, error, permission-denied, offline, and AI-fallback behavior are shown as separate frames or component variants linked by prototype interactions; nothing connects to Firestore, the API, or an AI provider.
 
 ---
@@ -142,6 +142,7 @@ This matrix records the evidence or policy that informs each design choice. Publ
 | **Multilingual Support (EN / FIL / HIL)** | Product scope; RA 12027 and RA 12199 as context requiring careful interpretation; caregiver language needs remain unvalidated | Tests whether caregivers can understand instructions in their preferred language. | If included in the prototype, language selection and sample copy are illustrative; translation quality and user comprehension require review. |
 | **Private Observation Journal (No External AI Use)** | Privacy requirements in [Security, Privacy, and AI Safeguards](security-privacy-ai.md); project data-minimization rules | Makes the journal's access and AI-processing boundaries visible to caregivers. Whether this increases trust must be tested. | Show a clear privacy explanation; implementation tests and request inspection must verify journal text is excluded from external AI payloads. |
 | **Constrained AI Helper with Fallback** | [Architecture Decisions](architecture-decisions.md) (ADR-006); project safety constraints | Limits suggestions to reviewed catalog items and provides a rule-based fallback when the AI provider fails and the API/catalog remain available. | Prototype uses simulated responses. Validate catalog-ID checks, timeout behavior, fallback behavior, and privacy boundaries in implementation tests. |
+| **Storybooks & Book Play Ideas** | [Architecture Decisions](architecture-decisions.md) (ADR-010); [API Reference](api-reference.md) §5–6; WHO/UNICEF guidance on shared reading | Connects reading time to a screen-free activity using public book data; the play idea is AI-written, so it carries the same labels and fallback as the helper. | Prototype uses sample book cards and a simulated idea. Whether parents want book-based ideas, and whether the covers suit Philippine families, requires walkthrough feedback. |
 | **Parental Device Controls / Lock** | Shared-device risk hypothesis; validate with intended users | Explores whether an additional confirmation step would reduce accidental edits on shared devices. | Not prototyped. The walkthrough asks whether anyone else uses the caregiver's phone before any control is designed; usability and security benefits are not established. |
 | **Descriptive-Only Weekly Summary** | [Product Scope](product-scope.md); [Security, Privacy, and AI Safeguards](security-privacy-ai.md) | Reduces the risk that a summary is mistaken for a clinical screening result; caregiver interpretation requires usability testing. | Show factual activity counts (for example, "4 activities completed"); exclude percentiles, developmental scores, and pass/fail graphs. |
 
@@ -162,6 +163,7 @@ graph TD
     D1 --> Mod1["Activity Completion Action Sheet"]
     D2 --> Mod2["Catalog Filter & Detail View"]
     D2 --> Mod3["Constrained AI Activity Helper"]
+    D2 --> Mod6["Storybooks & Book Play Idea"]
     D3 --> Mod4["Observation Record Action Sheet"]
     D4 --> Mod5["New Note Entry Form"]
     Root --> Acct["Account (header avatar menu, not a tab)"]
@@ -169,6 +171,8 @@ graph TD
     Acct --> A2["Settings (incl. weather hint), Privacy Notice & About"]
     Acct --> A3["Help & Support"]
 ```
+
+Explore has two sections, **Activities** (the reviewed catalog, filterable by domain, type — activity, story, rhyme or game — time, setting and language: English, Filipino or Hiligaynon) and **Storybooks** (book cards from Open Library with cover, title, author and subject tags, credited "Books from Open Library"). Choosing a book opens its detail with a **"Get a play idea"** action. Milestone prompts show their 2–3 everyday indicators and source under the prompt title ([Data Model](data-model.md) §2.8).
 
 Sign-in and the settings, privacy-notice, about and help views cover PRQ-01 and PRQ-03 from the [Traceability Matrix](traceability-matrix.md); they sit behind the header avatar so the navigation stays at five tabs. Offline-cache controls appear in Settings only if offline storage is adopted (see §7).
 
@@ -247,8 +251,9 @@ Every user journey in the Figma prototype must include all five interaction stat
 | **J4: Private Journal** | Date-stamped notes with `🔒 Private` badge. | "Your journal is private to you. Jot down a memory or funny moment." | Note list pulse skeleton. | `INVALID_INPUT`: "Notes can be up to 2,000 characters. Please shorten this entry." (The 2,000-character limit comes from the [Data Model](data-model.md); the API's separate 100KB request-body limit is never the user-facing note limit.) | "You're offline. Your note wasn't saved." Draft stays on screen with Retry; `🔒 Private` badge still visible. |
 | **J5: Learning Library** | Filterable catalog cards with provisional review chips. | "No activities found matching your filters. Try clearing 'Materials'." | Catalog grid pulse skeleton. | `SERVICE_UNAVAILABLE`: "The activity list didn't load. Check your connection, then choose Retry." | Only activities labeled "Available offline" open; others show "Needs a connection." |
 | **J6: AI Activity Helper** | Tailored suggestion grounded in catalog ID #104. | Form with time, materials, and setting inputs. | Animated shimmering helper card. | `RATE_LIMITED`: "Suggestion limit reached. Please wait a moment." | **Deterministic Fallback:** "AI helper offline. Here are top recommended activities for Maya's age group." |
+| **J7: Storybooks & Play Idea** | Book cards with covers; book detail with an AI play idea showing the AI badge, safety notice and disclaimer. | "No books found for this topic. Try another subject." | Book card pulse skeleton; shimmering idea card. | `RATE_LIMITED`: "Play idea limit reached. Please wait a moment." | **Fallbacks:** if Open Library is down, a saved book list shows without change; if AI is unavailable or its idea fails the checks, a reviewed catalog activity shows labeled "Catalog pick · not AI". |
 
-**Permission-denied frames:** J1 also includes a signed-out frame (`UNAUTHENTICATED`: "Please sign in again to continue."), and J4 includes an access-denied frame for a profile or note that belongs to another caregiver (API returns 403/404 per NFR-SEC-02: "This item isn't available to your account.").
+**Permission-denied frames:** J1 also includes a signed-out frame (`UNAUTHENTICATED`: "Please sign in again to continue."), and J4 includes an access-denied frame for a profile or note that belongs to another caregiver (API returns 404 `RESOURCE_NOT_FOUND` per NFR-SEC-02 and the [API Reference](api-reference.md) §3: "This item isn't available to your account.").
 
 **Error and status styling:** error frames use the brick-red error tokens, and undo toasts and confirmation dialogs follow §2.5.
 
@@ -275,6 +280,7 @@ When preparing the prototype for course instructor and faculty review, the team 
 - [ ] **Provisional Attribution Displayed:** Sourced catalog cards include *"Provisional Academic Reference — Pending Review"*.
 - [ ] **Private Journal Isolation Demonstrated:** Visual lock icon and privacy notice confirm notes are excluded from AI prompts.
 - [ ] **Deterministic Fallback Clickable:** Walkthrough demonstrates what occurs when the AI helper is offline.
+- [ ] **Storybook Flow Present:** Explore shows Storybooks with Open Library credit, and a book's play idea shows the AI badge, safety notice and its catalog fallback.
 - [ ] **Honest Offline States:** No offline frame claims data was saved or synced.
 - [ ] **Contrast Checked:** Text and button colors match §6.1 and meet WCAG 2.2 AA (4.5:1 for normal text).
 - [ ] **Zero Clinical Language:** UI audit verifies the absence of *"delayed"*, *"behind"*, *"late"*, *"on track"*, *"normal"*, *"should"*, *"at risk"*, *"red flag"*, *"score"*, *"pass/fail"*, *"screening"*, percentages and comparisons with other children. Filipino and Hiligaynon copy gets the same audit by a reviewer fluent in each language.
