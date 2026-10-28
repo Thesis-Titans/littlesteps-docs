@@ -38,15 +38,18 @@ For web changes:
 3. Confirm private data is not exposed in logs or browser storage beyond documented needs.
 4. Check keyboard navigation and responsive behavior for touched UI.
 
-For mobile (Flutter) changes:
+For Flutter (cross-platform) changes:
 1. Run static analysis and widget tests (`flutter analyze`, `flutter test`).
 2. Confirm zero warnings under `flutter_lints`.
-3. Verify minimum 48 × 48 dp touch targets on physical Android device or emulator.
+3. Verify responsive layout and minimum 48 × 48 dp touch targets across target form factors (with Android mobile as primary course testbed).
 4. Log any AI assistance in `docs/ai-usage-log.md`.
 
 ## Client Coding Standards & Project Architecture Baseline
 
 ### 1. Web Client (`littlesteps-react` · CIT 210)
+- **Responsive Web (Desktop & Mobile Browser Viewports):**
+  - Desktop: 1280px wide container layouts.
+  - Mobile Web: 375px–414px responsive viewport layouts.
 - **Feature-Modular Layout:** Code is strictly organized into domain modules to isolate feature work and eliminate file merge conflicts:
   - `src/services/`: External integrations (`firebase.ts`, `api.ts`, and contract tests).
   - `src/features/<feature-name>/`: Co-located UI components, hooks, domain types, and unit tests for each core feature (`auth/`, `profile/`, `activities/`, `journal/`, `reflections/`, `ai-helper/`).
@@ -58,7 +61,8 @@ For mobile (Flutter) changes:
   - Color contrast must adhere to WCAG 2.2 AA (minimum 4.5:1 for body text, 7.1:1 for primary buttons).
 - **Public Barrel Interfaces:** Feature internals are accessed only through the feature's `index.ts` barrel.
 
-### 2. Mobile Client (`littlesteps-flutter` · CC 207B)
+### 2. Cross-Platform Client (`littlesteps-flutter` · CC 207B)
+- **Multiplatform Capability:** Engineered with Flutter / Dart for cross-platform portability across Android, iOS, Web, and Desktop. Android serves as the primary evaluation and live demo device for CC 207B.
 - **Layered Architecture (CC 207B Requirement f):** Code is organized strictly by role:
   - `lib/screens/`: Top-level page views corresponding to the 6 core features.
   - `lib/widgets/`: Reusable, atomic UI widgets.
