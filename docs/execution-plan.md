@@ -84,7 +84,8 @@ CC 207B grades a Flutter application built on the same API and data as the web c
 
 | Feature | Backend (API) | Frontend (React) | Flutter (Sprints 3–4) |
 |---|---|---|---|
-| App shell, design tokens, navigation | — | Nherie (react #18) | Mark (flutter #2, project setup) |
+| Design tokens, assets, shared components | — | Mark (react #22) | Mark (flutter #2) |
+| App shell, navigation | — | Nherie (react #18) | Mark (flutter #2, project setup) |
 | Sign-in and protected API client | Mark | Mark (react #5) | Justin (flutter #3) |
 | Account, settings, privacy, help, your data | Justin (api #17) | Faith (react #16) | Faith (flutter #4) |
 | Child profile (FR-01) | Justin (api #7, #8) | Nherie (react #6) | Vincent (flutter #5) |
