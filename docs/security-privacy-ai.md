@@ -114,7 +114,7 @@ flowchart TD
 ```
 
 ### NFR-AI-04: Ethical Transparency, Labeling & Non-Diagnostic Boundary (CC 207B §2d Responsible use)
-- **Visual Labeling:** Every AI-generated suggestion must display an explicit AI badge and disclaimer: *"AI Suggestion — Always adapt to your child and ensure adult supervision."*
+- **Visual Labeling:** Every AI-generated suggestion must display an explicit AI badge, *"Suggested by AI"*, and the line *"You know your child best. Change it as you like, and stay close while you play."*
 - **Caregiver Autonomy:** Caregivers can reject, regenerate, customize, or manually replace any suggestion.
 - **Non-Diagnostic Rule:** The AI prompt system instructions strictly prohibit medical diagnosis, clinical developmental delay scoring, or pediatric treatment recommendations.
 - **Generated Storybook Ideas:** Because storybook companion ideas are newly written rather than picked from the catalog, the server rejects any response that fails the schema, exceeds its length limits or contains a term from the non-diagnostic list (UI/UX Specification §8), and falls back to a reviewed catalog activity. Every generated idea shows its safety notice and the adult-supervision disclaimer.

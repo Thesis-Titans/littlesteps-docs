@@ -76,7 +76,7 @@ These are design scenarios, not observed journeys or claims about how most careg
 
 ### P0 — Core walkthrough
 
-All six canonical capabilities are P0. The weekly summary and the AI helper are core features in the product scope, and an AI-powered feature is a CC 207B requirement, so they are not optional.
+All six canonical capabilities are P0. The weekly summary and the idea helper (AI) are core features in the product scope, and an AI-powered feature is a CC 207B requirement, so they are not optional.
 
 - Sign-in, plus settings, privacy notice, and about views reachable from the header avatar.
 - Responsive caregiver home/dashboard with synthetic data.
@@ -135,7 +135,7 @@ The design system review of 23 October 2026 left these open on purpose. Ask them
 
 1. **Where to write:** "You noticed Maya stacking cups. Where would you record that?" Watch whether participants choose Milestones or the Journal, and whether they expect to find it in the other place later.
 2. **Shared phones:** "Does anyone else use this phone?" Only design a lock or other shared-device control if this comes up.
-3. **"Not sure":** When recording an observation, would a "Not sure" answer help alongside "Observed" and "Not yet observed"? Adding it would change the data model's `status` values.
+3. **"Not sure":** When recording an observation, would a "Not sure" answer help alongside "I saw it" and "Not seen yet"? Adding it would change the data model's `status` values.
 4. **The weekly tab:** Is "This week" clear as the name for the weekly reflection?
 5. **Evening use:** When do participants usually use their phone for this, and is the screen comfortable in dim light? A dark theme is decided after this.
 6. **Filipino text:** If any participant prefers Filipino or Hiligaynon, check that labels, tabs and chips still fit and read naturally.

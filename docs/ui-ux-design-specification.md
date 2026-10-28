@@ -100,6 +100,32 @@ These rules come from the design system review of 23 October 2026 and apply to e
 - **Sign-in (WCAG 3.3.8):** Email and password fields allow paste and password managers (`autocomplete="email"`, `autocomplete="current-password"`), with no CAPTCHA or memory test. A session that ends keeps any unsaved draft and returns the caregiver to it after signing in again.
 - **Room for translation:** Labels, tabs and chips must fit text 30% longer than English (Tagalog runs about 28% longer); tab labels may wrap to two lines.
 
+### 2.6 Voice and Wording
+
+Parents read LittleSteps in short bursts, often one-handed, sometimes in their second or third language, and often worried about being judged. Screen text follows these rules, which came from the second heuristic evaluation (28 October 2026). Technical names stay in the API, data model and code; only the words parents see change.
+
+- **Everyday words.** Name things the way a parent would, not the way the system is built. No catalog, domain, observation, assessment, analytics, generate or JSON on screen.
+- **Short and calm.** One idea per sentence. Say a reassurance once per screen, not on every card.
+- **No blame, no verdicts.** Never imply a child is behind or a parent has fallen short. There are no daily goals or streaks.
+- **Errors say what happened and what is still safe**, then what to do next ("It may have been deleted. Your own notes are safe.").
+- **Label AI, don't sell it.** AI-written output carries the "Suggested by AI" badge (NFR-AI-04). Features are named for what they do ("Idea helper"), not for the technology.
+- **Point to real people.** For worries about development, name "your pediatrician or barangay health worker".
+- **Translate cleanly.** Plain English carries into Filipino and Hiligaynon. Each language gets its own review by a fluent speaker.
+
+| Instead of | Say | Note |
+|---|---|---|
+| AI helper · Generate another · catalog | Idea helper · Another idea · our activity list | AI output keeps the "Suggested by AI" badge. |
+| Cognitive · Motor · Language · Socio-Emotional | Thinking · Moving · Talking · Feelings | Labels only; the data model keeps `cognitive`, `motor`, `language`, `socioEmotional`. |
+| Domain | Kind of play | |
+| Age band · Young Toddlers (12–23 months) | Child's age · 12–23 months | |
+| Setting | Place | Indoor or outdoor. |
+| Record an observation · Observed · Not yet observed | Note what you saw · I saw it / Not seen yet · Seen on Oct 21 | Statuses stay `observed` / `not_yet_observed`. |
+| This is not a developmental assessment | It's not a test | Once per screen. |
+| Provisional Academic Reference — Pending Review | Source: early learning guide · still being checked | Honest about review status without sounding unsafe. |
+| Never sent to AI, analytics or error logs | Only you can see these notes. We never share them. | |
+| A JSON file of everything in your account | A copy of everything you've saved | |
+| Talk to a pediatrician or health worker | Talk to your pediatrician or barangay health worker | |
+
 ---
 
 ## 3. Illustrative Personas and Research Limitations
@@ -135,7 +161,7 @@ This matrix records the evidence or policy that informs each design choice. Publ
 |---|---|---|---|
 | **Caregiver-Facing UI (Not Child Screen)** | WHO (2020) Responsive Caregiving; WHO (2019) Screen Limits | Keeps the product focused on caregiver guidance and adult-child interaction. | Interface designed exclusively for adult caregiver guidance; no child-direct game loops. |
 | **Data-Minimized Child Model** | [Security, Privacy, and AI Guardrails](security-privacy-ai.md); NPC guidance; [Data Model](data-model.md) §2.2 | Reduces collection of unnecessary child personal data. | Stores a nickname (`name`), the derived age band (`ageBand`) and an optional birth month (`birthMonth`, `YYYY-MM`) only; **no exact birth dates, surnames or photos**. |
-| **Non-Diagnostic Observation Prompts** | [Product Scope](product-scope.md); RA 12199; preliminary P01 interview (exploratory only) | Keeps the interface from presenting observations as clinical pass/fail judgments. Whether the wording is clear and reassuring requires testing. | Replaces "Pass/Fail" with "Observed on [Date]" / "Not yet observed"; displays a clear non-diagnostic explanation. |
+| **Non-Diagnostic Observation Prompts** | [Product Scope](product-scope.md); RA 12199; preliminary P01 interview (exploratory only) | Keeps the interface from presenting observations as clinical pass/fail judgments. Whether the wording is clear and reassuring requires testing. | Replaces "Pass/Fail" with "Seen on [date]" / "Not seen yet"; displays a clear non-diagnostic explanation. |
 | **Provisional Content Attribution** | [Philippine Content Provenance](philippine-content-provenance.md) (Issue #3 Gate) | Avoids misleading claims of official government endorsement or clinical validation. | Catalog cards display: *"Provisional Academic Reference — Pending Review"*; no unreviewed claims. |
 | **Household-Material Activity Catalog** | UNICEF Care for Child Development; preliminary P01 interview (exploratory only) | Tests whether activities using common household materials are practical for caregivers. | Prototype examples use common materials; caregiver usability testing checks availability, clarity, and suitability. |
 | **Offline-Resilient Workflow** | PSA 2024 NICTHS (verify the cited statistic and its context before publication) | Explores access under intermittent connectivity or data constraints. | Prototype demonstrates only simulated offline behavior; real caching, persistence, and synchronization require implementation tests. |
@@ -162,7 +188,7 @@ graph TD
     
     D1 --> Mod1["Activity Completion Action Sheet"]
     D2 --> Mod2["Catalog Filter & Detail View"]
-    D2 --> Mod3["Constrained AI Activity Helper"]
+    D2 --> Mod3["Idea Helper (AI, limited to the activity list)"]
     D2 --> Mod6["Storybooks & Book Play Idea"]
     D3 --> Mod4["Observation Record Action Sheet"]
     D4 --> Mod5["New Note Entry Form"]
@@ -182,7 +208,7 @@ Sign-in and the settings, privacy-notice, about and help views cover PRQ-01 and 
 |---|---|---|
 | **Primary Navigation** | Fixed left sidebar (240px) with brand mark, child switcher, and 5 navigation tabs. | Sticky top bar (brand + child avatar) + **Fixed bottom tab bar** with the same 5 tabs (Today, Explore, Milestones, Journal, This week), each at least 48 × 48px. |
 | **Child Switcher** | Dropdown menu in sidebar showing Maya (14m) and Liam (48m), plus a "For Maya" chip in each child-scoped page header. | Header avatar opens the account menu with the child list; a "For Maya · 14 months" chip in each child-scoped header and form opens the switcher. |
-| **Dashboard Layout** | 2-column grid: Left = Today's Plan & AI Helper; Right = Weekly Summary & Milestones. | Single-column stacked cards optimized for vertical thumb scrolling. |
+| **Dashboard Layout** | 2-column grid: Left = Today's Plan & Idea Helper; Right = Weekly Summary & Milestones. | Single-column stacked cards optimized for vertical thumb scrolling. |
 | **Touch Targets** | Standard interactive buttons (min 36px height). | **48 × 48px for frequent and primary controls**, 44 × 44px floor for secondary links (§2.3). |
 | **Advisory Banner** | Shown in full, in the neutral advisory style (§6.3), on the first visit to Today and Milestones. After it is dismissed, a persistent "Not a diagnostic tool" link stays in the page header and reopens it. | Same behavior; the link sits under the page title. |
 | **Page Titles** | The H1 repeats the tab or menu label (Today, Explore, Milestones, Journal, This week); slogans such as "Notice, don't score" become the subtitle. | Same. |
@@ -231,7 +257,7 @@ Each color carries one meaning, and every status also carries an icon and words 
 |---|---|---|
 | Primary action and selection | Forest fill or Forest text with indicator | Primary buttons, selected chips, the active tab |
 | A positive record | Soft Green with Forest text and a check icon | Completed activities, observed milestones |
-| Warning | Caution yellow with an info icon | Conditions that need attention, such as the AI helper being offline |
+| Warning | Caution yellow with an info icon | Conditions that need attention, such as the idea helper being unavailable |
 | Error | Brick red (`color/status/error`) with an alert icon | Failed actions and validation errors |
 | Connection | Offline slate with the wifi-off icon | Offline badge and offline alerts |
 | Where content comes from | Pale blue | Source and review-status badges, the AI label |
@@ -245,15 +271,15 @@ Every user journey in the Figma prototype must include all five interaction stat
 
 | Journey / Screen | 1. Populated (Default) | 2. Empty State | 3. Loading (Skeleton) | 4. Error / Permission-denied (`{ error: { code, message } }`) | 5. Offline (Simulated) / AI Fallback |
 |---|---|---|---|---|---|
-| **J1: Child Profile** | Maya (14m) & Liam (48m) with age-band badges. | "No children added yet. Add a profile to get age-tailored ideas." | Profile card pulse skeleton. | `INVALID_INPUT`: "Name must be 1–50 characters. Choose a birth month and year within the last six years, or choose an age band." | Last-viewed profile shown with offline badge; editing disabled with "Reconnect to save changes." |
-| **J2: Daily Plan** | 2 scheduled activities with completion toggles. | "No activities planned for today. Tap below to pick a 10-minute game!" | Activity card pulse skeleton. | `NOT_FOUND`: "Activity not found. It may have been removed from the catalog. Your plan is shown as it was last loaded." | "You're offline. This activity wasn't marked complete." with Retry. |
-| **J3: Milestones** | Domain-grouped prompts with "Observed on [date]". | "No observations recorded yet. Look for small moments during play." | Milestone prompt pulse skeleton. | `INTERNAL_ERROR`: Safe error banner; zero stack traces exposed. | "You're offline. Your observation wasn't saved." Entered text stays on screen with Retry. |
-| **J4: Private Journal** | Date-stamped notes with `🔒 Private` badge. | "Your journal is private to you. Jot down a memory or funny moment." | Note list pulse skeleton. | `INVALID_INPUT`: "Notes can be up to 2,000 characters. Please shorten this entry." (The 2,000-character limit comes from the [Data Model](data-model.md); the API's separate 100KB request-body limit is never the user-facing note limit.) | "You're offline. Your note wasn't saved." Draft stays on screen with Retry; `🔒 Private` badge still visible. |
-| **J5: Learning Library** | Filterable catalog cards with provisional review chips. | "No activities found matching your filters. Try clearing 'Materials'." | Catalog grid pulse skeleton. | `SERVICE_UNAVAILABLE`: "The activity list didn't load. Check your connection, then choose Retry." | Only activities labeled "Available offline" open; others show "Needs a connection." |
-| **J6: AI Activity Helper** | Tailored suggestion grounded in catalog ID #104. | Form with time, materials, and setting inputs. | Animated shimmering helper card. | `RATE_LIMITED`: "Suggestion limit reached. Please wait a moment." | **Deterministic Fallback:** "AI helper offline. Here are top recommended activities for Maya's age group." |
-| **J7: Storybooks & Play Idea** | Book cards with covers; book detail with an AI play idea showing the AI badge, safety notice and disclaimer. | "No books found for this topic. Try another subject." | Book card pulse skeleton; shimmering idea card. | `RATE_LIMITED`: "Play idea limit reached. Please wait a moment." | **Fallbacks:** if Open Library is down, a saved book list shows without change; if AI is unavailable or its idea fails the checks, a reviewed catalog activity shows labeled "Catalog pick · not AI". |
+| **J1: Child Profile** | Maya (14m) & Liam (48m) with age-band badges. | "No children added yet. Add your child to get ideas for their age." | Profile card pulse skeleton. | `INVALID_INPUT`: "Add a nickname, then pick a birth month and year or an age range." (Nickname 1–50 characters; birth month within the last six years.) | Last-viewed profile shown with offline badge; editing disabled with "Reconnect to save changes." |
+| **J2: Daily Plan** | 2 scheduled activities with completion toggles. | "No activities planned for today. Want a quick idea? Most take 10 minutes or less." | Activity card pulse skeleton. | `NOT_FOUND`: "This activity isn't available anymore. It was taken off our list. The rest of your plan is still here." | "You're offline. This activity wasn't marked complete." with Retry. |
+| **J3: Milestones** | Prompts grouped by kind of play (Thinking, Moving, Talking, Feelings) with "Seen on [date]" and 2–3 "Look for" signs. | "Nothing noted yet. Look for small moments during play." | Milestone prompt pulse skeleton. | `INTERNAL_ERROR`: Safe error banner; zero stack traces exposed. | "You're offline. Your observation wasn't saved." Entered text stays on screen with Retry. |
+| **J4: Private Journal** | Date-stamped notes with `🔒 Private` badge. | "Your journal is private to you. Jot down a memory or funny moment." | Note list pulse skeleton. | `INVALID_INPUT`: "Notes can be up to 2,000 characters. Please make this one a little shorter." (The 2,000-character limit comes from the [Data Model](data-model.md); the API's separate 100KB request-body limit is never the user-facing note limit.) | "You're offline. Your note wasn't saved." Draft stays on screen with Retry; `🔒 Private` badge still visible. |
+| **J5: Learning Library** | Filterable activity cards with a "Source: early learning guide · still being checked" line. | "No activities match these filters. Try clearing 'Materials'." | Catalog grid pulse skeleton. | `SERVICE_UNAVAILABLE`: "The activity list didn't load. Check your connection, then choose Retry." | "You're offline. Activities marked 'Available offline' still open." Others show "Needs a connection." |
+| **J6: Idea Helper (AI)** | A suggestion from the activity list with the "Suggested by AI" badge and "Why we picked it". | Form: "How much time do you have?", "Where will you play?", "What do you have at home?" | Shimmering helper card: "Finding ideas for Maya… This usually takes a few seconds." | `RATE_LIMITED`: "Let's take a short break. You've asked for many ideas in a row. Please wait a minute, then try again." | **Deterministic Fallback:** "The idea helper isn't working right now. Here are a few favorites for Maya's age from our activity list," labeled "Our picks". |
+| **J7: Storybooks & Play Idea** | Book cards with covers; book detail with an AI play idea showing the AI badge, safety notice and disclaimer. | "No books found for this topic. Try another topic, like animals or bedtime." | Book card pulse skeleton; shimmering idea card. | `RATE_LIMITED`: "Let's take a short break. You've asked for many play ideas in a row. Please wait a minute, then try again." | **Fallbacks:** if Open Library is down, a saved list shows with "Showing books we saved earlier. New books will appear when the online library is back."; if AI is unavailable or its idea fails the checks, an activity from the list shows, labeled "Our pick". |
 
-**Permission-denied frames:** J1 also includes a signed-out frame (`UNAUTHENTICATED`: "Please sign in again to continue."), and J4 includes an access-denied frame for a profile or note that belongs to another caregiver (API returns 404 `RESOURCE_NOT_FOUND` per NFR-SEC-02 and the [API Reference](api-reference.md) §3: "This item isn't available to your account.").
+**Permission-denied frames:** J1 also includes a signed-out frame (`UNAUTHENTICATED`: "Please sign in again to continue."), and J4 includes an access-denied frame for a profile or note that belongs to another caregiver (API returns 404 `RESOURCE_NOT_FOUND` per NFR-SEC-02 and the [API Reference](api-reference.md) §3: "We can't open this note. It may have been deleted. Your own notes are safe.").
 
 **Error and status styling:** error frames use the brick-red error tokens, and undo toasts and confirmation dialogs follow §2.5.
 
@@ -277,9 +303,10 @@ When preparing the prototype for course instructor and faculty review, the team 
 - [ ] **Help Reachable:** Help and support is in the account menu.
 - [ ] **Readable Small Print:** No full sentence is set below 14px.
 - [ ] **Advisory Banner Visible:** The non-diagnostic advisory shows in full on the first visit to Today and Milestones, then remains reachable from a persistent "Not a diagnostic tool" link.
-- [ ] **Provisional Attribution Displayed:** Sourced catalog cards include *"Provisional Academic Reference — Pending Review"*.
+- [ ] **Source Shown:** Activity and milestone cards include *"Source: early learning guide · still being checked"* until review is complete.
 - [ ] **Private Journal Isolation Demonstrated:** Visual lock icon and privacy notice confirm notes are excluded from AI prompts.
-- [ ] **Deterministic Fallback Clickable:** Walkthrough demonstrates what occurs when the AI helper is offline.
+- [ ] **Deterministic Fallback Clickable:** Walkthrough demonstrates what happens when the idea helper is unavailable.
+- [ ] **Plain Wording:** Screen text follows §2.6; no catalog, domain, assessment or analytics jargon on screen.
 - [ ] **Storybook Flow Present:** Explore shows Storybooks with Open Library credit, and a book's play idea shows the AI badge, safety notice and its catalog fallback.
 - [ ] **Honest Offline States:** No offline frame claims data was saved or synced.
 - [ ] **Contrast Checked:** Text and button colors match §6.1 and meet WCAG 2.2 AA (4.5:1 for normal text).
