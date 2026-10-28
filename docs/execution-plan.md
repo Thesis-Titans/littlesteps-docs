@@ -366,7 +366,7 @@ Last checked against GitHub on **28 October 2026** (Sprint 1, Day 3).
 
 **In progress**
 
-- **App shell ([React #18](https://github.com/Thesis-Titans/littlesteps-react/issues/18)):** PR #27 open (`feat/app-shell`) — responsive shell with sidebar (1280px) + mobile bottom tab bar (375px), 5-tab routing (Today / Explore / Milestones / Journal / This week), `ChildContext` stub, protected routes. CI running. Owner: @Lovelly143 + @markalvincadangin. **Status: In Review.**
+- **App shell ([React #18](https://github.com/Thesis-Titans/littlesteps-react/issues/18)):** merged as PR #27 — responsive shell with sidebar (1280px) + mobile bottom tab bar (375px), 5-tab routing (Today / Explore / Milestones / Journal / This week), `ChildContext` stub, protected routes, 32 passing tests. ✅
 - **Figma prototype ([Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)):** high-fidelity frames wired; caregiver walkthrough (Sprint 1 goal) pending.
 
 **Still open**
