@@ -15,7 +15,7 @@ These sessions are an informal usability check, not research with a representati
 
 ## 1. Before each session
 
-- [ ] A charged phone with the Figma prototype open in Present mode on the mobile page. Check that flows 1–7 start.
+- [ ] A charged phone with the Figma prototype open in Present mode on the mobile page. Check that flows 1–8 start.
 - [ ] A printed or on-screen copy of §3 and the findings sheet in §4.
 - [ ] No recording unless the person agrees.
 
@@ -50,21 +50,23 @@ Hand the phone over on the sign-in screen. Read each task aloud, then stay quiet
 | 1 | "Sign in and find today's plan for Maya." | 1 | Reaches Today without help |
 | 2 | "You have 10 minutes and some cups and a towel. Find something to play." | 2 or the Explore tab | Opens a suggestion or catalog activity and can explain the steps |
 | 3 | "You tapped 'Mark complete' by mistake. Fix it." | 1 | Uses Undo on the toast |
-| 4 | "You noticed Maya stacking cups. Record that somewhere." | 4 or 5 | Records it in Milestones or the Journal; note which and why |
+| 4 | "You noticed Maya stacking cups. Write that down somewhere." | 4 or 5 | Notes it in Milestones or the Journal; note which and why |
 | 5 | "Write a private note about today, then delete it." | 5 | Saves a note, then confirms the delete |
-| 6 | "The internet suggestion isn't working. What can you still do?" | 3 | Understands the catalog picks and can add one |
+| 6 | "The idea helper isn't working. What can you still do?" | 3 | Understands "Our picks" and can add one |
 | 7 | "Find out how many activities Maya did this week." | This week tab | Reads the totals correctly |
+| 8 | "Find a picture book about food and get a play idea to go with it." | 8 | Opens a book and gets a play idea; can say the idea was suggested by AI |
 
 **Questions after the tasks** (from the design review, [storyboards §7](prototype-traceability-storyboards.md#7-walkthrough-questions-from-the-design-review))
 
 1. Did anything make you feel judged as a parent, or worried about your child?
-2. What do you think "Provisional Academic Reference — Pending Review" means?
-3. When recording what you saw, would a "Not sure" answer help, as well as "Observed" and "Not yet observed"?
+2. What do you think "Source: early learning guide · still being checked" means?
+3. When recording what you saw, would a "Not sure" answer help, as well as "I saw it" and "Not seen yet"?
 4. Is "This week" a clear name for the weekly summary?
 5. When during the day would you use this? Is the screen comfortable in a dim room?
 6. Would you rather use the app in English, Filipino or Hiligaynon?
 7. Who would you want to see your notes, if anyone?
 8. Would you use this? What would stop you?
+9. Was any word confusing, too technical or too formal? What would you call it?
 
 **System Usability Scale (optional, 3 minutes):** if time allows, ask the 10 standard SUS statements, each answered from 1 (strongly disagree) to 5 (strongly agree). With so few people, treat the score as one signal alongside what you observed.
 

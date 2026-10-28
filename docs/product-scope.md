@@ -130,7 +130,7 @@ Per CC 207B requirements, a 5-member team must deliver at least 6 core features 
 - **Preconditions:** Caregiver authenticated; selected child profile with age band; network connectivity (or fallback triggered).
 - **Inputs:** Available materials on hand (e.g., "paper, spoons, cardboard box"), available time (e.g., "15 minutes"), environment (indoor/outdoor, preselected from the optional weather hint when it is on), language preference.
 - **Processing:** Server-side Firebase Cloud Function invokes the AI recommender (Gemini API, [ADR-008](architecture-decisions.md)) with strict data minimization (no child PII or journal text); model matches constraints to valid reviewed catalog IDs; server validates response against catalog schema; if AI fails or times out (8s), server executes deterministic rule-based catalog fallback.
-- **Outputs:** Tailored activity suggestion card clearly stamped with AI badge and disclaimer: *"AI Suggestion — Always adapt to your child and ensure adult supervision,"* with one-click "Add to Routine" and "Generate Another" actions.
+- **Outputs:** Tailored activity suggestion card clearly stamped with AI badge and disclaimer: *"Suggested by AI"* and the line *"You know your child best. Change it as you like, and stay close while you play."*, with one-click "Add to today's plan" and "Another idea" actions.
 - **Storybook Companion ([ADR-010](architecture-decisions.md)):** From a storybook card (FR-04), the caregiver can ask for a play idea. Only the book title, subject tags and the child's age band are sent. Unlike the activity helper, the model writes a new short idea (title, instructions, safety notice) instead of choosing a catalog ID; the server validates it against the response schema and the non-diagnostic term list, and if that check or the provider fails, it returns a reviewed catalog activity matched on age band and subject instead.
 - **Verification Method:** Unit tests for schema validation of AI outputs; timeout tests verifying deterministic fallback triggers reliably on provider error; tests confirming a storybook idea that fails validation is replaced by a catalog activity.
 
@@ -140,7 +140,7 @@ Per CC 207B requirements, a 5-member team must deliver at least 6 core features 
 
 1. **Source Attribution:** Every milestone item and library activity must display clear source attribution (e.g., ECCD Council Philippine Early Learning Standards, CDC Milestone Checklists).
 2. **Prompts Not Tests:** Milestones must be presented as prompts for parent-child engagement and caregiver observation, never as pass/fail tests.
-3. **Non-Diagnostic Language:** UI copy and system summaries must avoid diagnostic assertions (e.g., avoiding "delayed," "abnormal," or "behind schedule"; using "not yet observed" or "continue exploring").
+3. **Non-Diagnostic Language:** UI copy and system summaries must avoid diagnostic assertions (e.g., avoiding "delayed," "abnormal," or "behind schedule"; using "not seen yet" or "continue exploring"; see the wording rules in the [UI/UX Design Specification](ui-ux-design-specification.md) §2.6).
 4. **Cultural Relevance:** Philippine rhymes, traditional games (e.g., *Bahay-Bahayan*, *Bulong-Pari*, fine-motor songs), and localized materials must be prioritized in catalog curation.
 
 ---
