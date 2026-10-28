@@ -27,7 +27,7 @@ The table below defines the planned system scope. Inclusion does not mean a capa
 | **Developmental Guidance** | Educational milestone observation prompts sourced from DepEd ECCD / CDC milestones with clear attributions. | Automated clinical diagnoses, developmental quotient (DQ) scores, developmental delay categorizations. |
 | **Activity Catalog** | Curated Philippine rhymes, stories, motor, cognitive, and sensory activities spanning 7 age bands. | E-commerce purchasing of toys/materials, paid content paywalls, external ad networks. |
 | **Messaging & Social** | Private caregiver observation journal strictly isolated per user account. | In-app direct messaging, public forums, community comment threads, photo sharing with other users. |
-| **AI Integration** | Server-side semantic activity recommender constrained strictly to the reviewed catalog with deterministic fallback. | Unconstrained generative text models diagnosing symptoms, conversational AI roleplaying as a pediatrician. |
+| **AI Integration** | Server-side semantic activity recommender constrained strictly to the reviewed catalog, plus a storybook companion that drafts one short play idea from a book's public metadata; both labeled as AI, non-diagnostic, and backed by deterministic catalog fallback. | Unconstrained generative text models diagnosing symptoms, conversational AI roleplaying as a pediatrician. |
 | **Hardware & Sensors** | Standard responsive web browsers and mobile application touch interfaces. | Wearable biometric monitors, IoT camera streaming, automated video behavioral tracking. |
 
 ---
@@ -112,7 +112,7 @@ Per CC 207B requirements, a 5-member team must deliver at least 6 core features 
 ### FR-04: Story, Rhyme, and Learning Activity Library
 - **Primary Actor:** Caregiver
 - **Preconditions:** None for viewing public reviewed catalog; authenticated to save/schedule.
-- **Inputs:** Age-band filter (0–71 mos), domain filter (Cognitive, Motor, Language, Socio-Emotional), language filter (English, Filipino, Regional), required materials keyword search, storybook subject tags.
+- **Inputs:** Age-band filter (0–71 mos), domain filter (Cognitive, Motor, Language, Socio-Emotional), language filter (English, Filipino, Hiligaynon), required materials keyword search, storybook subject tags.
 - **Processing:** Query engine executes multi-factor filtering against the reviewed activity catalog and queries the Open Library REST API for children's literature with server-side caching ([ADR-010](architecture-decisions.md)).
 - **Outputs:** Rich learning resource cards displaying activity title, source provenance attribution, age band, duration, instructions, materials list, and "Add to Daily Routine" action, plus dynamic children's book cards with covers.
 - **Verification Method:** Integration tests verifying catalog search, Open Library proxy responses, and provenance metadata validation.
@@ -131,7 +131,8 @@ Per CC 207B requirements, a 5-member team must deliver at least 6 core features 
 - **Inputs:** Available materials on hand (e.g., "paper, spoons, cardboard box"), available time (e.g., "15 minutes"), environment (indoor/outdoor, preselected from the optional weather hint when it is on), language preference.
 - **Processing:** Server-side Firebase Cloud Function invokes the AI recommender (Gemini API, [ADR-008](architecture-decisions.md)) with strict data minimization (no child PII or journal text); model matches constraints to valid reviewed catalog IDs; server validates response against catalog schema; if AI fails or times out (8s), server executes deterministic rule-based catalog fallback.
 - **Outputs:** Tailored activity suggestion card clearly stamped with AI badge and disclaimer: *"AI Suggestion — Always adapt to your child and ensure adult supervision,"* with one-click "Add to Routine" and "Generate Another" actions.
-- **Verification Method:** Unit tests for schema validation of AI outputs; timeout tests verifying deterministic fallback triggers reliably on provider error.
+- **Storybook Companion ([ADR-010](architecture-decisions.md)):** From a storybook card (FR-04), the caregiver can ask for a play idea. Only the book title, subject tags and the child's age band are sent. Unlike the activity helper, the model writes a new short idea (title, instructions, safety notice) instead of choosing a catalog ID; the server validates it against the response schema and the non-diagnostic term list, and if that check or the provider fails, it returns a reviewed catalog activity matched on age band and subject instead.
+- **Verification Method:** Unit tests for schema validation of AI outputs; timeout tests verifying deterministic fallback triggers reliably on provider error; tests confirming a storybook idea that fails validation is replaced by a catalog activity.
 
 ---
 
