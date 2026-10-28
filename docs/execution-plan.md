@@ -3,7 +3,7 @@
 **Status:** Canonical Delivery Baseline & Work Breakdown Structure  
 **Governing Standard:** PMBOK 7th Edition / ISO 21500 & Agile Scrum Baseline  
 **Owner:** Mark Alvin Cadangin (Technical Lead)  
-**Last Reviewed:** 2026-10-26  
+**Last Reviewed:** 2026-10-28  
 **Related Documents:** [API Reference & Integration Guide](api-reference.md), [Product Scope](product-scope.md), [Traceability Matrix](traceability-matrix.md), [Academic Deliverables](academic/README.md)
 
 ---
@@ -349,29 +349,33 @@ Keep work in progress small. Do not start dependent feature work while a key con
 - [Web Issue #12](https://github.com/Thesis-Titans/littlesteps-react/issues/12) is closed after correcting the emulator region in the Web README.
 - [Docs Issue #3](https://github.com/Thesis-Titans/littlesteps-docs/issues/3) remains open intentionally as the evidence, reuse-rights, and subject-matter review gate for real content. It is not a general repository-setup issue.
 
-### M0 status — Sprint 1 starts October 26
+### M0 status — Sprint 1 started October 26
 
-Checked against GitHub on 26 October 2026 (Sprint 1 kickoff).
+Last checked against GitHub on **28 October 2026** (Sprint 1, Day 3).
 
 **Done**
 
-- **Execution plan:** reviewed and merged in [Docs PR #13](https://github.com/Thesis-Titans/littlesteps-docs/pull/13), then revised in Docs PRs #29–#32 (repository renames, the Flutter restriction lifted, the Figma prototype gate and the design system review).
-- **Project board:** [Thesis-Titans LittleSteps Project #2](https://github.com/orgs/Thesis-Titans/projects/2) holds 30 items from `littlesteps-docs`, `littlesteps-api` and `littlesteps-react`, with a Status field of Backlog, Ready, In Progress, Blocked, In Review and Done.
-- **Native milestones:** `littlesteps-docs` has M0–M5; `littlesteps-api` and `littlesteps-react` each have M1–M5, and their execution issues are assigned to them.
+- **Execution plan:** reviewed and merged in [Docs PR #13](https://github.com/Thesis-Titans/littlesteps-docs/pull/13), then revised in Docs PRs #29–#32 (repository renames, the Flutter restriction lifted, the Figma prototype gate and the design system review). Updated 28 Oct.
+- **Project board:** [Thesis-Titans LittleSteps Project #2](https://github.com/orgs/Thesis-Titans/projects/2) holds **34 items** from `littlesteps-docs`, `littlesteps-api`, `littlesteps-react` and `littlesteps-flutter`, with Status Backlog / Ready / In Progress / Blocked / In Review / Done.
+- **Native milestones:** all four repos have M0–M5 milestones; execution issues are assigned to them.
+- **Sign-in + protected API client ([React #5](https://github.com/Thesis-Titans/littlesteps-react/issues/5)):** merged as PR #21 — `useAuth`, `AuthProvider`, `SignInForm`, 14 tests. ✅
+- **Design system ([React #22](https://github.com/Thesis-Titans/littlesteps-react/issues/22)):** merged as PR #26 — `tokens.css`, 12 shared components, `/dev/components` showcase, 26 tests. ✅
+- **Flutter scaffold + CI ([Flutter #2](https://github.com/Thesis-Titans/littlesteps-flutter/issues/2)):** merged as PR #18 — Flutter 3.47.6 project, Material 3 stub theme, GitHub Actions CI (analyze + test + format), zero analyze issues. ✅
+- **Flutter AI Usage Log ([Flutter #14](https://github.com/Thesis-Titans/littlesteps-flutter/issues/14)):** merged as PR #15 — `docs/ai-usage-log.md` with CC 207B format. ✅
+- **Docs PRs #63, #64, #65, #66:** storybook spec alignment, Figma as canonical design source, parent-friendly wording (plain language), and design system / app shell ownership split — all merged. ✅
 
 **In progress**
 
-- **Figma prototype ([Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)):** the file matches the reviewed UI/UX specification, has a high-fidelity pass and a heuristic review, and its flows are wired (seven mobile flows, one desktop flow). Still to do in Sprint 1: the caregiver walkthrough with recorded findings.
+- **App shell ([React #18](https://github.com/Thesis-Titans/littlesteps-react/issues/18)):** PR #27 open (`feat/app-shell`) — responsive shell with sidebar (1280px) + mobile bottom tab bar (375px), 5-tab routing (Today / Explore / Milestones / Journal / This week), `ChildContext` stub, protected routes. CI running. Owner: @Lovelly143 + @markalvincadangin. **Status: In Review.**
+- **Figma prototype ([Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)):** high-fidelity frames wired; caregiver walkthrough (Sprint 1 goal) pending.
 
 **Still open**
 
-- **Flutter track:** planned in §1.3, with feature owners assigned. Milestones M1–M5 and issues #2–#13 exist in `littlesteps-flutter`. Next: ask the course instructor about the fork and review rules.
-- **Low-fidelity prototypes:** CC 207B documentation requires low- and high-fidelity prototypes, and the app's UI must follow those the group presented. Create low-fidelity wireframes for the main journeys and confirm with the instructor which prototypes count.
-- **Client and walkthrough:** no client contact is planned (team decision). The CIT 246 client is the researched CSWDO La Paz–Lapuz District office, which also serves as CC 207B's realistic client. The prototype is checked informally with three to five parents the team knows, using the [parent walkthrough guide](parent-walkthrough-guide.md) ([Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)).
-- **CIT 246 checkpoints:** record Checkpoint 1's submission and approval, get the Checkpoint 2 and 3 dates, and confirm that three names and signatures are correct for the three-member team (§1.4).
-- **Backlog readiness:** before each sprint, review its API and Web issues against the Definition of Ready, add blocking links where supported, and make sure each has testable acceptance criteria and verification steps. The Web issues predate the reviewed UI/UX specification; owners update them to match it before starting.
-- **Board hygiene:** verify that project-management setup work is kept separate from product-delivery work on the board.
-- **Team capacity:** confirmed on 23 October 2026: all five members are available for the whole build window. Revisit at each sprint review.
+- **Low-fidelity prototypes:** CC 207B requires these; wireframes not started. Create alongside the Figma frames.
+- **CIT 246 checkpoints:** Checkpoint 1 submitted; approval not yet recorded. Checkpoint 2 and 3 dates TBA.
+- **Content provenance ([Docs #3](https://github.com/Thesis-Titans/littlesteps-docs/issues/3)):** open — source review gate for real Philippine content. Engineering uses synthetic fixtures.
+- **Course repository for Flutter:** pending instructor confirmation about fork rules and whether reviews in `littlesteps-flutter` count toward CC 207B.
+- **Backlog readiness:** API issues #7–#9 refined (Ready); React #6 and #16 in Ready; M2–M5 items remain Backlog until Sprint 2 planning.
 
 The coordination tracker is [Docs Issue #14](https://github.com/Thesis-Titans/littlesteps-docs/issues/14). Keep it open until the open items above are verified, then close it with evidence and begin product execution through normal backlog refinement and sprint planning.
 
