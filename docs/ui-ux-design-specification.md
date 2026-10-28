@@ -6,7 +6,7 @@
 **Last Reviewed:** 2026-10-26  
 **Associated Gate:** [Docs Issue #15 — [M0] Plan and validate the LittleSteps UI prototype before implementation](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)  
 **Related Documents:** [Product Scope](product-scope.md), [Traceability Matrix](traceability-matrix.md), [Prototype Traceability & Storyboards](prototype-traceability-storyboards.md), [Philippine Content Provenance](philippine-content-provenance.md)  
-**Prototype Medium:** Figma. This gate changes no code in `littlesteps-api`, `littlesteps-react`, or `littlesteps-flutter`.
+**Prototype Medium:** Figma, shared by the React and Flutter clients (§1, §9). This gate changes no code in `littlesteps-api`, `littlesteps-react`, or `littlesteps-flutter`.
 
 ---
 
@@ -16,7 +16,7 @@ Before establishing interface specifications, the technical boundaries are expli
 
 1. **Prototype Validation & Parallel Execution:** This document establishes the interaction and interface specification for the **Figma prototype and usability evaluation**. Per the execution plan (§1.2, §3), Sprint 1 engineering (M1 foundation) runs alongside the prototype walkthrough, with usability findings iteratively incorporated into M2–M4 screens ([Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)).
 2. **Mobile Experience as Responsive Web Frames:** Mobile is prototyped as **375px Figma frames** of the responsive browser layout, and desktop as **1280px frames**. `littlesteps-react` implements these responsive layouts, with caregiver walkthrough feedback feeding iterative refinements. Tablet behavior (768px–1024px) is specified in §5.2 but does not need its own frames.
-3. **Flutter Outside This Prototype Gate:** The prototype covers responsive web layouts only; native Flutter screens are not prototyped. The Flutter app adapts the reviewed 375px frames to Material 3 widgets as listed in §9.
+3. **One Prototype for Both Clients:** The Figma frames are the design source for **both** `littlesteps-react` and `littlesteps-flutter`. React implements the 1280px and 375px layouts; Flutter implements the reviewed **375px frames**, mapping each element to a Material 3 widget as listed in §9. There is no separate set of Flutter frames, so a change to a 375px frame applies to both apps.
 4. **Synthetic Data Only:** Frames use the synthetic profiles Maya (14 months) and Liam (48 months) and sample catalog entries. Loading, error, permission-denied, offline, and AI-fallback behavior are shown as separate frames or component variants linked by prototype interactions; nothing connects to Firestore, the API, or an AI provider.
 
 ---
