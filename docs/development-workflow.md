@@ -33,10 +33,44 @@ For API changes:
 5. Update OpenAPI and docs with behavior changes.
 
 For web changes:
-1. Run typecheck, build, and unit tests.
+1. Run typecheck, build, and unit tests (`npm run lint`, `npm test`, `npm run typecheck`, `npm run build`).
 2. Test loading, empty, error, and unauthorized states.
 3. Confirm private data is not exposed in logs or browser storage beyond documented needs.
 4. Check keyboard navigation and responsive behavior for touched UI.
+
+For mobile (Flutter) changes:
+1. Run static analysis and widget tests (`flutter analyze`, `flutter test`).
+2. Confirm zero warnings under `flutter_lints`.
+3. Verify minimum 48 × 48 dp touch targets on physical Android device or emulator.
+4. Log any AI assistance in `docs/ai-usage-log.md`.
+
+## Client Coding Standards & Project Architecture Baseline
+
+### 1. Web Client (`littlesteps-react` · CIT 210)
+- **Feature-Modular Layout:** Code is strictly organized into domain modules to isolate feature work and eliminate file merge conflicts:
+  - `src/services/`: External integrations (`firebase.ts`, `api.ts`, and contract tests).
+  - `src/features/<feature-name>/`: Co-located UI components, hooks, domain types, and unit tests for each core feature (`auth/`, `profile/`, `activities/`, `journal/`, `reflections/`, `ai-helper/`).
+  - `src/components/`: Shared design system atoms (`common/`) and global navigation shell (`layout/`).
+  - `src/styles/`: Central design tokens (`tokens.css`) and global styling (`main.css`).
+- **Styling Architecture (Vanilla CSS, No Tailwind):**
+  - **TailwindCSS is not used.**
+  - All components use **Vanilla CSS** referencing design tokens (`--forest`, `--canvas`, `--card`, `--input-border`) bound to the canonical Figma design system.
+  - Color contrast must adhere to WCAG 2.2 AA (minimum 4.5:1 for body text, 7.1:1 for primary buttons).
+- **Public Barrel Interfaces:** Feature internals are accessed only through the feature's `index.ts` barrel.
+
+### 2. Mobile Client (`littlesteps-flutter` · CC 207B)
+- **Layered Architecture (CC 207B Requirement f):** Code is organized strictly by role:
+  - `lib/screens/`: Top-level page views corresponding to the 6 core features.
+  - `lib/widgets/`: Reusable, atomic UI widgets.
+  - `lib/models/`: Strongly-typed data entities with `fromJson` / `toJson` serialization.
+  - `lib/services/`: HTTP REST client and local storage persistence.
+  - `lib/theme/`: Material 3 theme (`useMaterial3: true`), Inter typography, and `ThemeExtension` for status colors.
+  - `lib/routing/`: Named routes, route guards, and navigation transitions.
+- **Documentation Standard (CC 207B Requirement f):**
+  - Every public class, widget, and significant method must provide a `///` Dart doc comment.
+  - Significant logic blocks must include concise comments explaining *what* they do and *why*.
+- **Touch Ergonomics:** Interactive controls must maintain a minimum touch target of **48 × 48 dp** for comfortable one-handed mobile use.
+- **Academic AI Governance:** Any AI-assisted code, test, or asset generation must be logged in `docs/ai-usage-log.md`. Each member must be able to explain and edit their committed code live during individual code defenses.
 
 ## Local-first Firebase workflow
 - Follow the verified step-by-step setup in [getting-started.md](getting-started.md) to initialize the local multi-repo environment.
