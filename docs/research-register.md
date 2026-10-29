@@ -3,12 +3,12 @@
 **Status:** Canonical Research Reference Baseline  
 **Governing Standard:** PMBOK (Benchmarking) & ISO/IEC/IEEE 29148:2018  
 **Owner:** Vincent (Backend & Research Lead)  
-**Last Reviewed:** 2026-10-26  
+**Last Reviewed:** 2026-10-29  
 **Related Documents:** [Philippine Content Provenance](philippine-content-provenance.md), [Security, Privacy, and AI Safeguards](security-privacy-ai.md)
 
 ---
 
-Reviewed for the initial architecture baseline on 2026-10-11, with additional research entries incorporated on 2026-10-23 and 2026-10-26. Recheck official documentation before deployment because service behavior, legal interpretation, and pricing can change. Entries identify sources and intended use; they do not by themselves establish implementation or legal compliance.
+Reviewed for the initial architecture baseline on 2026-10-11, with additional research entries incorporated on 2026-10-23, 2026-10-26, and 2026-10-29 (Docs Issue #3). Recheck official documentation before deployment because service behavior, legal interpretation, and pricing can change. Entries identify sources and intended use; they do not by themselves establish implementation or legal compliance.
 
 | Topic | Source | How it informs LittleSteps |
 |---|---|---|
@@ -18,10 +18,10 @@ Reviewed for the initial architecture baseline on 2026-10-11, with additional re
 | OWASP REST Security Cheat Sheet | https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html | Use explicit CORS origins, allowlisted methods, request limits, input validation, safe errors, and rate limits. |
 | OWASP Input Validation Cheat Sheet | https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html | Validate syntax and semantics on the server, including fields, lengths, ranges, and nested structures. Authorization is a separate check. |
 | Philippine Data Privacy Act IRR (NPC) | https://privacy.gov.ph/implementing-rules-regulations-data-privacy-act-2012/ | Review transparency, declared purpose, data minimization, recipients, retention, rights, and automated-processing disclosures with the responsible privacy/legal authority or course instructor. |
-| ECCD Council resources — NELF, NELC, ECCD Checklist | https://eccdcouncil.gov.ph/resources/ | Official landing page lists candidate Philippine early-childhood framework, curriculum, and checklist materials. The exact document version, usage permissions, and relevance to each content item still require item-level review. Official framework available for reference, but reproduction, adaptation, and commercial-use conditions have not been independently verified; note Council distribution advisories. |
+| ECCD Council resources — NELF, NELC, ECCD Checklist | https://eccdcouncil.gov.ph/resources/ | Official publications: National Early Learning Framework (NELF, 2010 edition, Annex 4) and National Early Learning Curriculum Learning Resource Packages (NELC LRP 3 Parent-Mentor Activity Calendar, 2015 edition) inspected and verified for age-validated indicators and household activity prompts. See [Philippine Content Provenance §5.1](philippine-content-provenance.md). |
 | ECCD Council center-based standards | https://eccdcouncil.gov.ph/center-based-standards-guidelines/ | Candidate guidance for early-childhood programs serving ages 0–4; do not assume institutional standards validate caregiver-facing milestone claims. |
 | DepEd Kindergarten curriculum overview | https://www.deped.gov.ph/k-to-12/about/k-to-12-basic-education-curriculum/kindergarten/ | Official access point for Kindergarten curriculum guidance relevant to educational activities; verify the exact current guide and version before adapting competencies. |
-| DepEd MATATAG curriculum materials | https://www.deped.gov.ph/matatagcurriculumk147/ | DepEd's curriculum page links a Kindergarten guide; use the exact version and competency locator when grounding learning activities. |
+| DepEd MATATAG curriculum materials | https://www.deped.gov.ph/matatagcurriculumk147/ | DepEd MATATAG Kindergarten Curriculum Guide (2024 edition, DepEd Order No. 010, s. 2024) inspected for foundational literacy, numeracy, and motor skills mapping to the 60–71 month transition category. |
 | Republic Act No. 12199 — ECCD System Act of 2025 | https://lawphil.net/statutes/repacts/ra2025/ra_12199_2025.html | Primary statutory framework for the Philippine ECCD system, signed May 8, 2025, repealing RA 10410. Government sources (PIA, DepEd, ECCD Council) report the IRR was signed on August 5, 2026; full text, Official Gazette publication, and effectivity remain pending inspection. Allocates responsibilities: ECCD Council for ages below 5 (0–59 months) and DepEd for ages 5–8 (60–96 months, covering Kindergarten). Policy overview also on https://eccdcouncil.gov.ph/policy-documents/. |
 | Iloilo City ECCD centers | https://www.iloilotoday.com/iloilo-city-programs-projects-for-ilonggo-children/ | Local news report (1 January 2026) that the city has more than 200 operating ECCD centers and is building more. Used for the CIT 246 business case; confirm the current count with the client. |
 | CSWDO La Paz–Lapuz District office | https://www.govserv.org/PH/Iloilo-City/649162218285374/CSWDO-Lapaz-Lapuz-District | Directory listing of the district office's public page, which describes itself as the official page and shows training for child development workers and day care teachers. The CIT 246 client; confirm its address, head and supervised centers directly. |
@@ -34,8 +34,8 @@ Reviewed for the initial architecture baseline on 2026-10-11, with additional re
 
 ## Evidence limits and follow-up
 - These sources inform engineering and content sourcing; they do not establish legal compliance or validate a developmental screening tool.
-- Candidate Philippine early-childhood sources are recorded in [the content provenance protocol](philippine-content-provenance.md). Their inclusion is not a claim that exact PDFs, versions, permissions, or every relevant passage have been fully reviewed.
-- Before authoring catalog items, record each exact source title, issuing body, publication/version date if stated, access date, exact page/section/competency, adaptation notes, and reviewer.
+- Primary Philippine early-childhood sources (NELF 2010, NELC LRP 3 2015, DepEd MATATAG 2024) have been inspected and candidate records recorded in [the content provenance protocol](philippine-content-provenance.md).
+- Before authoring catalog items in production, record each exact source title, issuing body, publication/version date, access date, exact page/section/competency, adaptation notes, and reviewer.
 - Have an appropriate subject-matter specialist or course faculty review content before it is described as reviewed or approved.
 - Confirm current Firebase pricing/billing in the actual project before deployment.
 - Review provider terms and data-processing practices before enabling external AI.
