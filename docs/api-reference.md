@@ -198,7 +198,7 @@ To satisfy the CIT 210 requirement for a live external REST Data API, `littleste
 * **List query parameters (all optional):** `ageBand` (the seven bands in §4.2), `type` (`activity`, `story`, `rhyme`, `game`), `domain` (`cognitive`, `motor`, `language`, `socioEmotional`), `language` (`en`, `fil`, `hil`), `setting` (`indoor`, `outdoor`, `either`), `limit` (integer 1-50, default 20). Invalid values return `400 INVALID_INPUT`.
 * **List response:** `200 OK` with `{ "total": n, "items": [CatalogActivity] }` and `Cache-Control: public, max-age=3600`.
 * **By ID:** the `id` path parameter must match `^[a-z0-9-]+$` and be at most 64 characters, otherwise `400 INVALID_INPUT`. An unknown id returns `404 RESOURCE_NOT_FOUND`. Success is `200 OK` with one `CatalogActivity` and `Cache-Control: public, max-age=3600`.
-* **`CatalogActivity` fields:** `id`, `title`, `type`, `language`, `setting`, `ageBand`, `domain`, `durationMinutes` (1-180), `durationEstimate`, `materials`, `instructions` (array of steps), `provenanceSource`, `status` (`reviewed_approved`, `synthetic_fixture`, `draft`) and `limitations`.
+* **`CatalogActivity` fields:** `id`, `title`, `type`, `language`, `setting`, `ageBand`, `domain`, `durationMinutes` (1-180), `durationEstimate`, `materials`, `instructions` (array of steps), `provenanceSource`, `status` (`reviewed_approved`, `synthetic_fixture`; the OpenAPI draft also lists `draft`, which `data-model.md` does not) and `limitations`.
 * **Empty until reviewed:** production serves an empty catalog (`total: 0`, `items: []`, and `404` by id) until reviewed content is loaded. Synthetic engineering fixtures are never served as approved content.
 
 ---
@@ -287,13 +287,13 @@ All error responses strictly follow the standardized JSON error envelope:
 | :--- | :--- |
 | Public catalog (`/api/v1/catalog/*`) | `public, max-age=3600` |
 | Catalog books fallback response | `public, max-age=60` |
-| Authenticated routes (`/api/v1/me`, `/api/v1/children/**`) | `no-store` |
+| Authenticated routes: `/health` and `/api/v1/me` (implemented); `/api/v1/children/**` (planned, not yet specified in the contract) | `no-store` |
 
 ### Complete HTTP Status to Error Code Mapping Table
 
 | HTTP Status | Error Code | Trigger Scenario | Handling Strategy |
 | :---: | :--- | :--- | :--- |
-| **`400`** | `INVALID_INPUT` | Zod validation failure, missing required fields, malformed body, invalid catalog query or id format, malformed child UUID; the envelope includes `details` | Client highlights field errors |
+| **`400`** | `INVALID_INPUT` (a body that is not valid JSON returns `INVALID_JSON`) | Zod validation failure, missing required fields, invalid catalog query or id format, malformed child UUID; the envelope includes `details` | Client highlights field errors |
 | **`401`** | `UNAUTHENTICATED` | Missing or invalid Bearer token | Client redirects to sign-in |
 | **`403`** | `FORBIDDEN` | Valid user token attempting an administrative action | Client shows access denied alert |
 | **`404`** | `RESOURCE_NOT_FOUND` | Child ID, activity, or journal note does not exist OR belongs to another caregiver (BOLA) | Client shows item not found; prevents resource existence leakage |
