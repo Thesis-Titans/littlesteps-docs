@@ -8,7 +8,7 @@
 
 ---
 
-The sourcing framework and review protocol are defined. Under Docs Issue #3 the author has source-checked NELF (2010), NELC LRP 3 (2015) and the MATATAG Kindergarten Guide (2024); the other LRPs are only identified, not inspected. **Every record in this document is author-checked only (`source_checked`) and awaits subject-matter adviser review; no record is `subject_matter_reviewed` or `approved`, so Docs Issue #3 stays open.** Evidence held only in a private Drive cannot be verified by others; records carry `url`, `accessed` and `locator` fields that remain `TODO` until a public link and access date are added. This document does not establish that a source is cleared for unrestricted commercial reproduction, that milestone prompts are clinical instruments, or that LittleSteps replaces healthcare professionals.
+The sourcing framework and review protocol are defined. Under Docs Issue #3 the author has source-checked NELF (2010), NELC LRP 3 and the MATATAG Curriculum – Kindergarten; the other LRPs are only identified, not inspected. **Every record in this document is author-checked only (`source_checked`) and awaits subject-matter adviser review; no record is `subject_matter_reviewed` or `approved`, so Docs Issue #3 stays open.** Evidence held only in a private Drive cannot be verified by others; records carry `url`, `accessed` and `locator` fields that remain `TODO` until a public link and access date are added. This document does not establish that a source is cleared for unrestricted commercial reproduction, that milestone prompts are clinical instruments, or that LittleSteps replaces healthcare professionals.
 
 ---
 
@@ -35,19 +35,19 @@ Statutory age allocations and LittleSteps product navigation categories are stri
 1. **Statutory jurisdiction** establishes government agency legal authority under RA 12199 (ECCD Council for <5 years; DepEd for 5–8 years).
 2. **LittleSteps navigation categories** are internal UX categories created to help parents discover age-appropriate activities and record private observations. They are **not** statutory jurisdictions, legal definitions, or medical or developmental milestones.
 3. Specifically, the **60–71 month band ("Kindergarten Transition") is solely a LittleSteps product UX category** designed as a bridge for children entering Kindergarten, referencing DepEd Kindergarten competencies. It is **not** a separate statutory category under Philippine law.
-4. **Only NELF (2010), NELC LRP 3 (2015) and MATATAG Kindergarten (2024) have been author-checked.** Mappings that cite LRP 1, 2, 4, 5, 6, 7 or 8 are **provisional**: the official package is identified but not inspected. All mappings remain candidates pending adviser review.
+4. **Only NELF (2010), NELC LRP 3 and MATATAG Curriculum – Kindergarten have been author-checked.** Mappings that cite LRP 1, 2, 4, 5, 6, 7 or 8 are **provisional**: the official package is identified but not inspected. All mappings remain candidates pending adviser review.
 
 | LittleSteps Product Category | UX Navigation Range | Statutory Authority (RA 12199) | Candidate Curriculum Reference (author-checked; page locators under re-check) |
 | :--- | :---: | :--- | :--- |
-| **Young Infants** | 0–5 months | ECCD Council (<5 years) | NELF (2010) Annex 4; NELC LRP 3 (2015) pp. 21–44 *(locator to be re-checked against the PDF (@vincenttamano))* |
-| **Older Infants** | 6–11 months | ECCD Council (<5 years) | NELF (2010) Annex 4; NELC LRP 3 (2015) pp. 40–64 *(locator to be re-checked against the PDF (@vincenttamano))* |
-| **Young Toddlers** | 12–23 months | ECCD Council (<5 years) | NELF (2010) Annex 4; NELC LRP 3 (2015) pp. 88–99 *(locator to be re-checked against the PDF (@vincenttamano))*; LRP 2 *(provisional)* |
-| **Older Toddlers** | 24–35 months | ECCD Council (<5 years) | NELF (2010) Annex 4 pp. 89–94 *(locator to be re-checked against the PDF (@vincenttamano))*; NELC LRP 4, LRP 8 *(official package identified; not inspected; provisional)* |
-| **Younger Preschoolers** | 36–47 months | ECCD Council (<5 years) | NELF (2010) Annex 4 pp. 95–106 *(locator to be re-checked against the PDF (@vincenttamano))*; NELC LRP 5 *(provisional)* |
-| **Older Preschoolers** | 48–59 months | ECCD Council (<5 years) | NELF (2010) Annex 4 pp. 96–107 *(locator to be re-checked against the PDF (@vincenttamano))*; NELC LRP 6, LRP 7 *(provisional)* |
-| **Kindergarten Transition** | 60–71 months *(Product UX Band)* | DepEd (5–8 years) | DepEd MATATAG Curriculum — Kindergarten Guide (2024); NELF Annex 4 |
+| **Young Infants** | 0–5 months | ECCD Council (<5 years) | NELF (2010) Annex 4 *(printed pp. 67–109; per-band pages not yet confirmed (@vincenttamano))*; NELC LRP 3 *(PDF pp. 69–207; per-band pages not yet confirmed (@vincenttamano))* |
+| **Older Infants** | 6–11 months | ECCD Council (<5 years) | NELF (2010) Annex 4 *(printed pp. 67–109; per-band pages not yet confirmed (@vincenttamano))*; NELC LRP 3 *(PDF pp. 69–207; per-band pages not yet confirmed (@vincenttamano))* |
+| **Young Toddlers** | 12–23 months | ECCD Council (<5 years) | NELF (2010) Annex 4 *(printed pp. 67–109; per-band pages not yet confirmed (@vincenttamano))*; NELC LRP 3 *(PDF pp. 69–207; per-band pages not yet confirmed (@vincenttamano))*; LRP 2 *(provisional)* |
+| **Older Toddlers** | 24–35 months | ECCD Council (<5 years) | NELF (2010) Annex 4 *(printed pp. 67–109; per-band pages not yet confirmed (@vincenttamano))*; NELC LRP 4, LRP 8 *(official package identified; not inspected; provisional)* |
+| **Younger Preschoolers** | 36–47 months | ECCD Council (<5 years) | NELF (2010) Annex 4 *(printed pp. 67–109; per-band pages not yet confirmed (@vincenttamano))*; NELC LRP 5 *(provisional)* |
+| **Older Preschoolers** | 48–59 months | ECCD Council (<5 years) | NELF (2010) Annex 4 *(printed pp. 67–109; per-band pages not yet confirmed (@vincenttamano))*; NELC LRP 6, LRP 7 *(provisional)* |
+| **Kindergarten Transition** | 60–71 months *(Product UX Band)* | DepEd (5–8 years) | DepEd MATATAG Curriculum – Kindergarten; NELF Annex 4 *(printed pp. 67–109)* |
 
-*Note: LRP 1, 2, 4, 5, 6, 7 and 8 mappings are provisional candidates (official package identified; not inspected) and must not be treated as source evidence. The overlapping NELF/LRP 3 page ranges above are inconsistent and need re-checking by Vincent.*
+*Note: LRP 1, 2, 4, 5, 6, 7 and 8 mappings are provisional candidates (official package identified; not inspected) and must not be treated as source evidence. NELF page numbers are printed pages; LRP page numbers are PDF pages of the compiled file, not printed pages. Per-band page ranges are not yet confirmed (@vincenttamano). The NELF Annex 4 printed title reads "0-5.11 months", probably a typo for years; noted as printed, flagged for @vincenttamano.*
 
 ---
 
@@ -71,14 +71,14 @@ Philippine government publications are subject to specific legal conditions unde
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Republic Act No. 12199** | Republic of the Philippines | 0–8 years | Policy context; interagency responsibilities (Section 2); early childhood workforce standards. | Public statute. Free for policy and architectural grounding. | **Statute verified** (May 8, 2025; [Lawphil text](https://lawphil.net/statutes/repacts/ra2025/ra_12199_2025.html)). | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
 | **RA 12199 IRR** | ECCD Council, DepEd, DILG | 0–8 years | Implementing rules, operational guidelines for LGUs and Child Development Centers. | Pending official gazette publication and inspection of text. | **Signing reported August 5, 2026**; official text, gazette publication, and effectivity date pending verification. | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
-| **National Early Learning Framework (NELF)** | ECCD Council | 0–6 years | Foundational standards; Annex 4 contains age-validated developmental indicators across 7 early learning domains. | Official Council publication (2010). Text used for non-commercial educational alignment; borrowed third-party creative items protected. | **Author-checked (2010 edition)**; Annex 4 indicators extracted (pp. 73–106, locator to be re-checked against the PDF (@vincenttamano)). | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
+| **National Early Learning Framework (NELF)** | ECCD Council | 0–6 years | Foundational standards; Annex 4 contains age-validated developmental indicators across 7 early learning domains. | Official Council publication (approved 24 September 2010, ECCD Council Board Resolution No. 10-01). Text used for non-commercial educational alignment; borrowed third-party creative items protected. | **Author-checked (2010)**; Annex 4 indicators extracted (Annex 4, printed pp. 67–109; sub-ranges per age band not yet confirmed (@vincenttamano)). | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
 | **NELC — LRP 1 (Implementation Guidelines)** | ECCD Council | 0–4 years | Center and home implementation guidelines. | Educational reference copy. Unavailable for content authoring until permissions confirmed. | Official package identified; not inspected; provisional. | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
 | **NELC — LRP 2 (Standards & Competencies)** | ECCD Council | 0–4 years | Developmental domains, behavioral indicators, and milestone progression for infants and toddlers. | Educational reference copy. Subject to RA 8293 Sec. 176. Unavailable for content authoring until permissions confirmed. | Official package identified; not inspected; provisional. | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
-| **NELC — LRP 3 (Parent-Mentor Activity Calendar)** | ECCD Council | 0–23 months | Suggested home-based calendar of caregiver activities for infants and toddlers (feeding, bathing, movement, sensory play). | Educational home-mentoring package (2015 edition). Unavailable for content authoring until permissions confirmed. | **Author-checked (2015 edition)**; activity prompts extracted (pp. 21–99, locator to be re-checked against the PDF (@vincenttamano)). | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
+| **NELC — LRP 3 (Parent-Mentor Activity Calendar)** | ECCD Council | 0–23 months | Suggested home-based calendar of caregiver activities for infants and toddlers (feeding, bathing, movement, sensory play). | Educational home-mentoring package (compiled LRP package, file dated Nov 2025; original publication year not found in the file). Unavailable for content authoring until permissions confirmed. | **Author-checked (compiled LRP package, file dated Nov 2025; original publication year not found in the file)**; activity prompts extracted (LRP 3, PDF pp. 69–207 of the compiled LRP file; per-band pages not yet confirmed (@vincenttamano)). | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
 | **NELC — LRP 4 (Activities for 2–3 Years Old)** | ECCD Council | 24–35 months | Daily routine and exploration play ideas for older toddlers. | Educational reference copy. Unavailable for content authoring until permissions confirmed. | Official package identified; not inspected; provisional. | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
 | **NELC — LRP 5 & 6 (Pre-K1 & Pre-K2 Activities)** | ECCD Council | 36–59 months | Preschool activity plans for 3- and 4-year-olds. | Educational reference copy. Unavailable for content authoring until permissions confirmed. | Official packages identified; not inspected; provisional. | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
 | **NELC — LRP 7 (Creative Resources, Songs & Rhymes)** | ECCD Council | 0–4 years | Traditional action songs, poems, rhymes, and creative movement. | Third-party borrowed works protected under RA 8293. Traditional folklore is separated from modern works, but published arrangements and translations may be protected. Unavailable for content authoring until permissions confirmed. | Official package identified; not inspected; provisional. Creative assets not audited. | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
-| **DepEd MATATAG Kindergarten Curriculum Guide** | Department of Education (DepEd) | 5–6 years (60–71 mo UX) | Foundational learning domains: Literacy, Numeracy, Socio-Emotional, Motor Development. | Official DepEd issuance (DepEd Order No. 010, s. 2024; [MATATAG Portal](https://www.deped.gov.ph/matatagcurriculumk147/)). | **Author-checked (2024 edition)**; competencies cross-referenced for 60–71m transition band. | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
+| **DepEd MATATAG Kindergarten Curriculum Guide** | Department of Education (DepEd) | 5–6 years (60–71 mo UX) | Foundational learning domains: Literacy, Numeracy, Socio-Emotional, Motor Development. | Official DepEd curriculum file (DepEd MATATAG Curriculum – Kindergarten (33-page file, dated Aug 2023); issuing DepEd Order number and edition year not found in the file, to be confirmed (@vincenttamano); [MATATAG Portal](https://www.deped.gov.ph/matatagcurriculumk147/)). | **Author-checked**; competencies cross-referenced for 60–71m transition band. | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
 | **Philippine Early Childhood Development (ECD) Checklist (LRP 8)** | ECCD Council | 0–59 months | Professional assessment checklist used by trained Child Development Teachers (CDTs) and Child Development Workers (CDWs) for early identification of delays. | **Strictly non-diagnostic in LittleSteps.** Do NOT reproduce scoring, calculate developmental quotients, or convert to parent-facing screening tool. | **Restricted professional tool**; official package identified; not inspected; provisional. Non-diagnostic observation prompts only. | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
 | **CDC Milestone Checklists** | US CDC | 0–5 years | Educational references for milestone prompts. | US CDC educational resource. While general government text may be public domain, specific checklists require independent verification. Must NOT be presented as a validated Philippine instrument. | **Educational reference only**; secondary cross-reference. | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
 
@@ -109,8 +109,8 @@ source:
   organization: "ECCD Council"
   url: "https://eccdcouncil.gov.ph/resources/"
   accessed: "YYYY-MM-DD"
-  edition_date: "2015 Revised Edition"
-  exact_locator: "Section 1, Activity 4, Page 35"
+  edition_date: "compiled LRP package, file dated Nov 2025; original publication year not found in the file"
+  exact_locator: "LRP 3, PDF pp. 69–207 of the compiled LRP file; per-band pages not yet confirmed (@vincenttamano); Section 1, Activity 4"
   locator: TODO
 relationship_to_source: "adapted" # direct_link | adapted | original_informed_by_source
 adaptation_notes: "Paraphrased caregiver guidance for home environment using rolled blanket; removed center-based terminology."
@@ -126,7 +126,7 @@ limitations: "Provisional Academic Reference — Pending Review. Educational pro
 
 ### 5.1 Source-Checked Candidate Provenance Records (Multi-Domain Across 7 UX Bands)
 
-The following candidates were source-checked by the author against NELF (2010), NELC LRP 3 (2015), and the MATATAG Kindergarten Guide (2024). **Every record is author-checked only (`source_checked`) and awaits subject-matter adviser review; none is approved for the production catalog.** Fields align with the catalog in [Data Model §2.7](data-model.md): `materials`, `domain`, and an `item_type` that maps to the catalog `type`. Drive-only evidence is not verifiable by others, so each record's `url`, `accessed` and `locator` stay `TODO` until Vincent adds a public link, access date and exact locator.
+The following candidates were source-checked by the author against NELF (2010), NELC LRP 3, and the MATATAG Curriculum – Kindergarten. **Every record is author-checked only (`source_checked`) and awaits subject-matter adviser review; none is approved for the production catalog.** Fields align with the catalog in [Data Model §2.7](data-model.md): `materials`, `domain`, and an `item_type` that maps to the catalog `type`. Drive-only evidence is not verifiable by others, so each record's `url`, `accessed` and `locator` stay `TODO` until Vincent adds a public link, access date and exact locator. URLs, access dates and competency codes remain TODO until the download source is recorded.
 
 #### 1. Young Infants (0–5 months) — Gross Motor
 ```yaml
@@ -141,7 +141,7 @@ source:
   url: TODO
   accessed: TODO
   edition_date: "2010 Edition"
-  exact_locator: "Annex 4 (Age-Validated Indicators for Children Aged 0-12 months; spans more than the 0-5m band), Page 73, Gross Motor Skills [locator to be re-checked against the PDF (@vincenttamano)]"
+  exact_locator: "Annex 4, printed pp. 67–109; sub-ranges per age band not yet confirmed (@vincenttamano) (printed title reads 0-5.11 months, probably a typo for years; flagged), Gross Motor Skills"
   locator: TODO
 relationship_to_source: "adapted"
 adaptation_notes: "Adapted infant indicator into interactive caregiver floor play using a soft cloth toy held by the caregiver within the baby's view and reach, above the chest."
@@ -167,8 +167,8 @@ source:
   organization: "ECCD Council"
   url: TODO
   accessed: TODO
-  edition_date: "2015 Edition"
-  exact_locator: "LRP 3, Page 35, Gross Motor Routine"
+  edition_date: "compiled LRP package, file dated Nov 2025; original publication year not found in the file"
+  exact_locator: "LRP 3, PDF pp. 69–207 of the compiled LRP file; per-band pages not yet confirmed (@vincenttamano); Gross Motor Routine"
   locator: TODO
 relationship_to_source: "adapted"
 adaptation_notes: "Safe floor play on a firm mat with rolled blanket support and mirror tracking to build upper-body strength."
@@ -194,7 +194,7 @@ source:
   url: TODO
   accessed: TODO
   edition_date: "2010 Edition"
-  exact_locator: "Annex 4, Page 76, Cause-Effect Relationships"
+  exact_locator: "Annex 4, printed pp. 67–109; sub-ranges per age band not yet confirmed (@vincenttamano); Cause-Effect Relationships"
   locator: TODO
 relationship_to_source: "adapted"
 adaptation_notes: "Encourages tool-use problem solving by showing child how to use a wooden spoon to reach a nearby toy."
@@ -220,7 +220,7 @@ source:
   url: TODO
   accessed: TODO
   edition_date: "2010 Edition"
-  exact_locator: "Annex 4, Page 78, Receptivity to Others' Emotions"
+  exact_locator: "Annex 4, printed pp. 67–109; sub-ranges per age band not yet confirmed (@vincenttamano); Receptivity to Others' Emotions"
   locator: TODO
 relationship_to_source: "adapted"
 adaptation_notes: "Exaggerated facial expressions and warm vocal interactions facing a mirror to build emotional recognition."
@@ -246,7 +246,7 @@ source:
   url: TODO
   accessed: TODO
   edition_date: "2010 Edition"
-  exact_locator: "Annex 4, Page 81, Receptive Language Indicators (13-24 months)"
+  exact_locator: "Annex 4, printed pp. 67–109; sub-ranges per age band not yet confirmed (@vincenttamano); Receptive Language Indicators (13-24 months)"
   locator: TODO
 relationship_to_source: "adapted"
 adaptation_notes: "Face-to-face naming and rhyme play; the toddler explores body parts on themselves and the caregiver follows the child's lead, with no target number or pass/fail."
@@ -271,8 +271,8 @@ source:
   organization: "ECCD Council"
   url: TODO
   accessed: TODO
-  edition_date: "2015 Edition"
-  exact_locator: "LRP 3, Page 89, Kitchen Household Play"
+  edition_date: "compiled LRP package, file dated Nov 2025; original publication year not found in the file"
+  exact_locator: "LRP 3, PDF pp. 69–207 of the compiled LRP file; per-band pages not yet confirmed (@vincenttamano); Kitchen Household Play"
   locator: TODO
 relationship_to_source: "adapted"
 adaptation_notes: "Sorting clean plastic cups, plates, and saucers during meal preparation to support categorization."
@@ -298,7 +298,7 @@ source:
   url: TODO
   accessed: TODO
   edition_date: "2010 Edition"
-  exact_locator: "Annex 4, Page 89, Receptive Language Indicators (25-36 months)"
+  exact_locator: "Annex 4, printed pp. 67–109; sub-ranges per age band not yet confirmed (@vincenttamano); Receptive Language Indicators (25-36 months)"
   locator: TODO
 relationship_to_source: "adapted"
 adaptation_notes: "Positional preposition understanding ('inside', 'under', 'on top of') using a clean plastic bowl and ball."
@@ -324,7 +324,7 @@ source:
   url: TODO
   accessed: TODO
   edition_date: "2010 Edition"
-  exact_locator: "Annex 4, Page 90, Concept Formation"
+  exact_locator: "Annex 4, printed pp. 67–109; sub-ranges per age band not yet confirmed (@vincenttamano); Concept Formation"
   locator: TODO
 relationship_to_source: "adapted"
 adaptation_notes: "Color sorting using everyday household items (colored cups and clean cloth scraps)."
@@ -350,7 +350,7 @@ source:
   url: TODO
   accessed: TODO
   edition_date: "2010 Edition"
-  exact_locator: "Annex 4, Page 95, Gross Motor Skills (37-71 months) [locator to be re-checked against the PDF (@vincenttamano)]"
+  exact_locator: "Annex 4, printed pp. 67–109; sub-ranges per age band not yet confirmed (@vincenttamano); Gross Motor Skills (37-71 months)"
   locator: TODO
 relationship_to_source: "adapted"
 adaptation_notes: "Open-ended balance and hopping play along a floor line marked with chalk or masking tape; the child tries at their own pace and the caregiver describes what they see."
@@ -376,7 +376,7 @@ source:
   url: TODO
   accessed: TODO
   edition_date: "2010 Edition"
-  exact_locator: "Annex 4, Page 106, Interpersonal Values / Pakikipagkapwa [locator to be re-checked against the PDF (@vincenttamano)]"
+  exact_locator: "Annex 4, printed pp. 67–109; sub-ranges per age band not yet confirmed (@vincenttamano); Interpersonal Values / Pakikipagkapwa"
   locator: TODO
 relationship_to_source: "adapted"
 adaptation_notes: "Modeling polite Filipino honorifics and respectful greetings ('Magandang umaga', 'Po', 'Opo') with family members."
@@ -402,7 +402,7 @@ source:
   url: TODO
   accessed: TODO
   edition_date: "2010 Edition"
-  exact_locator: "Annex 4, Page 96, Fine Motor Skills [locator to be re-checked against the PDF (@vincenttamano)]"
+  exact_locator: "Annex 4, printed pp. 67–109; sub-ranges per age band not yet confirmed (@vincenttamano); Fine Motor Skills"
   locator: TODO
 relationship_to_source: "adapted"
 adaptation_notes: "Open-ended drawing play: the child draws a person or anything they like, and the caregiver follows the child's lead and invites them to tell about it."
@@ -428,7 +428,7 @@ source:
   url: TODO
   accessed: TODO
   edition_date: "2010 Edition"
-  exact_locator: "Annex 4, Page 97, Expressive Language"
+  exact_locator: "Annex 4, printed pp. 67–109; sub-ranges per age band not yet confirmed (@vincenttamano); Expressive Language"
   locator: TODO
 relationship_to_source: "adapted"
 adaptation_notes: "Inviting child to draw a favorite family experience and tell in their own words about their drawing, at whatever length they choose."
@@ -453,8 +453,8 @@ source:
   organization: "Department of Education (DepEd)"
   url: TODO
   accessed: TODO
-  edition_date: "2024 Edition (DepEd Order No. 010, s. 2024)"
-  exact_locator: "Foundational Literacy Domain, Competency: Letter-Sound Association; cross-referenced with NELF Annex 4, p. 98"
+  edition_date: "DepEd MATATAG Curriculum – Kindergarten (33-page file, dated Aug 2023); issuing DepEd Order number and edition year not found in the file, to be confirmed (@vincenttamano)"
+  exact_locator: "Foundational Literacy Domain, Competency: Letter-Sound Association; cross-referenced with NELF Annex 4 (printed pp. 67–109)"
   # competency code not recorded; locator TODO for Vincent
   locator: TODO
 relationship_to_source: "adapted"
@@ -481,7 +481,7 @@ source:
   url: TODO
   accessed: TODO
   edition_date: "2010 Edition"
-  exact_locator: "Annex 4, Page 101, Creative Thought & Problem Solving"
+  exact_locator: "Annex 4, printed pp. 67–109; sub-ranges per age band not yet confirmed (@vincenttamano); Creative Thought & Problem Solving"
   locator: TODO
 relationship_to_source: "adapted"
 adaptation_notes: "Imagining and painting non-real inventions or fantasy creatures, explaining their purpose and features."
@@ -502,7 +502,7 @@ This evidence gate ([Docs Issue #3, still open](https://github.com/Thesis-Titans
 
 1. **Current Legal Baseline Established:** RA 12199 (repealing RA 10410) is verified as the governing statute (signed May 8, 2025; [Lawphil text](https://lawphil.net/statutes/repacts/ra2025/ra_12199_2025.html)); government sources (PIA, DepEd, ECCD Council) report the IRR was signed on August 5, 2026, while official text, Official Gazette publication, and effectivity date remain pending inspection.
 2. **Jurisdictional Boundaries Distinct:** ECCD Council covers <5 years; DepEd covers 5–8 years. LittleSteps product navigation categories (including the 60–71 month Kindergarten transition band) are recognized as separate product UX groupings and not statutory categories.
-3. **Primary Source Documents Author-Checked:** NELF (2010), NELC LRP 3 (2015), and the DepEd MATATAG Kindergarten Curriculum Guide (2024) were checked by the author. Page and Annex locators are recorded but several are flagged for re-check, and public URLs and access dates are `TODO`. Other LRPs are identified but not inspected.
+3. **Primary Source Documents Author-Checked:** NELF (2010), NELC LRP 3, and the DepEd MATATAG Kindergarten Curriculum – Kindergarten were checked by the author. Annex and page locators are recorded as printed (NELF) or PDF (LRP) page ranges, per-band pages are not yet confirmed, and public URLs and access dates are `TODO`. Other LRPs are identified but not inspected.
 4. **Item-Level Source-Checked Candidates (`source_checked`):** Candidate activities across all 7 LittleSteps UX bands are drafted into the provenance YAML schema. They are author-checked only and await subject-matter adviser review; Docs Issue #3 stays open until that review happens.
 5. **Operational Gating to Production (`approved`):** While engineering tracks (API, React, Flutter) operate safely using clearly labeled `synthetic_fixture` records with *"Provisional Academic Reference — Pending Review"*, no production catalog item will be marked `approved` without formal faculty / early childhood subject-matter reviewer sign-off.
 6. **Automated Documentation CI Active:** The documentation repository (`littlesteps-docs`) runs automated verification on pull requests and pushes via GitHub Actions (`Docs CI/verify`), validating relative internal link integrity, image references, and issue template structure.
