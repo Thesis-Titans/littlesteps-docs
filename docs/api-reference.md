@@ -82,7 +82,7 @@ sequenceDiagram
 ## 3. Authentication, Authorization & Security Rules
 
 ### 3.1 Bearer Token Protocol (NFR-SEC-01)
-All endpoints except `/health` and `/api/v1/catalog/*` require an HTTP `Authorization` header containing a valid Firebase ID Token:
+All endpoints except `/health` and `/api/v1/catalog/*` (public reads) require an HTTP `Authorization` header containing a valid Firebase ID Token:
 ```http
 Authorization: Bearer <Firebase_ID_Token>
 ```
@@ -108,13 +108,23 @@ Base URL (Local Emulator): `http://127.0.0.1:5001/{projectId}/asia-southeast1/ap
 
 ### 4.2 Child Profile Management (FR-01)
 
+> **Contract proposed in littlesteps-api PRs #20/#21.** The child routes below are defined in the `littlesteps-api` OpenAPI draft (PR #21, `docs/child-profile-contract.md`) and are not implemented or merged yet. `DELETE` is not covered by that contract and stays at its earlier planned shape. **D1 is pending Mark's confirmation:** the API-to-storage mapping (`nickname` to stored `name`, `birthMonthYear` to stored `birthMonth`) and the omission of the internal `caregiverId` from responses are not decided.
+
 | Method | Path | Auth | Purpose | Success (Status / Body) | Error Codes |
 | :--- | :--- | :---: | :--- | :--- | :--- |
-| `GET` | `/api/v1/children` | Bearer | List all children belonging to the authenticated caregiver | `200 OK`<br/>`{ "children": [ { "id": "c1", "firstName": "Maya", ... } ] }` | `401` |
-| `POST` | `/api/v1/children` | Bearer | Register a new child profile (validates birth month/year) | `201 Created`<br/>`{ "id": "c1", "firstName": "Maya", ... }` | `400 INVALID_INPUT`<br/>`401` |
-| `GET` | `/api/v1/children/:childId` | Bearer | Retrieve specific child details | `200 OK`<br/>`{ "id": "c1", "firstName": "Maya", ... }` | `401`<br/>`404 RESOURCE_NOT_FOUND` |
-| `PATCH` | `/api/v1/children/:childId` | Bearer | Update child details | `200 OK`<br/>`{ "id": "c1", ... }` | `400`<br/>`401`<br/>`404` |
-| `DELETE`| `/api/v1/children/:childId` | Bearer | Cascading deletion of child and observations | `204 No Content` | `401`<br/>`404` |
+| `GET` | `/api/v1/children` | Bearer | List children owned by the verified caregiver (bare array, order unspecified) | `200 OK`<br/>`[ { "id": "...", "nickname": "Sample Child", "birthMonthYear": "2025-08", "ageBand": "12-23m", "createdAt": "...", "updatedAt": "..." } ]`, or `[]` | `401 UNAUTHENTICATED` |
+| `POST` | `/api/v1/children` | Bearer | Create a child profile: `nickname` plus exactly one of `birthMonthYear` (`YYYY-MM`) or `ageBand` | `201 Created`<br/>profile object (as above; no `birthMonthYear` when `ageBand` was sent) | `400 INVALID_INPUT` (shape, extra fields, both or neither age source)<br/>`401 UNAUTHENTICATED`<br/>`422 UNPROCESSABLE_ENTITY` (birth month in the future or over 71 months ago) |
+| `GET` | `/api/v1/children/:childId` | Bearer | Retrieve a child profile | `200 OK`<br/>profile object | `400 INVALID_INPUT` (malformed UUID)<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` |
+| `PATCH` | `/api/v1/children/:childId` | Bearer | Update `nickname` and/or exactly one of `birthMonthYear` or `ageBand` | `200 OK`<br/>updated profile object | `400 INVALID_INPUT` (empty update, nulls, both age sources)<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND`<br/>`422 UNPROCESSABLE_ENTITY` |
+| `DELETE`| `/api/v1/children/:childId` | Bearer | Cascading deletion of child and observations (planned; not part of the PR #21 contract) | `204 No Content` | `401`<br/>`404` |
+
+Rules from the proposed contract:
+* **Age bands:** `0-5m`, `6-11m`, `12-23m`, `24-35m`, `36-47m`, `48-59m`, `60-71m`. They are educational navigation categories, not clinical classifications.
+* **Age clock:** age is computed from the server's UTC calendar month (`12 * (currentYear - birthYear) + currentMonth - birthMonth`). A shape error such as `2025-13` is `400`; a future month or one more than 71 months ago is `422` on create and edit.
+* **Band derived on read:** when a birth month is stored, `ageBand` is computed on every read and never trusted from storage, so it does not go stale. A child past 71 months stays at `60-71m` on read (never an error). A caregiver-selected band (no birth month) is returned as stored.
+* **PATCH age source:** sending `birthMonthYear` stores the month; sending `ageBand` replaces the age source and removes any stored birth month; sending both is `400`.
+* **Strict bodies:** extra fields (`uid`, `caregiverId`, timestamps, surnames, photos, exact birth dates) are rejected with `400`; no field accepts `null`.
+* **Ownership:** a missing child, a child owned by another caregiver and a substituted ID all return the same `404 RESOURCE_NOT_FOUND`.
 
 ### 4.3 Milestone Observations (FR-01)
 
@@ -154,10 +164,10 @@ To satisfy the CIT 210 requirement for a live external REST Data API, `littleste
 ### 5.1 Endpoint Specification: `GET /api/v1/catalog/books`
 * **Access:** Public read-only (unauthenticated).
 * **Query Parameters:**
-  - `subject` (string, optional, default: `"picture_books"`): Filter by book subject (e.g., `"children"`, `"animals"`, `"bedtime"`).
+  - `subject` (string, optional, default: `"picture_books"`, max 64 characters): allowlist of `picture_books`, `bedtime`, `colors`, `animals`. Any other value returns `400 INVALID_INPUT`. *(Allowlist: contract proposed in littlesteps-api PRs #20/#21.)*
   - `limit` (integer, optional, default: `12`, max: `30`): Page size.
 * **Upstream Service:** `https://openlibrary.org/subjects/{subject}.json?limit={limit}`
-* **Server-Side In-Memory Cache:** Responses are cached in memory for **60 minutes** (`Cache-Control: public, max-age=3600`).
+* **Server-Side In-Memory Cache:** Responses are cached in memory for **60 minutes** (`Cache-Control: public, max-age=3600`). The `X-Cache` response header is `HIT` or `MISS`. Fallback responses use the shorter `Cache-Control: public, max-age=60` so clients retry the upstream soon. *(Contract proposed in littlesteps-api PRs #20/#21.)*
 * **Client Response Format:**
   ```json
   {
@@ -178,7 +188,18 @@ To satisfy the CIT 210 requirement for a live external REST Data API, `littleste
     }
   }
   ```
-* **Offline Resilience:** If Open Library times out or returns an error, the API returns a curated local backup JSON list with HTTP status 200 and `"provenance": { "source": "local-fallback" }`.
+* **Offline Resilience:** If Open Library times out or returns an error, the API returns a curated local backup JSON list with HTTP status 200 and `"provenance": { "source": "local-fallback" }` and `Cache-Control: public, max-age=60`.
+
+### 5.2 Learning Catalog: `GET /api/v1/catalog/activities` and `/api/v1/catalog/activities/:id`
+
+> **Contract proposed in littlesteps-api PRs #20/#21.** Defined in the OpenAPI draft (version 0.2.0); not merged yet.
+
+* **Access:** Public read-only (unauthenticated).
+* **List query parameters (all optional):** `ageBand` (the seven bands in §4.2), `type` (`activity`, `story`, `rhyme`, `game`), `domain` (`cognitive`, `motor`, `language`, `socioEmotional`), `language` (`en`, `fil`, `hil`), `setting` (`indoor`, `outdoor`, `either`), `limit` (integer 1-50, default 20). Invalid values return `400 INVALID_INPUT`.
+* **List response:** `200 OK` with `{ "total": n, "items": [CatalogActivity] }` and `Cache-Control: public, max-age=3600`.
+* **By ID:** the `id` path parameter must match `^[a-z0-9-]+$` and be at most 64 characters, otherwise `400 INVALID_INPUT`. An unknown id returns `404 RESOURCE_NOT_FOUND`. Success is `200 OK` with one `CatalogActivity` and `Cache-Control: public, max-age=3600`.
+* **`CatalogActivity` fields:** `id`, `title`, `type`, `language`, `setting`, `ageBand`, `domain`, `durationMinutes` (1-180), `durationEstimate`, `materials`, `instructions` (array of steps), `provenanceSource`, `status` (`reviewed_approved`, `synthetic_fixture`, `draft`) and `limitations`.
+* **Empty until reviewed:** production serves an empty catalog (`total: 0`, `items: []`, and `404` by id) until reviewed content is loaded. Synthetic engineering fixtures are never served as approved content.
 
 ---
 
@@ -249,26 +270,34 @@ All error responses strictly follow the standardized JSON error envelope:
 {
   "error": {
     "code": "INVALID_INPUT",
-    "message": "Field 'birthYear' must be an integer between 2019 and 2026.",
+    "message": "Request fields are invalid",
     "details": [
       {
-        "field": "birthYear",
-        "issue": "Expected integer <= 2026"
+        "field": "birthMonthYear",
+        "issue": "Expected format YYYY-MM"
       }
     ]
   }
 }
 ```
+`details` is an optional array of `{ "field", "issue" }` objects (the `ErrorEnvelope` schema, contract proposed in littlesteps-api PRs #20/#21). `code` and `message` are always present.
+
+### Caching rules
+| Route group | `Cache-Control` |
+| :--- | :--- |
+| Public catalog (`/api/v1/catalog/*`) | `public, max-age=3600` |
+| Catalog books fallback response | `public, max-age=60` |
+| Authenticated routes (`/api/v1/me`, `/api/v1/children/**`) | `no-store` |
 
 ### Complete HTTP Status to Error Code Mapping Table
 
 | HTTP Status | Error Code | Trigger Scenario | Handling Strategy |
 | :---: | :--- | :--- | :--- |
-| **`400`** | `INVALID_INPUT` | Zod validation failure, missing required fields, malformed body | Client highlights field errors |
+| **`400`** | `INVALID_INPUT` | Zod validation failure, missing required fields, malformed body, invalid catalog query or id format, malformed child UUID; the envelope includes `details` | Client highlights field errors |
 | **`401`** | `UNAUTHENTICATED` | Missing or invalid Bearer token | Client redirects to sign-in |
 | **`403`** | `FORBIDDEN` | Valid user token attempting an administrative action | Client shows access denied alert |
 | **`404`** | `RESOURCE_NOT_FOUND` | Child ID, activity, or journal note does not exist OR belongs to another caregiver (BOLA) | Client shows item not found; prevents resource existence leakage |
-| **`422`** | `UNPROCESSABLE_ENTITY` | Business logic violation (e.g. child age outside 0–71 months range) | Client displays business rule explanation |
+| **`422`** | `UNPROCESSABLE_ENTITY` | Business logic violation (e.g. child birth month in the future or more than 71 months ago on create/edit) | Client displays business rule explanation |
 | **`429`** | `RATE_LIMITED` | AI request quota exceeded (>10 requests/hour) | Client triggers Tier 3 fallback; includes `Retry-After: 3600` header |
 | **`500`** | `INTERNAL_SERVER_ERROR` | Unhandled server exception | Client displays generic error toast; hides internal stack traces |
 | **`502`** | `UPSTREAM_SERVICE_ERROR`| Open Library or Gemini API unreachable | Server automatically triggers internal cached or deterministic fallback |
