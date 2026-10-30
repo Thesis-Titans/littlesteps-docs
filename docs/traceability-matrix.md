@@ -35,7 +35,7 @@ This matrix links requirements to intended components, verification methods, wor
 | Prereq ID | Description | Target | Verification Method | Tracking Issue | Status |
 | :---: | :--- | :--- | :--- | :---: | :---: |
 | **PRQ-01** | **Caregiver Authentication & Sessions** | API, Web, Mobile | Auth Emulator Integration Tests | [Web #5](https://github.com/Thesis-Titans/littlesteps-react/issues/5)<br/>API `require-firebase-user.ts` | API scaffold reported; emulator verification evidence pending |
-| **PRQ-02** | **Ergonomic Responsive Shell** | Web, Mobile | Viewport Tests (375px–1440px) + Fitts's Law ($\ge$ 48px frequent, $\ge$ 44px floor) | [Docs #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15) (Prototype) | Specified in UI/UX Specification; viewport verification pending |
+| **PRQ-02** | **Ergonomic Responsive Shell** | Web, Mobile | Viewport Tests (375px–1440px) + Fitts's Law ($\ge$ 48px frequent, $\ge$ 44px floor) | [Docs #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15) (Prototype) | Implemented in [React PR #27](https://github.com/Thesis-Titans/littlesteps-react/pull/27); browser viewport verification pending ([React #28](https://github.com/Thesis-Titans/littlesteps-react/issues/28)) |
 | **PRQ-03** | **App Settings & Informational Views** | Web, Mobile | Visual Inspection & Policy Link Audit | WP-0.5 | Prototype Stage |
 
 ---
