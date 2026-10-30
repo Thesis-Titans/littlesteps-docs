@@ -3,7 +3,7 @@
 **Status:** Canonical Content Sourcing Baseline  
 **Governing Standard:** Republic Act No. 12199 (ECCD System Act) & RA 10173  
 **Owner:** Vincent (Backend & Content Lead)  
-**Last Reviewed:** 2026-10-29  
+**Last Reviewed:** 2026-10-30  
 **Related Documents:** [Research Register](research-register.md), [Product Scope](product-scope.md), [API Reference & Integration Guide](api-reference.md)
 
 ---
@@ -39,9 +39,9 @@ Statutory age allocations and LittleSteps product navigation categories are stri
 
 | LittleSteps Product Category | UX Navigation Range | Statutory Authority (RA 12199) | Candidate Curriculum Reference (author-checked; page locators under re-check) |
 | :--- | :---: | :--- | :--- |
-| **Young Infants** | 0–5 months | ECCD Council (<5 years) | NELF (2010) Annex 4 *(0–12 months section from printed p. 72)*; NELC LRP 3 *(infant calendars, 0 to 1 year, PDF pp. 70–136)* |
-| **Older Infants** | 6–11 months | ECCD Council (<5 years) | NELF (2010) Annex 4 *(0–12 months section from printed p. 72; 7–12 month indicators)*; NELC LRP 3 *(infant calendars, 0 to 1 year, PDF pp. 70–136)* |
-| **Young Toddlers** | 12–23 months | ECCD Council (<5 years) | NELF (2010) Annex 4 *(13–24 months section from printed p. 78)*; NELC LRP 3 *(toddler calendars, 1 to 2 years, PDF pp. 140–207)*; LRP 2 *(provisional)* |
+| **Young Infants** | 0–5 months | ECCD Council (<5 years) | NELF (2010) Annex 4 *(0–12 months section from printed p. 72)*; NELC LRP 3 *(infant calendars, 0 to 1 year, within LRP 3 PDF pp. 69–207; content from p. 70)* |
+| **Older Infants** | 6–11 months | ECCD Council (<5 years) | NELF (2010) Annex 4 *(0–12 months section from printed p. 72; 7–12 month indicators)*; NELC LRP 3 *(infant calendars, 0 to 1 year, within LRP 3 PDF pp. 69–207; content from p. 70)* |
+| **Young Toddlers** | 12–23 months | ECCD Council (<5 years) | NELF (2010) Annex 4 *(13–24 months section from printed p. 78)*; NELC LRP 3 *(toddler calendars, 1 to 2 years, within LRP 3 PDF pp. 69–207; content from p. 70)*; LRP 2 *(provisional)* |
 | **Older Toddlers** | 24–35 months | ECCD Council (<5 years) | NELF (2010) Annex 4 *(25–36 months section from printed p. 87)*; no NELC package in the compiled file is titled for 24–35 months (LRP 3 stops at 2 years; LRP 4–6 are Pre-K, 3–4 years) |
 | **Younger Preschoolers** | 36–47 months | ECCD Council (<5 years) | NELF (2010) Annex 4 *(37–71 months section from printed p. 95)*; NELC LRP 5 *(Pre-K1, 3 to 3.11 years; title confirmed, content not inspected)* |
 | **Older Preschoolers** | 48–59 months | ECCD Council (<5 years) | NELF (2010) Annex 4 *(37–71 months section from printed p. 95)*; NELC LRP 6 *(Pre-K2, 4 to 4.11 years)*, LRP 7 *(songs, rhymes, creative activities)*; titles confirmed, content not inspected |
@@ -96,7 +96,7 @@ Philippine government publications are subject to specific legal conditions unde
 | **National Early Learning Framework (NELF)** | ECCD Council | 0–6 years | Foundational standards; Annex 4 contains age-validated developmental indicators across the early learning domains listed in Annex 4 (five, per its Background). | Official Council publication (approved 24 September 2010, ECCD Council Board Resolution No. 10-01). Text used for non-commercial educational alignment; borrowed third-party creative items protected. | **Author-checked (2010)**; Annex 4 indicators extracted (Annex 4, printed pp. 67–109; age sections start at printed p. 72 for 0–12 months, p. 78 for 13–24, p. 87 for 25–36 and p. 95 for 37–71 months). | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
 | **NELC — LRP 1 (Implementation Guidelines)** | ECCD Council | 0–4 years | Center and home implementation guidelines. | Educational reference copy. Unavailable for content authoring until permissions confirmed. | Official package identified; not inspected; provisional. | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
 | **NELC — LRP 2 (Standards & Competencies)** | ECCD Council | 0–4 years | Developmental domains, behavioral indicators, and milestone progression for infants and toddlers. | Educational reference copy. Subject to RA 8293 Sec. 176. Unavailable for content authoring until permissions confirmed. | Official package identified; not inspected; provisional. | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
-| **NELC — LRP 3 (Parent-Mentor Activity Calendar)** | ECCD Council | 0–23 months | Suggested home-based calendar of caregiver activities for infants and toddlers (feeding, bathing, movement, sensory play). | Educational home-mentoring package (compiled LRP file, cover 2015; Governing Board Resolution No. 15-02, 10 September 2015). Unavailable for content authoring until permissions confirmed. | **Author-checked (compiled LRP file, cover 2015; Governing Board Resolution No. 15-02, 10 September 2015)**; activity prompts extracted (LRP 3, PDF pp. 69–207 of the compiled LRP file; page locators are given per record in §5.1). | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
+| **NELC — LRP 3 (Parent-Mentor Activity Calendar)** | ECCD Council | 0–23 months | Suggested home-based calendar of caregiver activities for infants and toddlers (feeding, bathing, movement, sensory play). | Educational home-mentoring package (compiled LRP file, cover 2015; Governing Board Resolution No. 15-02, 10 September 2015). Unavailable for content authoring until permissions confirmed. | **Author-checked (compiled LRP file, cover 2015; Governing Board Resolution No. 15-02, 10 September 2015)**; activity prompts extracted (LRP 3, PDF pp. 69–207 of the compiled LRP file, where p. 69 is blank apart from the header and content starts at p. 70; page locators are given per record in §5.1). | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
 | **NELC — LRP 4 (Suggested Routine Activities for Pre-K1 and Pre-K2)** | ECCD Council | 36–59 months | Routine activities for 3- and 4-year-olds (title confirmed in the compiled file). | Educational reference copy. Unavailable for content authoring until permissions confirmed. | Official package identified; not inspected; provisional. | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
 | **NELC — LRP 5 & 6 (Suggested Activities for Pre-K1: 3–3.11 years; Pre-K2: 4–4.11 years)** | ECCD Council | 36–59 months | Preschool activity plans for 3- and 4-year-olds. | Educational reference copy. Unavailable for content authoring until permissions confirmed. | Official packages identified; not inspected; provisional. | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
 | **NELC — LRP 7 (Creative Resources, Songs & Rhymes)** | ECCD Council | 0–4 years | Traditional action songs, poems, rhymes, and creative movement. | Third-party borrowed works protected under RA 8293. Traditional folklore is separated from modern works, but published arrangements and translations may be protected. Unavailable for content authoring until permissions confirmed. | Official package identified; not inspected; provisional. Creative assets not audited. | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
@@ -137,12 +137,12 @@ source:
   source_check: "Template example. Tummy session with toys, lights and mirrors, and the rolled blanket, confirmed on that page; \"Section 1, Activity 4\" in the earlier draft was not found."
 relationship_to_source: "adapted" # direct_link | adapted | original_informed_by_source
 adaptation_notes: "Paraphrased caregiver guidance for home environment using rolled blanket; removed center-based terminology."
-language: "fil" # en | fil | hil (one value, catalog `language`)
+language: "en" # en | fil | hil (one value, catalog `language`)
 safety_accessibility_notes: "Requires adult supervision at all times; use firm, flat floor surface (never soft beds)."
 review:
   reviewer_name: "Vincent Tamano (Backend & Content Lead)"
   reviewer_role: "Student Author / Course Researcher"
-  review_date: "2026-10-29"
+  review_date: "2026-10-30"
   review_status: "source_checked" # draft | source_checked | subject_matter_reviewed | reviewed_approved
 limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
 ```
@@ -170,11 +170,12 @@ source:
 relationship_to_source: "adapted"
 adaptation_notes: "Adapted infant indicator into interactive caregiver floor play using a soft cloth toy held by the caregiver within the baby's view and reach, above the chest."
 materials: ["Soft cloth toy"]
+language: "en" # en | fil | hil (catalog `language`)
 safety_accessibility_notes: "Caregiver holds the toy at all times; no string, ribbon or cord near an infant (strangulation risk); toy has no small detachable parts; awake, supervised play only."
 review:
   reviewer_name: "Vincent Tamano (Backend & Content Lead)"
   reviewer_role: "Student Author / Course Researcher"
-  review_date: "2026-10-29"
+  review_date: "2026-10-30"
   review_status: "source_checked"
 limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
 ```
@@ -198,10 +199,12 @@ source:
 relationship_to_source: "adapted"
 adaptation_notes: "Safe floor play on a firm mat with rolled blanket support and mirror tracking to build upper-body strength."
 materials: ["Firm mat", "Rolled blanket", "Unbreakable mirror"]
+language: "en" # en | fil | hil (catalog `language`)
+safety_accessibility_notes: "Awake, supervised play only; no small or detachable parts; nothing that can be swallowed. Firm, flat surface only, never a bed or soft surface; mirror must be unbreakable with no sharp edges."
 review:
   reviewer_name: "Vincent Tamano (Backend & Content Lead)"
   reviewer_role: "Student Author / Course Researcher"
-  review_date: "2026-10-29"
+  review_date: "2026-10-30"
   review_status: "source_checked"
 limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
 ```
@@ -209,7 +212,7 @@ limitations: "Provisional Academic Reference — Pending Review. Educational pro
 #### 3. Older Infants (6–11 months) — Cognitive Cause & Effect
 ```yaml
 item_id: "act-ph-nelf-003"
-title: "Spoon Fetch Challenge"
+title: "Spoon Reach Play"
 item_type: "game"
 intended_age_band: "6-11m"
 domain: "cognitive"
@@ -223,12 +226,14 @@ source:
   locator: "NELF printed p. 76 (PDF p. 86)"
   source_check: "Confirmed: source, age band and the spoon-to-reach indicator."
 relationship_to_source: "adapted"
-adaptation_notes: "Encourages tool-use problem solving by showing child how to use a wooden spoon to reach a nearby toy."
+adaptation_notes: "Reach play: the caregiver shows how a wooden spoon can nudge a nearby toy, and the child explores in their own way; there is no goal to complete and no right or wrong result."
 materials: ["Wooden spoon", "Small toy"]
+language: "en" # en | fil | hil (catalog `language`)
+safety_accessibility_notes: "Supervised play only; no small or detachable parts; nothing that can be swallowed. Choking risk: the toy must be too large to fit in the mouth and the spoon smooth, with no splinters; caregiver holds the spoon and watches for mouthing."
 review:
   reviewer_name: "Vincent Tamano (Backend & Content Lead)"
   reviewer_role: "Student Author / Course Researcher"
-  review_date: "2026-10-29"
+  review_date: "2026-10-30"
   review_status: "source_checked"
 limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
 ```
@@ -252,10 +257,12 @@ source:
 relationship_to_source: "adapted"
 adaptation_notes: "Exaggerated facial expressions and warm vocal interactions facing a mirror to build emotional recognition."
 materials: ["Unbreakable mirror"]
+language: "en" # en | fil | hil (catalog `language`)
+safety_accessibility_notes: "Awake, supervised play only; no small or detachable parts; nothing that can be swallowed. Mirror must be unbreakable with no sharp edges; caregiver holds or steadies it."
 review:
   reviewer_name: "Vincent Tamano (Backend & Content Lead)"
   reviewer_role: "Student Author / Course Researcher"
-  review_date: "2026-10-29"
+  review_date: "2026-10-30"
   review_status: "source_checked"
 limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
 ```
@@ -279,10 +286,12 @@ source:
 relationship_to_source: "adapted"
 adaptation_notes: "Face-to-face naming and rhyme play; the toddler explores body parts on themselves and the caregiver follows the child's lead, with no target number or pass/fail."
 materials: ["None required"]
+language: "en" # en | fil | hil (catalog `language`)
+safety_accessibility_notes: "Caregiver stays with the child; no objects needed; gentle touch only and stop if the child turns away."
 review:
   reviewer_name: "Vincent Tamano (Backend & Content Lead)"
   reviewer_role: "Student Author / Course Researcher"
-  review_date: "2026-10-29"
+  review_date: "2026-10-30"
   review_status: "source_checked"
 limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
 ```
@@ -306,10 +315,12 @@ source:
 relationship_to_source: "adapted"
 adaptation_notes: "Sorting clean plastic cups, plates, and saucers during meal preparation to support categorization."
 materials: ["Clean plastic cups", "Plastic plates", "Saucers"]
+language: "en" # en | fil | hil (catalog `language`)
+safety_accessibility_notes: "Supervise throughout; use unbreakable items with no cracks or sharp edges; keep out anything small enough to swallow."
 review:
   reviewer_name: "Vincent Tamano (Backend & Content Lead)"
   reviewer_role: "Student Author / Course Researcher"
-  review_date: "2026-10-29"
+  review_date: "2026-10-30"
   review_status: "source_checked"
 limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
 ```
@@ -333,10 +344,12 @@ source:
 relationship_to_source: "adapted"
 adaptation_notes: "Positional preposition understanding ('inside', 'under', 'on top of') using a clean plastic bowl and ball."
 materials: ["Small ball", "Plastic bowl"]
+language: "en" # en | fil | hil (catalog `language`)
+safety_accessibility_notes: "Supervise throughout; ball must be too large to fit in the mouth (choking risk); bowl must be unbreakable."
 review:
   reviewer_name: "Vincent Tamano (Backend & Content Lead)"
   reviewer_role: "Student Author / Course Researcher"
-  review_date: "2026-10-29"
+  review_date: "2026-10-30"
   review_status: "source_checked"
 limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
 ```
@@ -360,10 +373,12 @@ source:
 relationship_to_source: "adapted"
 adaptation_notes: "Color sorting using everyday household items (colored cups and clean cloth scraps)."
 materials: ["Red cups", "Blue cups", "Colored cloth scraps"]
+language: "en" # en | fil | hil (catalog `language`)
+safety_accessibility_notes: "Supervise throughout; cloth scraps must be too large to swallow and free of loose threads, pins and buttons; cups unbreakable."
 review:
   reviewer_name: "Vincent Tamano (Backend & Content Lead)"
   reviewer_role: "Student Author / Course Researcher"
-  review_date: "2026-10-29"
+  review_date: "2026-10-30"
   review_status: "source_checked"
 limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
 ```
@@ -387,10 +402,12 @@ source:
 relationship_to_source: "adapted"
 adaptation_notes: "Open-ended balance and hopping play along a floor line marked with chalk or masking tape; the child tries at their own pace and the caregiver describes what they see."
 materials: ["Masking tape or sidewalk chalk"]
+language: "en" # en | fil | hil (catalog `language`)
+safety_accessibility_notes: "Supervise closely and stay near to steady the child; clear, flat, non-slip area; keep chalk out of the mouth."
 review:
   reviewer_name: "Vincent Tamano (Backend & Content Lead)"
   reviewer_role: "Student Author / Course Researcher"
-  review_date: "2026-10-29"
+  review_date: "2026-10-30"
   review_status: "source_checked"
 limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
 ```
@@ -414,10 +431,12 @@ source:
 relationship_to_source: "adapted"
 adaptation_notes: "Modeling polite Filipino honorifics and respectful greetings ('Magandang umaga', 'Po', 'Opo') with family members."
 materials: ["None required"]
+language: "en" # en | fil | hil (catalog `language`) # instructions are English; the greetings "Magandang umaga", "po" and "opo" are Filipino
+safety_accessibility_notes: "Adult-led and no materials; child may answer in words, gestures or not at all; no pressure to repeat."
 review:
   reviewer_name: "Vincent Tamano (Backend & Content Lead)"
   reviewer_role: "Student Author / Course Researcher"
-  review_date: "2026-10-29"
+  review_date: "2026-10-30"
   review_status: "source_checked"
 limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
 ```
@@ -441,10 +460,12 @@ source:
 relationship_to_source: "adapted"
 adaptation_notes: "Open-ended drawing play: the child draws a person or anything they like, and the caregiver follows the child's lead and invites them to tell about it."
 materials: ["Thick crayon", "Plain paper"]
+language: "en" # en | fil | hil (catalog `language`)
+safety_accessibility_notes: "Use thick, non-toxic crayons; supervise so crayons are not put in the mouth."
 review:
   reviewer_name: "Vincent Tamano (Backend & Content Lead)"
   reviewer_role: "Student Author / Course Researcher"
-  review_date: "2026-10-29"
+  review_date: "2026-10-30"
   review_status: "source_checked"
 limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
 ```
@@ -468,10 +489,12 @@ source:
 relationship_to_source: "adapted"
 adaptation_notes: "Inviting child to draw a favorite family experience and tell in their own words about their drawing, at whatever length they choose."
 materials: ["Paper", "Crayons"]
+language: "en" # en | fil | hil (catalog `language`)
+safety_accessibility_notes: "Use non-toxic crayons; supervise so crayons are not put in the mouth."
 review:
   reviewer_name: "Vincent Tamano (Backend & Content Lead)"
   reviewer_role: "Student Author / Course Researcher"
-  review_date: "2026-10-29"
+  review_date: "2026-10-30"
   review_status: "source_checked"
 limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
 ```
@@ -495,10 +518,12 @@ source:
 relationship_to_source: "adapted"
 adaptation_notes: "Identifying phonetic sounds of common Filipino alphabet letters (A, B, S, M, T) and matching with household objects."
 materials: ["Paper letter cards", "Common household objects"]
+language: "en" # en | fil | hil (catalog `language`)
+safety_accessibility_notes: "Supervise throughout; cards large and smooth; household objects must be too large to swallow, not sharp or breakable."
 review:
   reviewer_name: "Vincent Tamano (Backend & Content Lead)"
   reviewer_role: "Student Author / Course Researcher"
-  review_date: "2026-10-29"
+  review_date: "2026-10-30"
   review_status: "source_checked"
 limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
 ```
@@ -522,10 +547,12 @@ source:
 relationship_to_source: "adapted"
 adaptation_notes: "Imagining and painting non-real inventions or fantasy creatures, explaining their purpose and features."
 materials: ["Paper", "Washable paint or crayons"]
+language: "en" # en | fil | hil (catalog `language`)
+safety_accessibility_notes: "Use washable, non-toxic paint; supervise so paint is not swallowed; cover clothes and table."
 review:
   reviewer_name: "Vincent Tamano (Backend & Content Lead)"
   reviewer_role: "Student Author / Course Researcher"
-  review_date: "2026-10-29"
+  review_date: "2026-10-30"
   review_status: "source_checked"
 limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
 ```
