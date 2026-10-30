@@ -211,7 +211,50 @@ LittleSteps integrates generative intelligence to enhance learning without relyi
 ### 6.1 Endpoints Specification
 
 #### `POST /api/v1/ai/recommendations`
-Generates activity recommendations based on non-identifying developmental parameters (Age Band, Domain, Indoor/Outdoor setting).
+Suggests up to three reviewed catalog activities for an age band, using only non-identifying parameters. Requires a Bearer token.
+
+> **Status:** implemented in the api PR `feat/ai-recommendations-core`, not merged yet. Until it merges, `main` does not serve this route. No AI provider is configured in this slice, so every response is currently a Tier 3 catalog fallback.
+
+* **Request body (strict):** unknown fields are rejected with `400`, never ignored, so `childId`, nicknames, notes and similar fields cannot be sent.
+
+  | Field | Type | Rules |
+  | :--- | :--- | :--- |
+  | `ageBand` | string, required | One of `0-5m`, `6-11m`, `12-23m`, `24-35m`, `36-47m`, `48-59m`, `60-71m` |
+  | `domain` | string, optional | One of `cognitive`, `motor`, `language`, `socioEmotional` |
+  | `setting` | string, optional | `indoor`, `outdoor` or `either` (default `either`) |
+  | `timeMinutes` | integer, required | 5 to 120 |
+  | `materials` | string array, optional | Up to 10 items, each at most 40 characters (default `[]`) |
+  | `language` | string, required | `en`, `fil` or `hil` |
+  | `count` | integer, optional | 1 to 3 (default 3) |
+
+  ```json
+  { "ageBand": "12-23m", "domain": "motor", "setting": "indoor", "timeMinutes": 15, "materials": ["cups", "spoon"], "language": "en", "count": 3 }
+  ```
+* **Response `200 OK`** (with `Cache-Control: no-store`):
+
+  | Field | Meaning |
+  | :--- | :--- |
+  | `suggestions[]` | Each item has `activityId`, `title`, `whyPicked` (short plain reason) and `activity` (the full `CatalogActivity`). Only `reviewed_approved` catalog items are returned, and titles and instructions always come from the catalog, never from the provider. |
+  | `source` | `"ai"` when the provider's picks passed validation, otherwise `"catalog_fallback"`. (This endpoint no longer uses the value `"catalog"`; that value remains for `/ai/story-activity`.) |
+  | `tier` | `1` (provider) or `3` (deterministic catalog). `2` (local Ollama) is reserved and not produced in this slice. |
+  | `provenance` | `badge` (`"Suggested by AI"` for tier 1, otherwise `null`), `label` (`"Our picks"` for fallback, otherwise `null`), `disclaimer` (`"Observational play suggestion only. Not developmental assessment."`), `guidance` (tier 1 only: `"You know your child best. Change it as you like, and stay close while you play."`), `model` (provider model name, or `null` for fallback) and `reviewed` (always `true`). |
+  | `reason` | Present only as `"NO_REVIEWED_CONTENT"` when the catalog holds no reviewed items. |
+
+  ```json
+  {
+    "suggestions": [
+      { "activityId": "stack-the-cups", "title": "Stack the Cups", "whyPicked": "Matches the age band and the cups you have.", "activity": { "id": "stack-the-cups" } }
+    ],
+    "source": "catalog_fallback",
+    "tier": 3,
+    "provenance": { "badge": null, "label": "Our picks", "disclaimer": "Observational play suggestion only. Not developmental assessment.", "model": null, "reviewed": true }
+  }
+  ```
+  The `activity` object is abbreviated above; see section 5.2 for its fields.
+* **Empty results:** with an empty reviewed catalog the response is `200` with `suggestions: []` and `reason: "NO_REVIEWED_CONTENT"`. When the catalog has content but nothing matches the request, the response is `200` with an empty `suggestions` list and no `reason`. Clients should show an empty state, not an error.
+* **Errors:** `400 INVALID_INPUT` with `details` (`{ "field", "issue" }`; an unknown field is reported as `"Unknown field"`), `401 UNAUTHENTICATED`, `500 INTERNAL_ERROR`. `429 RATE_LIMITED` is documented in the OpenAPI contract but **not implemented yet** (see section 6.2). A provider failure is never an error response.
+* **Privacy boundary:** the request carries no child or caregiver identifiers. The provider prompt contains only age band, time, setting, cleaned materials (lowercased, control characters removed, truncated, de-duplicated), language, the pick count, and the id, title, domain and materials of candidate catalog items. It never contains user ID, token, email, child data, observations or journal text. Logs record only the event name, tier, latency and error class, never prompts, replies, materials or user identifiers.
+* **Fallback behaviour:** the provider call is bounded at 8 seconds and its reply must pick only candidate ids and pass output validation. On timeout, error, invalid output, no provider configured, or no eligible candidates, the endpoint returns `200` with the deterministic Tier 3 ranking (`source: "catalog_fallback"`, `tier: 3`, no AI badge). Tier 2 (Ollama) is planned and not part of this slice.
 
 #### `POST /api/v1/ai/story-activity`
 Generates companion play and discussion activities based on a real book selected from the Open Library catalog.
@@ -252,7 +295,7 @@ Google Gemini API                                            Ollama (localhost:1
 1. **Tier 1 (Google Gemini 1.5 Flash - Cloud Primary):**
    - Called using server-side `@google/genai` or REST endpoint.
    - Timeout bounded at **8 seconds** via `AbortSignal.timeout(8000)`.
-   - Rate limit guard: 10 requests / hour per IP.
+   - Rate limit (planned, not implemented): 10 requests per hour per authenticated user, plus a looser per-IP cap. Over the limit the API would return `429 RATE_LIMITED` with `Retry-After: 3600`.
 2. **Tier 2 (Ollama - Local Offline AI Fallback):**
    - Active when `LOCAL_AI_ENABLED=true` in development/demo environments.
    - Pings `http://localhost:11434/api/generate` with model `qwen2.5-coder:7b`.
@@ -288,6 +331,7 @@ All error responses strictly follow the standardized JSON error envelope:
 | :--- | :--- |
 | Public catalog (`/api/v1/catalog/*`) | `public, max-age=3600` |
 | Catalog books fallback response | `public, max-age=60` |
+| AI routes (`/api/v1/ai/*`; `/ai/recommendations` is implemented in the api PR `feat/ai-recommendations-core`, not merged yet) | `no-store` |
 | Authenticated routes: `/health` and `/api/v1/me` (implemented); `/api/v1/children/**` (planned, not yet specified in the contract) | `no-store` |
 
 ### Complete HTTP Status to Error Code Mapping Table
@@ -299,7 +343,7 @@ All error responses strictly follow the standardized JSON error envelope:
 | **`403`** | `ORIGIN_NOT_ALLOWED` | Request from an origin not in the CORS allowlist (implemented) | Client shows access denied alert |
 | **`404`** | `RESOURCE_NOT_FOUND` | Child ID, activity, or journal note does not exist OR belongs to another caregiver (BOLA) | Client shows item not found; prevents resource existence leakage |
 | **`422`** (Unprocessable Content, [RFC 9110 §15.5.21](https://www.rfc-editor.org/rfc/rfc9110#section-15.5.21)) | `UNPROCESSABLE_ENTITY` | Business logic violation (e.g. child birth month in the future or more than 71 months ago on create/edit) | Client displays business rule explanation |
-| **`429`** | `RATE_LIMITED` | Planned, not implemented yet: AI request quota exceeded (>10 requests/hour) | Client triggers Tier 3 fallback; would include a `Retry-After: 3600` header (documented, not implemented) |
+| **`429`** | `RATE_LIMITED` | Planned, not implemented yet (documented in the OpenAPI contract for `/ai/recommendations`): AI request quota exceeded (more than 10 requests per hour per user, plus a looser per-IP cap) | Client triggers Tier 3 fallback; would include a `Retry-After: 3600` header (documented, not implemented) |
 | **`500`** | `INTERNAL_ERROR` | Unhandled server exception | Client displays generic error toast; hides internal stack traces |
 | **`502`** | `UPSTREAM_SERVICE_ERROR`| Open Library or Gemini API unreachable | Server automatically triggers internal cached or deterministic fallback |
 | **`504`** | `GATEWAY_TIMEOUT` | Upstream provider exceeds 8-second timeout | Server automatically triggers fallback response |
