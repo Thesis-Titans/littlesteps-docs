@@ -108,23 +108,26 @@ Base URL (Local Emulator): `http://127.0.0.1:5001/{projectId}/asia-southeast1/ap
 
 ### 4.2 Child Profile Management (FR-01)
 
-> **Contract merged in littlesteps-api PRs #21, #22 and #24; routes not implemented.** The child routes below are defined in `openapi/openapi.yaml` and `docs/child-profile-contract.md` on `main`, but no child route exists in the API yet ([API #8](https://github.com/Thesis-Titans/littlesteps-api/issues/8)). `DELETE` is not covered by that contract and stays at its earlier planned shape. Decisions D1 (API-to-storage mapping; `caregiverId` never returned) and D4 (nickname normalization and HTTP details) were recorded on 30 October 2026. D5 (deletion execution) and D6 (production retention) are open.
+> **Contract merged in littlesteps-api PRs #21, #22 and #24. The four `GET`/`POST`/`GET`/`PATCH` routes are implemented in api PR `feat/child-profile-api` (not merged yet).** The routes are defined in `openapi/openapi.yaml` and `docs/child-profile-contract.md`; the implementation tracks [API #8](https://github.com/Thesis-Titans/littlesteps-api/issues/8) and is not on `main` until that PR merges. `DELETE` is not covered by that contract and stays at its earlier planned shape. Decisions D1 (API-to-storage mapping; `caregiverId` never returned) and D4 (nickname normalization and HTTP details) were recorded on 30 October 2026. D5 (deletion execution) and D6 (production retention) are open.
 
 | Method | Path | Auth | Purpose | Success (Status / Body) | Error Codes |
 | :--- | :--- | :---: | :--- | :--- | :--- |
-| `GET` | `/api/v1/children` | Bearer | List children owned by the verified caregiver (bare array, order unspecified) | `200 OK`<br/>`[ { "id": "...", "nickname": "Sample Child", "birthMonthYear": "2025-08", "ageBand": "12-23m", "createdAt": "...", "updatedAt": "..." } ]`, or `[]` | `401 UNAUTHENTICATED` |
+| `GET` | `/api/v1/children` | Bearer | List children owned by the verified caregiver (bare array, ordered by `createdAt` then `id`; at most 50 profiles are read) | `200 OK`<br/>`[ { "id": "...", "nickname": "Sample Child", "birthMonthYear": "2025-08", "ageBand": "12-23m", "createdAt": "...", "updatedAt": "..." } ]`, or `[]` | `401 UNAUTHENTICATED` |
 | `POST` | `/api/v1/children` | Bearer | Create a child profile: `nickname` plus exactly one of `birthMonthYear` (`YYYY-MM`) or `ageBand` | `201 Created`<br/>profile object (as above; no `birthMonthYear` when `ageBand` was sent) | `400 INVALID_INPUT` (shape, extra fields, both or neither age source)<br/>`401 UNAUTHENTICATED`<br/>`422 UNPROCESSABLE_ENTITY` (birth month in the future or over 71 months ago) |
-| `GET` | `/api/v1/children/:childId` | Bearer | Retrieve a child profile | `200 OK`<br/>profile object | `400 INVALID_INPUT` (malformed UUID)<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` |
-| `PATCH` | `/api/v1/children/:childId` | Bearer | Update `nickname` and/or exactly one of `birthMonthYear` or `ageBand` | `200 OK`<br/>updated profile object | `400 INVALID_INPUT` (empty update, nulls, both age sources)<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND`<br/>`422 UNPROCESSABLE_ENTITY` |
+| `GET` | `/api/v1/children/:childId` | Bearer | Retrieve a child profile | `200 OK`<br/>profile object | `401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` (missing, another caregiver's, or malformed id) |
+| `PATCH` | `/api/v1/children/:childId` | Bearer | Update `nickname` and/or exactly one of `birthMonthYear` or `ageBand` | `200 OK`<br/>updated profile object | `400 INVALID_INPUT` / `INVALID_JSON` (empty update, nulls, both age sources)<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` (missing, another caregiver's, or malformed id)<br/>`422 UNPROCESSABLE_ENTITY` |
 | `DELETE`| `/api/v1/children/:childId` | Bearer | Cascading deletion of child and observations (planned; not part of the child profile contract) | `204 No Content` | `401`<br/>`404` |
 
-Rules from the merged contract (not yet implemented):
+Rules from the contract (implemented in the unmerged api branch):
 * **Age bands:** `0-5m`, `6-11m`, `12-23m`, `24-35m`, `36-47m`, `48-59m`, `60-71m`. They are educational navigation categories, not clinical classifications.
 * **Age clock:** age is computed from the server's UTC calendar month (`12 * (currentYear - birthYear) + currentMonth - birthMonth`). A shape error such as `2025-13` is `400`; a future month or one more than 71 months ago is `422` on create and edit.
 * **Band derived on read:** when a birth month is stored, `ageBand` is computed on every read and never trusted from storage, so it does not go stale. A child past 71 months stays at `60-71m` on read (never an error). A caregiver-selected band (no birth month) is returned as stored.
 * **PATCH age source:** sending `birthMonthYear` stores the month; sending `ageBand` replaces the age source and removes any stored birth month; sending both is `400`.
 * **Strict bodies:** extra fields (`uid`, `caregiverId`, timestamps, surnames, photos, exact birth dates) are rejected with `400`; no field accepts `null`.
-* **Ownership:** a missing child, a child owned by another caregiver and a substituted ID all return the same `404 RESOURCE_NOT_FOUND`.
+* **Ownership:** a missing child, a child owned by another caregiver and a substituted ID all return the same `404 RESOURCE_NOT_FOUND`. A malformed id in the path is also that `404`, not a `400`.
+* **Validation before lookup:** body validation errors (`400`, `422`) are returned before the child is looked up and do not depend on the id, so they reveal nothing about whether an id exists.
+* **Storage and limits:** records are read and written only under the caller's own path (`/caregivers/{uid}/children/{childId}`). `POST` returns `201`. The list reads at most 50 profiles; no cap on the number of children is decided yet.
+* **Caching:** child responses send `Cache-Control: no-store`.
 
 ### 4.3 Milestone Observations (FR-01)
 
@@ -288,13 +291,13 @@ All error responses strictly follow the standardized JSON error envelope:
 | :--- | :--- |
 | Public catalog (`/api/v1/catalog/*`) | `public, max-age=3600` |
 | Catalog books fallback response | `public, max-age=60` |
-| Authenticated routes: `/health` and `/api/v1/me` (implemented); `/api/v1/children/**` (planned, not yet specified in the contract) | `no-store` |
+| Authenticated routes: `/health` and `/api/v1/me` (implemented); `/api/v1/children` and `/api/v1/children/{childId}` (implemented in the unmerged api branch); other child sub-routes (planned) | `no-store` |
 
 ### Complete HTTP Status to Error Code Mapping Table
 
 | HTTP Status | Error Code | Trigger Scenario | Handling Strategy |
 | :---: | :--- | :--- | :--- |
-| **`400`** | `INVALID_INPUT` (a body that is not valid JSON returns `INVALID_JSON`) | Zod validation failure, missing required fields, invalid catalog query or id format, malformed child UUID; the envelope includes `details` | Client highlights field errors |
+| **`400`** | `INVALID_INPUT` (a body that is not valid JSON returns `INVALID_JSON`) | Zod validation failure, missing required fields, invalid catalog query or id format; the envelope includes `details` | Client highlights field errors |
 | **`401`** | `UNAUTHENTICATED` | Missing or invalid Bearer token | Client redirects to sign-in |
 | **`403`** | `ORIGIN_NOT_ALLOWED` | Request from an origin not in the CORS allowlist (implemented) | Client shows access denied alert |
 | **`404`** | `RESOURCE_NOT_FOUND` | Child ID, activity, or journal note does not exist OR belongs to another caregiver (BOLA) | Client shows item not found; prevents resource existence leakage |

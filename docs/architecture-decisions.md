@@ -250,7 +250,7 @@ graph TD
 ---
 
 ### ADR-012: Child Profile Age Rules and Ownership Responses
-- **Status:** Accepted for the contract (decisions D1 and D4 recorded 30 October 2026 in [API PR #24](https://github.com/Thesis-Titans/littlesteps-api/pull/24); D2 and D3 were decided in the contract review and Mark may still review them; D2 and D3 decided in the contract review). The child routes are not implemented ([API #8](https://github.com/Thesis-Titans/littlesteps-api/issues/8)). D5 (deletion execution) and D6 (production retention) are open.
+- **Status:** Accepted for the contract (decisions D1 and D4 recorded 30 October 2026 in [API PR #24](https://github.com/Thesis-Titans/littlesteps-api/pull/24); D2 and D3 were decided in the contract review and Mark may still review them; D2 and D3 decided in the contract review). The four profile routes are implemented in the api branch `feat/child-profile-api`, which is not merged yet ([API #8](https://github.com/Thesis-Titans/littlesteps-api/issues/8)). D5 (deletion execution) and D6 (production retention) are open.
 - **Context:** The child profile stores a nickname and a birth month, not an exact birth date. Age bands drive catalog navigation and must not go stale. Ownership failures must not reveal whether another caregiver's child exists. Source: `docs/child-profile-contract.md` in `littlesteps-api`.
 - **Options Considered:**
   1. *Store the age band only:* simple, but the band goes stale and cannot be corrected from a birth month.
@@ -262,6 +262,8 @@ graph TD
   - A stored child who passes 71 months stays at `60-71m` on read. There is no error, no new field and no clamping on write.
   - Create takes a nickname plus exactly one age source (`birthMonthYear` or `ageBand`). PATCH takes `nickname` and/or exactly one age source; both sources is `400`, nulls are rejected.
   - The nickname is trimmed and internal whitespace is collapsed (D4). The API names `nickname` and `birthMonthYear` map to stored `name` and `birthMonth`, and `caregiverId` is never returned (D1).
+  - A malformed child id in the path returns the same `404 RESOURCE_NOT_FOUND` as a missing child, not a `400`, so the id format reveals nothing.
+  - Body validation (`400`, `422`) runs before the child lookup and does not depend on the id.
   - A missing child and another caregiver's child return the same `404 RESOURCE_NOT_FOUND` (same status, body and headers). This is a project design choice built on per-object authorization ([OWASP API1:2023](https://api-security.owasp.org/editions/2023/en/0xa1-broken-object-level-authorization)); that page does not itself prescribe 404 over 403.
 - **Consequences:**
   - *Positive:* no stale bands, no exact birth dates stored, no ownership disclosure through status codes.
