@@ -351,22 +351,23 @@ Keep work in progress small. Do not start dependent feature work while a key con
 
 ### M0 status — Sprint 1 started October 26
 
-Last checked against GitHub on **30 October 2026** (Sprint 1, Day 5).
+Last checked against GitHub on the evening of **30 October 2026** (Sprint 1, Day 5).
 
 **Done**
 
 - **Execution plan:** reviewed and merged in [Docs PR #13](https://github.com/Thesis-Titans/littlesteps-docs/pull/13), then revised in Docs PRs #29–#32 (repository renames, the Flutter restriction lifted, the Figma prototype gate and the design system review).
-- **Project board:** [Thesis-Titans LittleSteps Project #2](https://github.com/orgs/Thesis-Titans/projects/2) holds **83 items** from `littlesteps-docs`, `littlesteps-api`, `littlesteps-react` and `littlesteps-flutter`: 38 Done, 8 In Progress, 4 Ready and 33 Backlog (Status Backlog / Ready / In Progress / Blocked / In Review / Done).
+- **Project board:** [Thesis-Titans LittleSteps Project #2](https://github.com/orgs/Thesis-Titans/projects/2) holds **88 items** from `littlesteps-docs`, `littlesteps-api`, `littlesteps-react` and `littlesteps-flutter`: 39 Done, 10 In Progress, 2 In Review, 4 Ready and 33 Backlog (Status Backlog / Ready / In Progress / Blocked / In Review / Done).
 - **Native milestones:** all four repos have M0–M5 milestones; execution issues are assigned to them.
 - **Sign-in + protected API client ([React #5](https://github.com/Thesis-Titans/littlesteps-react/issues/5)):** merged as PR #21 — `useAuth`, `AuthProvider`, `SignInForm`, 14 tests at merge.
 - **Design system ([React #22](https://github.com/Thesis-Titans/littlesteps-react/issues/22)):** merged as PR #26 — `tokens.css`, 12 shared components, `/dev/components` showcase, 26 tests at merge.
 - **App shell ([React #18](https://github.com/Thesis-Titans/littlesteps-react/issues/18)):** merged as PR #27 on 28 October — responsive shell with sidebar (1280px) and mobile bottom tab bar (375px), 5-tab routing (Today / Explore / Milestones / Journal / This week), `ChildContext` stub, protected routes, 32 passing tests. The browser check is still open (React #28, below).
 - **Learning catalog API ([API #9](https://github.com/Thesis-Titans/littlesteps-api/issues/9)):** merged as [API PR #20](https://github.com/Thesis-Titans/littlesteps-api/pull/20), with review fixes in PR #23 and corrected fallback book ids, licence wording and User-Agent contact in PR #25.
-- **Child profile contract ([API #7](https://github.com/Thesis-Titans/littlesteps-api/issues/7)):** merged as [API PR #21](https://github.com/Thesis-Titans/littlesteps-api/pull/21), with review fixes in PR #22 and decisions D1 and D4 recorded on 30 October in PR #24. This is a contract only; the child routes are not implemented (API #8). Decisions D5 (deletion execution) and D6 (production retention) are still open.
+- **Child profile contract ([API #7](https://github.com/Thesis-Titans/littlesteps-api/issues/7)):** merged as [API PR #21](https://github.com/Thesis-Titans/littlesteps-api/pull/21), with review fixes in PR #22 and decisions D1 and D4 recorded on 30 October in PR #24. This is a contract only; the routes are implemented in the open API PR #29 (see Still open). Decisions D5 (deletion execution) and D6 (production retention) are still open.
 - **Flutter scaffold + CI ([Flutter #2](https://github.com/Thesis-Titans/littlesteps-flutter/issues/2)):** merged as PR #18 — Flutter 3.47.6 project, Material 3 stub theme, GitHub Actions CI (analyze + test + format), zero analyze issues.
 - **Flutter AI Usage Log ([Flutter #14](https://github.com/Thesis-Titans/littlesteps-flutter/issues/14)):** merged as PR #15 — `docs/ai-usage-log.md` with CC 207B format.
 - **Docs PRs #63–#67:** storybook spec alignment, Figma as canonical design source, parent-friendly wording, design system / app shell ownership split, and the app shell record for PRQ-02 — all merged.
 - **Docs PRs #68 and #69:** verified NELF, LRP and MATATAG editions recorded in the provenance register, with review fixes. These are source candidates only; [Docs #3](https://github.com/Thesis-Titans/littlesteps-docs/issues/3) stays open.
+- **Docs PR #72:** Sprint 1 status, traceability evidence and decision records updated; merged.
 - **Docs PRs #70 and #71:** API reference synced with the catalog and child profile contracts; API reference, privacy and safety text aligned with the cited standards.
 
 **In progress**
@@ -375,9 +376,12 @@ Last checked against GitHub on **30 October 2026** (Sprint 1, Day 5).
 
 **Still open**
 
-- **Child profile API ([API #8](https://github.com/Thesis-Titans/littlesteps-api/issues/8)):** Ready; the routes are not implemented.
-- **Child profile workflow ([React #6](https://github.com/Thesis-Titans/littlesteps-react/issues/6)) and account menu / settings ([React #16](https://github.com/Thesis-Titans/littlesteps-react/issues/16)):** Ready.
-- **App shell browser check ([React #28](https://github.com/Thesis-Titans/littlesteps-react/issues/28)):** Ready; viewport verification and the Account link decision are pending.
+- **Child profile API ([API #8](https://github.com/Thesis-Titans/littlesteps-api/issues/8)):** implemented in the open [API PR #29](https://github.com/Thesis-Titans/littlesteps-api/pull/29) (draft, stacked on PR #26, input validation and age calculation) and in review. It is not merged, so `main` does not serve the child routes. A caregiver may have at most 20 children. Decisions D1 and D4 are decided; D5 (deletion execution) and D6 (production retention) are open.
+- **Child profile workflow ([React #6](https://github.com/Thesis-Titans/littlesteps-react/issues/6)):** screens in the open [React PR #32](https://github.com/Thesis-Titans/littlesteps-react/pull/32) (draft, stacked on PR #29, the API client).
+- **Account menu / settings ([React #16](https://github.com/Thesis-Titans/littlesteps-react/issues/16)):** open [React PR #31](https://github.com/Thesis-Titans/littlesteps-react/pull/31) (draft).
+- **App shell browser check ([React #28](https://github.com/Thesis-Titans/littlesteps-react/issues/28)):** viewport verification and the Account link decision are pending. The open [React PR #30](https://github.com/Thesis-Titans/littlesteps-react/pull/30) fixes the narrow bottom-bar label.
+- **AI recommendation core ([API #13](https://github.com/Thesis-Titans/littlesteps-api/issues/13)):** open [API PR #28](https://github.com/Thesis-Titans/littlesteps-api/pull/28) (draft). Its contract is in open [Docs PR #74](https://github.com/Thesis-Titans/littlesteps-docs/pull/74); the child profile routes are documented in open [Docs PR #75](https://github.com/Thesis-Titans/littlesteps-docs/pull/75).
+- **Nothing from this batch is merged.** API PRs #26, #28 and #29, React PRs #29 to #32 and Docs PRs #74 and #75 are open. Items that are not merged by the Sunday review are carry-over candidates for the next sprint.
 - **Low-fidelity prototypes ([Docs #44](https://github.com/Thesis-Titans/littlesteps-docs/issues/44)):** CC 207B requires these; in progress, not complete. Create alongside the Figma frames.
 - **CIT 246 checkpoints:** Checkpoint 1 submitted; approval not yet recorded. Checkpoint 2 and 3 dates TBA.
 - **Content provenance ([Docs #3](https://github.com/Thesis-Titans/littlesteps-docs/issues/3)):** open — source items still to be verified before real Philippine content is used. Engineering uses synthetic fixtures.
