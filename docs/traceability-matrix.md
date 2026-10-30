@@ -48,7 +48,7 @@ This matrix links requirements to intended components, verification methods, wor
 | **NFR-SEC-02** | BOLA Ownership Defense | OWASP API1:2023 | Negative Security Integration Tests | Required: demonstrate cross-caregiver reads and writes are rejected with safe `403`/`404` responses. |
 | **NFR-SEC-03** | Secret Exposure Prevention | CC 207B §2b / Git | Secret scanning and bundle inspection | Required: no secrets in repository history or client bundles; server secrets remain server-side. |
 | **NFR-SEC-04** | CORS Allowlist & Safe Errors | OWASP ASVS | Automated HTTP Header Tests | Required: reject unauthorized origins and ensure error responses contain no stack traces or internal details. |
-| **NFR-PRIV-01** | RA 10173 Data Minimization | RA 10173 / NPC IRR | Schema Inspection & Privacy Notice | Exact birth dates avoided; no biometric or GPS data collected. |
+| **NFR-PRIV-01** | RA 10173 Data Minimization | RA 10173 (Sec. 11, 16, 18); see NFR-PRIV-04 in [security, privacy and AI safeguards](security-privacy-ai.md) | Schema Inspection & Privacy Notice | Exact birth dates avoided; no biometric or GPS data collected. |
 | **NFR-PRIV-02** | Journal Isolation from AI & Telemetry | RA 10173 / Statutory | Unit Tests on AI Prompt Payloads | Prompt-builder tests must assert that journal strings are absent from AI request payloads. |
 | **NFR-PRIV-03** | Synthetic Data Policy | Team Testing Policy | Test Fixture Audit | Fixture audit checks that demo and test profiles use synthetic names in the `demo-littlesteps` environment. |
 | **NFR-AI-01** | Relevance & Real Caregiver Problem Fit | CC 207B §2a Relevance | Usability Pilot Testing | Usability testing must assess whether suggestions match the caregiver's stated time, materials, and setting constraints. |

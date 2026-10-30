@@ -89,13 +89,15 @@ graph TD
 These rules come from the design system review of 23 October 2026 and apply to every component and screen.
 
 - **Visible focus (WCAG 2.4.7):** Every interactive component has a Focus state: a 2px `color/focus` ring with a 2px offset (7.1:1 on white, 6.6:1 on canvas), plus a 2px white inner ring on Forest-filled controls.
-- **Focus not hidden (WCAG 2.4.11):** Scrolling content reserves room for the fixed mobile bars (`scroll-padding-top: 60px`, `scroll-padding-bottom: 72px`) so a focused element is never covered.
+- **Focus not hidden (WCAG 2.4.11):** Scrolling content reserves room for the fixed mobile bars (`scroll-padding-top: 60px`, `scroll-padding-bottom: 72px`) so a focused element is never covered. `scroll-padding` alone is not enough: sticky bars also need a keyboard focus test (tab through every screen and confirm the focused element stays visible).
+- **Page titled (WCAG 2.4.2, A):** Every screen or route has a unique, descriptive page title.
+- **Target size (WCAG 2.5.8, AA):** The minimum is 24 by 24 CSS pixels; the 44/48 px rule in §2.3 is stricter and applies.
 - **Recognizable fields (WCAG 1.4.11):** Text fields, selects and unselected chips use `color/border/input` (3.5:1 on white). Entered values use `color/text/primary`; only placeholders use secondary text.
 - **Undo or confirm:** Reversible actions show an undo toast that stays until the next action or for at least 10 seconds, pauses while hovered or focused, and is announced politely (WCAG 2.2.1). Irreversible actions (deleting a note, a child's records or the account) open a confirmation dialog whose button names the action, such as "Delete Maya's records".
 - **Unsaved drafts:** Cancelling or navigating away from a note or observation that has typed text opens a "Discard this note?" dialog with "Keep editing" as the safe default and "Discard note" as the destructive action. An empty form closes without asking.
 - **Status messages (WCAG 4.1.3):** Loading lines, saves and undo toasts use `role="status"`; errors use `role="alert"`.
 - **Reduced motion (WCAG 2.3.3):** With `prefers-reduced-motion: reduce`, skeletons are static, the AI loading shimmer stops and tap-scale transitions are removed.
-- **Resize and reflow (WCAG 1.4.4, 1.4.10):** Screens stay usable at 200% text size and at 320px width without horizontal scrolling.
+- **Resize and reflow (WCAG 1.4.4, 1.4.10):** Screens stay usable at 200% text size and at 320 CSS px width without horizontal scrolling (1.4.10 Reflow, AA). Criteria checked against [WCAG 2.2](https://www.w3.org/TR/WCAG22/).
 - **Readable line length:** Running text is capped at about 70 characters per line, including inside wide desktop cards.
 - **Sign-in (WCAG 3.3.8):** Email and password fields allow paste and password managers (`autocomplete="email"`, `autocomplete="current-password"`), with no CAPTCHA or memory test. A session that ends keeps any unsaved draft and returns the caregiver to it after signing in again.
 - **Room for translation:** Labels, tabs and chips must fit text 30% longer than English (Tagalog runs about 28% longer); tab labels may wrap to two lines.
@@ -109,6 +111,8 @@ Parents read LittleSteps in short bursts, often one-handed, sometimes in their s
 - **No blame, no verdicts.** Never imply a child is behind or a parent has fallen short. There are no daily goals or streaks.
 - **Errors say what happened and what is still safe**, then what to do next ("It may have been deleted. Your own notes are safe.").
 - **Label AI, don't sell it.** AI-written output carries the "Suggested by AI" badge (NFR-AI-04). Features are named for what they do ("Idea helper"), not for the technology.
+- **A milestone is not a test.** Following the spirit of CDC's [milestone guidance](https://www.cdc.gov/act-early/milestones/index.html), "Not yet" is a prompt to talk to a doctor, not a verdict. No scores, delay labels or percentiles appear on screen.
+- **Standard reassurance line (team wording, not a CDC quote):** "Children develop at different rates. Talk to a health professional if you have concerns."
 - **Point to real people.** For worries about development, name "your pediatrician or barangay health worker".
 - **Translate cleanly.** Plain English carries into Filipino and Hiligaynon. Each language gets its own review by a fluent speaker.
 

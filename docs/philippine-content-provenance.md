@@ -138,7 +138,7 @@ source:
 relationship_to_source: "adapted" # direct_link | adapted | original_informed_by_source
 adaptation_notes: "Paraphrased caregiver guidance for home environment using rolled blanket; removed center-based terminology."
 language: "en" # en | fil | hil (one value, catalog `language`)
-safety_accessibility_notes: "Requires adult supervision at all times; use firm, flat floor surface (never soft beds)."
+safety_accessibility_notes: "Requires adult supervision at all times; use firm, flat floor surface (never soft beds). No cords or ribbons (general precaution). Play only while the baby is awake; never leave the baby to sleep on this setup, and always place the baby on their back to sleep on a firm flat surface (AAP 2022 safe sleep policy, https://publications.aap.org/pediatrics/article/150/1/e2022057990/188304/Sleep-Related-Infant-Deaths-Updated-2022; secondary source, text to be confirmed)."
 review:
   reviewer_name: "Vincent Tamano (Backend & Content Lead)"
   reviewer_role: "Student Author / Course Researcher"
@@ -171,7 +171,7 @@ relationship_to_source: "adapted"
 adaptation_notes: "Adapted infant indicator into interactive caregiver floor play using a soft cloth toy held by the caregiver within the baby's view and reach, above the chest."
 materials: ["Soft cloth toy"]
 language: "en" # en | fil | hil (catalog `language`)
-safety_accessibility_notes: "Caregiver holds the toy at all times; no string, ribbon or cord near an infant (strangulation risk); toy has no small detachable parts; awake, supervised play only."
+safety_accessibility_notes: "Caregiver holds the toy at all times; no string, ribbon or cord near an infant (strangulation risk); the toy must not fit completely inside a small-parts test cylinder ([CPSC Small Parts](https://www.cpsc.gov/FAQ/Small-Parts)); awake, supervised play only."
 review:
   reviewer_name: "Vincent Tamano (Backend & Content Lead)"
   reviewer_role: "Student Author / Course Researcher"
@@ -200,7 +200,7 @@ relationship_to_source: "adapted"
 adaptation_notes: "Safe floor play on a firm mat with rolled blanket support and mirror tracking to build upper-body strength."
 materials: ["Firm mat", "Rolled blanket", "Unbreakable mirror"]
 language: "en" # en | fil | hil (catalog `language`)
-safety_accessibility_notes: "Awake, supervised play only; no small or detachable parts; nothing that can be swallowed. Firm, flat surface only, never a bed or soft surface; mirror must be unbreakable with no sharp edges."
+safety_accessibility_notes: "Awake, supervised play only; objects must not fit completely inside a small-parts test cylinder ([CPSC Small Parts](https://www.cpsc.gov/FAQ/Small-Parts)); nothing that can be swallowed. Firm, flat surface only, never a bed or soft surface; no cords or ribbons; never leave the baby to sleep on this setup, and always place the baby on their back to sleep on a firm flat surface (AAP 2022 safe sleep policy, https://publications.aap.org/pediatrics/article/150/1/e2022057990/188304/Sleep-Related-Infant-Deaths-Updated-2022; secondary source, text to be confirmed); mirror must be unbreakable with no sharp edges."
 review:
   reviewer_name: "Vincent Tamano (Backend & Content Lead)"
   reviewer_role: "Student Author / Course Researcher"
@@ -229,7 +229,7 @@ relationship_to_source: "adapted"
 adaptation_notes: "Reach play: the caregiver shows how a wooden spoon can nudge a nearby toy, and the child explores in their own way; there is no goal to complete and no right or wrong result."
 materials: ["Wooden spoon", "Small toy"]
 language: "en" # en | fil | hil (catalog `language`)
-safety_accessibility_notes: "Supervised play only; no small or detachable parts; nothing that can be swallowed. Choking risk: the toy must be too large to fit in the mouth and the spoon smooth, with no splinters; caregiver holds the spoon and watches for mouthing."
+safety_accessibility_notes: "Supervised play only; objects must not fit completely inside a small-parts test cylinder ([CPSC Small Parts](https://www.cpsc.gov/FAQ/Small-Parts)); nothing that can be swallowed. Choking risk: the toy must be too large to fit in the mouth and the spoon smooth, with no splinters; caregiver holds the spoon and watches for mouthing."
 review:
   reviewer_name: "Vincent Tamano (Backend & Content Lead)"
   reviewer_role: "Student Author / Course Researcher"
@@ -258,7 +258,7 @@ relationship_to_source: "adapted"
 adaptation_notes: "Exaggerated facial expressions and warm vocal interactions facing a mirror to build emotional recognition."
 materials: ["Unbreakable mirror"]
 language: "en" # en | fil | hil (catalog `language`)
-safety_accessibility_notes: "Awake, supervised play only; no small or detachable parts; nothing that can be swallowed. Mirror must be unbreakable with no sharp edges; caregiver holds or steadies it."
+safety_accessibility_notes: "Awake, supervised play only; objects must not fit completely inside a small-parts test cylinder ([CPSC Small Parts](https://www.cpsc.gov/FAQ/Small-Parts)); nothing that can be swallowed. Mirror must be unbreakable with no sharp edges; caregiver holds or steadies it."
 review:
   reviewer_name: "Vincent Tamano (Backend & Content Lead)"
   reviewer_role: "Student Author / Course Researcher"
