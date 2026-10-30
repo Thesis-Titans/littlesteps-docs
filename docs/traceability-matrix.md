@@ -34,7 +34,7 @@ This matrix links requirements to intended components, verification methods, wor
 
 | Prereq ID | Description | Target | Verification Method | Tracking Issue | Status |
 | :---: | :--- | :--- | :--- | :---: | :---: |
-| **PRQ-01** | **Caregiver Authentication & Sessions** | API, Web, Mobile | Auth Emulator Integration Tests | [Web #5](https://github.com/Thesis-Titans/littlesteps-react/issues/5)<br/>API `require-firebase-user.ts` | Web sign-in implemented ([Web #5](https://github.com/Thesis-Titans/littlesteps-react/issues/5), React PR #21, 14 tests); API token middleware and `test/auth-emulator.test.ts` exist in `littlesteps-api`; mobile not started |
+| **PRQ-01** | **Caregiver Authentication & Sessions** | API, Web, Mobile | Auth Emulator Integration Tests | [Web #5](https://github.com/Thesis-Titans/littlesteps-react/issues/5)<br/>API `require-firebase-user.ts` | Web sign-in implemented ([Web #5](https://github.com/Thesis-Titans/littlesteps-react/issues/5), React PR #21, 14 tests at merge); API token middleware is in `littlesteps-api`, and `test/auth-emulator.test.ts` runs in its CI through the Auth Emulator step; mobile not started |
 | **PRQ-02** | **Ergonomic Responsive Shell** | Web, Mobile | Viewport Tests (375px–1440px) + Fitts's Law ($\ge$ 48px frequent, $\ge$ 44px floor) | [Docs #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15) (Prototype) | Implemented in [React PR #27](https://github.com/Thesis-Titans/littlesteps-react/pull/27) (32 passing tests); browser viewport verification still pending ([React #28](https://github.com/Thesis-Titans/littlesteps-react/issues/28)); mobile not started |
 | **PRQ-03** | **App Settings & Informational Views** | Web, Mobile | Visual Inspection & Policy Link Audit | WP-0.5 | Prototype Stage |
 
