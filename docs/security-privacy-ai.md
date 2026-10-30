@@ -51,7 +51,21 @@ LittleSteps processes sensitive family and early-learning observations. System a
   - Avoid collecting exact birth dates; birth month and year (or coarse age band) are sufficient for milestone and activity navigation.
   - No biometric data, national ID numbers, or precise GPS coordinates are ever collected or stored.
   - The optional weather location is a city or municipality chosen by the caregiver, stored as a name and coordinates rounded to two decimal places, and sent only to Open-Meteo from the server ([ADR-009](architecture-decisions.md)). It is off by default and can be cleared.
-  - A plain-language Privacy Notice must be presented to caregivers upon account registration, detailing data categories, processing purposes, retention periods, and deletion procedures.
+  - A plain-language Privacy Notice must be presented to caregivers upon account registration, detailing data categories, processing purposes, retention periods, and deletion procedures. Minimum text:
+    - *What we collect:* a child nickname, birth month and year, activity records and your notes.
+    - *Why:* to suggest age-suitable activities and keep your own record.
+    - *Who sees it:* you. Notes never go to AI, analytics or logs.
+    - *Your rights:* see, correct, delete and get a copy of your data.
+    - *How long we keep it:* while your account is active, and deleted on request. Any inactivity period is proposed, not approved.
+    - *If something goes wrong:* we will tell you and the National Privacy Commission within 72 hours of a data breach.
+    - *Contact:* the named team privacy contact.
+
+### NFR-PRIV-04: Data Subject Rights, Retention, Breach Handling and Consent (RA 10173)
+- **Rights:** The system supports the rights in [RA 10173](https://lawphil.net/statutes/repacts/ra2012/ra_10173_2012.html) Sec. 16 (access, rectification, erasure) and Sec. 18 (data portability), through edit, hard-delete and JSON export (Data Model §3).
+- **Retention:** Retention follows Sec. 11(e), which allows personal data to be kept only as long as necessary for the declared purpose. The inactivity period in the Data Model is a team proposal and is not approved.
+- **Breach handling:** The team must notify the NPC and affected people within 72 hours of a personal data breach (NPC Circular 16-03; secondary source, primary text to be confirmed).
+- **Consent for a child's data:** Parent or guardian consent applies to a child's data. NPC advisory opinions on this are to be confirmed.
+- **Registration and DPO:** NPC Circular 2022-04 registration and data protection officer thresholds are unlikely to apply to a course project (to be confirmed). Naming a privacy contact is a team choice.
 
 ### NFR-PRIV-02: Observation Journal Confidentiality & Isolation
 - **Requirement:** Qualitative entries in the Private Observation Journal (FR-03) constitute private caregiver reflections and must be treated with maximum confidentiality.

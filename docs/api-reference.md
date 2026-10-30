@@ -91,7 +91,7 @@ Authorization: Bearer <Firebase_ID_Token>
 
 ### 3.2 BOLA Authorization Defense (NFR-SEC-02)
 * When a client queries `/api/v1/children/:childId/...`, the server inspects Firestore at `/caregivers/{uid}/children/{childId}` using the token's authenticated `uid`.
-* **Zero-Leakage Policy:** If the child does not exist, or belongs to a different caregiver, the server returns **`404 Not Found`** with error code `RESOURCE_NOT_FOUND`. It deliberately does not return `403 Forbidden`, preventing attackers from enumerating valid child IDs.
+* **Zero-Leakage Policy:** If the child does not exist, or belongs to a different caregiver, the server returns **`404 Not Found`** with error code `RESOURCE_NOT_FOUND`. It deliberately does not return `403 Forbidden`, so callers cannot tell a missing ID from another caregiver's ID. Returning 404 is a project design choice; per-object authorization itself follows [OWASP API1:2023](https://api-security.owasp.org/editions/2023/en/0xa1-broken-object-level-authorization).
 
 ---
 
@@ -103,8 +103,8 @@ Base URL (Local Emulator): `http://127.0.0.1:5001/{projectId}/asia-southeast1/ap
 
 | Method | Path | Auth | Purpose | Success (Status / Body) | Error Codes |
 | :--- | :--- | :---: | :--- | :--- | :--- |
-| `GET` | `/health` | None | Public liveness probe | `200 OK`<br/>`{ "status": "ok", "timestamp": "..." }` | `500` |
-| `GET` | `/api/v1/me` | Bearer | Return authenticated Firebase UID and profile metadata | `200 OK`<br/>`{ "uid": "abc", "email": "...", "createdAt": "..." }` | `401 UNAUTHENTICATED` |
+| `GET` | `/health` | None | Public liveness probe | `200 OK`<br/>`{ "status": "ok" }` | `500` |
+| `GET` | `/api/v1/me` | Bearer | Return the authenticated Firebase UID (email and `createdAt` are planned, not implemented) | `200 OK`<br/>`{ "uid": "abc" }` (planned additions: `email`, `createdAt`) | `401 UNAUTHENTICATED` |
 
 ### 4.2 Child Profile Management (FR-01)
 
@@ -167,7 +167,7 @@ To satisfy the CIT 210 requirement for a live external REST Data API, `littleste
   - `subject` (string, optional, default: `"picture_books"`, max 64 characters): allowlist of `picture_books`, `bedtime`, `colors`, `animals`. Any other value returns `400 INVALID_INPUT`. *(Allowlist: contract proposed in littlesteps-api PRs #20/#21.)*
   - `limit` (integer, optional, default: `12`, max: `30`): Page size.
 * **Upstream Service:** `https://openlibrary.org/subjects/{subject}.json?limit={limit}`
-* **Server-Side In-Memory Cache:** Responses are cached in memory for **60 minutes** (`Cache-Control: public, max-age=3600`). The `X-Cache` response header is `HIT` or `MISS`. Fallback responses use the shorter `Cache-Control: public, max-age=60` so clients retry the upstream soon. *(Contract proposed in littlesteps-api PRs #20/#21.)*
+* **Server-Side In-Memory Cache:** Responses are cached in memory for **60 minutes** (`Cache-Control: public, max-age=3600`). The `X-Cache` response header (`HIT` or `MISS`) is a non-standard debug header; [RFC 6648](https://www.rfc-editor.org/rfc/rfc6648) discourages `X-` prefixes for new headers. The CORS middleware may add `Vary: Origin` to catalog responses, which can fragment CDN caches (to be confirmed). Fallback responses use the shorter `Cache-Control: public, max-age=60` so clients retry the upstream soon. *(Contract proposed in littlesteps-api PRs #20/#21.)*
 * **Client Response Format:**
   ```json
   {
@@ -184,10 +184,11 @@ To satisfy the CIT 210 requirement for a live external REST Data API, `littleste
     ],
     "provenance": {
       "source": "Open Library (Internet Archive)",
-      "license": "Public Domain / Open Access"
+      "license": "Open Library data; cover images may carry their own rights"
     }
   }
   ```
+* **Licence note:** Open Library data is published with no new rights asserted by the Internet Archive; cover images may carry their own rights ([Open Library licensing](https://openlibrary.org/developers/licensing)).
 * **Offline Resilience:** If Open Library times out or returns an error, the API returns a curated local backup JSON list with HTTP status 200 and `"provenance": { "source": "local-fallback" }` and `Cache-Control: public, max-age=60`.
 
 ### 5.2 Learning Catalog: `GET /api/v1/catalog/activities` and `/api/v1/catalog/activities/:id`
@@ -295,11 +296,11 @@ All error responses strictly follow the standardized JSON error envelope:
 | :---: | :--- | :--- | :--- |
 | **`400`** | `INVALID_INPUT` (a body that is not valid JSON returns `INVALID_JSON`) | Zod validation failure, missing required fields, invalid catalog query or id format, malformed child UUID; the envelope includes `details` | Client highlights field errors |
 | **`401`** | `UNAUTHENTICATED` | Missing or invalid Bearer token | Client redirects to sign-in |
-| **`403`** | `FORBIDDEN` | Valid user token attempting an administrative action | Client shows access denied alert |
+| **`403`** | `ORIGIN_NOT_ALLOWED` | Request from an origin not in the CORS allowlist (implemented) | Client shows access denied alert |
 | **`404`** | `RESOURCE_NOT_FOUND` | Child ID, activity, or journal note does not exist OR belongs to another caregiver (BOLA) | Client shows item not found; prevents resource existence leakage |
-| **`422`** | `UNPROCESSABLE_ENTITY` | Business logic violation (e.g. child birth month in the future or more than 71 months ago on create/edit) | Client displays business rule explanation |
-| **`429`** | `RATE_LIMITED` | AI request quota exceeded (>10 requests/hour) | Client triggers Tier 3 fallback; includes `Retry-After: 3600` header |
-| **`500`** | `INTERNAL_SERVER_ERROR` | Unhandled server exception | Client displays generic error toast; hides internal stack traces |
+| **`422`** (Unprocessable Content, [RFC 9110 §15.5.21](https://www.rfc-editor.org/rfc/rfc9110#section-15.5.21)) | `UNPROCESSABLE_ENTITY` | Business logic violation (e.g. child birth month in the future or more than 71 months ago on create/edit) | Client displays business rule explanation |
+| **`429`** | `RATE_LIMITED` | Planned, not implemented yet: AI request quota exceeded (>10 requests/hour) | Client triggers Tier 3 fallback; would include a `Retry-After: 3600` header (documented, not implemented) |
+| **`500`** | `INTERNAL_ERROR` | Unhandled server exception | Client displays generic error toast; hides internal stack traces |
 | **`502`** | `UPSTREAM_SERVICE_ERROR`| Open Library or Gemini API unreachable | Server automatically triggers internal cached or deterministic fallback |
 | **`504`** | `GATEWAY_TIMEOUT` | Upstream provider exceeds 8-second timeout | Server automatically triggers fallback response |
 
@@ -310,6 +311,6 @@ All error responses strictly follow the standardized JSON error envelope:
 When presenting the API Integration during the **CIT 210 Code Defense / Presentation**, deliver the following narrative:
 
 > 1. **Decomposition & Responsibility:** *"Our backend is an Express Node.js API hosted as a serverless Firebase Cloud Function. It serves as an authoritative gateway between the React frontend and Cloud Firestore. We enforce strict server-side validation using Zod and maintain a clean OpenAPI 3.1 contract."*
-> 2. **Authentication & BOLA Defense:** *"Every protected request carries a Firebase ID token. Our auth middleware cryptographically decodes the token on the server and derives the caregiver's UID directly from the verified signature. To prevent Broken Object Level Authorization (OWASP API1:2023), accessing an unowned child record returns HTTP 404, preventing attackers from learning whether an ID exists."*
+> 2. **Authentication & BOLA Defense:** *"Every protected request carries a Firebase ID token. Our auth middleware cryptographically decodes the token on the server and derives the caregiver's UID directly from the verified signature. To prevent Broken Object Level Authorization (OWASP API1:2023), accessing an unowned child record returns HTTP 404 (our design choice, so an ID's existence is not revealed)."*
 > 3. **Dual-API Layering:** *"In response to our course requirements, we implemented a dual-API integration pipeline. First, we query the **Open Library REST API** to fetch authentic children's storybooks, managing query parameters, pagination, and server-side response caching. Second, we layer **Google Gemini AI** on top of the fetched book metadata to generate contextual, screen-free toddler play activities."*
 > 4. **Resilience & Fallbacks:** *"Our AI architecture implements a 3-tier fallback hierarchy: Cloud Gemini with an 8-second timeout $\to$ Local Ollama for offline demo resilience $\to$ Deterministic Philippine curriculum catalog. If any network or quota failure occurs, the application degrades gracefully without breaking the user experience."*
