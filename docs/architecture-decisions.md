@@ -181,7 +181,7 @@ graph TD
   - The materials text is cleaned on the server before it is sent: it is cut to a short length and reduced to recognized household-material words, so anything else a caregiver types (such as a name) is dropped.
   - Only synthetic accounts and data are used while the free tier is in place (NFR-PRIV-03).
   - The API key stays in server configuration (emulator environment or Functions secrets), never in a client.
-  - Free-tier rate limits are low, so a rate-limited or failed call uses the deterministic fallback (NFR-AI-03, UI/UX spec §7 J6).
+  - Free-tier rate limits are low, so a rate-limited (planned; rate limiting is not implemented) or failed call uses the deterministic fallback (NFR-AI-03, UI/UX spec §7 J6).
   - The model is a current Gemini Flash-class model, chosen and pinned in configuration at M4.
 - **Revisit trigger:** Before any real caregiver uses the AI helper (a pilot or production), move to the paid tier or Vertex AI, whose terms exclude training on prompts, and repeat the provider review.
 - **Consequences:**

@@ -65,7 +65,7 @@ sequenceDiagram
   Client->>API: POST /api/v1/ai/story-activity { bookTitle: "..." }
   critical 3-Tier AI Fallback Pipeline
     API->>AI: Tier 1: Query Gemini 1.5 Flash (8s timeout)
-    AI-->>API: Success / Fail (429, Timeout)
+    AI-->>API: Success / Fail (timeout, error, invalid output)
   option Tier 1 Fails
     API->>AI: Tier 2: Query Local Ollama (localhost:11434)
     AI-->>API: Success / Fail
@@ -223,7 +223,7 @@ Suggests up to three reviewed catalog activities for an age band, using only non
   | `domain` | string, optional | One of `cognitive`, `motor`, `language`, `socioEmotional` |
   | `setting` | string, optional | `indoor`, `outdoor` or `either` (default `either`) |
   | `timeMinutes` | integer, required | 5 to 120 |
-  | `materials` | string array, optional | Up to 10 items, each at most 40 characters (default `[]`) |
+  | `materials` | string array, optional | Up to 10 items, each at most 40 characters, counted as Unicode code points (default `[]`) |
   | `language` | string, required | `en`, `fil` or `hil` |
   | `count` | integer, optional | 1 to 3 (default 3) |
 
@@ -288,9 +288,14 @@ Generates companion play and discussion activities based on a real book selected
 ### 6.2 The 3-Tier Fallback Hierarchy
 
 ```
-[Tier 1: Cloud LLM]  ──(Fails: Timeout > 8s, HTTP 429)──>  [Tier 2: Local AI]  ──(Fails: Offline)──>  [Tier 3: Catalog Rule]
-Google Gemini API                                            Ollama (localhost:11434)                   Pre-reviewed JSON
+/ai/story-activity (planned):
+[Tier 1: Cloud LLM]  ──(Fails: Timeout > 8s, error)──>  [Tier 2: Local AI]  ──(Fails: Offline)──>  [Tier 3: Catalog Rule]
+
+/ai/recommendations (implemented in the api branch, not merged yet):
+[Tier 1: Cloud LLM]  ──(Any provider failure: timeout > 8s, error, invalid output, none configured)──>  [Tier 3: Catalog Rule]
 ```
+
+The Tier 1 to Tier 2 step applies to `/api/v1/ai/story-activity` only, and that route is planned. `/api/v1/ai/recommendations` has no Tier 2: any provider failure goes straight to Tier 3 (`src/ai/ai-service.ts`).
 
 1. **Tier 1 (Google Gemini 1.5 Flash - Cloud Primary):**
    - Called using server-side `@google/genai` or REST endpoint.
