@@ -219,7 +219,7 @@ Generates companion play and discussion activities based on a real book selected
   {
     "bookTitle": "The Very Hungry Caterpillar",
     "subjects": ["Animals", "Counting"],
-    "ageBand": "12-24m"
+    "ageBand": "12-23m"
   }
   ```
 * **Response Payload (Standard Enriched Format):**
