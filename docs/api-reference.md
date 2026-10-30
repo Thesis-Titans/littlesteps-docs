@@ -113,7 +113,7 @@ Base URL (Local Emulator): `http://127.0.0.1:5001/{projectId}/asia-southeast1/ap
 | Method | Path | Auth | Purpose | Success (Status / Body) | Error Codes |
 | :--- | :--- | :---: | :--- | :--- | :--- |
 | `GET` | `/api/v1/children` | Bearer | List children owned by the verified caregiver (bare array, ordered by `createdAt` then `id`; read with a safety bound of 50, though a caregiver can have at most 20) | `200 OK`<br/>`[ { "id": "...", "nickname": "Sample Child", "birthMonthYear": "2025-08", "ageBand": "12-23m", "createdAt": "...", "updatedAt": "..." } ]`, or `[]` | `401 UNAUTHENTICATED` |
-| `POST` | `/api/v1/children` | Bearer | Create a child profile: `nickname` plus exactly one of `birthMonthYear` (`YYYY-MM`) or `ageBand` | `201 Created`<br/>profile object (as above; no `birthMonthYear` when `ageBand` was sent) | `400 INVALID_INPUT` (shape, extra fields, both or neither age source)<br/>`401 UNAUTHENTICATED`<br/>`422 UNPROCESSABLE_ENTITY` (birth month in the future or over 71 months ago; or the caregiver already has 20 children) |
+| `POST` | `/api/v1/children` | Bearer | Create a child profile: `nickname` plus exactly one of `birthMonthYear` (`YYYY-MM`) or `ageBand` | `201 Created`<br/>profile object (as above; no `birthMonthYear` when `ageBand` was sent) | `400 INVALID_INPUT` (shape, extra fields, both or neither age source)<br/>`401 UNAUTHENTICATED`<br/>`422 UNPROCESSABLE_ENTITY` (birth month in the future or over 71 months ago; or the caregiver already has 20 children)<br/>`503 SERVICE_UNAVAILABLE` (transaction aborted by contention after the server's retries; see below) |
 | `GET` | `/api/v1/children/:childId` | Bearer | Retrieve a child profile | `200 OK`<br/>profile object | `401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` (missing, another caregiver's, or malformed id) |
 | `PATCH` | `/api/v1/children/:childId` | Bearer | Update `nickname` and/or exactly one of `birthMonthYear` or `ageBand` | `200 OK`<br/>updated profile object | `400 INVALID_INPUT` / `INVALID_JSON` (empty update, nulls, both age sources)<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` (missing, another caregiver's, or malformed id)<br/>`422 UNPROCESSABLE_ENTITY` |
 | `DELETE`| `/api/v1/children/:childId` | Bearer | Cascading deletion of child and observations (planned; not part of the child profile contract) | `204 No Content` | `401`<br/>`404` |
@@ -127,7 +127,8 @@ Rules from the contract (implemented in the unmerged api branch):
 * **Ownership:** a missing child, a child owned by another caregiver and a substituted ID all return the same `404 RESOURCE_NOT_FOUND`. A malformed id in the path is also that `404`, not a `400`.
 * **Validation before lookup:** body validation errors (`400`, `422`) are returned before the child is looked up and do not depend on the id, so they reveal nothing about whether an id exists.
 * **Storage and limits:** records are read and written only under the caller's own path (`/caregivers/{uid}/children/{childId}`). `POST` returns `201`. Each caregiver may have at most 20 children (decision of 30 October 2026, ADR-012). When 20 already exist, `POST` returns `422 UNPROCESSABLE_ENTITY` with the message `You can add up to 20 children.` and `details: [{ "field": "children", "issue": "Limit of 20 children reached" }]`. The count and the create are atomic (one Firestore transaction), so concurrent requests cannot exceed the cap. The list is ordered by `createdAt` then `id` and is still read with a safety bound of 50, which the API never reaches.
-* **Caching:** child responses send `Cache-Control: no-store`.
+* **Contention:** if the transaction that counts and creates the child is aborted by contention after the server's retries, `POST` returns `503 SERVICE_UNAVAILABLE` with the message `Please try again in a moment.`, `Retry-After: 1` and `Cache-Control: no-store`. Nothing is created. The client should retry after a moment.
+* **Caching:** child responses send `Cache-Control: no-store`, including error responses such as this `503`.
 
 ### 4.3 Milestone Observations (FR-01)
 
@@ -305,6 +306,7 @@ All error responses strictly follow the standardized JSON error envelope:
 | **`429`** | `RATE_LIMITED` | Planned, not implemented yet: AI request quota exceeded (>10 requests/hour) | Client triggers Tier 3 fallback; would include a `Retry-After: 3600` header (documented, not implemented) |
 | **`500`** | `INTERNAL_ERROR` | Unhandled server exception | Client displays generic error toast; hides internal stack traces |
 | **`502`** | `UPSTREAM_SERVICE_ERROR`| Open Library or Gemini API unreachable | Server automatically triggers internal cached or deterministic fallback |
+| **`503`** | `SERVICE_UNAVAILABLE` | Transient conflict: the transaction that counts and creates a child (`POST /api/v1/children`) was aborted by contention after the server's retries. This is not an AI provider failure (see `502` and `504`). Sent with `Retry-After: 1` and `no-store` | Client retries the same request after a moment |
 | **`504`** | `GATEWAY_TIMEOUT` | Upstream provider exceeds 8-second timeout | Server automatically triggers fallback response |
 
 ---

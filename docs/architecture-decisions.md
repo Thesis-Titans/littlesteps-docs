@@ -242,6 +242,7 @@ graph TD
   - `422 UNPROCESSABLE_ENTITY` for a well-formed value that breaks a business rule. The status is named "Unprocessable Content" in RFC 9110 section 15.5.21. The 400/422 split is a project convention.
   - `404 RESOURCE_NOT_FOUND` for missing resources.
   - `Cache-Control: no-store` by default on every route except the public catalog, and on all error responses (RFC 9111 section 5.2.2.5), because RFC 9110 section 15.1 lists 404 as heuristically cacheable.
+  - `503 SERVICE_UNAVAILABLE` for a transient conflict, such as the child-create transaction aborted by contention after the server's retries. It carries `Retry-After: 1` and `no-store`, and the client retries after a moment. It is not used for AI provider failures.
   - `429 RATE_LIMITED` with `Retry-After` (RFC 6585 section 4) is the planned shape for rate limits. It is not implemented.
 - **Consequences:**
   - *Positive:* one error parser for the React and Flutter clients; no cached error responses.
