@@ -184,11 +184,11 @@ To satisfy the CIT 210 requirement for a live external REST Data API, `littleste
     ],
     "provenance": {
       "source": "Open Library (Internet Archive)",
-      "license": "Open Library data; cover images may carry their own rights"
+      "license": "Open Library data; no new rights asserted by the Internet Archive; some contributions may carry existing rights"
     }
   }
   ```
-* **Licence note:** Open Library data is published with no new rights asserted by the Internet Archive; cover images may carry their own rights ([Open Library licensing](https://openlibrary.org/developers/licensing)).
+* **Licence note:** Open Library data is published with no new rights asserted by the Internet Archive; the licensing page notes that existing rights issues may apply to some contributions ([Open Library licensing](https://openlibrary.org/developers/licensing)).
 * **Offline Resilience:** If Open Library times out or returns an error, the API returns a curated local backup JSON list with HTTP status 200 and `"provenance": { "source": "local-fallback" }` and `Cache-Control: public, max-age=60`.
 
 ### 5.2 Learning Catalog: `GET /api/v1/catalog/activities` and `/api/v1/catalog/activities/:id`

@@ -138,7 +138,7 @@ source:
 relationship_to_source: "adapted" # direct_link | adapted | original_informed_by_source
 adaptation_notes: "Paraphrased caregiver guidance for home environment using rolled blanket; removed center-based terminology."
 language: "en" # en | fil | hil (one value, catalog `language`)
-safety_accessibility_notes: "Requires adult supervision at all times; use firm, flat floor surface (never soft beds). No cords or ribbons (general precaution). Awake and supervised; always place the baby on their back to sleep on a firm flat surface (AAP 2022 safe sleep policy, https://publications.aap.org/pediatrics/article/150/1/e2022057990/188304/Sleep-Related-Infant-Deaths-Updated-2022; secondary source, text to be confirmed)."
+safety_accessibility_notes: "Requires adult supervision at all times; use firm, flat floor surface (never soft beds). No cords or ribbons (general precaution). Play only while the baby is awake; never leave the baby to sleep on this setup, and always place the baby on their back to sleep on a firm flat surface (AAP 2022 safe sleep policy, https://publications.aap.org/pediatrics/article/150/1/e2022057990/188304/Sleep-Related-Infant-Deaths-Updated-2022; secondary source, text to be confirmed)."
 review:
   reviewer_name: "Vincent Tamano (Backend & Content Lead)"
   reviewer_role: "Student Author / Course Researcher"
@@ -200,7 +200,7 @@ relationship_to_source: "adapted"
 adaptation_notes: "Safe floor play on a firm mat with rolled blanket support and mirror tracking to build upper-body strength."
 materials: ["Firm mat", "Rolled blanket", "Unbreakable mirror"]
 language: "en" # en | fil | hil (catalog `language`)
-safety_accessibility_notes: "Awake, supervised play only; objects must not fit completely inside a small-parts test cylinder ([CPSC Small Parts](https://www.cpsc.gov/FAQ/Small-Parts)); nothing that can be swallowed. Firm, flat surface only, never a bed or soft surface; no cords or ribbons; awake and supervised; always place the baby on their back to sleep on a firm flat surface (AAP 2022 safe sleep policy, https://publications.aap.org/pediatrics/article/150/1/e2022057990/188304/Sleep-Related-Infant-Deaths-Updated-2022; secondary source, text to be confirmed); mirror must be unbreakable with no sharp edges."
+safety_accessibility_notes: "Awake, supervised play only; objects must not fit completely inside a small-parts test cylinder ([CPSC Small Parts](https://www.cpsc.gov/FAQ/Small-Parts)); nothing that can be swallowed. Firm, flat surface only, never a bed or soft surface; no cords or ribbons; never leave the baby to sleep on this setup, and always place the baby on their back to sleep on a firm flat surface (AAP 2022 safe sleep policy, https://publications.aap.org/pediatrics/article/150/1/e2022057990/188304/Sleep-Related-Infant-Deaths-Updated-2022; secondary source, text to be confirmed); mirror must be unbreakable with no sharp edges."
 review:
   reviewer_name: "Vincent Tamano (Backend & Content Lead)"
   reviewer_role: "Student Author / Course Researcher"
