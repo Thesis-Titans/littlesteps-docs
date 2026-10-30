@@ -219,7 +219,7 @@ graph TD
   3. *Open Library Subject API + 3-Tier AI Fallback (Chosen):*
      - Use Open Library REST API (`openlibrary.org/subjects/picture_books.json`) to dynamically fetch children's picture books and covers.
      - Implement a 3-tier fallback engine: Cloud Gemini 1.5 Flash (Tier 1) -> Local Ollama (`localhost:11434`, Tier 2 offline dev/demo fallback) -> Deterministic Curriculum Catalog (Tier 3 safety net).
-- **Status of implementation (30 October 2026):** only the catalog books proxy with its fallback list is implemented ([API PR #20](https://github.com/Thesis-Titans/littlesteps-api/pull/20), [#25](https://github.com/Thesis-Titans/littlesteps-api/pull/25)). The Ollama tier and `POST /api/v1/ai/story-activity` are planned, not implemented, and are not in `openapi.yaml`.
+- **Status of implementation (30 October 2026):** the catalog books proxy with its fallback list ([API PR #20](https://github.com/Thesis-Titans/littlesteps-api/pull/20), [#25](https://github.com/Thesis-Titans/littlesteps-api/pull/25)) and `POST /api/v1/ai/recommendations` with its deterministic fallback and no AI provider configured ([API PR #28](https://github.com/Thesis-Titans/littlesteps-api/pull/28)) are implemented. A real AI provider, the Ollama tier and `POST /api/v1/ai/story-activity` are planned, not implemented, and are not in `openapi.yaml`.
 - **Decision:**
   - Implement `GET /api/v1/catalog/books` in `littlesteps-api` as a server-side proxy to Open Library with an in-memory 1-hour cache.
   - Implement `POST /api/v1/ai/story-activity` to generate screen-free play ideas based on the fetched book metadata.

@@ -213,7 +213,7 @@ LittleSteps integrates generative intelligence to enhance learning without relyi
 #### `POST /api/v1/ai/recommendations`
 Suggests up to three reviewed catalog activities for an age band, using only non-identifying parameters. Requires a Bearer token.
 
-> **Status:** implemented in the api PR `feat/ai-recommendations-core`, not merged yet. Until it merges, `main` does not serve this route. No AI provider is configured in this slice, so every response is currently a Tier 3 catalog fallback.
+> **Status:** implemented and merged in littlesteps-api PR #28 (30 October 2026). No AI provider is configured in this slice, so every response is currently a Tier 3 catalog fallback.
 
 * **Request body (strict):** unknown fields are rejected with `400`, never ignored, so `childId`, nicknames, notes and similar fields cannot be sent.
 
@@ -291,7 +291,7 @@ Generates companion play and discussion activities based on a real book selected
 /ai/story-activity (planned):
 [Tier 1: Cloud LLM]  ──(Fails: Timeout > 8s, error)──>  [Tier 2: Local AI]  ──(Fails: Offline)──>  [Tier 3: Catalog Rule]
 
-/ai/recommendations (implemented in the api branch, not merged yet):
+/ai/recommendations (implemented, api PR #28):
 [Tier 1: Cloud LLM]  ──(Any provider failure: timeout > 8s, error, invalid output, none configured)──>  [Tier 3: Catalog Rule]
 ```
 
@@ -336,7 +336,7 @@ All error responses strictly follow the standardized JSON error envelope:
 | :--- | :--- |
 | Public catalog (`/api/v1/catalog/*`) | `public, max-age=3600` |
 | Catalog books fallback response | `public, max-age=60` |
-| AI routes (`/api/v1/ai/*`; `/ai/recommendations` is implemented in the api PR `feat/ai-recommendations-core`, not merged yet) | `no-store` |
+| AI routes (`/api/v1/ai/*`; `/ai/recommendations` is implemented, api PR #28) | `no-store` |
 | Authenticated routes: `/health` and `/api/v1/me` (implemented); `/api/v1/children/**` (planned, not yet specified in the contract) | `no-store` |
 
 ### Complete HTTP Status to Error Code Mapping Table
