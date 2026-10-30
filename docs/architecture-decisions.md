@@ -242,6 +242,7 @@ graph TD
   - `422 UNPROCESSABLE_ENTITY` for a well-formed value that breaks a business rule. The status is named "Unprocessable Content" in RFC 9110 section 15.5.21. The 400/422 split is a project convention.
   - `404 RESOURCE_NOT_FOUND` for missing resources.
   - `Cache-Control: no-store` by default on every route except the public catalog, and on all error responses (RFC 9111 section 5.2.2.5), because RFC 9110 section 15.1 lists 404 as heuristically cacheable.
+  - `503 SERVICE_UNAVAILABLE` for a transient conflict, such as a child create or update transaction aborted by contention after the server's retries. It carries `Retry-After: 1` and `no-store`, and the client retries after a moment. It is not used for AI provider failures.
   - `429 RATE_LIMITED` with `Retry-After` (RFC 6585 section 4) is the planned shape for rate limits. It is not implemented.
 - **Consequences:**
   - *Positive:* one error parser for the React and Flutter clients; no cached error responses.
@@ -250,7 +251,7 @@ graph TD
 ---
 
 ### ADR-012: Child Profile Age Rules and Ownership Responses
-- **Status:** Accepted for the contract (decisions D1 and D4 recorded 30 October 2026 in [API PR #24](https://github.com/Thesis-Titans/littlesteps-api/pull/24); D2 and D3 were decided in the contract review and Mark may still review them; D2 and D3 decided in the contract review). The child routes are not implemented ([API #8](https://github.com/Thesis-Titans/littlesteps-api/issues/8)). D5 (deletion execution) and D6 (production retention) are open.
+- **Status:** Accepted for the contract (decisions D1 and D4 recorded 30 October 2026 in [API PR #24](https://github.com/Thesis-Titans/littlesteps-api/pull/24); D2 and D3 were decided in the contract review and Mark may still review them; D2 and D3 decided in the contract review). The four profile routes are implemented and merged in API [PR #26](https://github.com/Thesis-Titans/littlesteps-api/pull/26) and [PR #29](https://github.com/Thesis-Titans/littlesteps-api/pull/29) ([API #8](https://github.com/Thesis-Titans/littlesteps-api/issues/8)); rate limiting is still planned. D5 (deletion execution) and D6 (production retention) are open.
 - **Context:** The child profile stores a nickname and a birth month, not an exact birth date. Age bands drive catalog navigation and must not go stale. Ownership failures must not reveal whether another caregiver's child exists. Source: `docs/child-profile-contract.md` in `littlesteps-api`.
 - **Options Considered:**
   1. *Store the age band only:* simple, but the band goes stale and cannot be corrected from a birth month.
@@ -261,7 +262,10 @@ graph TD
   - A birth month in the future or more than 71 months old is rejected on create and edit with `422 UNPROCESSABLE_ENTITY` (0 to 71 months inclusive is accepted). Shape errors such as `2025-13` stay `400`.
   - A stored child who passes 71 months stays at `60-71m` on read. There is no error, no new field and no clamping on write.
   - Create takes a nickname plus exactly one age source (`birthMonthYear` or `ageBand`). PATCH takes `nickname` and/or exactly one age source; both sources is `400`, nulls are rejected.
-  - The nickname is trimmed and internal whitespace is collapsed (D4). The API names `nickname` and `birthMonthYear` map to stored `name` and `birthMonth`, and `caregiverId` is never returned (D1).
+  - The nickname is trimmed and internal whitespace is collapsed (D4). It must be 1 to 50 characters, counted as Unicode code points, with no Unicode control or format characters (for example a zero-width space); otherwise `400 INVALID_INPUT` with details `[{ field: 'nickname', issue: 'Nickname must not contain control or invisible characters' }]`. The API names `nickname` and `birthMonthYear` map to stored `name` and `birthMonth`, and `caregiverId` is never returned (D1).
+  - Each caregiver may have at most 20 children (decided 30 October 2026). Creating a 21st returns `422 UNPROCESSABLE_ENTITY` (`You can add up to 20 children.`); the count and create run in one Firestore transaction. Reason: a bounded list, a simple child switcher in the UI, and small per-caregiver data. The list keeps a read bound of 50 as a safety limit.
+  - A malformed child id in the path returns the same `404 RESOURCE_NOT_FOUND` as a missing child, not a `400`, so the id format reveals nothing.
+  - Body validation (`400`, `422`) runs before the child lookup and does not depend on the id.
   - A missing child and another caregiver's child return the same `404 RESOURCE_NOT_FOUND` (same status, body and headers). This is a project design choice built on per-object authorization ([OWASP API1:2023](https://api-security.owasp.org/editions/2023/en/0xa1-broken-object-level-authorization)); that page does not itself prescribe 404 over 403.
 - **Consequences:**
   - *Positive:* no stale bands, no exact birth dates stored, no ownership disclosure through status codes.

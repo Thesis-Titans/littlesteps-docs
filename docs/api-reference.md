@@ -108,23 +108,28 @@ Base URL (Local Emulator): `http://127.0.0.1:5001/{projectId}/asia-southeast1/ap
 
 ### 4.2 Child Profile Management (FR-01)
 
-> **Contract merged in littlesteps-api PRs #21, #22 and #24; routes not implemented.** The child routes below are defined in `openapi/openapi.yaml` and `docs/child-profile-contract.md` on `main`, but no child route exists in the API yet ([API #8](https://github.com/Thesis-Titans/littlesteps-api/issues/8)). `DELETE` is not covered by that contract and stays at its earlier planned shape. Decisions D1 (API-to-storage mapping; `caregiverId` never returned) and D4 (nickname normalization and HTTP details) were recorded on 30 October 2026. D5 (deletion execution) and D6 (production retention) are open.
+> **Contract merged in littlesteps-api PRs #21, #22 and #24. The four `GET`/`POST`/`GET`/`PATCH` routes are implemented and merged in littlesteps-api PRs #26 and #29.** The routes are defined in `openapi/openapi.yaml` and `docs/child-profile-contract.md`; the implementation tracks [API #8](https://github.com/Thesis-Titans/littlesteps-api/issues/8). `DELETE` is not covered by that contract and stays at its earlier planned shape. Decisions D1 (API-to-storage mapping; `caregiverId` never returned) and D4 (nickname normalization and HTTP details) were recorded on 30 October 2026. D5 (deletion execution) and D6 (production retention) are open.
 
 | Method | Path | Auth | Purpose | Success (Status / Body) | Error Codes |
 | :--- | :--- | :---: | :--- | :--- | :--- |
-| `GET` | `/api/v1/children` | Bearer | List children owned by the verified caregiver (bare array, order unspecified) | `200 OK`<br/>`[ { "id": "...", "nickname": "Sample Child", "birthMonthYear": "2025-08", "ageBand": "12-23m", "createdAt": "...", "updatedAt": "..." } ]`, or `[]` | `401 UNAUTHENTICATED` |
-| `POST` | `/api/v1/children` | Bearer | Create a child profile: `nickname` plus exactly one of `birthMonthYear` (`YYYY-MM`) or `ageBand` | `201 Created`<br/>profile object (as above; no `birthMonthYear` when `ageBand` was sent) | `400 INVALID_INPUT` (shape, extra fields, both or neither age source)<br/>`401 UNAUTHENTICATED`<br/>`422 UNPROCESSABLE_ENTITY` (birth month in the future or over 71 months ago) |
-| `GET` | `/api/v1/children/:childId` | Bearer | Retrieve a child profile | `200 OK`<br/>profile object | `400 INVALID_INPUT` (malformed UUID)<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` |
-| `PATCH` | `/api/v1/children/:childId` | Bearer | Update `nickname` and/or exactly one of `birthMonthYear` or `ageBand` | `200 OK`<br/>updated profile object | `400 INVALID_INPUT` (empty update, nulls, both age sources)<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND`<br/>`422 UNPROCESSABLE_ENTITY` |
+| `GET` | `/api/v1/children` | Bearer | List children owned by the verified caregiver (bare array, ordered by `createdAt` then `id`; read with a safety bound of 50, though a caregiver can have at most 20) | `200 OK`<br/>`[ { "id": "...", "nickname": "Sample Child", "birthMonthYear": "2025-08", "ageBand": "12-23m", "createdAt": "...", "updatedAt": "..." } ]`, or `[]` | `401 UNAUTHENTICATED` |
+| `POST` | `/api/v1/children` | Bearer | Create a child profile: `nickname` plus exactly one of `birthMonthYear` (`YYYY-MM`) or `ageBand` | `201 Created`<br/>profile object (as above; no `birthMonthYear` when `ageBand` was sent) | `400 INVALID_INPUT` (shape, extra fields, both or neither age source)<br/>`401 UNAUTHENTICATED`<br/>`422 UNPROCESSABLE_ENTITY` (birth month in the future or over 71 months ago; or the caregiver already has 20 children)<br/>`503 SERVICE_UNAVAILABLE` (transaction aborted by contention after the server's retries; see below) |
+| `GET` | `/api/v1/children/:childId` | Bearer | Retrieve a child profile | `200 OK`<br/>profile object | `401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` (missing, another caregiver's, or malformed id) |
+| `PATCH` | `/api/v1/children/:childId` | Bearer | Update `nickname` and/or exactly one of `birthMonthYear` or `ageBand` | `200 OK`<br/>updated profile object | `400 INVALID_INPUT` / `INVALID_JSON` (empty update, nulls, both age sources)<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` (missing, another caregiver's, or malformed id)<br/>`422 UNPROCESSABLE_ENTITY`<br/>`503 SERVICE_UNAVAILABLE` (contention) |
 | `DELETE`| `/api/v1/children/:childId` | Bearer | Cascading deletion of child and observations (planned; not part of the child profile contract) | `204 No Content` | `401`<br/>`404` |
 
-Rules from the merged contract (not yet implemented):
+Rules from the contract (implemented, api PRs #26 and #29):
 * **Age bands:** `0-5m`, `6-11m`, `12-23m`, `24-35m`, `36-47m`, `48-59m`, `60-71m`. They are educational navigation categories, not clinical classifications.
 * **Age clock:** age is computed from the server's UTC calendar month (`12 * (currentYear - birthYear) + currentMonth - birthMonth`). A shape error such as `2025-13` is `400`; a future month or one more than 71 months ago is `422` on create and edit.
 * **Band derived on read:** when a birth month is stored, `ageBand` is computed on every read and never trusted from storage, so it does not go stale. A child past 71 months stays at `60-71m` on read (never an error). A caregiver-selected band (no birth month) is returned as stored.
 * **PATCH age source:** sending `birthMonthYear` stores the month; sending `ageBand` replaces the age source and removes any stored birth month; sending both is `400`.
+* **Nickname:** leading and trailing whitespace is trimmed and internal whitespace is collapsed to one space. The result must be 1 to 50 characters, counted as Unicode code points, and must contain no Unicode control or format characters (for example a zero-width space). Otherwise the API returns `400 INVALID_INPUT` with `details` `[{ "field": "nickname", "issue": "Nickname must not contain control or invisible characters" }]` for that case.
 * **Strict bodies:** extra fields (`uid`, `caregiverId`, timestamps, surnames, photos, exact birth dates) are rejected with `400`; no field accepts `null`.
-* **Ownership:** a missing child, a child owned by another caregiver and a substituted ID all return the same `404 RESOURCE_NOT_FOUND`.
+* **Ownership:** a missing child, a child owned by another caregiver and a substituted ID all return the same `404 RESOURCE_NOT_FOUND`. A malformed id in the path is also that `404`, not a `400`.
+* **Validation before lookup:** body validation errors (`400`, `422`) are returned before the child is looked up and do not depend on the id, so they reveal nothing about whether an id exists.
+* **Storage and limits:** records are read and written only under the caller's own path (`/caregivers/{uid}/children/{childId}`). `POST` returns `201`. Each caregiver may have at most 20 children (decision of 30 October 2026, ADR-012). When 20 already exist, `POST` returns `422 UNPROCESSABLE_ENTITY` with the message `You can add up to 20 children.` and `details: [{ "field": "children", "issue": "Limit of 20 children reached" }]`. The count and the create are atomic (one Firestore transaction), so concurrent requests cannot exceed the cap. The list is ordered by `createdAt` then `id` and is still read with a safety bound of 50, which the API never reaches.
+* **Contention:** if the transaction that counts and creates the child, or updates it, is aborted by contention after the server's retries, `POST` and `PATCH` return `503 SERVICE_UNAVAILABLE` with the message `Please try again in a moment.`, `Retry-After: 1` and `Cache-Control: no-store`. Nothing is created or changed. The client should retry after a moment.
+* **Caching:** child responses send `Cache-Control: no-store`, including error responses such as this `503`.
 
 ### 4.3 Milestone Observations (FR-01)
 
@@ -337,20 +342,21 @@ All error responses strictly follow the standardized JSON error envelope:
 | Public catalog (`/api/v1/catalog/*`) | `public, max-age=3600` |
 | Catalog books fallback response | `public, max-age=60` |
 | AI routes (`/api/v1/ai/*`; `/ai/recommendations` is implemented, api PR #28) | `no-store` |
-| Authenticated routes: `/health` and `/api/v1/me` (implemented); `/api/v1/children/**` (planned, not yet specified in the contract) | `no-store` |
+| Authenticated routes: `/health` and `/api/v1/me` (implemented); `/api/v1/children` and `/api/v1/children/{childId}` (implemented, api PRs #26 and #29); `DELETE` (planned) | `no-store` |
 
 ### Complete HTTP Status to Error Code Mapping Table
 
 | HTTP Status | Error Code | Trigger Scenario | Handling Strategy |
 | :---: | :--- | :--- | :--- |
-| **`400`** | `INVALID_INPUT` (a body that is not valid JSON returns `INVALID_JSON`) | Zod validation failure, missing required fields, invalid catalog query or id format, malformed child UUID; the envelope includes `details` | Client highlights field errors |
+| **`400`** | `INVALID_INPUT` (a body that is not valid JSON returns `INVALID_JSON`) | Zod validation failure, missing required fields, invalid catalog query or id format; the envelope includes `details` | Client highlights field errors |
 | **`401`** | `UNAUTHENTICATED` | Missing or invalid Bearer token | Client redirects to sign-in |
 | **`403`** | `ORIGIN_NOT_ALLOWED` | Request from an origin not in the CORS allowlist (implemented) | Client shows access denied alert |
 | **`404`** | `RESOURCE_NOT_FOUND` | Child ID, activity, or journal note does not exist OR belongs to another caregiver (BOLA) | Client shows item not found; prevents resource existence leakage |
-| **`422`** (Unprocessable Content, [RFC 9110 §15.5.21](https://www.rfc-editor.org/rfc/rfc9110#section-15.5.21)) | `UNPROCESSABLE_ENTITY` | Business logic violation (e.g. child birth month in the future or more than 71 months ago on create/edit) | Client displays business rule explanation |
+| **`422`** (Unprocessable Content, [RFC 9110 §15.5.21](https://www.rfc-editor.org/rfc/rfc9110#section-15.5.21)) | `UNPROCESSABLE_ENTITY` | Business logic violation (e.g. child birth month in the future or more than 71 months ago on create/edit, or creating a 21st child) | Client displays business rule explanation |
 | **`429`** | `RATE_LIMITED` | Planned, not implemented yet (documented in the OpenAPI contract for `/ai/recommendations`): AI request quota exceeded (more than 10 requests per hour per user, plus a looser per-IP cap) | Client triggers Tier 3 fallback; would include a `Retry-After: 3600` header (documented, not implemented) |
 | **`500`** | `INTERNAL_ERROR` | Unhandled server exception | Client displays generic error toast; hides internal stack traces |
 | **`502`** | `UPSTREAM_SERVICE_ERROR`| Open Library or Gemini API unreachable | Server automatically triggers internal cached or deterministic fallback |
+| **`503`** | `SERVICE_UNAVAILABLE` | Transient conflict: the transaction that counts and creates a child, or the one that updates it (`POST /api/v1/children` or `PATCH /api/v1/children/{childId}`) was aborted by contention after the server's retries. This is not an AI provider failure (see `502` and `504`). Sent with `Retry-After: 1` and `no-store` | Client retries the same request after a moment |
 | **`504`** | `GATEWAY_TIMEOUT` | Upstream provider exceeds 8-second timeout | Server automatically triggers fallback response |
 
 ---
