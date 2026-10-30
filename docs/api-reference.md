@@ -108,7 +108,7 @@ Base URL (Local Emulator): `http://127.0.0.1:5001/{projectId}/asia-southeast1/ap
 
 ### 4.2 Child Profile Management (FR-01)
 
-> **Contract proposed in littlesteps-api PRs #20/#21.** The child routes below are defined in the `littlesteps-api` OpenAPI draft (PR #21, `docs/child-profile-contract.md`) and are not implemented or merged yet. `DELETE` is not covered by that contract and stays at its earlier planned shape. **D1 is pending Mark's confirmation:** the API-to-storage mapping (`nickname` to stored `name`, `birthMonthYear` to stored `birthMonth`) and the omission of the internal `caregiverId` from responses are not decided.
+> **Contract merged in littlesteps-api PRs #21, #22 and #24; routes not implemented.** The child routes below are defined in `openapi/openapi.yaml` and `docs/child-profile-contract.md` on `main`, but no child route exists in the API yet ([API #8](https://github.com/Thesis-Titans/littlesteps-api/issues/8)). `DELETE` is not covered by that contract and stays at its earlier planned shape. Decisions D1 (API-to-storage mapping; `caregiverId` never returned) and D4 (nickname normalization and HTTP details) were recorded on 30 October 2026. D5 (deletion execution) and D6 (production retention) are open.
 
 | Method | Path | Auth | Purpose | Success (Status / Body) | Error Codes |
 | :--- | :--- | :---: | :--- | :--- | :--- |
@@ -116,9 +116,9 @@ Base URL (Local Emulator): `http://127.0.0.1:5001/{projectId}/asia-southeast1/ap
 | `POST` | `/api/v1/children` | Bearer | Create a child profile: `nickname` plus exactly one of `birthMonthYear` (`YYYY-MM`) or `ageBand` | `201 Created`<br/>profile object (as above; no `birthMonthYear` when `ageBand` was sent) | `400 INVALID_INPUT` (shape, extra fields, both or neither age source)<br/>`401 UNAUTHENTICATED`<br/>`422 UNPROCESSABLE_ENTITY` (birth month in the future or over 71 months ago) |
 | `GET` | `/api/v1/children/:childId` | Bearer | Retrieve a child profile | `200 OK`<br/>profile object | `400 INVALID_INPUT` (malformed UUID)<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` |
 | `PATCH` | `/api/v1/children/:childId` | Bearer | Update `nickname` and/or exactly one of `birthMonthYear` or `ageBand` | `200 OK`<br/>updated profile object | `400 INVALID_INPUT` (empty update, nulls, both age sources)<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND`<br/>`422 UNPROCESSABLE_ENTITY` |
-| `DELETE`| `/api/v1/children/:childId` | Bearer | Cascading deletion of child and observations (planned; not part of the PR #21 contract) | `204 No Content` | `401`<br/>`404` |
+| `DELETE`| `/api/v1/children/:childId` | Bearer | Cascading deletion of child and observations (planned; not part of the child profile contract) | `204 No Content` | `401`<br/>`404` |
 
-Rules from the proposed contract:
+Rules from the merged contract (not yet implemented):
 * **Age bands:** `0-5m`, `6-11m`, `12-23m`, `24-35m`, `36-47m`, `48-59m`, `60-71m`. They are educational navigation categories, not clinical classifications.
 * **Age clock:** age is computed from the server's UTC calendar month (`12 * (currentYear - birthYear) + currentMonth - birthMonth`). A shape error such as `2025-13` is `400`; a future month or one more than 71 months ago is `422` on create and edit.
 * **Band derived on read:** when a birth month is stored, `ageBand` is computed on every read and never trusted from storage, so it does not go stale. A child past 71 months stays at `60-71m` on read (never an error). A caregiver-selected band (no birth month) is returned as stored.
@@ -164,10 +164,10 @@ To satisfy the CIT 210 requirement for a live external REST Data API, `littleste
 ### 5.1 Endpoint Specification: `GET /api/v1/catalog/books`
 * **Access:** Public read-only (unauthenticated).
 * **Query Parameters:**
-  - `subject` (string, optional, default: `"picture_books"`, max 64 characters): allowlist of `picture_books`, `bedtime`, `colors`, `animals`. Any other value returns `400 INVALID_INPUT`. *(Allowlist: contract proposed in littlesteps-api PRs #20/#21.)*
+  - `subject` (string, optional, default: `"picture_books"`, max 64 characters): allowlist of `picture_books`, `bedtime`, `colors`, `animals`. Any other value returns `400 INVALID_INPUT`. *(Allowlist implemented in littlesteps-api PR #20.)*
   - `limit` (integer, optional, default: `12`, max: `30`): Page size.
 * **Upstream Service:** `https://openlibrary.org/subjects/{subject}.json?limit={limit}`
-* **Server-Side In-Memory Cache:** Responses are cached in memory for **60 minutes** (`Cache-Control: public, max-age=3600`). The `X-Cache` response header (`HIT` or `MISS`) is a non-standard debug header; [RFC 6648](https://www.rfc-editor.org/rfc/rfc6648) discourages `X-` prefixes for new headers. The CORS middleware may add `Vary: Origin` to catalog responses, which can fragment CDN caches (to be confirmed). Fallback responses use the shorter `Cache-Control: public, max-age=60` so clients retry the upstream soon. *(Contract proposed in littlesteps-api PRs #20/#21.)*
+* **Server-Side In-Memory Cache:** Responses are cached in memory for **60 minutes** (`Cache-Control: public, max-age=3600`). The `X-Cache` response header (`HIT` or `MISS`) is a non-standard debug header; [RFC 6648](https://www.rfc-editor.org/rfc/rfc6648) discourages `X-` prefixes for new headers. The CORS middleware may add `Vary: Origin` to catalog responses, which can fragment CDN caches (to be confirmed). Fallback responses use the shorter `Cache-Control: public, max-age=60` so clients retry the upstream soon. *(Implemented in littlesteps-api PR #20; fallback fixes in PR #25.)*
 * **Client Response Format:**
   ```json
   {
@@ -193,7 +193,7 @@ To satisfy the CIT 210 requirement for a live external REST Data API, `littleste
 
 ### 5.2 Learning Catalog: `GET /api/v1/catalog/activities` and `/api/v1/catalog/activities/:id`
 
-> **Contract proposed in littlesteps-api PRs #20/#21.** Defined in the OpenAPI draft (version 0.2.0); not merged yet.
+> **Implemented in littlesteps-api PR #20** (OpenAPI version 0.2.0, review fixes in PR #23), using synthetic fixtures until the source review in Docs #3 is complete.
 
 * **Access:** Public read-only (unauthenticated).
 * **List query parameters (all optional):** `ageBand` (the seven bands in §4.2), `type` (`activity`, `story`, `rhyme`, `game`), `domain` (`cognitive`, `motor`, `language`, `socioEmotional`), `language` (`en`, `fil`, `hil`), `setting` (`indoor`, `outdoor`, `either`), `limit` (integer 1-50, default 20). Invalid values return `400 INVALID_INPUT`.
@@ -281,7 +281,7 @@ All error responses strictly follow the standardized JSON error envelope:
   }
 }
 ```
-`details` is an optional array of `{ "field", "issue" }` objects (the `ErrorEnvelope` schema, contract proposed in littlesteps-api PRs #20/#21). `code` and `message` are always present.
+`details` is an optional array of `{ "field", "issue" }` objects (the `ErrorEnvelope` schema, defined in OpenAPI version 0.2.0 on `main`). `code` and `message` are always present.
 
 ### Caching rules
 | Route group | `Cache-Control` |
