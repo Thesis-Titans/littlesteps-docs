@@ -181,7 +181,7 @@ graph TD
   - The materials text is cleaned on the server before it is sent: it is cut to a short length and reduced to recognized household-material words, so anything else a caregiver types (such as a name) is dropped.
   - Only synthetic accounts and data are used while the free tier is in place (NFR-PRIV-03).
   - The API key stays in server configuration (emulator environment or Functions secrets), never in a client.
-  - Free-tier rate limits are low, so a rate-limited or failed call uses the deterministic fallback (NFR-AI-03, UI/UX spec §7 J6).
+  - Free-tier rate limits are low, so a rate-limited (planned; rate limiting is not implemented) or failed call uses the deterministic fallback (NFR-AI-03, UI/UX spec §7 J6).
   - The model is a current Gemini Flash-class model, chosen and pinned in configuration at M4.
 - **Revisit trigger:** Before any real caregiver uses the AI helper (a pilot or production), move to the paid tier or Vertex AI, whose terms exclude training on prompts, and repeat the provider review.
 - **Consequences:**
@@ -219,7 +219,7 @@ graph TD
   3. *Open Library Subject API + 3-Tier AI Fallback (Chosen):*
      - Use Open Library REST API (`openlibrary.org/subjects/picture_books.json`) to dynamically fetch children's picture books and covers.
      - Implement a 3-tier fallback engine: Cloud Gemini 1.5 Flash (Tier 1) -> Local Ollama (`localhost:11434`, Tier 2 offline dev/demo fallback) -> Deterministic Curriculum Catalog (Tier 3 safety net).
-- **Status of implementation (30 October 2026):** only the catalog books proxy with its fallback list is implemented ([API PR #20](https://github.com/Thesis-Titans/littlesteps-api/pull/20), [#25](https://github.com/Thesis-Titans/littlesteps-api/pull/25)). The Ollama tier and `POST /api/v1/ai/story-activity` are planned, not implemented, and are not in `openapi.yaml`.
+- **Status of implementation (30 October 2026):** the catalog books proxy with its fallback list ([API PR #20](https://github.com/Thesis-Titans/littlesteps-api/pull/20), [#25](https://github.com/Thesis-Titans/littlesteps-api/pull/25)) and `POST /api/v1/ai/recommendations` with its deterministic fallback and no AI provider configured ([API PR #28](https://github.com/Thesis-Titans/littlesteps-api/pull/28)) are implemented. A real AI provider, the Ollama tier and `POST /api/v1/ai/story-activity` are planned, not implemented, and are not in `openapi.yaml`.
 - **Decision:**
   - Implement `GET /api/v1/catalog/books` in `littlesteps-api` as a server-side proxy to Open Library with an in-memory 1-hour cache.
   - Implement `POST /api/v1/ai/story-activity` to generate screen-free play ideas based on the fetched book metadata.
