@@ -219,6 +219,7 @@ graph TD
   3. *Open Library Subject API + 3-Tier AI Fallback (Chosen):*
      - Use Open Library REST API (`openlibrary.org/subjects/picture_books.json`) to dynamically fetch children's picture books and covers.
      - Implement a 3-tier fallback engine: Cloud Gemini 1.5 Flash (Tier 1) -> Local Ollama (`localhost:11434`, Tier 2 offline dev/demo fallback) -> Deterministic Curriculum Catalog (Tier 3 safety net).
+- **Status of implementation (30 October 2026):** only the catalog books proxy with its fallback list is implemented ([API PR #20](https://github.com/Thesis-Titans/littlesteps-api/pull/20), [#25](https://github.com/Thesis-Titans/littlesteps-api/pull/25)). The Ollama tier and `POST /api/v1/ai/story-activity` are planned, not implemented, and are not in `openapi.yaml`.
 - **Decision:**
   - Implement `GET /api/v1/catalog/books` in `littlesteps-api` as a server-side proxy to Open Library with an in-memory 1-hour cache.
   - Implement `POST /api/v1/ai/story-activity` to generate screen-free play ideas based on the fetched book metadata.
@@ -227,3 +228,42 @@ graph TD
   - *Positive:* Fully satisfies CIT 210's 25-pt API integration requirement by demonstrating real REST data integration alongside modern AI augmentation; guarantees 100% offline demo resilience via Ollama and deterministic catalog fallback.
   - *Trade-off:* Requires maintaining the proxy endpoint and mapping Open Library book schemas into LittleSteps card formats.
 
+---
+
+### ADR-011: Error Envelope and Status Codes
+- **Status:** Accepted (30 October 2026); implemented for existing routes in [API PR #20](https://github.com/Thesis-Titans/littlesteps-api/pull/20), extended to child routes by the contract in [API PR #21](https://github.com/Thesis-Titans/littlesteps-api/pull/21). Rate limiting is planned, not implemented.
+- **Context:** Every route needs one predictable error shape and a consistent split between malformed and rule-breaking input, and error responses must not be cached by shared caches.
+- **Options Considered:**
+  1. *RFC 9457 problem details (`application/problem+json`):* a standard format.
+  2. *Project `ErrorEnvelope`:* `{ "error": { "code", "message", "details"? } }`, where `details` is an optional array of `{ "field", "issue" }`. (Chosen.)
+- **Decision:**
+  - Use the `ErrorEnvelope`. It is a deliberate deviation from RFC 9457; section 4 of that RFC allows an application to carry errors in a format it already defines. Moving to `application/problem+json` later is the cheapest migration.
+  - `400 INVALID_INPUT` for shape or validation errors and `400 INVALID_JSON` for malformed JSON (RFC 9110 section 15.5.1).
+  - `422 UNPROCESSABLE_ENTITY` for a well-formed value that breaks a business rule. The status is named "Unprocessable Content" in RFC 9110 section 15.5.21. The 400/422 split is a project convention.
+  - `404 RESOURCE_NOT_FOUND` for missing resources.
+  - `Cache-Control: no-store` by default on every route except the public catalog, and on all error responses (RFC 9111 section 5.2.2.5), because RFC 9110 section 15.1 lists 404 as heuristically cacheable.
+  - `429 RATE_LIMITED` with `Retry-After` (RFC 6585 section 4) is the planned shape for rate limits. It is not implemented.
+- **Consequences:**
+  - *Positive:* one error parser for the React and Flutter clients; no cached error responses.
+  - *Trade-off:* generic problem-details tooling will not understand the envelope without a mapping.
+
+---
+
+### ADR-012: Child Profile Age Rules and Ownership Responses
+- **Status:** Accepted for the contract (decisions D1 and D4 recorded 30 October 2026 in [API PR #24](https://github.com/Thesis-Titans/littlesteps-api/pull/24); D2 and D3 were decided in the contract review and Mark may still review them; D2 and D3 decided in the contract review). The child routes are not implemented ([API #8](https://github.com/Thesis-Titans/littlesteps-api/issues/8)). D5 (deletion execution) and D6 (production retention) are open.
+- **Context:** The child profile stores a nickname and a birth month, not an exact birth date. Age bands drive catalog navigation and must not go stale. Ownership failures must not reveal whether another caregiver's child exists. Source: `docs/child-profile-contract.md` in `littlesteps-api`.
+- **Options Considered:**
+  1. *Store the age band only:* simple, but the band goes stale and cannot be corrected from a birth month.
+  2. *Store the birth month and derive the band on read.* (Chosen.) A caregiver may instead pick a band, which is returned as stored.
+  3. *Return 403 for another caregiver's child:* tells the caller that the ID exists. (Rejected.)
+- **Decision:**
+  - Age is the number of months between the birth month and the server's current UTC calendar month. The band is derived on read; the bands are `0-5m` through `60-71m`.
+  - A birth month in the future or more than 71 months old is rejected on create and edit with `422 UNPROCESSABLE_ENTITY` (0 to 71 months inclusive is accepted). Shape errors such as `2025-13` stay `400`.
+  - A stored child who passes 71 months stays at `60-71m` on read. There is no error, no new field and no clamping on write.
+  - Create takes a nickname plus exactly one age source (`birthMonthYear` or `ageBand`). PATCH takes `nickname` and/or exactly one age source; both sources is `400`, nulls are rejected.
+  - The nickname is trimmed and internal whitespace is collapsed (D4). The API names `nickname` and `birthMonthYear` map to stored `name` and `birthMonth`, and `caregiverId` is never returned (D1).
+  - A missing child and another caregiver's child return the same `404 RESOURCE_NOT_FOUND` (same status, body and headers). This is a project design choice built on per-object authorization ([OWASP API1:2023](https://api-security.owasp.org/editions/2023/en/0xa1-broken-object-level-authorization)); that page does not itself prescribe 404 over 403.
+- **Consequences:**
+  - *Positive:* no stale bands, no exact birth dates stored, no ownership disclosure through status codes.
+  - *Trade-off:* a caregiver cannot tell a mistyped ID from a foreign one; a child older than 71 months keeps the last band until the profile is edited.
+  - *Open:* D5 and D6 block deletion implementation and production retention policy.
