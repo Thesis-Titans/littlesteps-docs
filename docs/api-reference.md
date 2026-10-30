@@ -65,7 +65,7 @@ sequenceDiagram
   Client->>API: POST /api/v1/ai/story-activity { bookTitle: "..." }
   critical 3-Tier AI Fallback Pipeline
     API->>AI: Tier 1: Query Gemini 1.5 Flash (8s timeout)
-    AI-->>API: Success / Fail (429, Timeout)
+    AI-->>API: Success / Fail (timeout, error, invalid output)
   option Tier 1 Fails
     API->>AI: Tier 2: Query Local Ollama (localhost:11434)
     AI-->>API: Success / Fail
@@ -108,17 +108,17 @@ Base URL (Local Emulator): `http://127.0.0.1:5001/{projectId}/asia-southeast1/ap
 
 ### 4.2 Child Profile Management (FR-01)
 
-> **Contract merged in littlesteps-api PRs #21, #22 and #24. The four `GET`/`POST`/`GET`/`PATCH` routes are implemented in api PR `feat/child-profile-api` (not merged yet).** The routes are defined in `openapi/openapi.yaml` and `docs/child-profile-contract.md`; the implementation tracks [API #8](https://github.com/Thesis-Titans/littlesteps-api/issues/8) and is not on `main` until that PR merges. `DELETE` is not covered by that contract and stays at its earlier planned shape. Decisions D1 (API-to-storage mapping; `caregiverId` never returned) and D4 (nickname normalization and HTTP details) were recorded on 30 October 2026. D5 (deletion execution) and D6 (production retention) are open.
+> **Contract merged in littlesteps-api PRs #21, #22 and #24. The four `GET`/`POST`/`GET`/`PATCH` routes are implemented and merged in littlesteps-api PRs #26 and #29.** The routes are defined in `openapi/openapi.yaml` and `docs/child-profile-contract.md`; the implementation tracks [API #8](https://github.com/Thesis-Titans/littlesteps-api/issues/8). `DELETE` is not covered by that contract and stays at its earlier planned shape. Decisions D1 (API-to-storage mapping; `caregiverId` never returned) and D4 (nickname normalization and HTTP details) were recorded on 30 October 2026. D5 (deletion execution) and D6 (production retention) are open.
 
 | Method | Path | Auth | Purpose | Success (Status / Body) | Error Codes |
 | :--- | :--- | :---: | :--- | :--- | :--- |
 | `GET` | `/api/v1/children` | Bearer | List children owned by the verified caregiver (bare array, ordered by `createdAt` then `id`; read with a safety bound of 50, though a caregiver can have at most 20) | `200 OK`<br/>`[ { "id": "...", "nickname": "Sample Child", "birthMonthYear": "2025-08", "ageBand": "12-23m", "createdAt": "...", "updatedAt": "..." } ]`, or `[]` | `401 UNAUTHENTICATED` |
 | `POST` | `/api/v1/children` | Bearer | Create a child profile: `nickname` plus exactly one of `birthMonthYear` (`YYYY-MM`) or `ageBand` | `201 Created`<br/>profile object (as above; no `birthMonthYear` when `ageBand` was sent) | `400 INVALID_INPUT` (shape, extra fields, both or neither age source)<br/>`401 UNAUTHENTICATED`<br/>`422 UNPROCESSABLE_ENTITY` (birth month in the future or over 71 months ago; or the caregiver already has 20 children)<br/>`503 SERVICE_UNAVAILABLE` (transaction aborted by contention after the server's retries; see below) |
 | `GET` | `/api/v1/children/:childId` | Bearer | Retrieve a child profile | `200 OK`<br/>profile object | `401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` (missing, another caregiver's, or malformed id) |
-| `PATCH` | `/api/v1/children/:childId` | Bearer | Update `nickname` and/or exactly one of `birthMonthYear` or `ageBand` | `200 OK`<br/>updated profile object | `400 INVALID_INPUT` / `INVALID_JSON` (empty update, nulls, both age sources)<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` (missing, another caregiver's, or malformed id)<br/>`422 UNPROCESSABLE_ENTITY` |
+| `PATCH` | `/api/v1/children/:childId` | Bearer | Update `nickname` and/or exactly one of `birthMonthYear` or `ageBand` | `200 OK`<br/>updated profile object | `400 INVALID_INPUT` / `INVALID_JSON` (empty update, nulls, both age sources)<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` (missing, another caregiver's, or malformed id)<br/>`422 UNPROCESSABLE_ENTITY`<br/>`503 SERVICE_UNAVAILABLE` (contention) |
 | `DELETE`| `/api/v1/children/:childId` | Bearer | Cascading deletion of child and observations (planned; not part of the child profile contract) | `204 No Content` | `401`<br/>`404` |
 
-Rules from the contract (implemented in the unmerged api branch):
+Rules from the contract (implemented, api PRs #26 and #29):
 * **Age bands:** `0-5m`, `6-11m`, `12-23m`, `24-35m`, `36-47m`, `48-59m`, `60-71m`. They are educational navigation categories, not clinical classifications.
 * **Age clock:** age is computed from the server's UTC calendar month (`12 * (currentYear - birthYear) + currentMonth - birthMonth`). A shape error such as `2025-13` is `400`; a future month or one more than 71 months ago is `422` on create and edit.
 * **Band derived on read:** when a birth month is stored, `ageBand` is computed on every read and never trusted from storage, so it does not go stale. A child past 71 months stays at `60-71m` on read (never an error). A caregiver-selected band (no birth month) is returned as stored.
@@ -128,7 +128,7 @@ Rules from the contract (implemented in the unmerged api branch):
 * **Ownership:** a missing child, a child owned by another caregiver and a substituted ID all return the same `404 RESOURCE_NOT_FOUND`. A malformed id in the path is also that `404`, not a `400`.
 * **Validation before lookup:** body validation errors (`400`, `422`) are returned before the child is looked up and do not depend on the id, so they reveal nothing about whether an id exists.
 * **Storage and limits:** records are read and written only under the caller's own path (`/caregivers/{uid}/children/{childId}`). `POST` returns `201`. Each caregiver may have at most 20 children (decision of 30 October 2026, ADR-012). When 20 already exist, `POST` returns `422 UNPROCESSABLE_ENTITY` with the message `You can add up to 20 children.` and `details: [{ "field": "children", "issue": "Limit of 20 children reached" }]`. The count and the create are atomic (one Firestore transaction), so concurrent requests cannot exceed the cap. The list is ordered by `createdAt` then `id` and is still read with a safety bound of 50, which the API never reaches.
-* **Contention:** if the transaction that counts and creates the child is aborted by contention after the server's retries, `POST` returns `503 SERVICE_UNAVAILABLE` with the message `Please try again in a moment.`, `Retry-After: 1` and `Cache-Control: no-store`. Nothing is created. The client should retry after a moment.
+* **Contention:** if the transaction that counts and creates the child, or updates it, is aborted by contention after the server's retries, `POST` and `PATCH` return `503 SERVICE_UNAVAILABLE` with the message `Please try again in a moment.`, `Retry-After: 1` and `Cache-Control: no-store`. Nothing is created or changed. The client should retry after a moment.
 * **Caching:** child responses send `Cache-Control: no-store`, including error responses such as this `503`.
 
 ### 4.3 Milestone Observations (FR-01)
@@ -216,7 +216,50 @@ LittleSteps integrates generative intelligence to enhance learning without relyi
 ### 6.1 Endpoints Specification
 
 #### `POST /api/v1/ai/recommendations`
-Generates activity recommendations based on non-identifying developmental parameters (Age Band, Domain, Indoor/Outdoor setting).
+Suggests up to three reviewed catalog activities for an age band, using only non-identifying parameters. Requires a Bearer token.
+
+> **Status:** implemented and merged in littlesteps-api PR #28 (30 October 2026). No AI provider is configured in this slice, so every response is currently a Tier 3 catalog fallback.
+
+* **Request body (strict):** unknown fields are rejected with `400`, never ignored, so `childId`, nicknames, notes and similar fields cannot be sent.
+
+  | Field | Type | Rules |
+  | :--- | :--- | :--- |
+  | `ageBand` | string, required | One of `0-5m`, `6-11m`, `12-23m`, `24-35m`, `36-47m`, `48-59m`, `60-71m` |
+  | `domain` | string, optional | One of `cognitive`, `motor`, `language`, `socioEmotional` |
+  | `setting` | string, optional | `indoor`, `outdoor` or `either` (default `either`) |
+  | `timeMinutes` | integer, required | 5 to 120 |
+  | `materials` | string array, optional | Up to 10 items, each at most 40 characters, counted as Unicode code points (default `[]`) |
+  | `language` | string, required | `en`, `fil` or `hil` |
+  | `count` | integer, optional | 1 to 3 (default 3) |
+
+  ```json
+  { "ageBand": "12-23m", "domain": "motor", "setting": "indoor", "timeMinutes": 15, "materials": ["cups", "spoon"], "language": "en", "count": 3 }
+  ```
+* **Response `200 OK`** (with `Cache-Control: no-store`):
+
+  | Field | Meaning |
+  | :--- | :--- |
+  | `suggestions[]` | Each item has `activityId`, `title`, `whyPicked` (short plain reason) and `activity` (the full `CatalogActivity`). Only `reviewed_approved` catalog items are returned, and titles and instructions always come from the catalog, never from the provider. |
+  | `source` | `"ai"` when the provider's picks passed validation, otherwise `"catalog_fallback"`. (This endpoint no longer uses the value `"catalog"`; that value remains for `/ai/story-activity`.) |
+  | `tier` | `1` (provider) or `3` (deterministic catalog). `2` (local Ollama) is reserved and not produced in this slice. |
+  | `provenance` | `badge` (`"Suggested by AI"` for tier 1, otherwise `null`), `label` (`"Our picks"` for fallback, otherwise `null`), `disclaimer` (`"Observational play suggestion only. Not developmental assessment."`), `guidance` (tier 1 only: `"You know your child best. Change it as you like, and stay close while you play."`), `model` (provider model name, or `null` for fallback) and `reviewed` (always `true`). |
+  | `reason` | Present only as `"NO_REVIEWED_CONTENT"` when the catalog holds no reviewed items. |
+
+  ```json
+  {
+    "suggestions": [
+      { "activityId": "stack-the-cups", "title": "Stack the Cups", "whyPicked": "Matches the age band and the cups you have.", "activity": { "id": "stack-the-cups" } }
+    ],
+    "source": "catalog_fallback",
+    "tier": 3,
+    "provenance": { "badge": null, "label": "Our picks", "disclaimer": "Observational play suggestion only. Not developmental assessment.", "model": null, "reviewed": true }
+  }
+  ```
+  The `activity` object is abbreviated above; see section 5.2 for its fields.
+* **Empty results:** with an empty reviewed catalog the response is `200` with `suggestions: []` and `reason: "NO_REVIEWED_CONTENT"`. When the catalog has content but nothing matches the request, the response is `200` with an empty `suggestions` list and no `reason`. Clients should show an empty state, not an error.
+* **Errors:** `400 INVALID_INPUT` with `details` (`{ "field", "issue" }`; an unknown field is reported as `"Unknown field"`), `401 UNAUTHENTICATED`, `500 INTERNAL_ERROR`. `429 RATE_LIMITED` is documented in the OpenAPI contract but **not implemented yet** (see section 6.2). A provider failure is never an error response.
+* **Privacy boundary:** the request carries no child or caregiver identifiers. The provider prompt contains only age band, time, setting, cleaned materials (lowercased, control characters removed, truncated, de-duplicated), language, the pick count, and the id, title, domain and materials of candidate catalog items. It never contains user ID, token, email, child data, observations or journal text. Logs record only the event name, tier, latency and error class, never prompts, replies, materials or user identifiers.
+* **Fallback behaviour:** the provider call is bounded at 8 seconds and its reply must pick only candidate ids and pass output validation. On timeout, error, invalid output, no provider configured, or no eligible candidates, the endpoint returns `200` with the deterministic Tier 3 ranking (`source: "catalog_fallback"`, `tier: 3`, no AI badge). Tier 2 (Ollama) is planned and not part of this slice.
 
 #### `POST /api/v1/ai/story-activity`
 Generates companion play and discussion activities based on a real book selected from the Open Library catalog.
@@ -250,14 +293,19 @@ Generates companion play and discussion activities based on a real book selected
 ### 6.2 The 3-Tier Fallback Hierarchy
 
 ```
-[Tier 1: Cloud LLM]  ──(Fails: Timeout > 8s, HTTP 429)──>  [Tier 2: Local AI]  ──(Fails: Offline)──>  [Tier 3: Catalog Rule]
-Google Gemini API                                            Ollama (localhost:11434)                   Pre-reviewed JSON
+/ai/story-activity (planned):
+[Tier 1: Cloud LLM]  ──(Fails: Timeout > 8s, error)──>  [Tier 2: Local AI]  ──(Fails: Offline)──>  [Tier 3: Catalog Rule]
+
+/ai/recommendations (implemented, api PR #28):
+[Tier 1: Cloud LLM]  ──(Any provider failure: timeout > 8s, error, invalid output, none configured)──>  [Tier 3: Catalog Rule]
 ```
+
+The Tier 1 to Tier 2 step applies to `/api/v1/ai/story-activity` only, and that route is planned. `/api/v1/ai/recommendations` has no Tier 2: any provider failure goes straight to Tier 3 (`src/ai/ai-service.ts`).
 
 1. **Tier 1 (Google Gemini 1.5 Flash - Cloud Primary):**
    - Called using server-side `@google/genai` or REST endpoint.
    - Timeout bounded at **8 seconds** via `AbortSignal.timeout(8000)`.
-   - Rate limit guard: 10 requests / hour per IP.
+   - Rate limit (planned, not implemented): 10 requests per hour per authenticated user, plus a looser per-IP cap. Over the limit the API would return `429 RATE_LIMITED` with `Retry-After: 3600`.
 2. **Tier 2 (Ollama - Local Offline AI Fallback):**
    - Active when `LOCAL_AI_ENABLED=true` in development/demo environments.
    - Pings `http://localhost:11434/api/generate` with model `qwen2.5-coder:7b`.
@@ -293,7 +341,8 @@ All error responses strictly follow the standardized JSON error envelope:
 | :--- | :--- |
 | Public catalog (`/api/v1/catalog/*`) | `public, max-age=3600` |
 | Catalog books fallback response | `public, max-age=60` |
-| Authenticated routes: `/health` and `/api/v1/me` (implemented); `/api/v1/children` and `/api/v1/children/{childId}` (implemented in the unmerged api branch); other child sub-routes (planned) | `no-store` |
+| AI routes (`/api/v1/ai/*`; `/ai/recommendations` is implemented, api PR #28) | `no-store` |
+| Authenticated routes: `/health` and `/api/v1/me` (implemented); `/api/v1/children` and `/api/v1/children/{childId}` (implemented, api PRs #26 and #29); `DELETE` (planned) | `no-store` |
 
 ### Complete HTTP Status to Error Code Mapping Table
 
@@ -304,10 +353,10 @@ All error responses strictly follow the standardized JSON error envelope:
 | **`403`** | `ORIGIN_NOT_ALLOWED` | Request from an origin not in the CORS allowlist (implemented) | Client shows access denied alert |
 | **`404`** | `RESOURCE_NOT_FOUND` | Child ID, activity, or journal note does not exist OR belongs to another caregiver (BOLA) | Client shows item not found; prevents resource existence leakage |
 | **`422`** (Unprocessable Content, [RFC 9110 §15.5.21](https://www.rfc-editor.org/rfc/rfc9110#section-15.5.21)) | `UNPROCESSABLE_ENTITY` | Business logic violation (e.g. child birth month in the future or more than 71 months ago on create/edit, or creating a 21st child) | Client displays business rule explanation |
-| **`429`** | `RATE_LIMITED` | Planned, not implemented yet: AI request quota exceeded (>10 requests/hour) | Client triggers Tier 3 fallback; would include a `Retry-After: 3600` header (documented, not implemented) |
+| **`429`** | `RATE_LIMITED` | Planned, not implemented yet (documented in the OpenAPI contract for `/ai/recommendations`): AI request quota exceeded (more than 10 requests per hour per user, plus a looser per-IP cap) | Client triggers Tier 3 fallback; would include a `Retry-After: 3600` header (documented, not implemented) |
 | **`500`** | `INTERNAL_ERROR` | Unhandled server exception | Client displays generic error toast; hides internal stack traces |
 | **`502`** | `UPSTREAM_SERVICE_ERROR`| Open Library or Gemini API unreachable | Server automatically triggers internal cached or deterministic fallback |
-| **`503`** | `SERVICE_UNAVAILABLE` | Transient conflict: the transaction that counts and creates a child (`POST /api/v1/children`) was aborted by contention after the server's retries. This is not an AI provider failure (see `502` and `504`). Sent with `Retry-After: 1` and `no-store` | Client retries the same request after a moment |
+| **`503`** | `SERVICE_UNAVAILABLE` | Transient conflict: the transaction that counts and creates a child, or the one that updates it (`POST /api/v1/children` or `PATCH /api/v1/children/{childId}`) was aborted by contention after the server's retries. This is not an AI provider failure (see `502` and `504`). Sent with `Retry-After: 1` and `no-store` | Client retries the same request after a moment |
 | **`504`** | `GATEWAY_TIMEOUT` | Upstream provider exceeds 8-second timeout | Server automatically triggers fallback response |
 
 ---

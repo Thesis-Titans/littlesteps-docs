@@ -181,7 +181,7 @@ graph TD
   - The materials text is cleaned on the server before it is sent: it is cut to a short length and reduced to recognized household-material words, so anything else a caregiver types (such as a name) is dropped.
   - Only synthetic accounts and data are used while the free tier is in place (NFR-PRIV-03).
   - The API key stays in server configuration (emulator environment or Functions secrets), never in a client.
-  - Free-tier rate limits are low, so a rate-limited or failed call uses the deterministic fallback (NFR-AI-03, UI/UX spec §7 J6).
+  - Free-tier rate limits are low, so a rate-limited (planned; rate limiting is not implemented) or failed call uses the deterministic fallback (NFR-AI-03, UI/UX spec §7 J6).
   - The model is a current Gemini Flash-class model, chosen and pinned in configuration at M4.
 - **Revisit trigger:** Before any real caregiver uses the AI helper (a pilot or production), move to the paid tier or Vertex AI, whose terms exclude training on prompts, and repeat the provider review.
 - **Consequences:**
@@ -219,7 +219,7 @@ graph TD
   3. *Open Library Subject API + 3-Tier AI Fallback (Chosen):*
      - Use Open Library REST API (`openlibrary.org/subjects/picture_books.json`) to dynamically fetch children's picture books and covers.
      - Implement a 3-tier fallback engine: Cloud Gemini 1.5 Flash (Tier 1) -> Local Ollama (`localhost:11434`, Tier 2 offline dev/demo fallback) -> Deterministic Curriculum Catalog (Tier 3 safety net).
-- **Status of implementation (30 October 2026):** only the catalog books proxy with its fallback list is implemented ([API PR #20](https://github.com/Thesis-Titans/littlesteps-api/pull/20), [#25](https://github.com/Thesis-Titans/littlesteps-api/pull/25)). The Ollama tier and `POST /api/v1/ai/story-activity` are planned, not implemented, and are not in `openapi.yaml`.
+- **Status of implementation (30 October 2026):** the catalog books proxy with its fallback list ([API PR #20](https://github.com/Thesis-Titans/littlesteps-api/pull/20), [#25](https://github.com/Thesis-Titans/littlesteps-api/pull/25)) and `POST /api/v1/ai/recommendations` with its deterministic fallback and no AI provider configured ([API PR #28](https://github.com/Thesis-Titans/littlesteps-api/pull/28)) are implemented. A real AI provider, the Ollama tier and `POST /api/v1/ai/story-activity` are planned, not implemented, and are not in `openapi.yaml`.
 - **Decision:**
   - Implement `GET /api/v1/catalog/books` in `littlesteps-api` as a server-side proxy to Open Library with an in-memory 1-hour cache.
   - Implement `POST /api/v1/ai/story-activity` to generate screen-free play ideas based on the fetched book metadata.
@@ -242,7 +242,7 @@ graph TD
   - `422 UNPROCESSABLE_ENTITY` for a well-formed value that breaks a business rule. The status is named "Unprocessable Content" in RFC 9110 section 15.5.21. The 400/422 split is a project convention.
   - `404 RESOURCE_NOT_FOUND` for missing resources.
   - `Cache-Control: no-store` by default on every route except the public catalog, and on all error responses (RFC 9111 section 5.2.2.5), because RFC 9110 section 15.1 lists 404 as heuristically cacheable.
-  - `503 SERVICE_UNAVAILABLE` for a transient conflict, such as the child-create transaction aborted by contention after the server's retries. It carries `Retry-After: 1` and `no-store`, and the client retries after a moment. It is not used for AI provider failures.
+  - `503 SERVICE_UNAVAILABLE` for a transient conflict, such as a child create or update transaction aborted by contention after the server's retries. It carries `Retry-After: 1` and `no-store`, and the client retries after a moment. It is not used for AI provider failures.
   - `429 RATE_LIMITED` with `Retry-After` (RFC 6585 section 4) is the planned shape for rate limits. It is not implemented.
 - **Consequences:**
   - *Positive:* one error parser for the React and Flutter clients; no cached error responses.
@@ -251,7 +251,7 @@ graph TD
 ---
 
 ### ADR-012: Child Profile Age Rules and Ownership Responses
-- **Status:** Accepted for the contract (decisions D1 and D4 recorded 30 October 2026 in [API PR #24](https://github.com/Thesis-Titans/littlesteps-api/pull/24); D2 and D3 were decided in the contract review and Mark may still review them; D2 and D3 decided in the contract review). The four profile routes are implemented in the api branch `feat/child-profile-api`, which is not merged yet ([API #8](https://github.com/Thesis-Titans/littlesteps-api/issues/8)). D5 (deletion execution) and D6 (production retention) are open.
+- **Status:** Accepted for the contract (decisions D1 and D4 recorded 30 October 2026 in [API PR #24](https://github.com/Thesis-Titans/littlesteps-api/pull/24); D2 and D3 were decided in the contract review and Mark may still review them; D2 and D3 decided in the contract review). The four profile routes are implemented and merged in API [PR #26](https://github.com/Thesis-Titans/littlesteps-api/pull/26) and [PR #29](https://github.com/Thesis-Titans/littlesteps-api/pull/29) ([API #8](https://github.com/Thesis-Titans/littlesteps-api/issues/8)); rate limiting is still planned. D5 (deletion execution) and D6 (production retention) are open.
 - **Context:** The child profile stores a nickname and a birth month, not an exact birth date. Age bands drive catalog navigation and must not go stale. Ownership failures must not reveal whether another caregiver's child exists. Source: `docs/child-profile-contract.md` in `littlesteps-api`.
 - **Options Considered:**
   1. *Store the age band only:* simple, but the band goes stale and cannot be corrected from a birth month.
