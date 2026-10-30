@@ -262,6 +262,7 @@ graph TD
   - A stored child who passes 71 months stays at `60-71m` on read. There is no error, no new field and no clamping on write.
   - Create takes a nickname plus exactly one age source (`birthMonthYear` or `ageBand`). PATCH takes `nickname` and/or exactly one age source; both sources is `400`, nulls are rejected.
   - The nickname is trimmed and internal whitespace is collapsed (D4). The API names `nickname` and `birthMonthYear` map to stored `name` and `birthMonth`, and `caregiverId` is never returned (D1).
+  - Each caregiver may have at most 20 children (decided 30 October 2026). Creating a 21st returns `422 UNPROCESSABLE_ENTITY` (`You can add up to 20 children.`); the count and create run in one Firestore transaction. Reason: a bounded list, a simple child switcher in the UI, and small per-caregiver data. The list keeps a read bound of 50 as a safety limit.
   - A malformed child id in the path returns the same `404 RESOURCE_NOT_FOUND` as a missing child, not a `400`, so the id format reveals nothing.
   - Body validation (`400`, `422`) runs before the child lookup and does not depend on the id.
   - A missing child and another caregiver's child return the same `404 RESOURCE_NOT_FOUND` (same status, body and headers). This is a project design choice built on per-object authorization ([OWASP API1:2023](https://api-security.owasp.org/editions/2023/en/0xa1-broken-object-level-authorization)); that page does not itself prescribe 404 over 403.
