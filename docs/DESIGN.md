@@ -50,7 +50,7 @@ spacing:
   touch-min: 48px
   touch-secondary: 44px
   top-bar: 60px
-  bottom-bar: 88px
+  bottom-bar: 72px
   sidebar: 240px
 components:
   button-primary:
@@ -128,8 +128,7 @@ Two frame sizes: **1280** (desktop) and **375** (mobile). Mobile is designed fir
 
 - **Spacing scale:** 4, 8, 12, 16, 24, 32 px. Adjacent touch targets stay at least 8 px apart.
 - **Touch targets:** frequent and primary controls are at least **48 × 48 px**; secondary links may go to **44 × 44**, never lower. WCAG 2.5.8 requires only 24 × 24; ours is for one-handed comfort.
-- **App shell:** top bar 60 px, bottom tab bar 88 px (five tabs, two-line labels allowed), side navigation 240 px on desktop. The bar sizes come from Figma and `tokens.css`; the spec's `scroll-padding-bottom: 72px` is smaller than the 88 px bar, so check it when the spec is revised.
-- **Reserved space:** scrolling content keeps `scroll-padding` for the fixed bars so a focused element is never hidden (WCAG 2.4.11).
+- **App shell:** top bar 60 px, side navigation 240 px on desktop, bottom tab bar 72 px in the Figma master (five tabs, two-line labels allowed). The React app currently uses 88 px (`tokens.css`) so two-line labels fit; Figma and React need to agree, and the team has not decided which changes. Until then, treat 72 px as the design value.
 - **Five states on every screen:** populated, empty, loading, error or permission denied, offline or AI fallback. Journeys J1 to J7 are in specification [§7](ui-ux-design-specification.md).
 
 ## Elevation & Depth

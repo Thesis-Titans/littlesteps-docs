@@ -3,7 +3,7 @@
 **Status:** Canonical Design Specification for Prototype Validation  
 **Governing Standard:** ISO 9241 (Ergonomics of Human-System Interaction) & WCAG 2.2 AA  
 **Owner:** Nherie (Frontend Lead) & Faith (Usability Lead)  
-**Last Reviewed:** 2026-10-26  
+**Last Reviewed:** 2026-10-31  
 **Associated Gate:** [Docs Issue #15 — [M0] Plan and validate the LittleSteps UI prototype before implementation](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)  
 **Related Documents:** [Product Scope](product-scope.md), [Traceability Matrix](traceability-matrix.md), [Prototype Traceability & Storyboards](prototype-traceability-storyboards.md), [Philippine Content Provenance](philippine-content-provenance.md)  
 **Prototype Medium:** Figma, shared by the React and Flutter clients (§1, §9). This gate changes no code in `littlesteps-api`, `littlesteps-react`, or `littlesteps-flutter`.
@@ -53,7 +53,7 @@ graph TD
 ---
 
 ### 2.2 Norman’s Interaction Principles
-- **Affordances & Signifiers:** Interactive cards use subtle border elevation (`box-shadow: 0 1px 3px rgba(0,0,0,0.08)`) and distinct affordances (chevron icons, tap-state feedback) so clickable areas are immediately unambiguous. Tap-state scale transitions are removed when the user prefers reduced motion (§2.5).
+- **Affordances & Signifiers:** Interactive cards use subtle border elevation (Figma effect style `LittleSteps/Elevation/Card`: `0 1px 2px` and `0 4px 14px` in the primary text color at 4% and 6%) and distinct affordances (chevron icons, tap-state feedback) so clickable areas are immediately unambiguous. Tap-state scale transitions are removed when the user prefers reduced motion (§2.5).
 - **Constraints:** Forms use bounded selection rather than free-text entry: the child's age is given as a birth month and year from two pickers limited to the last six years, and the app derives the age band (one of the 7 canonical bands, 0–71 months). Caregivers who prefer not to give a birth month can choose a band directly.
 - **Feedback & Mappings:** The relationship between controls and outcomes is direct: tapping a filter immediately adjusts the card list below it without requiring a secondary "Apply" button tap.
 
@@ -213,7 +213,7 @@ Sign-in and the settings, privacy-notice, about and help views cover PRQ-01 and 
 | **Primary Navigation** | Fixed left sidebar (240px) with brand mark, child switcher, and 5 navigation tabs. | Sticky top bar (brand + child avatar) + **Fixed bottom tab bar** with the same 5 tabs (Today, Explore, Milestones, Journal, This week), each at least 48 × 48px. |
 | **Child Switcher** | Dropdown menu in sidebar showing Maya (14m) and Liam (48m), plus a "For Maya" chip in each child-scoped page header. | Header avatar opens the account menu with the child list; a "For Maya · 14 months" chip in each child-scoped header and form opens the switcher. |
 | **Dashboard Layout** | 2-column grid: Left = Today's Plan & Idea Helper; Right = Weekly Summary & Milestones. | Single-column stacked cards optimized for vertical thumb scrolling. |
-| **Touch Targets** | Standard interactive buttons (min 36px height). | **48 × 48px for frequent and primary controls**, 44 × 44px floor for secondary links (§2.3). |
+| **Touch Targets** | Same 44 × 44px floor; primary buttons 48px tall. A mouse needs no less than a thumb. | **48 × 48px for frequent and primary controls**, 44 × 44px floor for secondary links (§2.3). |
 | **Advisory Banner** | Shown in full, in the neutral advisory style (§6.3), on the first visit to Today and Milestones. After it is dismissed, a persistent "Not a diagnostic tool" link stays in the page header and reopens it. | Same behavior; the link sits under the page title. |
 | **Page Titles** | The H1 repeats the tab or menu label (Today, Explore, Milestones, Journal, This week); slogans such as "Notice, don't score" become the subtitle. | Same. |
 
@@ -242,7 +242,17 @@ The canonical values are the variables in the Figma file's **LittleSteps · Desi
   - *Error:* `color/status/error` (`#FFF6F5` bg) with `color/text/error` (`#853029`, 8.1:1) and `color/border/error` (`#B83D33`, 5.3:1). Muted brick red: clearly an error, still calm.
 - **Interaction:** `color/border/input` (`#7E8C86`, 3.5:1 on white, 3.3:1 on canvas) for fields, selects and unselected chips; `color/focus` (`#1F634D`) for focus rings.
 - **Pairs to avoid:** secondary text on caution (3.99:1), on offline (4.46:1) or on Soft Green (4.2:1) fails WCAG AA.
-- **To add in Figma:** the error, input-border and focus variables above, and rebinding the Text field and Secondary button, which still use hard-coded colors from the retired palette.
+
+### 6.1a Shape, Spacing and Shell Sizes
+
+These values are Figma variables or effect styles; `tokens.css` and `app_tokens.dart` mirror them.
+
+- **Radii:** 10px for controls (buttons, fields, chips), 16px for cards.
+- **Spacing scale:** 4, 8, 12, 16, 24 and 32px.
+- **Touch targets:** 48px for frequent and primary controls, 44px floor (§2.3).
+- **Shell:** top bar 60px, desktop sidebar 240px, mobile tab bar 72px in the Figma master. The React app currently sets the bar to 88px so two-line tab labels fit; the Figma master and the `scroll-padding-bottom: 72px` rule in §2.5 should be updated to match, or React reduced, once the team decides.
+- **Elevation:** cards `0 1px 2px` and `0 4px 14px` at 4% and 6% of the primary text color; overlays `0 12px 32px` at 14%.
+- **Icons:** the 15 icons on Figma page `02 · Components` (today, explore, milestones, journal, thisWeek, lock, check, clock, info, sparkle, chevronDown, chevronRight, close, plus, wifiOff).
 
 ### 6.2 Typography Hierarchy
 Use **Inter**, loading only the four weights in use (Regular, Medium, Semi Bold, Bold), subset to Latin, to limit data cost on prepaid plans:
@@ -250,7 +260,7 @@ Use **Inter**, loading only the four weights in use (Regular, Medium, Semi Bold,
 - **Section Headers (H2):** 20px SemiBold (Desktop: 24px)
 - **Subheaders (H3):** 16px SemiBold
 - **Body Regular:** **16px Regular** (line-height: 24px; strictly avoids sub-14px body text)
-- **Body small:** 14px Regular (line-height: 20px) — for any sentence a caregiver must read: privacy statements, disclaimers, helper text, alert bodies and error messages. Privacy and error copy uses primary text color.
+- **Body small:** 14px Regular (line-height: 20px) — for any sentence a caregiver must read: privacy statements, disclaimers, helper text, alert bodies and error messages. Privacy and helper copy uses primary text color; error messages use `color/text/error` on `color/status/error`, as in the components.
 - **Small / Metadata:** 13px Medium — only for timestamps, counts, badges and short labels, never for full sentences.
 
 ### 6.3 Semantic Color Map
@@ -296,7 +306,7 @@ Every user journey in the Figma prototype must include all five interaction stat
 When preparing the prototype for course instructor and faculty review, the team must verify:
 
 - [ ] **Figma Link Recorded:** The [Figma file](https://www.figma.com/design/yqUHW4lOuuly4jDPNMkMVI/LittleSteps-%E2%80%94-Responsive-Caregiver-Prototype) is linked in Docs Issue #15, with view access for reviewers.
-- [ ] **Viewport Coverage:** Populated frames exist at 1280px and 375px for all 6 core capabilities; other state frames follow the §7 coverage rule.
+- [ ] **Viewport Coverage:** Populated frames exist at 1280px and 375px for all seven journeys (J1–J7); other state frames follow the §7 coverage rule.
 - [ ] **Navigation Consistency:** The same five tabs appear in the desktop sidebar and the mobile bottom bar; sign-in, settings, privacy notice, and about are reachable from the header avatar.
 - [ ] **Permission-denied Frames:** J1 signed-out and J4 access-denied frames are present.
 - [ ] **Ergonomic Verification:** Frequent and primary mobile controls are at least **48 × 48 CSS pixels**; nothing is below 44 × 44.
