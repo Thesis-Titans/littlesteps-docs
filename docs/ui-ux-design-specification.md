@@ -89,7 +89,7 @@ graph TD
 These rules come from the design system review of 23 October 2026 and apply to every component and screen.
 
 - **Visible focus (WCAG 2.4.7):** Every interactive component has a Focus state: a 2px `color/focus` ring with a 2px offset (7.1:1 on white, 6.6:1 on canvas), plus a 2px white inner ring on Forest-filled controls.
-- **Focus not hidden (WCAG 2.4.11):** Scrolling content reserves room for the fixed mobile bars (`scroll-padding-top: 60px`, `scroll-padding-bottom: 72px`) so a focused element is never covered (the mobile tab bar height is an open decision, see §6.1a). `scroll-padding` alone is not enough: sticky bars also need a keyboard focus test (tab through every screen and confirm the focused element stays visible).
+- **Focus not hidden (WCAG 2.4.11):** Scrolling content reserves room for the fixed mobile bars (`scroll-padding-top: 60px`, `scroll-padding-bottom: 72px`) so a focused element is never covered. Sticky bars also need a keyboard focus test (tab through every screen and confirm the focused element stays visible).
 - **Page titled (WCAG 2.4.2, A):** Every screen or route has a unique, descriptive page title.
 - **Target size (WCAG 2.5.8, AA):** The minimum is 24 by 24 CSS pixels; the 44/48 px rule in §2.3 is stricter and applies.
 - **Recognizable fields (WCAG 1.4.11):** Text fields, selects and unselected chips use `color/border/input` (3.5:1 on white). Entered values use `color/text/primary`; only placeholders use secondary text.
@@ -115,6 +115,8 @@ Parents read LittleSteps in short bursts, often one-handed, sometimes in their s
 - **Standard reassurance line (team wording, not a CDC quote):** "Children develop at different rates. Talk to a health professional if you have concerns."
 - **Point to real people.** For worries about development, name "your pediatrician or barangay health worker".
 - **Translate cleanly.** Plain English carries into Filipino and Hiligaynon. Each language gets its own review by a fluent speaker.
+- **Sentence case everywhere.** Headings, buttons, tabs, alerts, badges and form labels use sentence case ("Add to today's plan", "Not seen yet", "Not a diagnostic tool"), never Title Case. Proper nouns (*LittleSteps*, *Maya*, *Open Library*, *Tagalog*, *Hiligaynon*), standard acronyms (*AI*, *JSON*, *WCAG*, *CDC*), and single navigation tab names (*Today*, *Explore*, *Milestones*, *Journal*) keep their capitalized forms.
+- **No AI slop and no buzzwords.** Never use marketing fluff, robotic jargon or filler phrases ("delve", "supercharge", "unlock", "empower", "seamless", "revolutionize", "smart", "magic"). Say plainly what the feature does, what the child did, or what the parent can try.
 
 | Instead of | Say | Note |
 |---|---|---|
@@ -125,6 +127,8 @@ Parents read LittleSteps in short bursts, often one-handed, sometimes in their s
 | Setting | Place | Indoor or outdoor. |
 | Record an observation · Observed · Not yet observed | Note what you saw · I saw it / Not seen yet · Seen on Oct 21 | Statuses stay `observed` / `not_yet_observed`. |
 | This is not a developmental assessment | It's not a test | Once per screen. |
+| Not a Diagnostic Tool (banner title) | Not a diagnostic tool | Follows the sentence-case rule. |
+| Non-diagnostic banner body | LittleSteps shares play ideas and things to look for. It's not a test. Children develop at different rates. Talk to a health professional, like your pediatrician or barangay health worker, if you have concerns. | Canonical banner wording across spec, Figma and app shell. |
 | Provisional Academic Reference — Pending Review | Source: early learning guide · still being checked | Honest about review status without sounding unsafe. |
 | Never sent to AI, analytics or error logs | Only you can see these notes. We never share them. | |
 | A JSON file of everything in your account | A copy of everything you've saved | |
@@ -250,7 +254,7 @@ These values are Figma variables or effect styles; `tokens.css` and `app_tokens.
 - **Radii:** 10px for controls (buttons, fields, chips), 16px for cards.
 - **Spacing scale:** 4, 8, 12, 16, 24 and 32px.
 - **Touch targets:** 48px for frequent and primary controls, 44px floor (§2.3).
-- **Shell:** top bar 60px, desktop sidebar 240px, mobile tab bar 72px in the Figma master. The React app currently sets the bar to 88px so two-line tab labels fit; the Figma master and the `scroll-padding-bottom: 72px` rule in §2.5 should be updated to match, or React reduced, once the team decides.
+- **Shell:** top bar 60px, desktop sidebar 240px, mobile tab bar 72px (canonical in Figma and spec; labels fit in single line or tight two-line rhythm; `scroll-padding-bottom: 72px`).
 - **Elevation:** cards `0 1px 2px` and `0 4px 14px` at 4% and 6% of the primary text color; overlays `0 12px 32px` at 14%.
 - **Icons:** the 15 icons on Figma page `02 · Components` (today, explore, milestones, journal, thisWeek, lock, check, clock, info, sparkle, chevronDown, chevronRight, close, plus, wifiOff).
 
@@ -387,30 +391,33 @@ Rules for any option: illustrations are decorative (`alt=""` or `aria-hidden`), 
 
 ### 10.3 Imagery and icons
 
-- **Photos:** none of children. Photographs of materials or places may appear in the future only with a source credit and a written alt text, and need project lead approval first.
+- **Photos:** none of children. No stock photography of people or children is allowed anywhere in the product. Photographs of physical materials or safe household places may appear in the future only with a source credit, written alt text, and project lead approval.
 - **Icons:** the 15 icons in Figma (see §6.1a). Icons take the text color, are decorative unless they are the only content of a control, and always sit beside words for status (§6.3). New icons use the same 24px grid and stroke weight.
 
 ### 10.4 Motion
 
-In the React app today the only motion is the skeleton pulse (1.4 seconds, opacity only); the tap-scale transition mentioned in §2.2 and §2.5 is not built. The proposal adds a small token set so every screen moves the same way. These values are **not yet in Figma**; add them there first if approved.
+**Decided 2026-10-31 (project lead):** the three motion tokens below are adopted across web and mobile shells. These values are to be mirrored in Figma effect styles.
 
-| Token (proposed) | Value | Use |
+| Token | Value | Use |
 |---|---|---|
 | `motion/duration/fast` | 120ms | Hover, press and focus feedback |
 | `motion/duration/base` | 200ms | Dialogs, sheets, toasts and menus opening |
 | `motion/easing/standard` | `cubic-bezier(0.2, 0, 0, 1)` | All transitions |
 
-Rules: when the tokens ship, add one global `prefers-reduced-motion: reduce` reset, because the current rule covers only the skeleton classes; animate opacity and transform only; nothing moves for more than 300ms except the skeleton pulse; no looping animation other than skeletons and the AI loading indicator; no motion that signals urgency (shaking, bouncing, flashing). With `prefers-reduced-motion: reduce` (or `MediaQuery.disableAnimations` in Flutter) all of it is removed, as in §2.5.
+Rules: when the tokens ship, add one global `prefers-reduced-motion: reduce` reset; animate opacity and transform only; nothing moves for more than 300ms except the skeleton pulse; no looping animation other than skeletons and the AI loading indicator; no motion that signals urgency (shaking, bouncing, flashing). With `prefers-reduced-motion: reduce` (or `MediaQuery.disableAnimations` in Flutter) all transitions are set to 0ms immediately, as in §2.5.
 
 ### 10.5 Empty-state art
 
 Empty states (§7) use the title-and-action pattern first. Under option A, a leaf shape or the parent-and-child illustration may sit above the title on first-run screens only; an empty list inside a working screen has text and one action, nothing else.
 
-### 10.6 Decisions needed
+### 10.6 Decisions record
 
-1. ~~Illustration option~~: decided, option A (§10.2).
-2. Approve or change the motion tokens (§10.4), then add them to Figma.
-3. Confirm no photography for now (§10.3).
+1. **Illustration option:** decided 2026-10-31, option A sparing (§10.2), with the activity card cover exception.
+2. **Motion tokens:** decided 2026-10-31, 120ms fast, 200ms base, standard ease-out curve (§10.4).
+3. **Photography policy:** decided 2026-10-31, zero photography of children or stock people (§10.3).
+4. **Sentence case:** decided 2026-10-31, strict sentence case for all headings, labels and actions (§2.6).
+5. **Mobile tab bar:** decided 2026-10-31, 72px canonical height (§6.1a).
+6. **Non-diagnostic banner:** decided 2026-10-31, canonical title and body standardized (§2.6).
 
 ---
 
@@ -472,9 +479,18 @@ Source: Figma file `yqUHW4lOuuly4jDPNMkMVI`, page `02 · Components`, read on 20
 | Empty and denied | `State / Empty`, `State / Empty week`, `State / Access denied` | One each | `EmptyState` (built); session problems are handled by `ProtectedRoute` | Styled `Card` |
 | Dialogs | `Dialog / Confirm delete note`, `Confirm delete child records`, `Discard draft` | One each | `ConfirmDialog` (built; not yet used for the note and records deletes) | `AlertDialog` |
 
-### 11.6 Gaps
+### 11.6 Gaps and Wireframe Requirements (Issue #44)
 
 - **In Figma, not built in React:** Checkbox, Radio, Switch, Icon button, and all product patterns in §11.3.
 - **Built in React, no Figma master:** `SuccessNotice`, `CreateAccountForm`, `ChildLimitNote`, `ChildStatus`, `Logo`. Add masters, or confirm they reuse existing ones.
-- **Frame names:** the agent instructions still refer to frames named `WEB 00 · 1280` and `MOBILE WEB 00 · 375`. The convention going forward is `Platform / Area / Screen – State`.
-- **Wireframes:** low-fidelity 375px frames come before further visual change (docs #44, owner Nherie). Whether the course counts them as a deliverable is to be confirmed with the instructor.
+- **Frame names:** the convention going forward is `Platform / Area / Screen – State`.
+- **Low-fidelity wireframes (Issue #44):** 9 essential 375px mobile wireframe frames are required in Figma before additional high-fidelity or code iterations:
+  1. `Mobile / Auth / Sign In – Default`: email, password, submit button, link to create account, clear focus ring.
+  2. `Mobile / Onboarding / Add Child – Form`: child nickname, age band or birth month select, non-diagnostic guidance, save action.
+  3. `Mobile / Today / Dashboard – Default`: top bar with child chip, advisory banner ("Not a diagnostic tool"), idea helper card, two activity cards with cover art, 72px tab bar.
+  4. `Mobile / Explore / Catalog – Default`: search input, filter chips (Thinking, Moving, Talking, Feelings), activity list with material tags, storybooks section.
+  5. `Mobile / Explore / Activity Detail – Default`: cover banner, household materials list, step-by-step play guide, milestone prompt, deterministic fallback note.
+  6. `Mobile / Milestones / Tracker – Default`: age selector, persistent "Not a diagnostic tool" link, milestone prompt rows ("Seen on [date]" / "Not seen yet").
+  7. `Mobile / Journal / Notes – Default`: privacy lock indicator, "+ New note" action, chronological note cards, empty state layout.
+  8. `Mobile / Reflection / Weekly – Default`: weekly moments count, kind-of-play distribution, reflection prompt, save reflection action.
+  9. `Mobile / Account / Menu – Modal`: child switcher list, Add child link, Export data copy, Help and support link, Sign out action.
