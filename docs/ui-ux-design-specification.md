@@ -354,3 +354,122 @@ The Flutter app (CC 207B) uses the reviewed 375px mobile-web frames as its desig
 | Text size | Respect the system text scale (`MediaQuery.textScaler`) up to 200% | Layouts must not clip or overlap. |
 
 Where a Flutter screen needs to differ from its 375px frame, record the difference and the reason in the Flutter pull request.
+
+---
+
+## 10. Visual Direction
+
+**Status:** Proposal for approval by the project lead and the usability lead. Until it is approved, the existing Figma frames and the rules in §2 and §6 stand. Choices marked **Recommended** are the proposal; the alternatives are listed so the team can pick differently.
+
+The visual style supports calm technology (§2.4): quiet surfaces, one action color, and no decoration that competes with the task. Decoration never carries meaning, and nothing here may use the clinical or scoring language banned in §2.6.
+
+### 10.1 Brand
+
+- **Mark and app icon:** the brandmark and app icon in the React `src/assets/brand` folder are the only marks. Show the brandmark in the top bar, the sign-in screens and the About screen. Keep clear space equal to the mark's height on all sides, and do not recolor it.
+- **Color:** Forest is the only action color (§6.1). The decorative brand colors (`artwork-forest`, `warm-cream`, `soft-sage`, `orange`, `mist`, `slate`, `dusty-blue`) appear in artwork only, never in text or controls.
+- **Voice:** brand voice is the wording in §2.6. The product name is written "LittleSteps".
+
+### 10.2 Illustration
+
+Existing artwork: one parent-and-child illustration and six leaf shapes (desktop and mobile), built for the sign-in screens.
+
+| Option | What it means | Trade-off |
+|---|---|---|
+| **A. Sparing (Recommended)** | Use the parent-and-child illustration and leaf shapes only on sign-in, first-run and empty states. No illustration inside working screens such as Today, Journal or forms. | Matches calm technology and keeps pages light on prepaid data. Less visual personality. |
+| B. Spot illustrations | Add a small illustration per kind of play (Thinking, Moving, Talking, Feelings) on cards and headers. | More warmth and recognition; more artwork to draw, review and keep consistent, and a risk of clutter. |
+| C. None | Typography and color only. | Lightest and quickest; the product may feel plain to first-time parents. |
+
+Rules for any option: illustrations are decorative (`alt=""` or `aria-hidden`), use the decorative brand colors, show no identifiable child faces, and are no larger than 240px tall on mobile. SVG only, under 20 KB each.
+
+### 10.3 Imagery and icons
+
+- **Photos:** none of children. Photographs of materials or places may appear in the future only with a source credit and a written alt text, and need project lead approval first.
+- **Icons:** the 15 icons in Figma (see §6.1a). Icons take the text color, are decorative unless they are the only content of a control, and always sit beside words for status (§6.3). New icons use the same 24px grid and stroke weight.
+
+### 10.4 Motion
+
+Today the only motion is the skeleton pulse (1.4 seconds, opacity only) and tap-scale transitions. The proposal adds a small token set so every screen moves the same way. These values are **not yet in Figma**; add them there first if approved.
+
+| Token (proposed) | Value | Use |
+|---|---|---|
+| `motion/duration/fast` | 120ms | Hover, press and focus feedback |
+| `motion/duration/base` | 200ms | Dialogs, sheets, toasts and menus opening |
+| `motion/easing/standard` | `cubic-bezier(0.2, 0, 0, 1)` | All transitions |
+
+Rules: animate opacity and transform only; nothing moves for more than 300ms except the skeleton pulse; no looping animation other than skeletons and the AI loading indicator; no motion that signals urgency (shaking, bouncing, flashing). With `prefers-reduced-motion: reduce` (or `MediaQuery.disableAnimations` in Flutter) all of it is removed, as in §2.5.
+
+### 10.5 Empty-state art
+
+Empty states (§7) use the title-and-action pattern first. Under option A, a leaf shape or the parent-and-child illustration may sit above the title on first-run screens only; an empty list inside a working screen has text and one action, nothing else.
+
+### 10.6 Decisions needed
+
+1. Illustration option A, B or C (§10.2).
+2. Approve or change the motion tokens (§10.4), then add them to Figma.
+3. Confirm no photography for now (§10.3).
+
+---
+
+## 11. Component Inventory and Figma Mapping
+
+Source: Figma file `yqUHW4lOuuly4jDPNMkMVI`, page `02 · Components`, read on 2026-10-31. "Built" means the component exists in `littlesteps-react/src` today. The Flutter column is the Material 3 widget from §9; Flutter code is written by team members.
+
+### 11.1 Core primitives
+
+| Component | Figma frame (page `02 · Components`) | States in Figma | React | Flutter (§9) |
+|---|---|---|---|---|
+| Button | `Button` | Primary and Secondary, Default and Focus | `Button` (built; also `text`, `danger`) | `FilledButton`, `OutlinedButton` |
+| Text field | `Text field` | Default, Focus, Error, Disabled, Filled | `TextField` (built) | `TextFormField` |
+| Select | `Select` | Default, Focus | `Select` (built) | `DropdownMenu` |
+| Chip | `Chip / Filter` | Default, Selected, each with Focus | `Chip` (built) | `FilterChip`, `ChoiceChip` |
+| Checkbox, Radio, Switch | `Checkbox`, `Radio`, `Switch` | Two values, each with Focus | Not built | `Checkbox`, `Radio`, `Switch` |
+| Icon button | `Icon button` | Default, Focus | Not built | `IconButton` |
+| Toast | `Toast / Type=Undo` | Undo | `UndoToast`, `SuccessNotice` (built) | `SnackBar` |
+| Icons | `icon/*` (15 masters) | n/a | `Icon` (built) | `Icon` with bundled SVGs |
+
+### 11.2 Navigation and shell
+
+| Component | Figma frame | States | React | Flutter |
+|---|---|---|---|---|
+| Sidebar item | `Nav / Sidebar item` | Default, Active, each with Focus | `SideNav` (built) | n/a (mobile frames only) |
+| Bottom tab | `Nav / Bottom tab` | Default, Active, each with Focus | `BottomTabBar` (built) | `NavigationBar` |
+| Child switcher | `Child switcher`, `Child context / Switcher` | Default, Focus | `ChildSwitcher` (built) | `AppBar` chip |
+| Shells | `Shell / Desktop sidebar`, `Shell / Mobile top bar`, `Shell / Mobile tab bar` | n/a | `AppShell`, `TopBar`, `ScreenHeader` (built) | `AppBar`, `NavigationBar` |
+| Account menu | `Sheet / Account menu`, `Row / Settings item` | Default, Focus | `AccountLink`, account screens (built) | `showModalBottomSheet` |
+
+### 11.3 Product patterns
+
+| Component | Figma frame | States | React | Flutter |
+|---|---|---|---|---|
+| Activity card | `Card / Activity`, `Card / Catalog item`, `Pill / Material`, `Cover / Activity`, `Card / Book` | Planned, Completed, Default, Focus | Not built | `Card.outlined` |
+| Milestone row | `Row / Milestone prompt`, `Card / Milestones preview` | Observed, Not yet observed | Not built | `Card.outlined` |
+| Journal note | `Card / Journal note`, `Form / New journal note` | Default | Not built | `Card.outlined`, `TextFormField` |
+| Weekly reflection | `Card / Weekly summary`, `Week totals`, `Domain counts`, `Moments noticed`, `Reflection prompt` | Default | Not built | `Card.outlined` |
+| Idea helper | `Card / Idea helper entry`, `Panel / Idea helper` | Form, Suggestion, Fallback, Loading, Rate limited | Not built | `Card`, `AlertDialog` or sheet |
+| Observation form | `Form / Record observation` | Default | Not built | `TextFormField` |
+
+### 11.4 Forms and account
+
+| Component | Figma frame | States | React | Flutter |
+|---|---|---|---|---|
+| Sign-in | `Form / Sign in` | Default, Session ended | `SignInForm` (built); `CreateAccountForm` has no Figma master | `TextFormField`, `FilledButton` |
+| Child profile | `Form / Child profile` | Default, Error, Offline | `ChildForm`, `EditChildScreen`, `FirstRun` (built) | `TextFormField`, `DropdownMenu` |
+| Text section | `Card / Text section` | Default | About, Privacy and Help screens (built) | `Card.outlined` |
+
+### 11.5 Feedback and system states
+
+| Component | Figma frame | States | React | Flutter |
+|---|---|---|---|---|
+| Badge | `Badge / Provisional`, `Completed`, `AI`, `Private`, `Offline` | One each | `Badge` (built) | `Chip` or `Container` styled |
+| Advisory banner | `Banner / Advisory` | Default | `NonDiagnosticNotice` (built) | Styled `Card` |
+| Inline alert | `Alert / Inline` | Error, Offline | `InlineAlert` (built) | Styled `Card` in the scroll view |
+| Skeleton | `Skeleton` | Card, Row, Profile | `Skeleton` (built) | Placeholder shapes |
+| Empty and denied | `State / Empty`, `State / Empty week`, `State / Access denied` | One each | `EmptyState` (built); `SessionProblem` | Styled `Card` |
+| Dialogs | `Dialog / Confirm delete note`, `Confirm delete child records`, `Discard draft` | One each | `ConfirmDialog` (built; not yet used for the note and records deletes) | `AlertDialog` |
+
+### 11.6 Gaps
+
+- **In Figma, not built in React:** Checkbox, Radio, Switch, Icon button, and all product patterns in §11.3.
+- **Built in React, no Figma master:** `SuccessNotice`, `CreateAccountForm`, `ChildLimitNote`, `ChildStatus`, `Logo`. Add masters, or confirm they reuse existing ones.
+- **Frame names:** the agent instructions still refer to frames named `WEB 00 · 1280` and `MOBILE WEB 00 · 375`. The convention going forward is `Platform / Area / Screen – State`.
+- **Wireframes:** low-fidelity 375px frames come before further visual change (docs #44, owner Nherie). Whether the course counts them as a deliverable is to be confirmed with the instructor.
