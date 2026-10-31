@@ -144,7 +144,7 @@ flowchart TD
 
 ### NFR-REL-01: Performance & Operational Limits
 - **API Response Latency:** Standard CRUD operations (profiles, activities, journal, summaries) must respond within 500ms under local emulator conditions.
-- **Rate & Cost Limiting:** AI suggestion endpoints must enforce per-caregiver rate limits (e.g., maximum 10 requests per hour) to prevent API quota exhaustion and denial-of-wallet attacks. When rate limits are reached, the API responds with HTTP 429 `RATE_LIMITED` and a `Retry-After: 3600` header, and the client automatically triggers the Tier 3 deterministic catalog fallback.
+- **Rate & Cost Limiting:** AI suggestion endpoints enforce per-caregiver rate limits to prevent API quota exhaustion and denial-of-wallet attacks. This is implemented on `POST /api/v1/ai/recommendations` (API PR #33): 10 requests per signed-in user per UTC clock hour, plus a per-address cap (default 30 per hour, configurable with `AI_IP_LIMIT_PER_HOUR`). When a limit is reached, the API responds with HTTP 429 `RATE_LIMITED` and a `Retry-After` header holding the real seconds until the window resets, and the client shows the rate-limited state or the Tier 3 catalog. If the counting store is unavailable the check fails open.
 - **Payload Constraints:** Request body parsers enforce a 100KB payload limit to prevent memory exhaustion attacks.
 
 ---
