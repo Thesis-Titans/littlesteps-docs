@@ -50,7 +50,7 @@ spacing:
   touch-min: 48px
   touch-secondary: 44px
   top-bar: 60px
-  bottom-bar: 88px
+  bottom-bar: 72px
   sidebar: 240px
 components:
   button-primary:
@@ -128,17 +128,16 @@ Two frame sizes: **1280** (desktop) and **375** (mobile). Mobile is designed fir
 
 - **Spacing scale:** 4, 8, 12, 16, 24, 32 px. Adjacent touch targets stay at least 8 px apart.
 - **Touch targets:** frequent and primary controls are at least **48 × 48 px**; secondary links may go to **44 × 44**, never lower. WCAG 2.5.8 requires only 24 × 24; ours is for one-handed comfort.
-- **App shell:** top bar 60 px, bottom tab bar 88 px (five tabs, two-line labels allowed), side navigation 240 px on desktop. The bar sizes come from Figma and `tokens.css`; the spec's `scroll-padding-bottom: 72px` is smaller than the 88 px bar, so check it when the spec is revised.
-- **Reserved space:** scrolling content keeps `scroll-padding` for the fixed bars so a focused element is never hidden (WCAG 2.4.11).
+- **App shell:** top bar 60 px, side navigation 240 px on desktop, bottom tab bar 72 px in the Figma master (five tabs, two-line labels allowed). React currently uses 88 px; the open decision is in [spec §6.1a](ui-ux-design-specification.md). Until it is made, treat 72 px as the design value.
 - **Five states on every screen:** populated, empty, loading, error or permission denied, offline or AI fallback. Journeys J1 to J7 are in specification [§7](ui-ux-design-specification.md).
 
 ## Elevation & Depth
 
-Depth is quiet. Cards sit on the canvas with a subtle border and, when they stand alone on the page background, a soft shadow (`0 1px 2px` and `0 4px 14px` at 4% and 6% of the text color). Overlays and dialogs use one larger shadow (`0 12px 32px` at 14%). These values come from Figma and `tokens.css`; spec §2.2 shows a simpler `0 1px 3px` shadow that should be aligned. No cards inside cards, no glows, no gradients.
+Depth is quiet. Cards sit on the canvas with a subtle border and, when they stand alone on the page background, a soft shadow (`0 1px 2px` and `0 4px 14px` at 4% and 6% of the text color). Overlays and dialogs use one larger shadow (`0 12px 32px` at 14%). No cards inside cards, no glows, no gradients.
 
 ## Shapes
 
-Two radii only: **10 px** for controls (buttons, fields, chips) and **16 px** for cards. Radii, the spacing scale and the 44 px secondary target come from Figma and `tokens.css`, not yet from the spec. Icons come from the 15 Figma icons, take the text color, and are decorative (`aria-hidden`) unless they are the only content of a control.
+Two radii only: **10 px** for controls (buttons, fields, chips) and **16 px** for cards. Radii, spacing and sizes are recorded in [spec §6.1a](ui-ux-design-specification.md). Icons come from the 15 Figma icons, take the text color, and are decorative (`aria-hidden`) unless they are the only content of a control.
 
 ## Components
 
