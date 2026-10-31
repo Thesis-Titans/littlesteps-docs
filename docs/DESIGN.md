@@ -78,9 +78,9 @@ components:
 **Governing Standard:** WCAG 2.2 AA and ISO 9241  
 **Related Documents:** [UI/UX Design Specification](ui-ux-design-specification.md), [Documentation Standards](documentation-standards.md), [Development Workflow](development-workflow.md)
 
-This file is the one design brief that people, AI agents and both clients (React and Flutter) read before they touch the UI. It follows the open [DESIGN.md format](https://github.com/google-labs-code/design.md/blob/main/docs/spec.md) (version `alpha`): token values in the front matter above, rationale in the sections below, in the format's section order.
+This file is the one design brief that people, AI agents and both clients (React and Flutter) read before they design or review the UI (Flutter: advise and review only, see the Agent Guide). It follows the open [DESIGN.md format](https://github.com/google-labs-code/design.md/blob/main/docs/spec.md) (version `alpha`): token values in the front matter above, rationale in the sections below, in the format's section order.
 
-**Order of authority.** Figma (file `yqUHW4lOuuly4jDPNMkMVI`, collection **LittleSteps · Design Tokens**) is canonical. The [UI/UX specification](ui-ux-design-specification.md) holds the reasoning and the rules. This file summarizes both for fast reading. If they disagree, Figma wins for values and the specification wins for rules, and this file is corrected. Change a value in Figma first, then `tokens.css`, then `app_tokens.dart`, then this file.
+**Order of authority.** Figma (file `yqUHW4lOuuly4jDPNMkMVI`, collection **LittleSteps · Design Tokens**) is canonical. The [UI/UX specification](ui-ux-design-specification.md) holds the reasoning and the rules. This file summarizes both for fast reading. If they disagree, Figma wins for values and the specification wins for rules, and this file is corrected. Change a value in Figma first, then `tokens.css`, then a member updates `app_tokens.dart`, then this file. If code and this file disagree, report it; do not silently pick one.
 
 ## Overview
 
@@ -94,7 +94,7 @@ The product should feel **calm, warm and plain**: a quiet helper, never a coach 
 - **Thumb first.** Primary actions sit in the bottom 35% of a 375 px screen.
 - **Honest about AI.** AI-written output always carries the "Suggested by AI" badge. Features are named for what they do ("Idea helper"), not for the technology.
 
-The complete reasoning is in specification sections [2](ui-ux-design-specification.md) and [5](ui-ux-design-specification.md).
+The reasoning is in the specification: [principles and the thumb zone (§2)](ui-ux-design-specification.md) and [navigation (§5)](ui-ux-design-specification.md).
 
 ## Colors
 
@@ -117,28 +117,28 @@ The full meaning table is specification [§6.3](ui-ux-design-specification.md).
 One family, **Inter**, loading only Regular, Medium, Semi Bold and Bold, subset to Latin to limit data cost on prepaid plans.
 
 - **Display and headings** step down on mobile (26/20 px against 32/24 px on desktop).
-- **Body is 16 px with 24 px line height, and never smaller.** Any sentence a parent must read (privacy statements, helper text, alert bodies, errors) is at least 14 px, set in the primary text color.
+- **Body is 16 px with 24 px line height, and never smaller.** Any sentence a parent must read (privacy statements, helper text, alert bodies, errors) is at least 14 px. Privacy and helper text use the primary text color; error messages use the error text color on the error background, as `tokens.css` and `components.css` do. (Spec §6.2 says error copy uses primary text; the spec needs aligning.)
 - **Meta (13 px, Medium)** is for timestamps, counts, badges and short labels only, never for full sentences.
 - **Line length** is capped near 70 characters, including inside wide desktop cards.
 - **Room to grow:** screens stay usable at 200% text and at 320 px width with no horizontal scroll (WCAG 1.4.4, 1.4.10). Labels fit text 30% longer than English; tab labels may wrap to two lines.
 
 ## Layout
 
-Two frame sizes: **1280** (desktop) and **375** (mobile). Mobile is designed first; the state frames exist at 375 only.
+Two frame sizes: **1280** (desktop) and **375** (mobile). Mobile is designed first. The populated state is required at both sizes; the other states are required at 375 and may be reused at 1280.
 
 - **Spacing scale:** 4, 8, 12, 16, 24, 32 px. Adjacent touch targets stay at least 8 px apart.
 - **Touch targets:** frequent and primary controls are at least **48 × 48 px**; secondary links may go to **44 × 44**, never lower. WCAG 2.5.8 requires only 24 × 24; ours is for one-handed comfort.
-- **App shell:** top bar 60 px, bottom tab bar 88 px (five tabs, two-line labels allowed), side navigation 240 px on desktop.
+- **App shell:** top bar 60 px, bottom tab bar 88 px (five tabs, two-line labels allowed), side navigation 240 px on desktop. The bar sizes come from Figma and `tokens.css`; the spec's `scroll-padding-bottom: 72px` is smaller than the 88 px bar, so check it when the spec is revised.
 - **Reserved space:** scrolling content keeps `scroll-padding` for the fixed bars so a focused element is never hidden (WCAG 2.4.11).
 - **Five states on every screen:** populated, empty, loading, error or permission denied, offline or AI fallback. Journeys J1 to J7 are in specification [§7](ui-ux-design-specification.md).
 
 ## Elevation & Depth
 
-Depth is quiet. Cards sit on the canvas with a subtle border and, when they stand alone on the page background, a soft shadow (`0 1px 2px` and `0 4px 14px` at 4% and 6% of the text color). Overlays and dialogs use one larger shadow (`0 12px 32px` at 14%). No cards inside cards, no glows, no gradients.
+Depth is quiet. Cards sit on the canvas with a subtle border and, when they stand alone on the page background, a soft shadow (`0 1px 2px` and `0 4px 14px` at 4% and 6% of the text color). Overlays and dialogs use one larger shadow (`0 12px 32px` at 14%). These values come from Figma and `tokens.css`; spec §2.2 shows a simpler `0 1px 3px` shadow that should be aligned. No cards inside cards, no glows, no gradients.
 
 ## Shapes
 
-Two radii only: **10 px** for controls (buttons, fields, chips) and **16 px** for cards. Icons come from the 15 Figma icons, take the text color, and are decorative (`aria-hidden`) unless they are the only content of a control.
+Two radii only: **10 px** for controls (buttons, fields, chips) and **16 px** for cards. Radii, the spacing scale and the 44 px secondary target come from Figma and `tokens.css`, not yet from the spec. Icons come from the 15 Figma icons, take the text color, and are decorative (`aria-hidden`) unless they are the only content of a control.
 
 ## Components
 
@@ -146,24 +146,25 @@ The shared set is built once in Figma (page `02 · Components`) and mirrored in 
 
 | Component | Purpose | Rule that matters |
 |---|---|---|
-| Button | Every action | One `primary` per screen. 48 px tall. `danger` only for permanent deletes. |
+| Button | Every action | One `primary` per screen. 48 px tall (text buttons 44). Variants: `primary`, `secondary`, `text`, `danger` (permanent deletes only). |
 | TextField, Select | Input | Visible label, never placeholder-only. Errors inline, linked to the field. Paste is never blocked. |
 | Chip | Filters and choices | A toggle, 48 px tall, selected state shown by more than color. |
 | Card | Grouping | `elevated` only on the page background. |
 | Badge | Short status | The AI badge is required on every AI-written result. |
 | InlineAlert | Errors, offline, notices | Stays until solved. Errors `role="alert"`, the rest `role="status"`. Never a toast for an error. |
+| Icon | The 15 Figma icons | Decorative by default; give a label only when the icon is the whole control. |
 | Skeleton, EmptyState | Loading, nothing yet | Static under reduced motion. Empty states say what will appear and how to add the first item, with no blame. |
 | ConfirmDialog | Permanent actions only | The button names the action ("Delete Maya's records"), never "OK". Cancel has focus first. |
 | UndoToast, SuccessNotice | Reversible actions, confirmations | At least 10 seconds, pause on hover or focus, announced politely. |
 | App shell | Top bar, bottom tabs, side nav | Tab labels may wrap. Focus is never covered by a bar. |
 
-Per-component props and states are in the [React components README](https://github.com/Thesis-Titans/littlesteps-react/blob/main/src/components/README.md). The component inventory mapped to Figma frames is planned for the specification revision.
+Full props and states are in the [React components README](https://github.com/Thesis-Titans/littlesteps-react/blob/main/src/components/README.md).
 
 ## Do's and Don'ts
 
 **Do**
 
-- Use tokens only: color, spacing, radius, type and sizes come from the tokens above.
+- Use tokens only: color, spacing, radius, type and sizes come from the tokens in this file and `tokens.css`.
 - Show a visible focus ring on every interactive element: 2 px `focus` color, 2 px offset.
 - Give every screen a unique, descriptive page title (WCAG 2.4.2).
 - Offer undo for reversible actions and a named confirmation for irreversible ones.
@@ -190,8 +191,19 @@ The full rules and the complete swap table live in specification [§2.6](ui-ux-d
 Read this file first, then the specification sections it links, before designing or reviewing any UI.
 
 1. **Order of authority:** Figma, then the specification, then this file, then code.
-2. **Tokens in code:** React reads `littlesteps-react/src/styles/tokens.css`; Flutter reads `littlesteps-flutter/lib/theme/app_tokens.dart`. Names follow the Figma variable paths (`color/brand/forest` becomes `--color-brand-forest`).
+2. **Tokens in code:** React reads `littlesteps-react/src/styles/tokens.css`; Flutter reads `littlesteps-flutter/lib/theme/app_tokens.dart`. The front matter keys here are short aliases. React names follow the Figma variable paths (`color/brand/forest` becomes `--color-brand-forest`); Dart uses camelCase equivalents.
+
+   | Front matter key | CSS variable |
+   |---|---|
+   | `primary` | `--color-brand-forest` |
+   | `canvas`, `card`, `soft-green` | `--color-surface-canvas`, `--color-surface-card`, `--color-surface-soft-green` |
+   | `text`, `text-secondary`, `on-primary` | `--color-text-primary`, `--color-text-secondary`, `--color-text-on-brand` |
+   | `border-*`, `status-*`, `focus` | `--color-border-*`, `--color-status-*`, `--color-focus` |
+   | `xs` to `xxl` | `--space-4` to `--space-32` (the number is pixels) |
+   | `touch-min`, `touch-secondary`, `top-bar`, `bottom-bar`, `sidebar` | `--size-touch-target-min`, `--size-touch-target-secondary`, `--size-top-bar`, `--size-bottom-bar`, `--size-sidebar` |
+
+   Not in the front matter: the font fallback stack, the 2 px focus ring width and offset, and the 16 px minimum body size. Read them in `tokens.css`. Desktop type sizes are React-only.
 3. **Reviewing:** check against the specification §8 checklist, WCAG 2.2 AA, the do's and don'ts above and the voice rules. Report findings with a location and a proposed fix; do not rewrite the design.
-4. **Flutter:** the Flutter app is written by team members for the CC 207B course. AI tools advise and review only, never generate Flutter code, and any AI use is logged in `littlesteps-flutter/docs/ai-usage-log.md`.
-5. **Skills and plugins:** none are installed. Design-review rules are applied as written rubrics, not as downloaded skills.
+4. **Flutter:** members write and can defend all Flutter code (Individual Code Defense, CC 207B). AI may advise, review and give teaching snippets of 15 lines or fewer, never whole screens or features. Log every use in `littlesteps-flutter/docs/ai-usage-log.md` before opening the pull request, and tick the box in the PR template. Members add the tokens Dart still lacks (Soft Green, the status colors, offline and error text, error border, focus, on-primary, the decorative brand colors) and the 44 px target, shell sizes and 2 px focus ring offset.
+5. **Skills and plugins:** none are installed as of 2026-10-31. Design-review rules are applied as written rubrics, not as downloaded skills.
 6. **Not final:** the specification is being revised (visual direction, component inventory, wireframes). Motion has no tokens yet: keep transitions short, animate opacity and transform only, and follow the reduced-motion rule until motion tokens exist in Figma.
