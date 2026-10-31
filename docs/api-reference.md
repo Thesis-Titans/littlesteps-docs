@@ -257,7 +257,7 @@ Suggests up to three reviewed catalog activities for an age band, using only non
   ```
   The `activity` object is abbreviated above; see section 5.2 for its fields.
 * **Empty results:** with an empty reviewed catalog the response is `200` with `suggestions: []` and `reason: "NO_REVIEWED_CONTENT"`. When the catalog has content but nothing matches the request, the response is `200` with an empty `suggestions` list and no `reason`. Clients should show an empty state, not an error.
-* **Errors:** `400 INVALID_INPUT` with `details` (`{ "field", "issue" }`; an unknown field is reported as `"Unknown field"`), `401 UNAUTHENTICATED`, `500 INTERNAL_ERROR`. `429 RATE_LIMITED` is documented in the OpenAPI contract but **not implemented yet** (see section 6.2). A provider failure is never an error response.
+* **Errors:** `400 INVALID_INPUT` with `details` (`{ "field", "issue" }`; an unknown field is reported as `"Unknown field"`), `401 UNAUTHENTICATED`, `500 INTERNAL_ERROR`. `429 RATE_LIMITED` with `Retry-After` (see section 6.2). Every authenticated request counts toward the limit, including one that later fails validation. A provider failure is never an error response.
 * **Privacy boundary:** the request carries no child or caregiver identifiers. The provider prompt contains only age band, time, setting, cleaned materials (lowercased, control characters removed, truncated, de-duplicated), language, the pick count, and the id, title, domain and materials of candidate catalog items. It never contains user ID, token, email, child data, observations or journal text. Logs record only the event name, tier, latency and error class, never prompts, replies, materials or user identifiers.
 * **Fallback behaviour:** the provider call is bounded at 8 seconds and its reply must pick only candidate ids and pass output validation. On timeout, error, invalid output, no provider configured, or no eligible candidates, the endpoint returns `200` with the deterministic Tier 3 ranking (`source: "catalog_fallback"`, `tier: 3`, no AI badge). Tier 2 (Ollama) is planned and not part of this slice.
 
@@ -305,7 +305,7 @@ The Tier 1 to Tier 2 step applies to `/api/v1/ai/story-activity` only, and that 
 1. **Tier 1 (Google Gemini 1.5 Flash - Cloud Primary):**
    - Called using server-side `@google/genai` or REST endpoint.
    - Timeout bounded at **8 seconds** via `AbortSignal.timeout(8000)`.
-   - Rate limit (planned, not implemented): 10 requests per hour per authenticated user, plus a looser per-IP cap. Over the limit the API would return `429 RATE_LIMITED` with `Retry-After: 3600`.
+   - Rate limit (implemented on `POST /api/v1/ai/recommendations`, api PR #33): 10 requests per signed-in user per UTC clock hour, counted in Firestore (`rate_limits`). If the store is unavailable the check fails open and the request proceeds. A per-address cap also applies (default 30 per hour, set with `AI_IP_LIMIT_PER_HOUR`, `0` disables it; the count is in memory per instance; `TRUST_PROXY_HOPS`, default 1, sets how many proxy hops are trusted when reading the address, to be verified on a deployed function before relying on it). Over either limit the API returns `429 RATE_LIMITED` with `Retry-After` set to the real number of seconds until the window resets (1 to 3600), not a fixed value. The window is a fixed clock hour, so a burst across an hour boundary can use up to twice the limit.
 2. **Tier 2 (Ollama - Local Offline AI Fallback):**
    - Active when `LOCAL_AI_ENABLED=true` in development/demo environments.
    - Pings `http://localhost:11434/api/generate` with model `qwen2.5-coder:7b`.
@@ -341,7 +341,7 @@ All error responses strictly follow the standardized JSON error envelope:
 | :--- | :--- |
 | Public catalog (`/api/v1/catalog/*`) | `public, max-age=3600` |
 | Catalog books fallback response | `public, max-age=60` |
-| AI routes (`/api/v1/ai/*`; `/ai/recommendations` is implemented, api PR #28) | `no-store` |
+| AI routes (`/api/v1/ai/*`; `/ai/recommendations` is implemented, api PR #28), including its `429` response | `no-store` |
 | Authenticated routes: `/health` and `/api/v1/me` (implemented); `/api/v1/children` and `/api/v1/children/{childId}` (implemented, api PRs #26 and #29); `DELETE` (planned) | `no-store` |
 
 ### Complete HTTP Status to Error Code Mapping Table
@@ -353,7 +353,8 @@ All error responses strictly follow the standardized JSON error envelope:
 | **`403`** | `ORIGIN_NOT_ALLOWED` | Request from an origin not in the CORS allowlist (implemented) | Client shows access denied alert |
 | **`404`** | `RESOURCE_NOT_FOUND` | Child ID, activity, or journal note does not exist OR belongs to another caregiver (BOLA) | Client shows item not found; prevents resource existence leakage |
 | **`422`** (Unprocessable Content, [RFC 9110 §15.5.21](https://www.rfc-editor.org/rfc/rfc9110#section-15.5.21)) | `UNPROCESSABLE_ENTITY` | Business logic violation (e.g. child birth month in the future or more than 71 months ago on create/edit, or creating a 21st child) | Client displays business rule explanation |
-| **`429`** | `RATE_LIMITED` | Planned, not implemented yet (documented in the OpenAPI contract for `/ai/recommendations`): AI request quota exceeded (more than 10 requests per hour per user, plus a looser per-IP cap) | Client triggers Tier 3 fallback; would include a `Retry-After: 3600` header (documented, not implemented) |
+| **`429`** | `RATE_LIMITED` | Implemented on `POST /api/v1/ai/recommendations` only (api PR #33): more than 10 requests in the UTC clock hour for the signed-in user, or the per-address cap (default 30 per hour). Planned for other endpoints | Client shows the rate-limited state or uses the Tier 3 catalog; response carries `Retry-After` with the real seconds until the window resets (1 to 3600) |
+| **`413`** | `PAYLOAD_TOO_LARGE` | Request body over the 100KB limit. Message: "The request body is too large." Sent with `no-store` (implemented, api PR #32) | Client shortens the request |
 | **`500`** | `INTERNAL_ERROR` | Unhandled server exception | Client displays generic error toast; hides internal stack traces |
 | **`502`** | `UPSTREAM_SERVICE_ERROR`| Open Library or Gemini API unreachable | Server automatically triggers internal cached or deterministic fallback |
 | **`503`** | `SERVICE_UNAVAILABLE` | Transient conflict: the transaction that counts and creates a child, or the one that updates it (`POST /api/v1/children` or `PATCH /api/v1/children/{childId}`) was aborted by contention after the server's retries. This is not an AI provider failure (see `502` and `504`). Sent with `Retry-After: 1` and `no-store` | Client retries the same request after a moment |
