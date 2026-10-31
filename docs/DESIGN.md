@@ -50,7 +50,7 @@ spacing:
   touch-min: 48px
   touch-secondary: 44px
   top-bar: 60px
-  bottom-bar: 72px  # decided 31 Oct; tokens.css still says 88px until react #28 lands
+  bottom-bar: 72px
   sidebar: 240px
 components:
   button-primary:
@@ -128,7 +128,7 @@ Two frame sizes: **1280** (desktop) and **375** (mobile). Mobile is designed fir
 
 - **Spacing scale:** 4, 8, 12, 16, 24, 32 px. Adjacent touch targets stay at least 8 px apart.
 - **Touch targets:** frequent and primary controls are at least **48 × 48 px**; secondary links may go to **44 × 44**, never lower. WCAG 2.5.8 requires only 24 × 24; ours is for one-handed comfort.
-- **App shell:** top bar 60 px, side navigation 240 px on desktop, bottom tab bar 72 px (five tabs). The 72 px height is decided (spec §10.6); the React token still says 88 px and is to be changed (react #28).
+- **App shell:** top bar 60 px, side navigation 240 px on desktop, bottom tab bar 72 px (five tabs). The 72 px height is decided (spec §10.6) and is in `tokens.css` (react PR #36); at 320 px two-line labels make the bar taller, so scroll padding adds 16 px.
 - **Five states on every screen:** populated, empty, loading, error or permission denied, offline or AI fallback. Journeys J1 to J7 are in specification [§7](ui-ux-design-specification.md).
 
 ## Elevation & Depth
