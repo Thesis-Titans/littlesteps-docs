@@ -371,6 +371,8 @@ The visual style supports calm technology (§2.4): quiet surfaces, one action co
 
 ### 10.2 Illustration
 
+**Decided 2026-10-31: option A (sparing)**, by the project lead.
+
 Existing artwork: one parent-and-child illustration and six leaf shapes (desktop and mobile), built for the sign-in screens.
 
 | Option | What it means | Trade-off |
@@ -404,7 +406,7 @@ Empty states (§7) use the title-and-action pattern first. Under option A, a lea
 
 ### 10.6 Decisions needed
 
-1. Illustration option A, B or C (§10.2).
+1. ~~Illustration option~~: decided, option A (§10.2).
 2. Approve or change the motion tokens (§10.4), then add them to Figma.
 3. Confirm no photography for now (§10.3).
 
