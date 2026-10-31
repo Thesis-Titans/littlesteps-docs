@@ -89,7 +89,7 @@ graph TD
 These rules come from the design system review of 23 October 2026 and apply to every component and screen.
 
 - **Visible focus (WCAG 2.4.7):** Every interactive component has a Focus state: a 2px `color/focus` ring with a 2px offset (7.1:1 on white, 6.6:1 on canvas), plus a 2px white inner ring on Forest-filled controls.
-- **Focus not hidden (WCAG 2.4.11):** Scrolling content reserves room for the fixed mobile bars (`scroll-padding-top: 60px`, `scroll-padding-bottom: 72px`) so a focused element is never covered. Sticky bars also need a keyboard focus test (tab through every screen and confirm the focused element stays visible).
+- **Focus not hidden (WCAG 2.4.11):** Scrolling content reserves room for the fixed mobile bars (`scroll-padding-top: 60px`, `scroll-padding-bottom: 88px`, the 72px bar plus a 16px allowance because two-line labels make the bar taller at 320px) so a focused element is never covered. Sticky bars also need a keyboard focus test (tab through every screen and confirm the focused element stays visible).
 - **Page titled (WCAG 2.4.2, A):** Every screen or route has a unique, descriptive page title.
 - **Target size (WCAG 2.5.8, AA):** The minimum is 24 by 24 CSS pixels; the 44/48 px rule in §2.3 is stricter and applies.
 - **Recognizable fields (WCAG 1.4.11):** Text fields, selects and unselected chips use `color/border/input` (3.5:1 on white). Entered values use `color/text/primary`; only placeholders use secondary text.
@@ -254,7 +254,7 @@ These values are Figma variables or effect styles; `tokens.css` and `app_tokens.
 - **Radii:** 10px for controls (buttons, fields, chips), 16px for cards.
 - **Spacing scale:** 4, 8, 12, 16, 24 and 32px.
 - **Touch targets:** 48px for frequent and primary controls, 44px floor (§2.3).
-- **Shell:** top bar 60px, desktop sidebar 240px, mobile tab bar 72px (canonical in Figma and spec; labels fit in single line or tight two-line rhythm; `scroll-padding-bottom: 72px`).
+- **Shell:** top bar 60px, desktop sidebar 240px, mobile tab bar 72px (canonical in Figma and spec; 72px minimum; labels are one line from 360px, and at 320px two labels wrap and the bar grows to about 85px, so `scroll-padding-bottom` is 72px plus 16px).
 - **Elevation:** cards `0 1px 2px` and `0 4px 14px` at 4% and 6% of the primary text color; overlays `0 12px 32px` at 14%.
 - **Icons:** the 15 icons on Figma page `02 · Components` (today, explore, milestones, journal, thisWeek, lock, check, clock, info, sparkle, chevronDown, chevronRight, close, plus, wifiOff).
 
