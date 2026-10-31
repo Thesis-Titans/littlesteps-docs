@@ -16,7 +16,7 @@ This rubric is what reviewers (people and review agents) apply to React code and
 
 ## 2. LittleSteps rules (all reviews)
 
-These come from the specification and DESIGN.md, except the sentence-case rule, which is new here and should be added to the specification.
+These come from the specification and DESIGN.md.
 
 - Contrast: text at least 4.5:1, large text and field borders at least 3:1 (WCAG 1.4.3, 1.4.11). Never put secondary text on Caution, Offline or Soft Green.
 - Touch targets: 48 × 48 px for frequent and primary controls, 44 × 44 px floor, 8 px between targets (spec §2.3; WCAG 2.5.8 needs only 24 × 24).

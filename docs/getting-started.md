@@ -66,8 +66,11 @@ cp .env.example .env
 Default `.env` contents:
 ```ini
 CORS_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
+OPEN_LIBRARY_CONTACT=
 ```
-*(Allowlists local Vite frontend requests during development).*
+*(Allowlists local Vite frontend requests during development. Set `OPEN_LIBRARY_CONTACT` to a real contact address before calling the catalog books route.)*
+
+The file also lists optional settings: `GEMINI_API_KEY` and `GEMINI_MODEL` (both needed to turn the Gemini provider on; leave empty locally), `AI_IP_LIMIT_PER_HOUR` and `TRUST_PROXY_HOPS`. See `.env.example` for what each does. Never commit real values.
 
 > [!SECURITY]
 > `.env` is ignored by Git. Never commit service account keys, private secrets, or production credentials to `.env`.

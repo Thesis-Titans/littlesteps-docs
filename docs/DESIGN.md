@@ -117,7 +117,7 @@ The full meaning table is specification [§6.3](ui-ux-design-specification.md).
 One family, **Inter**, loading only Regular, Medium, Semi Bold and Bold, subset to Latin to limit data cost on prepaid plans.
 
 - **Display and headings** step down on mobile (26/20 px against 32/24 px on desktop).
-- **Body is 16 px with 24 px line height, and never smaller.** Any sentence a parent must read (privacy statements, helper text, alert bodies, errors) is at least 14 px. Privacy and helper text use the primary text color; error messages use the error text color on the error background, as `tokens.css` and `components.css` do. (Spec §6.2 says error copy uses primary text; the spec needs aligning.)
+- **Body is 16 px with 24 px line height, and never smaller.** Any sentence a parent must read (privacy statements, helper text, alert bodies, errors) is at least 14 px. Privacy and helper text use the primary text color; error messages use the error text color on the error background, as `tokens.css` and `components.css` do.
 - **Meta (13 px, Medium)** is for timestamps, counts, badges and short labels only, never for full sentences.
 - **Line length** is capped near 70 characters, including inside wide desktop cards.
 - **Room to grow:** screens stay usable at 200% text and at 320 px width with no horizontal scroll (WCAG 1.4.4, 1.4.10). Labels fit text 30% longer than English; tab labels may wrap to two lines.
@@ -128,7 +128,7 @@ Two frame sizes: **1280** (desktop) and **375** (mobile). Mobile is designed fir
 
 - **Spacing scale:** 4, 8, 12, 16, 24, 32 px. Adjacent touch targets stay at least 8 px apart.
 - **Touch targets:** frequent and primary controls are at least **48 × 48 px**; secondary links may go to **44 × 44**, never lower. WCAG 2.5.8 requires only 24 × 24; ours is for one-handed comfort.
-- **App shell:** top bar 60 px, side navigation 240 px on desktop, bottom tab bar 72 px in the Figma master (five tabs, two-line labels allowed). React currently uses 88 px; the open decision is in [spec §6.1a](ui-ux-design-specification.md). Until it is made, treat 72 px as the design value.
+- **App shell:** top bar 60 px, side navigation 240 px on desktop, bottom tab bar 72 px (five tabs). The 72 px height is decided (spec §10.6); the React token still says 88 px and is to be changed (react #28).
 - **Five states on every screen:** populated, empty, loading, error or permission denied, offline or AI fallback. Journeys J1 to J7 are in specification [§7](ui-ux-design-specification.md).
 
 ## Elevation & Depth
@@ -176,6 +176,7 @@ Full props and states are in the [React components README](https://github.com/Th
 - Don't put secondary text on Caution, Offline or Soft Green.
 - Don't use decorative brand colors for text or controls.
 - Don't use streaks, scores, delay labels, urgency or blame, anywhere.
+- Don't use Title Case or marketing words ("unlock", "seamless", "smart"); spec §2.6 requires strict sentence case and plain wording.
 - Don't use clinical or technical words on screen: catalog, domain, observation, assessment, analytics, generate, JSON.
 - Don't let color alone carry meaning.
 
@@ -205,4 +206,4 @@ Read this file first, then the specification sections it links, before designing
 3. **Reviewing:** check against the specification §8 checklist, WCAG 2.2 AA, the do's and don'ts above and the voice rules. Report findings with a location and a proposed fix; do not rewrite the design.
 4. **Flutter:** members write and can defend all Flutter code (Individual Code Defense, CC 207B). AI may advise, review and give teaching snippets of 15 lines or fewer, never whole screens or features. Log every use in `littlesteps-flutter/docs/ai-usage-log.md` before opening the pull request, and tick the box in the PR template. Members add the tokens Dart still lacks (Soft Green, the status colors, offline and error text, error border, focus, on-primary, the decorative brand colors) and the 44 px target, shell sizes and 2 px focus ring offset.
 5. **Skills and plugins:** none are installed as of 2026-10-31. Design-review rules are applied as written rubrics, not as downloaded skills.
-6. **Not final:** the specification is being revised (visual direction, component inventory, wireframes). Motion has no tokens yet: keep transitions short, animate opacity and transform only, and follow the reduced-motion rule until motion tokens exist in Figma.
+6. **Decisions of 2026-10-31** (spec §10.6): illustration option A with the activity cover exception; motion tokens 120 ms (fast), 200 ms (base) and one standard easing, to be added to Figma and `tokens.css`; no photography of children or stock people; strict sentence case; one canonical non-diagnostic banner; 72 px tab bar. Low-fidelity wireframes (docs #44) are in progress.
