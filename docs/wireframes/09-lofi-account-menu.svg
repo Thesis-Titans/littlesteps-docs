@@ -1,0 +1,22 @@
+<svg width="375" height="812" viewBox="0 0 375 812" fill="none" xmlns="http://www.w3.org/2000/svg">
+<!-- Background overlay -->
+<rect width="375" height="812" fill="#000000" fill-opacity="0.4"/>
+<!-- Modal Sheet (bottom aligned) -->
+<rect y="430" width="375" height="382" rx="20" fill="#FFFFFF"/>
+<rect x="167" y="442" width="40" height="4" rx="2" fill="#D1D5DB"/>
+<text x="24" y="475" font-family="Inter, sans-serif" font-size="18" font-weight="700" fill="#111827">Account & children</text>
+
+<!-- Children list -->
+<rect x="24" y="495" width="327" height="52" rx="12" fill="#F3F4F6"/>
+<text x="40" y="526" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#111827">Maya (14 months)</text>
+<text x="310" y="526" font-family="Inter, sans-serif" font-size="13" fill="#111827">Active ✓</text>
+
+<!-- Menu Actions -->
+<text x="24" y="580" font-family="Inter, sans-serif" font-size="15" fill="#111827">+ Add another child</text>
+<line x1="24" y1="595" x2="351" y2="595" stroke="#E5E7EB" stroke-width="1"/>
+<text x="24" y="625" font-family="Inter, sans-serif" font-size="15" fill="#111827">Export a copy of your data</text>
+<line x1="24" y1="640" x2="351" y2="640" stroke="#E5E7EB" stroke-width="1"/>
+<text x="24" y="670" font-family="Inter, sans-serif" font-size="15" fill="#111827">Help and support</text>
+<line x1="24" y1="685" x2="351" y2="685" stroke="#E5E7EB" stroke-width="1"/>
+<text x="24" y="715" font-family="Inter, sans-serif" font-size="15" font-weight="500" fill="#991B1B">Sign out</text>
+</svg>
