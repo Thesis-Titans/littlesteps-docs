@@ -89,7 +89,7 @@ graph TD
 These rules come from the design system review of 23 October 2026 and apply to every component and screen.
 
 - **Visible focus (WCAG 2.4.7):** Every interactive component has a Focus state: a 2px `color/focus` ring with a 2px offset (7.1:1 on white, 6.6:1 on canvas), plus a 2px white inner ring on Forest-filled controls.
-- **Focus not hidden (WCAG 2.4.11):** Scrolling content reserves room for the fixed mobile bars (`scroll-padding-top: 60px`, `scroll-padding-bottom: 72px`) so a focused element is never covered. `scroll-padding` alone is not enough: sticky bars also need a keyboard focus test (tab through every screen and confirm the focused element stays visible).
+- **Focus not hidden (WCAG 2.4.11):** Scrolling content reserves room for the fixed mobile bars (`scroll-padding-top: 60px`, `scroll-padding-bottom: 72px`) so a focused element is never covered (the mobile tab bar height is an open decision, see §6.1a). `scroll-padding` alone is not enough: sticky bars also need a keyboard focus test (tab through every screen and confirm the focused element stays visible).
 - **Page titled (WCAG 2.4.2, A):** Every screen or route has a unique, descriptive page title.
 - **Target size (WCAG 2.5.8, AA):** The minimum is 24 by 24 CSS pixels; the 44/48 px rule in §2.3 is stricter and applies.
 - **Recognizable fields (WCAG 1.4.11):** Text fields, selects and unselected chips use `color/border/input` (3.5:1 on white). Entered values use `color/text/primary`; only placeholders use secondary text.
@@ -213,7 +213,7 @@ Sign-in and the settings, privacy-notice, about and help views cover PRQ-01 and 
 | **Primary Navigation** | Fixed left sidebar (240px) with brand mark, child switcher, and 5 navigation tabs. | Sticky top bar (brand + child avatar) + **Fixed bottom tab bar** with the same 5 tabs (Today, Explore, Milestones, Journal, This week), each at least 48 × 48px. |
 | **Child Switcher** | Dropdown menu in sidebar showing Maya (14m) and Liam (48m), plus a "For Maya" chip in each child-scoped page header. | Header avatar opens the account menu with the child list; a "For Maya · 14 months" chip in each child-scoped header and form opens the switcher. |
 | **Dashboard Layout** | 2-column grid: Left = Today's Plan & Idea Helper; Right = Weekly Summary & Milestones. | Single-column stacked cards optimized for vertical thumb scrolling. |
-| **Touch Targets** | Same 44 × 44px floor; primary buttons 48px tall. A mouse needs no less than a thumb. | **48 × 48px for frequent and primary controls**, 44 × 44px floor for secondary links (§2.3). |
+| **Touch Targets** | Same 44 × 44px floor; primary buttons 48px tall. | **48 × 48px for frequent and primary controls**, 44 × 44px floor for secondary links (§2.3). |
 | **Advisory Banner** | Shown in full, in the neutral advisory style (§6.3), on the first visit to Today and Milestones. After it is dismissed, a persistent "Not a diagnostic tool" link stays in the page header and reopens it. | Same behavior; the link sits under the page title. |
 | **Page Titles** | The H1 repeats the tab or menu label (Today, Explore, Milestones, Journal, This week); slogans such as "Notice, don't score" become the subtitle. | Same. |
 
