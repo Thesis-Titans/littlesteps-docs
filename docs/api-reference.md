@@ -27,7 +27,7 @@ flowchart TD
 
     APIGateway -->|"Caregiver-Scoped CRUD"| Firestore[("Cloud Firestore<br/><code>/caregivers/{uid}/...</code>")]
     APIGateway -->|"Books & Covers Proxy"| OpenLibrary["Open Library REST API<br/>(Picture Books Catalog)"]
-    APIGateway -->|"AI Suggestion & Cascade"| AIEngine["<b>3-Tier AI Fallback Engine</b><br/>1. Cloud Gemini 1.5 Flash (8s timeout)<br/>2. Local Edge Ollama (qwen2.5-coder:7b)<br/>3. Deterministic ECCD Catalog Matcher"]
+    APIGateway -->|"AI Suggestion & Cascade"| AIEngine["<b>3-Tier AI Fallback Engine</b><br/>1. Cloud Gemini (8s timeout)<br/>2. Local Edge Ollama (qwen2.5-coder:7b)<br/>3. Deterministic ECCD Catalog Matcher"]
 ```
 
 ### Why This Architecture Enhances Efficiency & Security (CIT 210 Presentation Focus)
@@ -64,7 +64,7 @@ sequenceDiagram
   Parent->>Client: Tap "Suggest Play Idea for This Story"
   Client->>API: POST /api/v1/ai/story-activity { bookTitle: "..." }
   critical 3-Tier AI Fallback Pipeline
-    API->>AI: Tier 1: Query Gemini 1.5 Flash (8s timeout)
+    API->>AI: Tier 1: Query Gemini (8s timeout)
     AI-->>API: Success / Fail (timeout, error, invalid output)
   option Tier 1 Fails
     API->>AI: Tier 2: Query Local Ollama (localhost:11434)
@@ -133,12 +133,16 @@ Rules from the contract (implemented, api PRs #26 and #29):
 
 ### 4.3 Milestone Observations (FR-01)
 
+> **Planned, not built.** These routes are not in `openapi.yaml` yet (api #16).
+
 | Method | Path | Auth | Purpose | Success (Status / Body) | Error Codes |
 | :--- | :--- | :---: | :--- | :--- | :--- |
 | `GET` | `/api/v1/children/:childId/milestones` | Bearer | List caregiver observations for child | `200 OK`<br/>`{ "observations": [ { "milestoneId": "m1", "status": "observed" } ] }` | `401`<br/>`404` |
 | `POST` | `/api/v1/children/:childId/milestones` | Bearer | Record milestone observation (`observed` or `not_yet_observed`) | `201 Created`<br/>`{ "observationId": "o1", ... }` | `400 INVALID_INPUT`<br/>`401`<br/>`404` |
 
 ### 4.4 Activity Planning & Scheduling (FR-02)
+
+> **Planned, not built.** These routes are not in `openapi.yaml` yet (api #10).
 
 | Method | Path | Auth | Purpose | Success (Status / Body) | Error Codes |
 | :--- | :--- | :---: | :--- | :--- | :--- |
@@ -148,6 +152,8 @@ Rules from the contract (implemented, api PRs #26 and #29):
 
 ### 4.5 Private Observation Journal (FR-03)
 
+> **Planned, not built.** These routes are not in `openapi.yaml` yet (api #11).
+
 | Method | Path | Auth | Purpose | Success (Status / Body) | Error Codes |
 | :--- | :--- | :---: | :--- | :--- | :--- |
 | `GET` | `/api/v1/children/:childId/journal` | Bearer | List private observation journal entries | `200 OK`<br/>`{ "entries": [ { "id": "j1", "title": "First steps", ... } ] }` | `401`<br/>`404` |
@@ -155,6 +161,8 @@ Rules from the contract (implemented, api PRs #26 and #29):
 | `DELETE`| `/api/v1/children/:childId/journal/:id`| Bearer | Permanently delete journal note | `204 No Content` | `401`<br/>`404` |
 
 ### 4.6 Weekly Summary (FR-05)
+
+> **Planned, not built.** These routes are not in `openapi.yaml` yet (api #12).
 
 | Method | Path | Auth | Purpose | Success (Status / Body) | Error Codes |
 | :--- | :--- | :---: | :--- | :--- | :--- |
@@ -218,7 +226,7 @@ LittleSteps integrates generative intelligence to enhance learning without relyi
 #### `POST /api/v1/ai/recommendations`
 Suggests up to three reviewed catalog activities for an age band, using only non-identifying parameters. Requires a Bearer token.
 
-> **Status:** implemented and merged in littlesteps-api PR #28 (30 October 2026). No AI provider is configured in this slice, so every response is currently a Tier 3 catalog fallback.
+> **Status:** implemented and merged in littlesteps-api PR #28 (30 October 2026). The Gemini provider was added in api PR #34 and is off by default: it is used only when `GEMINI_API_KEY` and `GEMINI_MODEL` are both set, otherwise, and on any provider failure, the response is the Tier 3 catalog fallback. A live smoke test is still pending before it is enabled.
 
 * **Request body (strict):** unknown fields are rejected with `400`, never ignored, so `childId`, nicknames, notes and similar fields cannot be sent.
 
@@ -261,7 +269,7 @@ Suggests up to three reviewed catalog activities for an age band, using only non
 * **Privacy boundary:** the request carries no child or caregiver identifiers. The provider prompt contains only age band, time, setting, cleaned materials (lowercased, control characters removed, truncated, de-duplicated), language, the pick count, and the id, title, domain and materials of candidate catalog items. It never contains user ID, token, email, child data, observations or journal text. Logs record only the event name, tier, latency and error class, never prompts, replies, materials or user identifiers.
 * **Fallback behaviour:** the provider call is bounded at 8 seconds and its reply must pick only candidate ids and pass output validation. On timeout, error, invalid output, no provider configured, or no eligible candidates, the endpoint returns `200` with the deterministic Tier 3 ranking (`source: "catalog_fallback"`, `tier: 3`, no AI badge). Tier 2 (Ollama) is planned and not part of this slice.
 
-#### `POST /api/v1/ai/story-activity`
+#### `POST /api/v1/ai/story-activity` (planned, not in OpenAPI)
 Generates companion play and discussion activities based on a real book selected from the Open Library catalog.
 * **Request Payload:**
   ```json
@@ -283,7 +291,7 @@ Generates companion play and discussion activities based on a real book selected
     },
     "provenance": {
       "tier": 1,
-      "source": "gemini-1.5-flash",
+      "source": "<GEMINI_MODEL>",
       "badge": "Suggested by AI",
       "disclaimer": "Observational play suggestion only. Not developmental assessment."
     }
@@ -302,7 +310,7 @@ Generates companion play and discussion activities based on a real book selected
 
 The Tier 1 to Tier 2 step applies to `/api/v1/ai/story-activity` only, and that route is planned. `/api/v1/ai/recommendations` has no Tier 2: any provider failure goes straight to Tier 3 (`src/ai/ai-service.ts`).
 
-1. **Tier 1 (Google Gemini 1.5 Flash - Cloud Primary):**
+1. **Tier 1 (Google Gemini - Cloud Primary):**
    - Called using server-side `@google/genai` or REST endpoint.
    - Timeout bounded at **8 seconds** via `AbortSignal.timeout(8000)`.
    - Rate limit (implemented on `POST /api/v1/ai/recommendations`, api PR #33): 10 requests per signed-in user per UTC clock hour, counted in Firestore (`rate_limits`). If the store is unavailable the check fails open and the request proceeds. A per-address cap also applies (default 30 per hour, set with `AI_IP_LIMIT_PER_HOUR`, `0` disables it; the count is in memory per instance; `TRUST_PROXY_HOPS`, default 1, sets how many proxy hops are trusted when reading the address, to be verified on a deployed function before relying on it). Over either limit the API returns `429 RATE_LIMITED` with `Retry-After` set to the real number of seconds until the window resets (1 to 3600), not a fixed value. The window is a fixed clock hour, so a burst across an hour boundary can use up to twice the limit.

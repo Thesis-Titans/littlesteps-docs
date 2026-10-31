@@ -114,7 +114,7 @@ flowchart TD
     Req --> Sanitize
 
     subgraph FallbackEngine["3-Tier AI Fallback Engine (ADR-010)"]
-        T1{"<b>Tier 1: Cloud Gemini</b><br/>Gemini 1.5 Flash (8s timeout)"}
+        T1{"<b>Tier 1: Cloud Gemini</b><br/>Gemini (8s timeout)"}
         T2{"<b>Tier 2: Local Edge AI</b><br/>Ollama (qwen2.5-coder:7b)"}
         T3["<b>Tier 3: Deterministic Catalog</b><br/>Pre-Reviewed ECCD Activity Matcher"]
     end

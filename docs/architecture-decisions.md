@@ -31,7 +31,7 @@ graph TD
         CloudFunctions["Firebase Cloud Functions (2nd Gen)<br/>Node.js 22 / Express / TypeScript"]
         AuthMiddleware["Token Verification Middleware<br/>(Firebase Admin SDK)"]
         BOLAAuth["Ownership & BOLA Authorization Engine<br/>(child.caregiverId === uid)"]
-        AIService["AI Recommender & Companion Service<br/>(Server-side Gemini 1.5 Flash · ADR-008/010)"]
+        AIService["AI Recommender & Companion Service<br/>(Server-side Gemini · ADR-008/010)"]
         OllamaLocal["Local Edge Ollama Engine<br/>(Tier 2 Offline Fallback · ADR-010)"]
         FallbackService["Deterministic Fallback Engine<br/>(Rule-based Catalog Matcher)"]
     end
@@ -40,7 +40,7 @@ graph TD
         Firestore["Cloud Firestore<br/>(Caregiver-Scoped Collections)"]
         ReviewedCatalog["Static Reviewed Catalog<br/>(Verified Milestones & Activities)"]
         OpenLibrary["Open Library REST API<br/>(Picture Books & Covers · ADR-010)"]
-        ExternalAI["Cloud Gemini 1.5 Flash<br/>(Tier 1 AI · Sanitized Prompts · ADR-008)"]
+        ExternalAI["Cloud Gemini<br/>(Tier 1 AI · Sanitized Prompts · ADR-008)"]
         Weather["Open-Meteo Forecast API<br/>(Rounded City Coordinates Only · ADR-009)"]
     end
 
@@ -219,7 +219,7 @@ graph TD
   2. *Gutendex (Project Gutenberg REST API):* Public domain literature, but tests showed high latency and connection timeouts under load.
   3. *Open Library Subject API + 3-Tier AI Fallback (Chosen):*
      - Use Open Library REST API (`openlibrary.org/subjects/picture_books.json`) to dynamically fetch children's picture books and covers.
-     - Implement a 3-tier fallback engine: Cloud Gemini 1.5 Flash (Tier 1) -> Local Ollama (`localhost:11434`, Tier 2 offline dev/demo fallback) -> Deterministic Curriculum Catalog (Tier 3 safety net).
+     - Implement a 3-tier fallback engine: Cloud Gemini (Tier 1) -> Local Ollama (`localhost:11434`, Tier 2 offline dev/demo fallback) -> Deterministic Curriculum Catalog (Tier 3 safety net).
 - **Status of implementation (31 October 2026):** the catalog books proxy with its fallback list ([API PR #20](https://github.com/Thesis-Titans/littlesteps-api/pull/20), [#25](https://github.com/Thesis-Titans/littlesteps-api/pull/25)) and `POST /api/v1/ai/recommendations` with its deterministic fallback ([API PR #28](https://github.com/Thesis-Titans/littlesteps-api/pull/28)) are implemented. The Tier 1 Gemini provider is implemented behind configuration ([API PR #34](https://github.com/Thesis-Titans/littlesteps-api/pull/34)): it needs `GEMINI_API_KEY` and `GEMINI_MODEL` (there is no default model), is off by default, uses a circuit breaker (3 failures open it for 60 seconds) and caps the reply at 64KB. It must be smoke-tested with a live key before it is enabled. The Tier 2 Ollama tier and `POST /api/v1/ai/story-activity` are planned, not implemented, and are not in `openapi.yaml`.
 - **Decision:**
   - Implement `GET /api/v1/catalog/books` in `littlesteps-api` as a server-side proxy to Open Library with an in-memory 1-hour cache.
