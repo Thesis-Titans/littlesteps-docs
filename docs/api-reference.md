@@ -291,7 +291,7 @@ Generates companion play and discussion activities based on a real book selected
     },
     "provenance": {
       "tier": 1,
-      "source": "gemini-1.5-flash",
+      "source": "<GEMINI_MODEL>",
       "badge": "Suggested by AI",
       "disclaimer": "Observational play suggestion only. Not developmental assessment."
     }

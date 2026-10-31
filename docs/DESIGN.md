@@ -50,7 +50,7 @@ spacing:
   touch-min: 48px
   touch-secondary: 44px
   top-bar: 60px
-  bottom-bar: 72px
+  bottom-bar: 72px  # decided 31 Oct; tokens.css still says 88px until react #28 lands
   sidebar: 240px
 components:
   button-primary:
@@ -176,7 +176,7 @@ Full props and states are in the [React components README](https://github.com/Th
 - Don't put secondary text on Caution, Offline or Soft Green.
 - Don't use decorative brand colors for text or controls.
 - Don't use streaks, scores, delay labels, urgency or blame, anywhere.
-- Don't use Title Case or marketing words ("unlock", "seamless", "smart"); spec §2.6 requires strict sentence case and plain wording.
+- Don't use Title Case (proper nouns, standard acronyms and the single tab names keep their capitals) or marketing words ("unlock", "seamless", "smart"); spec §2.6 requires strict sentence case and plain wording.
 - Don't use clinical or technical words on screen: catalog, domain, observation, assessment, analytics, generate, JSON.
 - Don't let color alone carry meaning.
 
@@ -206,4 +206,4 @@ Read this file first, then the specification sections it links, before designing
 3. **Reviewing:** check against the specification §8 checklist, WCAG 2.2 AA, the do's and don'ts above and the voice rules. Report findings with a location and a proposed fix; do not rewrite the design.
 4. **Flutter:** members write and can defend all Flutter code (Individual Code Defense, CC 207B). AI may advise, review and give teaching snippets of 15 lines or fewer, never whole screens or features. Log every use in `littlesteps-flutter/docs/ai-usage-log.md` before opening the pull request, and tick the box in the PR template. Members add the tokens Dart still lacks (Soft Green, the status colors, offline and error text, error border, focus, on-primary, the decorative brand colors) and the 44 px target, shell sizes and 2 px focus ring offset.
 5. **Skills and plugins:** none are installed as of 2026-10-31. Design-review rules are applied as written rubrics, not as downloaded skills.
-6. **Decisions of 2026-10-31** (spec §10.6): illustration option A with the activity cover exception; motion tokens 120 ms (fast), 200 ms (base) and one standard easing, to be added to Figma and `tokens.css`; no photography of children or stock people; strict sentence case; one canonical non-diagnostic banner; 72 px tab bar. Low-fidelity wireframes (docs #44) are in progress.
+6. **Decisions of 2026-10-31** (spec §10.6): illustration option A with the activity cover exception; motion tokens 120 ms (fast), 200 ms (base) and one standard easing, to be added to Figma and `tokens.css`; no photography of children or stock people; strict sentence case; one canonical non-diagnostic banner (wording in spec §2.6); 72 px tab bar. Low-fidelity wireframes (docs #44) are in progress.
