@@ -371,7 +371,7 @@ The visual style supports calm technology (§2.4): quiet surfaces, one action co
 
 ### 10.2 Illustration
 
-**Decided 2026-10-31: option A (sparing)**, by the project lead.
+**Decided 2026-10-31: option A (sparing)**, by the project lead, with the one exception below.
 
 Existing artwork: one parent-and-child illustration and six leaf shapes (desktop and mobile), built for the sign-in screens.
 
@@ -380,6 +380,8 @@ Existing artwork: one parent-and-child illustration and six leaf shapes (desktop
 | **A. Sparing (Recommended)** | Use the parent-and-child illustration and leaf shapes only on sign-in, first-run and empty states. No illustration inside working screens such as Today, Journal or forms. | Matches calm technology and keeps pages light on prepaid data. Less visual personality. |
 | B. Spot illustrations | Add a small illustration per kind of play (Thinking, Moving, Talking, Feelings) on cards and headers. | More warmth and recognition; more artwork to draw, review and keep consistent, and a risk of clutter. |
 | C. None | Typography and color only. | Lightest and quickest; the product may feel plain to first-time parents. |
+
+**Exception (decided 2026-10-31, project lead):** the `Cover / Activity` banner on activity cards (leaf shapes and a sprout icon on a soft background) stays in working screens such as Today and Explore. It helps parents scan a list. It is decorative, carries no information, and is the only illustration allowed inside a working screen.
 
 Rules for any option: illustrations are decorative (`alt=""` or `aria-hidden`), use the decorative brand colors, show no identifiable child faces, and are no larger than 240px tall on mobile. SVG only, under 20 KB each.
 
