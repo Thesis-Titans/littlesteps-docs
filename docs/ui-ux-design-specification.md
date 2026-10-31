@@ -366,7 +366,7 @@ The visual style supports calm technology (§2.4): quiet surfaces, one action co
 ### 10.1 Brand
 
 - **Mark and app icon:** the brandmark and app icon in the React `src/assets/brand` folder are the only marks. Show the brandmark in the top bar, the sign-in screens and the About screen. Keep clear space equal to the mark's height on all sides, and do not recolor it.
-- **Color:** Forest is the only action color (§6.1). The decorative brand colors (`artwork-forest`, `warm-cream`, `soft-sage`, `orange`, `mist`, `slate`, `dusty-blue`) appear in artwork only, never in text or controls.
+- **Color:** Forest is the only action color (§6.1). The decorative brand colors (`artwork-forest`, `warm-cream`, `soft-sage`, `orange`, `mist`, `slate`, `dusty-blue`) appear in artwork only, never in text or controls. One exception exists today: the `LittleSteps` wordmark in the top bar uses `artwork-forest`, which is part of the logo lockup.
 - **Voice:** brand voice is the wording in §2.6. The product name is written "LittleSteps".
 
 ### 10.2 Illustration
@@ -390,7 +390,7 @@ Rules for any option: illustrations are decorative (`alt=""` or `aria-hidden`), 
 
 ### 10.4 Motion
 
-Today the only motion is the skeleton pulse (1.4 seconds, opacity only) and tap-scale transitions. The proposal adds a small token set so every screen moves the same way. These values are **not yet in Figma**; add them there first if approved.
+In the React app today the only motion is the skeleton pulse (1.4 seconds, opacity only); the tap-scale transition mentioned in §2.1 is not built. The proposal adds a small token set so every screen moves the same way. These values are **not yet in Figma**; add them there first if approved.
 
 | Token (proposed) | Value | Use |
 |---|---|---|
@@ -398,7 +398,7 @@ Today the only motion is the skeleton pulse (1.4 seconds, opacity only) and tap-
 | `motion/duration/base` | 200ms | Dialogs, sheets, toasts and menus opening |
 | `motion/easing/standard` | `cubic-bezier(0.2, 0, 0, 1)` | All transitions |
 
-Rules: animate opacity and transform only; nothing moves for more than 300ms except the skeleton pulse; no looping animation other than skeletons and the AI loading indicator; no motion that signals urgency (shaking, bouncing, flashing). With `prefers-reduced-motion: reduce` (or `MediaQuery.disableAnimations` in Flutter) all of it is removed, as in §2.5.
+Rules: when the tokens ship, add one global `prefers-reduced-motion: reduce` reset, because the current rule covers only the skeleton classes; animate opacity and transform only; nothing moves for more than 300ms except the skeleton pulse; no looping animation other than skeletons and the AI loading indicator; no motion that signals urgency (shaking, bouncing, flashing). With `prefers-reduced-motion: reduce` (or `MediaQuery.disableAnimations` in Flutter) all of it is removed, as in §2.5.
 
 ### 10.5 Empty-state art
 
@@ -423,11 +423,12 @@ Source: Figma file `yqUHW4lOuuly4jDPNMkMVI`, page `02 · Components`, read on 20
 | Button | `Button` | Primary and Secondary, Default and Focus | `Button` (built; also `text`, `danger`) | `FilledButton`, `OutlinedButton` |
 | Text field | `Text field` | Default, Focus, Error, Disabled, Filled | `TextField` (built) | `TextFormField` |
 | Select | `Select` | Default, Focus | `Select` (built) | `DropdownMenu` |
+| Card | Used inside the product patterns in §11.3 (no standalone master) | n/a | `Card` (built) | `Card.outlined` |
 | Chip | `Chip / Filter` | Default, Selected, each with Focus | `Chip` (built) | `FilterChip`, `ChoiceChip` |
 | Checkbox, Radio, Switch | `Checkbox`, `Radio`, `Switch` | Two values, each with Focus | Not built | `Checkbox`, `Radio`, `Switch` |
 | Icon button | `Icon button` | Default, Focus | Not built | `IconButton` |
 | Toast | `Toast / Type=Undo` | Undo | `UndoToast`, `SuccessNotice` (built) | `SnackBar` |
-| Icons | `icon/*` (15 masters) | n/a | `Icon` (built) | `Icon` with bundled SVGs |
+| Icons | `icon/*` (15 masters) | n/a | `Icon` (built; the folder also holds a coloured `check-forest-20` variant) | `Icon` with bundled SVGs |
 
 ### 11.2 Navigation and shell
 
@@ -466,7 +467,7 @@ Source: Figma file `yqUHW4lOuuly4jDPNMkMVI`, page `02 · Components`, read on 20
 | Advisory banner | `Banner / Advisory` | Default | `NonDiagnosticNotice` (built) | Styled `Card` |
 | Inline alert | `Alert / Inline` | Error, Offline | `InlineAlert` (built) | Styled `Card` in the scroll view |
 | Skeleton | `Skeleton` | Card, Row, Profile | `Skeleton` (built) | Placeholder shapes |
-| Empty and denied | `State / Empty`, `State / Empty week`, `State / Access denied` | One each | `EmptyState` (built); `SessionProblem` | Styled `Card` |
+| Empty and denied | `State / Empty`, `State / Empty week`, `State / Access denied` | One each | `EmptyState` (built); session problems are handled by `ProtectedRoute` | Styled `Card` |
 | Dialogs | `Dialog / Confirm delete note`, `Confirm delete child records`, `Discard draft` | One each | `ConfirmDialog` (built; not yet used for the note and records deletes) | `AlertDialog` |
 
 ### 11.6 Gaps
