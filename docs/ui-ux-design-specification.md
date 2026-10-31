@@ -390,7 +390,7 @@ Rules for any option: illustrations are decorative (`alt=""` or `aria-hidden`), 
 
 ### 10.4 Motion
 
-In the React app today the only motion is the skeleton pulse (1.4 seconds, opacity only); the tap-scale transition mentioned in §2.1 is not built. The proposal adds a small token set so every screen moves the same way. These values are **not yet in Figma**; add them there first if approved.
+In the React app today the only motion is the skeleton pulse (1.4 seconds, opacity only); the tap-scale transition mentioned in §2.2 and §2.5 is not built. The proposal adds a small token set so every screen moves the same way. These values are **not yet in Figma**; add them there first if approved.
 
 | Token (proposed) | Value | Use |
 |---|---|---|
