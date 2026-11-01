@@ -133,22 +133,24 @@ Rules from the contract (implemented, api PRs #26 and #29):
 
 ### 4.3 Milestone Observations (FR-01)
 
-> **Planned, not built.** These routes are not in `openapi.yaml` yet (api #16).
+> **Implemented and merged in `littlesteps-api` PR #39.** These routes are defined in `openapi/openapi.yaml` (tracking [API #16](https://github.com/Thesis-Titans/littlesteps-api/issues/16)).
 
 | Method | Path | Auth | Purpose | Success (Status / Body) | Error Codes |
 | :--- | :--- | :---: | :--- | :--- | :--- |
-| `GET` | `/api/v1/children/:childId/milestones` | Bearer | List caregiver observations for child | `200 OK`<br/>`{ "observations": [ { "milestoneId": "m1", "status": "observed" } ] }` | `401`<br/>`404` |
-| `POST` | `/api/v1/children/:childId/milestones` | Bearer | Record milestone observation (`observed` or `not_yet_observed`) | `201 Created`<br/>`{ "observationId": "o1", ... }` | `400 INVALID_INPUT`<br/>`401`<br/>`404` |
+| `GET` | `/api/v1/children/:childId/milestones` | Bearer | List caregiver observations for child | `200 OK`<br/>`[ { "id": "m1", "childId": "c1", "milestoneId": "soc_01", "observed": true, "observedOn": "2026-11-01", ... } ]` | `401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` |
+| `POST` | `/api/v1/children/:childId/milestones` | Bearer | Record or update milestone observation (`milestoneId`, `observed`, optional `observedOn`, `notes`) | `201 Created`<br/>observation record object | `400 INVALID_INPUT`<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` |
+| `DELETE` | `/api/v1/children/:childId/milestones/:milestoneRecordId` | Bearer | Delete milestone observation record | `204 No Content` | `401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` |
 
 ### 4.4 Activity Planning & Scheduling (FR-02)
 
-> **Planned, not built.** These routes are not in `openapi.yaml` yet (api #10).
+> **Implemented and merged in `littlesteps-api` PR #39.** These routes are defined in `openapi/openapi.yaml` (tracking [API #10](https://github.com/Thesis-Titans/littlesteps-api/issues/10)). Note: canonical route prefix is `/api/v1/children/:childId/plans`.
 
 | Method | Path | Auth | Purpose | Success (Status / Body) | Error Codes |
 | :--- | :--- | :---: | :--- | :--- | :--- |
-| `GET` | `/api/v1/children/:childId/activities` | Bearer | List planned/completed activities | `200 OK`<br/>`{ "activities": [ { "activityId": "a1", "completed": true } ] }` | `401`<br/>`404` |
-| `POST` | `/api/v1/children/:childId/activities` | Bearer | Schedule an activity for today | `201 Created`<br/>`{ "scheduledId": "s1", "completed": false }` | `400`<br/>`401`<br/>`404` |
-| `PATCH`| `/api/v1/children/:childId/activities/:id` | Bearer | Toggle completion status | `200 OK`<br/>`{ "scheduledId": "s1", "completed": true }` | `400`<br/>`401`<br/>`404` |
+| `GET` | `/api/v1/children/:childId/plans` | Bearer | List activity plans for child (filterable by `date`, `status`) | `200 OK`<br/>`[ { "id": "p1", "childId": "c1", "activityId": "act_01", "scheduledDate": "2026-11-01", "status": "planned", ... } ]` | `401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` |
+| `POST` | `/api/v1/children/:childId/plans` | Bearer | Schedule or plan an activity for child (`activityId`, `scheduledDate`, optional `notes`, `status`) | `201 Created`<br/>plan object | `400 INVALID_INPUT`<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND`<br/>`413 PAYLOAD_TOO_LARGE` |
+| `PATCH` | `/api/v1/children/:childId/plans/:planId` | Bearer | Update activity plan or toggle completion status (`status`, `completedAt`, `durationMinutes`, `notes`) | `200 OK`<br/>updated plan object | `400 INVALID_INPUT`<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND`<br/>`413 PAYLOAD_TOO_LARGE` |
+| `DELETE` | `/api/v1/children/:childId/plans/:planId` | Bearer | Delete an activity plan | `204 No Content` | `401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` |
 
 ### 4.5 Private Observation Journal (FR-03)
 
