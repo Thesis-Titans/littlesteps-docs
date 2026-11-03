@@ -3,7 +3,7 @@
 **Status:** Canonical Delivery Baseline & Work Breakdown Structure  
 **Governing Standard:** PMBOK 7th Edition / ISO 21500 & Agile Scrum Baseline  
 **Owner:** Mark Alvin Cadangin (Technical Lead)  
-**Last Reviewed:** 2026-10-28  
+**Last Reviewed:** 2026-11-03  
 **Related Documents:** [API Reference & Integration Guide](api-reference.md), [Product Scope](product-scope.md), [Traceability Matrix](traceability-matrix.md), [Academic Deliverables](academic/README.md)
 
 ---
@@ -372,7 +372,7 @@ Last checked against GitHub on **31 October 2026** (Sprint 1, Day 6).
 
 **In progress**
 
-- **Figma prototype ([Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)):** high-fidelity frames wired; caregiver walkthrough (Sprint 1 goal) pending, with findings due November 1.
+- **Figma prototype ([Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)):** high-fidelity frames wired. The caregiver walkthrough was run with 2 participants and the gate report (PASS) is in the issue comment of 30 October. The instructor walkthrough is still pending; the issue carries into Sprint 2.
 
 **Still open**
 
@@ -383,11 +383,16 @@ Last checked against GitHub on **31 October 2026** (Sprint 1, Day 6).
 - **Milestone 2 & Sprint 2 progress (merged 1 November 2026):**
   - **API PR #38 & #39:** local CORS configuration, Activity planning API (`/api/v1/children/:childId/plans`), and Milestone observations API (`/api/v1/children/:childId/milestones`) with 50 new automated tests. `littlesteps-api` now has **254 passing tests** (100% CI green).
   - **React PR #39 & #40:** Learning Catalog browsing (`/explore`), AI suggestion screen (`IdeaHelper` with provenance badge and offline fallback), and updated Figma sign-in and sign-up auth forms (in-field trailing eye icon with 48px target, clean copy). `littlesteps-react` now has **209 passing tests** (100% CI green).
+- **Sprint 2 progress (merged 3 November 2026):**
+  - **React PR #43 ([React #17](https://github.com/Thesis-Titans/littlesteps-react/issues/17)) and PR #44 ([React #8](https://github.com/Thesis-Titans/littlesteps-react/issues/8)):** milestone prompts and notes; Today plan with quick filters, mark complete with undo, History, and "Add to plan" in Explore. `littlesteps-react` `main` now has **275 passing tests in 26 files**. React #8 and React #17 stay open until that is done. What is left is tracked in [React #45](https://github.com/Thesis-Titans/littlesteps-react/issues/45) (Figma layout pass for Today and Milestones) and [React #46](https://github.com/Thesis-Titans/littlesteps-react/issues/46) (a failed token refresh is treated as a generic error, not as signed out). The milestone prompts are sample fixtures for the 12-23 month band only, shown as "Sample wording, not reviewed", until [Docs #3](https://github.com/Thesis-Titans/littlesteps-docs/issues/3) is done.
+  - **API PR #44 ([API #41](https://github.com/Thesis-Titans/littlesteps-api/issues/41), closed):** plan and milestone writes drop undefined fields and edits use `set`. Before it, creating a plan returned `500` on Firestore. `littlesteps-api` `main` has **254 unit tests plus 12 emulator tests** (run with `npm run test:emulator`).
+  - **Rulings:** milestone wording is "Seen on" and "Not seen yet" (UI/UX specification section 2.6). The "Under 10 mins" filter means `durationMinutes <= 10`.
+  - **Open follow-ups:** [API #42](https://github.com/Thesis-Titans/littlesteps-api/issues/42) (Firestore indexes and history ordering; the plans list returns the oldest 100), [API #43](https://github.com/Thesis-Titans/littlesteps-api/issues/43) (a milestone `observedDate` after today in UTC is rejected, which affects UTC+8 callers), [React #45](https://github.com/Thesis-Titans/littlesteps-react/issues/45), [React #46](https://github.com/Thesis-Titans/littlesteps-react/issues/46), and [Docs #92](https://github.com/Thesis-Titans/littlesteps-docs/issues/92) (spec: `NOT_FOUND` against `RESOURCE_NOT_FOUND`; whether "Under 10 mins" means 10 minutes or less; "Add to plan" against "Add to today's plan").
 - **Sprint 1 Closeout & Sprint 2 Carry-overs (1 November 2026):**
   - [Docs #14](https://github.com/Thesis-Titans/littlesteps-docs/issues/14) and [Docs #45](https://github.com/Thesis-Titans/littlesteps-docs/issues/45) closed with the final review scoreboard. Sprint 2 backlog is tracked in [Docs #73](https://github.com/Thesis-Titans/littlesteps-docs/issues/73) (In Progress on the Project Board).
   - **Carry-over items into Sprint 2:**
-    - [Docs #44](https://github.com/Thesis-Titans/littlesteps-docs/issues/44): 9 mobile wireframes built and verified on the Figma `Low-fidelity` canvas (Section 313:280); in-class presentation checklist tracked for CC 207B.
-    - [Docs #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15): prototype walkthrough findings documented; in-class instructor presentation pending.
+    - [Docs #44](https://github.com/Thesis-Titans/littlesteps-docs/issues/44): 9 mobile wireframes built on the Figma `Low-fidelity` canvas (Section 313:280) and committed as SVGs in [Docs PR #85](https://github.com/Thesis-Titans/littlesteps-docs/pull/85). Still open: links from each wireframe to its high-fidelity frame, and the CC 207B instructor's answer on which prototypes count as presented in class.
+    - [Docs #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15): prototype gate is PASS (2 participants, comment of 30 October); the instructor walkthrough is still pending.
     - [Docs #3](https://github.com/Thesis-Titans/littlesteps-docs/issues/3): Philippine ECCD source material verification in progress by @vincenttamano.
     - [React #6](https://github.com/Thesis-Titans/littlesteps-react/issues/6): child profile screens merged; delete dialog deferred to M3 pending API #17.
     - [React #16](https://github.com/Thesis-Titans/littlesteps-react/issues/16): account pages merged; data export and account deletion deferred to M3 pending API #17.
