@@ -3,7 +3,7 @@
 **Status:** Canonical Interface Specification Baseline  
 **Governing Standard:** OpenAPI 3.1.0 & ISO/IEC/IEEE 42010:2022 (Interface View)  
 **Owner:** Mark Alvin Cadangin (Technical Lead) & Justin (Backend Lead)  
-**Last Reviewed:** 2026-10-26  
+**Last Reviewed:** 2026-11-03  
 **Related Documents:** [Architecture Decisions](architecture-decisions.md) (ADR-001, ADR-003, ADR-010), [Data Model Specification](data-model.md), [Security, Privacy, and AI Safeguards](security-privacy-ai.md), [CIT 210 Deliverables](academic/cit210/README.md)
 
 ---
@@ -133,13 +133,19 @@ Rules from the contract (implemented, api PRs #26 and #29):
 
 ### 4.3 Milestone Observations (FR-01)
 
-> **Implemented and merged in `littlesteps-api` PR #39.** These routes are defined in `openapi/openapi.yaml` (tracking [API #16](https://github.com/Thesis-Titans/littlesteps-api/issues/16)).
+> **Implemented and merged in `littlesteps-api` PR #39.** These routes are defined in `openapi/openapi.yaml` (tracking [API #16](https://github.com/Thesis-Titans/littlesteps-api/issues/16)). There is no `DELETE` route for observations; a caregiver changes an observation with `PATCH`.
 
 | Method | Path | Auth | Purpose | Success (Status / Body) | Error Codes |
 | :--- | :--- | :---: | :--- | :--- | :--- |
-| `GET` | `/api/v1/children/:childId/milestones` | Bearer | List caregiver observations for child | `200 OK`<br/>`[ { "id": "m1", "childId": "c1", "milestoneId": "soc_01", "observed": true, "observedOn": "2026-11-01", ... } ]` | `401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` |
-| `POST` | `/api/v1/children/:childId/milestones` | Bearer | Record or update milestone observation (`milestoneId`, `observed`, optional `observedOn`, `notes`) | `201 Created`<br/>observation record object | `400 INVALID_INPUT`<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` |
-| `DELETE` | `/api/v1/children/:childId/milestones/:milestoneRecordId` | Bearer | Delete milestone observation record | `204 No Content` | `401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` |
+| `GET` | `/api/v1/children/:childId/milestones` | Bearer | List the caregiver's observations for the child (optional `status` and `milestoneId` filters) | `200 OK`<br/>`[ { "id": "...", "childId": "...", "milestoneId": "soc_01", "status": "observed", "observedDate": "2026-11-01", "notes": "...", "createdAt": "...", "updatedAt": "..." } ]` | `400 INVALID_INPUT`<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` |
+| `POST` | `/api/v1/children/:childId/milestones` | Bearer | Record an observation (`milestoneId`, `status`, optional `observedDate`, `notes`) | `201 Created`<br/>observation object | `400 INVALID_INPUT`<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND`<br/>`413 PAYLOAD_TOO_LARGE`<br/>`422 UNPROCESSABLE_ENTITY` (`observedDate` after today)<br/>`503 SERVICE_UNAVAILABLE` |
+| `PATCH` | `/api/v1/children/:childId/milestones/:milestoneId` | Bearer | Update `status`, `observedDate` or `notes`; the path takes a milestone id or an observation UUID | `200 OK`<br/>updated observation object | `400 INVALID_INPUT`<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND`<br/>`413 PAYLOAD_TOO_LARGE`<br/>`422 UNPROCESSABLE_ENTITY`<br/>`503 SERVICE_UNAVAILABLE` |
+
+Behaviour on `main`:
+* **Status values:** `observed`, `not_yet_observed`, `not_sure`. The web client shows them as "Seen on" and "Not seen yet" (UI/UX specification section 2.6).
+* **Date rule:** `observedDate` is a `YYYY-MM-DD` string. It defaults to today (UTC) and is rejected with `422` when it is after today in UTC. A caller ahead of UTC (for example UTC+8) can be rejected for its own local today; tracked in [API #43](https://github.com/Thesis-Titans/littlesteps-api/issues/43).
+* **List cap and order:** the list returns at most 100 observations, ordered by `observedDate` then document id. Filtering by `status` or `milestoneId` uses the same order. Index checks for these queries are tracked in [API #42](https://github.com/Thesis-Titans/littlesteps-api/issues/42).
+* **Writes:** optional fields that are left out are dropped before the Firestore write, and edits replace the stored record with `set` ([API PR #44](https://github.com/Thesis-Titans/littlesteps-api/pull/44)).
 
 ### 4.4 Activity Planning & Scheduling (FR-02)
 
@@ -147,10 +153,15 @@ Rules from the contract (implemented, api PRs #26 and #29):
 
 | Method | Path | Auth | Purpose | Success (Status / Body) | Error Codes |
 | :--- | :--- | :---: | :--- | :--- | :--- |
-| `GET` | `/api/v1/children/:childId/plans` | Bearer | List activity plans for child (filterable by `date`, `status`) | `200 OK`<br/>`[ { "id": "p1", "childId": "c1", "activityId": "act_01", "scheduledDate": "2026-11-01", "status": "planned", ... } ]` | `401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` |
-| `POST` | `/api/v1/children/:childId/plans` | Bearer | Schedule or plan an activity for child (`activityId`, `scheduledDate`, optional `notes`, `status`) | `201 Created`<br/>plan object | `400 INVALID_INPUT`<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND`<br/>`413 PAYLOAD_TOO_LARGE` |
-| `PATCH` | `/api/v1/children/:childId/plans/:planId` | Bearer | Update activity plan or toggle completion status (`status`, `completedAt`, `durationMinutes`, `notes`) | `200 OK`<br/>updated plan object | `400 INVALID_INPUT`<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND`<br/>`413 PAYLOAD_TOO_LARGE` |
-| `DELETE` | `/api/v1/children/:childId/plans/:planId` | Bearer | Delete an activity plan | `204 No Content` | `401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` |
+| `GET` | `/api/v1/children/:childId/plans` | Bearer | List activity plans for the child (optional `date` and `status` filters) | `200 OK`<br/>`[ { "id": "...", "childId": "...", "activityId": "act-01", "scheduledDate": "2026-11-01", "status": "planned", "createdAt": "...", "updatedAt": "..." } ]` | `400 INVALID_INPUT`<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` |
+| `POST` | `/api/v1/children/:childId/plans` | Bearer | Plan an activity (`activityId`, `scheduledDate`; optional `status`, `durationMinutes`, `feedbackNote`) | `201 Created`<br/>plan object | `400 INVALID_INPUT`<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND`<br/>`413 PAYLOAD_TOO_LARGE`<br/>`503 SERVICE_UNAVAILABLE` |
+| `PATCH` | `/api/v1/children/:childId/plans/:planId` | Bearer | Update a plan or mark it complete (`activityId`, `scheduledDate`, `status`, `durationMinutes`, `feedbackNote`) | `200 OK`<br/>updated plan object | `400 INVALID_INPUT`<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND`<br/>`413 PAYLOAD_TOO_LARGE`<br/>`503 SERVICE_UNAVAILABLE` |
+| `DELETE` | `/api/v1/children/:childId/plans/:planId` | Bearer | Delete an activity plan | `204 No Content` | `401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND`<br/>`503 SERVICE_UNAVAILABLE` |
+
+Behaviour on `main`:
+* **Status values:** `planned`, `completed`, `skipped`. Setting `completed` records `completedAt`.
+* **List cap and order:** the list returns at most 100 plans, ordered by `scheduledDate` then document id, so a child with more than 100 plans gets the oldest 100 and newer plans are not returned. Index and ordering follow-up: [API #42](https://github.com/Thesis-Titans/littlesteps-api/issues/42).
+* **Writes:** as for milestones, undefined fields are dropped before the write and edits use `set`. Before [API PR #44](https://github.com/Thesis-Titans/littlesteps-api/pull/44), creating a plan returned `500` on Firestore.
 
 ### 4.5 Private Observation Journal (FR-03)
 

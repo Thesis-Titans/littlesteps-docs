@@ -3,7 +3,7 @@
 **Status:** Canonical Developer Tutorial Baseline  
 **Governing Standard:** Diátaxis Framework (Learning-Oriented Tutorial)  
 **Owner:** Mark Alvin Cadangin (Technical Lead)  
-**Last Reviewed:** 2026-10-26  
+**Last Reviewed:** 2026-11-03  
 **Related Documents:** [API Reference & Integration Guide](api-reference.md), [Development Workflow](development-workflow.md), [Architecture Decisions](architecture-decisions.md)
 
 ---
@@ -96,12 +96,12 @@ npm run build
 # 4. Run unit tests (Vitest)
 npm test
 
-# 5. Run headless Firebase Auth Emulator integration tests
+# 5. Run headless Firebase Auth and Firestore Emulator integration tests
 npm run test:emulator
 ```
 
 > [!TIP]
-> `npm run test:emulator` starts an isolated, offline Auth emulator under project ID `demo-littlesteps`, runs synthetic token verification tests, and automatically shuts down. No Google Cloud credentials or billing accounts are touched.
+> `npm run test:emulator` starts isolated, offline Auth and Firestore emulators under project ID `demo-littlesteps`, runs the synthetic token, child profile, plan and milestone tests (12 emulator tests on `main`), and automatically shuts down. `npm test` skips these and runs the 254 unit tests. No Google Cloud credentials or billing accounts are touched.
 
 ### D. Running Interactive Emulators
 To start the emulators for active frontend development:
