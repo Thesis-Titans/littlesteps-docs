@@ -23,7 +23,7 @@ A Project Management Plan for the **Iloilo City Social Welfare and Development O
 
 **Submitted to:**
 
-- [Instructor's name], CIT 246 IT Project Management, West Visayas State University, College of Information and Communications Technology
+- Prof. Tracy Marie Andrea Madrasta, CIT 246 IT Project Management, West Visayas State University, College of Information and Communications Technology
 - The OIC District Head, CSWDO La Paz–Lapuz District office (identified by role; see Appendix A for the contact record)
 
 **Date of submission:** 2 December 2026

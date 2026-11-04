@@ -52,7 +52,7 @@ The client is the Iloilo City Social Welfare and Development Office (CSWDO), La 
 > Mark Alvin Cadangin, Project Manager, for the CIT 246 group (Mae Daniella Faith C. Benjamin, Nherie C. Acebuche)
 > Signature: ____________________
 >
-> Noted: [Instructor's name], CIT 246 instructor
+> Noted: Prof. Tracy Marie Andrea Madrasta, CIT 246 instructor
 > Signature: ____________________
 
 ### A.3 Interview guide
