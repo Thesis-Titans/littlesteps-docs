@@ -9,7 +9,7 @@
 
 ## Appendix A. Client Contact
 
-**No direct contact was made with the client for this plan.** The team chose the Iloilo City Social Welfare and Development Office (CSWDO), La Paz–Lapuz District office as a realistic client from public information, and decided not to contact it during the course. The plan does not claim the office's agreement, and its sponsor and stakeholders are identified by role only.
+**No direct contact was made with the real client for this plan; A.1 explains the simulation that stands in for it.** The team chose the Iloilo City Social Welfare and Development Office (CSWDO), La Paz–Lapuz District office as a realistic client from public information, and decided not to contact it during the course. The plan does not claim the office's agreement, and its sponsor and stakeholders are identified by role only.
 
 What the plan relies on instead:
 
@@ -25,9 +25,72 @@ What the plan relies on instead:
 
 **How a real project would make contact.** A request letter to the OIC District Head, followed by a courtesy meeting and short interviews with CDWs, in the project's first two weeks (WBS 2.1.1).
 
+### A.1 What this appendix contains
+
+Because the team did not contact the office, this appendix carries a **classroom simulation** of the contact a real project would make, so the plan can show how the evidence would be gathered, recorded and used. **Everything in A.2 to A.5 is simulated.** The people in it are role-play personas, not real officers or workers of the CSWDO or any Iloilo City office, and nothing in it is a statement, quote or agreement from the real office. The plan's figures do not rely on it: the business case and cost figures rest on the public sources above and on labelled estimates.
+
+### A.2 Request letter (draft, not sent)
+
+> [Date]
+>
+> The OIC District Head
+> City Social Welfare and Development Office, La Paz–Lapuz District
+> Iloilo City
+>
+> **Subject: Request for a courtesy meeting and short interviews on a home-learning app for Child Development Centers**
+>
+> Dear Sir or Madam,
+>
+> We are third-year students of the College of Information and Communications Technology, West Visayas State University, taking CIT 246 IT Project Management. As a course exercise we are planning, on paper only, a project to give parents and other caregivers of children in your Child Development Centers a free home-activity and observation app. We are not asking for funds, data on children, or any commitment.
+>
+> We respectfully ask for a 30-minute courtesy meeting with you and for short interviews (about 20 minutes each, no child names or records) with two Child Development Workers and, if the workers agree, two parents. We would share our findings and the finished plan with your office.
+>
+> Respectfully,
+> [Name, signature], Project Manager, for the CIT 246 group (Mark Alvin Cadangin, Mae Daniella Faith C. Benjamin, Nherie C. Acebuche)
+> Noted: [Instructor's name], CIT 246 instructor
+
+### A.3 Interview guide (CDW, 20 minutes)
+
+1. Walk me through how you give parents activity ideas for home today. How often, in what form?
+2. How much time a week do you spend preparing, printing or sending them? What does it cost the center?
+3. How do you record what a child can do now? Where is that record kept, and what happens when it is lost?
+4. What phones do the parents use? Do they have mobile data or Wi-Fi at home?
+5. What would make you stop using a new app within a month?
+6. What would worry you about parents using an app with your children's information?
+
+### A.4 Simulated discovery interview notes
+
+*Simulated. Persona: a Child Development Worker (CDW) of a barangay center, played by a team member. Answers are written to be plausible for the role and are not data.*
+
+| Topic | Simulated answer | Used in the plan as |
+|---|---|---|
+| Activity ideas for home | Handouts photocopied monthly; a few parents get messages in a Messenger group | The current-process description in Section 3 |
+| Weekly time | About 2 hours a week preparing and sharing | The 2-hour planning figure, still labelled an estimate |
+| Child record | Paper notebook and the ECCD checklist; notebooks get lost or wet | The "record lost" problem in Section 3 |
+| Phones | Most parents have a basic Android phone; data is often prepaid and limited | The 70% Android planning figure and the offline-first constraint |
+| What would make her stop | If it takes longer than the paper notebook, or is in English only | Usability criterion (SUS 70) and the Filipino and Hiligaynon content |
+| Worry | Parents seeing other children's names; photos of children | The privacy design in Section 6 and Section 13 |
+
+### A.5 Simulated sponsor courtesy meeting
+
+*Simulated. Persona: the OIC District Head, played by a team member. This is not the real officer.*
+
+- **Interest:** wants something the district can run within existing staff and no new fees for families.
+- **Concern:** who answers if a parent complains; who keeps the system running after the students leave. Section 15 names a city IT office maintainer for this reason.
+- **Request:** a short monthly report she can pass to the city, which matches the sponsor updates in Section 12.
+- **Not agreed:** funding, dates or pilot centers. A real meeting would confirm these in writing.
+
 ## Appendix B. Documents From the Current Process
 
-None were collected, because the client was not contacted. A real project would collect, with names removed: a sample home-activity handout, a page of a home-learning notebook, and the ECCD Checklist form the centers use.
+None were collected from the client. The **sample forms** below are simulated, written by the team to show the kind of document a real project would collect, with names removed.
+
+| Document | Simulated sample |
+|---|---|
+| Home-activity handout | One page: "Activity of the week: sorting by colour using things at home", materials, steps, and a line for the parent to tick |
+| Home-learning notebook page | A dated line per day: "Activity done / child said or did / parent's note" |
+| ECCD Checklist form | The public national form is used in the centers; a real project would collect the center's copy |
+
+A real project would replace these with scans of the center's own documents.
 
 ## Appendix C. Individual Contribution Statement
 
