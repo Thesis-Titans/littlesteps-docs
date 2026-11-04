@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210.0mm" height="136.8mm" viewBox="0 0 793.70 517.00" font-family='Arial, "Liberation Sans", "Nimbus Sans", "Helvetica Neue", Helvetica, "DejaVu Sans", sans-serif'>
+<rect width="793.70" height="517.00" fill="#ffffff"/>
+<text x="28.00" y="34.00" font-size="15" fill="#1a1a1a" text-anchor="start" font-weight="700" >Figure 11.1</text>
+<text x="28.00" y="50.00" font-size="10.5" fill="#555555" text-anchor="start" >Project organization chart. Solid lines show reporting; dotted lines show coordination with people outside the project team.</text>
+<line x1="28.00" y1="59.00" x2="765.70" y2="59.00" stroke="#1a1a1a" stroke-width="1.2" />
+<line x1="396.85" y1="139.00" x2="396.85" y2="152.00" stroke="#1a1a1a" stroke-width="1.2" />
+<line x1="396.85" y1="152.00" x2="396.85" y2="152.00" stroke="#1a1a1a" stroke-width="1.2" />
+<line x1="396.85" y1="152.00" x2="396.85" y2="165.00" stroke="#1a1a1a" stroke-width="1.2" />
+<line x1="396.85" y1="223.00" x2="396.85" y2="236.00" stroke="#1a1a1a" stroke-width="1.2" />
+<line x1="209.42" y1="236.00" x2="584.27" y2="236.00" stroke="#1a1a1a" stroke-width="1.2" />
+<line x1="209.42" y1="236.00" x2="209.42" y2="249.00" stroke="#1a1a1a" stroke-width="1.2" />
+<line x1="334.38" y1="236.00" x2="334.38" y2="249.00" stroke="#1a1a1a" stroke-width="1.2" />
+<line x1="459.33" y1="236.00" x2="459.33" y2="249.00" stroke="#1a1a1a" stroke-width="1.2" />
+<line x1="584.27" y1="236.00" x2="584.27" y2="249.00" stroke="#1a1a1a" stroke-width="1.2" />
+<line x1="159.95" y1="307.00" x2="159.95" y2="446.00" stroke="#1a1a1a" stroke-width="1.2" />
+<line x1="159.95" y1="362.00" x2="166.95" y2="362.00" stroke="#1a1a1a" stroke-width="1.2" />
+<line x1="159.95" y1="446.00" x2="166.95" y2="446.00" stroke="#1a1a1a" stroke-width="1.2" />
+<line x1="284.90" y1="307.00" x2="284.90" y2="446.00" stroke="#1a1a1a" stroke-width="1.2" />
+<line x1="284.90" y1="362.00" x2="291.90" y2="362.00" stroke="#1a1a1a" stroke-width="1.2" />
+<line x1="284.90" y1="446.00" x2="291.90" y2="446.00" stroke="#1a1a1a" stroke-width="1.2" />
+<line x1="325.38" y1="110.00" x2="140.95" y2="110.00" stroke="#555555" stroke-width="1.2" stroke-dasharray="2 3" stroke-linecap="round"/>
+<line x1="468.32" y1="110.00" x2="652.75" y2="110.00" stroke="#555555" stroke-width="1.2" stroke-dasharray="2 3" stroke-linecap="round"/>
+<line x1="152.95" y1="278.00" x2="118.95" y2="278.00" stroke="#555555" stroke-width="1.2" stroke-dasharray="2 3" stroke-linecap="round"/>
+<line x1="468.32" y1="194.00" x2="652.75" y2="194.00" stroke="#555555" stroke-width="1.2" stroke-dasharray="2 3" stroke-linecap="round"/>
+<rect x="325.38" y="81.00" width="142.95" height="58.00" rx="3" fill="#eef0f2" stroke="#1a1a1a" stroke-width="1.2" />
+<text x="396.85" y="103.25" font-size="10" fill="#1a1a1a" text-anchor="middle" font-weight="700" >Project sponsor</text>
+<text x="396.85" y="113.75" font-size="9" fill="#555555" text-anchor="middle" >OIC District Head, CSWDO La</text>
+<text x="396.85" y="124.25" font-size="9" fill="#555555" text-anchor="middle" >Paz–Lapuz District</text>
+<rect x="28.00" y="81.00" width="112.95" height="58.00" rx="3" fill="#ffffff" stroke="#555555" stroke-width="1" stroke-dasharray="4 3" />
+<text x="84.47" y="102.75" font-size="10" fill="#1a1a1a" text-anchor="middle" font-weight="700" >Data Protection</text>
+<text x="84.47" y="114.25" font-size="10" fill="#1a1a1a" text-anchor="middle" font-weight="700" >Officer</text>
+<text x="84.47" y="124.75" font-size="9" fill="#555555" text-anchor="middle" >client&#x27;s DPO</text>
+<rect x="652.75" y="81.00" width="112.95" height="58.00" rx="3" fill="#ffffff" stroke="#555555" stroke-width="1" stroke-dasharray="4 3" />
+<text x="709.23" y="102.75" font-size="10" fill="#1a1a1a" text-anchor="middle" font-weight="700" >Child Development</text>
+<text x="709.23" y="114.25" font-size="10" fill="#1a1a1a" text-anchor="middle" font-weight="700" >Workers</text>
+<text x="709.23" y="124.75" font-size="9" fill="#555555" text-anchor="middle" >two pilot centers</text>
+<rect x="325.38" y="165.00" width="142.95" height="58.00" rx="3" fill="#eef0f2" stroke="#1a1a1a" stroke-width="1.2" />
+<text x="396.85" y="192.50" font-size="10" fill="#1a1a1a" text-anchor="middle" font-weight="700" >Project manager</text>
+<text x="396.85" y="203.00" font-size="9" fill="#555555" text-anchor="middle" >Mark Alvin Cadangin</text>
+<rect x="652.75" y="165.00" width="112.95" height="58.00" rx="3" fill="#ffffff" stroke="#555555" stroke-width="1" stroke-dasharray="4 3" />
+<text x="709.23" y="192.50" font-size="10" fill="#1a1a1a" text-anchor="middle" font-weight="700" >Maintainer</text>
+<text x="709.23" y="203.00" font-size="9" fill="#555555" text-anchor="middle" >city IT office designee</text>
+<rect x="152.95" y="249.00" width="112.95" height="58.00" rx="3" fill="#eef0f2" stroke="#1a1a1a" stroke-width="1.2" />
+<text x="209.42" y="265.50" font-size="10" fill="#1a1a1a" text-anchor="middle" font-weight="700" >Business analyst and</text>
+<text x="209.42" y="277.00" font-size="10" fill="#1a1a1a" text-anchor="middle" font-weight="700" >quality lead</text>
+<text x="209.42" y="287.50" font-size="9" fill="#555555" text-anchor="middle" >Mae Daniella Faith C.</text>
+<text x="209.42" y="298.00" font-size="9" fill="#555555" text-anchor="middle" >Benjamin</text>
+<rect x="277.90" y="249.00" width="112.95" height="58.00" rx="3" fill="#eef0f2" stroke="#1a1a1a" stroke-width="1.2" />
+<text x="334.38" y="270.75" font-size="10" fill="#1a1a1a" text-anchor="middle" font-weight="700" >Stakeholder and</text>
+<text x="334.38" y="282.25" font-size="10" fill="#1a1a1a" text-anchor="middle" font-weight="700" >content coordinator</text>
+<text x="334.38" y="292.75" font-size="9" fill="#555555" text-anchor="middle" >Nherie C. Acebuche</text>
+<rect x="402.85" y="249.00" width="112.95" height="58.00" rx="3" fill="#eef0f2" stroke="#1a1a1a" stroke-width="1.2" />
+<text x="459.33" y="270.75" font-size="10" fill="#1a1a1a" text-anchor="middle" font-weight="700" >Developer A</text>
+<text x="459.33" y="282.25" font-size="10" fill="#1a1a1a" text-anchor="middle" font-weight="700" >(backend and app)</text>
+<text x="459.33" y="292.75" font-size="9" fill="#555555" text-anchor="middle" >contracted</text>
+<rect x="527.80" y="249.00" width="112.95" height="58.00" rx="3" fill="#eef0f2" stroke="#1a1a1a" stroke-width="1.2" />
+<text x="584.27" y="276.50" font-size="10" fill="#1a1a1a" text-anchor="middle" font-weight="700" >Developer B (app)</text>
+<text x="584.27" y="287.00" font-size="9" fill="#555555" text-anchor="middle" >contracted</text>
+<rect x="28.00" y="249.00" width="90.95" height="58.00" rx="3" fill="#ffffff" stroke="#555555" stroke-width="1" stroke-dasharray="4 3" />
+<text x="73.47" y="270.75" font-size="10" fill="#1a1a1a" text-anchor="middle" font-weight="700" >Privacy</text>
+<text x="73.47" y="282.25" font-size="10" fill="#1a1a1a" text-anchor="middle" font-weight="700" >consultant</text>
+<text x="73.47" y="292.75" font-size="9" fill="#555555" text-anchor="middle" >contracted</text>
+<rect x="166.95" y="333.00" width="98.95" height="58.00" rx="3" fill="#eef0f2" stroke="#1a1a1a" stroke-width="1.2" />
+<text x="216.42" y="360.50" font-size="10" fill="#1a1a1a" text-anchor="middle" font-weight="700" >UI/UX designer</text>
+<text x="216.42" y="371.00" font-size="9" fill="#555555" text-anchor="middle" >part-time contractor</text>
+<rect x="166.95" y="417.00" width="98.95" height="58.00" rx="3" fill="#eef0f2" stroke="#1a1a1a" stroke-width="1.2" />
+<text x="216.42" y="444.50" font-size="10" fill="#1a1a1a" text-anchor="middle" font-weight="700" >QA tester</text>
+<text x="216.42" y="455.00" font-size="9" fill="#555555" text-anchor="middle" >part-time contractor</text>
+<rect x="291.90" y="333.00" width="98.95" height="58.00" rx="3" fill="#eef0f2" stroke="#1a1a1a" stroke-width="1.2" />
+<text x="341.38" y="354.75" font-size="10" fill="#1a1a1a" text-anchor="middle" font-weight="700" >ECCD content</text>
+<text x="341.38" y="366.25" font-size="10" fill="#1a1a1a" text-anchor="middle" font-weight="700" >reviewer</text>
+<text x="341.38" y="376.75" font-size="9" fill="#555555" text-anchor="middle" >contracted specialist</text>
+<rect x="291.90" y="417.00" width="98.95" height="58.00" rx="3" fill="#eef0f2" stroke="#1a1a1a" stroke-width="1.2" />
+<text x="341.38" y="444.50" font-size="10" fill="#1a1a1a" text-anchor="middle" font-weight="700" >Translator</text>
+<text x="341.38" y="455.00" font-size="9" fill="#555555" text-anchor="middle" >contracted</text>
+<rect x="28.00" y="488.00" width="24.00" height="12.00" rx="2" fill="#eef0f2" stroke="#1a1a1a" stroke-width="1.2" />
+<text x="58.00" y="498.00" font-size="9.5" fill="#555555" text-anchor="start" >Project team</text>
+<rect x="148.00" y="488.00" width="24.00" height="12.00" rx="2" fill="#fff" stroke="#555555" stroke-width="1" stroke-dasharray="4 3" />
+<text x="178.00" y="498.00" font-size="9.5" fill="#555555" text-anchor="start" >Outside the project team</text>
+<line x1="318.00" y1="494.00" x2="344.00" y2="494.00" stroke="#1a1a1a" stroke-width="1.2" />
+<text x="350.00" y="498.00" font-size="9.5" fill="#555555" text-anchor="start" >Reports to</text>
+<line x1="418.00" y1="494.00" x2="444.00" y2="494.00" stroke="#555555" stroke-width="1.2" stroke-dasharray="2 3" stroke-linecap="round"/>
+<text x="450.00" y="498.00" font-size="9.5" fill="#555555" text-anchor="start" >Coordinates with</text>
+</svg>

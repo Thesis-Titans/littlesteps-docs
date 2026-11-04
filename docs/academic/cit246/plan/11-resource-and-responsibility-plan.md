@@ -9,36 +9,7 @@
 
 ## 11.1 Project Organizational Chart
 
-```mermaid
-flowchart TB
-  SP["Project sponsor<br/>OIC District Head, CSWDO La Paz–Lapuz District"]
-  PM["Project manager<br/>Mark Alvin Cadangin"]
-  BA["Business analyst and quality lead<br/>Mae Daniella Faith C. Benjamin"]
-  CC["Stakeholder and content coordinator<br/>Nherie C. Acebuche"]
-  DA["Developer A (backend and app)<br/>contracted"]
-  DB["Developer B (app)<br/>contracted"]
-  UX["UI/UX designer<br/>part-time contractor"]
-  QA["QA tester<br/>part-time contractor"]
-  CR["ECCD content reviewer<br/>contracted specialist"]
-  TR["Translator<br/>contracted"]
-  PC["Privacy consultant<br/>contracted"]
-  DPO["Data Protection Officer<br/>client's DPO"]
-  CDW["Child Development Workers<br/>two pilot centers"]
-  MT["Maintainer<br/>city IT office designee"]
-  SP --> PM
-  SP -.-> DPO
-  SP -.-> CDW
-  PM --> BA
-  PM --> CC
-  PM --> DA
-  PM --> DB
-  BA --> UX
-  BA --> QA
-  BA -.-> PC
-  CC --> CR
-  CC --> TR
-  PM -.-> MT
-```
+![Figure 11.1. Project organization chart](figures/fig-11-1-org-chart.png)
 
 *Figure 11.1. Solid lines: reporting. Dotted lines: coordination with people outside the project team.*
 

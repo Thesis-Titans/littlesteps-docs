@@ -1,0 +1,234 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210.0mm" height="297.0mm" viewBox="0 0 793.70 1122.50" font-family='Arial, "Liberation Sans", "Nimbus Sans", "Helvetica Neue", Helvetica, "DejaVu Sans", sans-serif'>
+<rect width="793.70" height="1122.50" fill="#ffffff"/>
+<text x="28.00" y="34.00" font-size="15" fill="#1a1a1a" text-anchor="start" font-weight="700" >Figure 8.2</text>
+<text x="28.00" y="50.00" font-size="10.5" fill="#555555" text-anchor="start" >Schedule and cost baseline on one time axis: Gantt chart by WBS branch (top) and cumulative planned cost against the budget (bottom).</text>
+<line x1="28.00" y1="59.00" x2="765.70" y2="59.00" stroke="#1a1a1a" stroke-width="1.2" />
+<rect x="28.00" y="67.00" width="22.00" height="8.00" rx="0" fill="#b42318" stroke="#b42318" stroke-width="1.4" />
+<text x="55.00" y="75.00" font-size="9" fill="#555555" text-anchor="start" >Critical path</text>
+<rect x="123.00" y="67.00" width="22.00" height="8.00" rx="0" fill="#d9dde1" stroke="#7d868e" stroke-width="1" />
+<text x="150.00" y="75.00" font-size="9" fill="#555555" text-anchor="start" >Not critical</text>
+<rect x="213.00" y="67.00" width="22.00" height="8.00" rx="0" fill="#ffffff" stroke="#7d868e" stroke-width="1" stroke-dasharray="3 2" />
+<text x="240.00" y="75.00" font-size="9" fill="#555555" text-anchor="start" >Level of effort</text>
+<path d="M323,66 l5,5 l-5,5 l-5,-5 Z" fill="#1a1a1a"/>
+<text x="333.00" y="75.00" font-size="9" fill="#555555" text-anchor="start" >Milestone</text>
+<line x1="388.00" y1="71.00" x2="418.00" y2="71.00" stroke="#b42318" stroke-width="1.2" stroke-dasharray="5 3" />
+<text x="423.00" y="75.00" font-size="9" fill="#555555" text-anchor="start" >Budget with contingency</text>
+<text x="322.22" y="96.00" font-size="9" fill="#555555" text-anchor="middle" font-weight="700" >Jan</text>
+<text x="379.72" y="96.00" font-size="9" fill="#555555" text-anchor="middle" font-weight="700" >Feb</text>
+<text x="437.23" y="96.00" font-size="9" fill="#555555" text-anchor="middle" font-weight="700" >Mar</text>
+<text x="496.69" y="96.00" font-size="9" fill="#555555" text-anchor="middle" font-weight="700" >Apr</text>
+<text x="556.14" y="96.00" font-size="9" fill="#555555" text-anchor="middle" font-weight="700" >May</text>
+<text x="615.60" y="96.00" font-size="9" fill="#555555" text-anchor="middle" font-weight="700" >Jun</text>
+<text x="675.05" y="96.00" font-size="9" fill="#555555" text-anchor="middle" font-weight="700" >Jul</text>
+<text x="735.48" y="96.00" font-size="9" fill="#555555" text-anchor="middle" font-weight="700" >Aug</text>
+<text x="287.00" y="96.00" font-size="8.5" fill="#555555" text-anchor="end" >2027</text>
+<line x1="292.00" y1="101.00" x2="292.00" y2="844.70" stroke="#b8b8b8" stroke-width="0.6" />
+<line x1="352.43" y1="101.00" x2="352.43" y2="844.70" stroke="#b8b8b8" stroke-width="0.6" />
+<line x1="407.01" y1="101.00" x2="407.01" y2="844.70" stroke="#b8b8b8" stroke-width="0.6" />
+<line x1="467.44" y1="101.00" x2="467.44" y2="844.70" stroke="#b8b8b8" stroke-width="0.6" />
+<line x1="525.93" y1="101.00" x2="525.93" y2="844.70" stroke="#b8b8b8" stroke-width="0.6" />
+<line x1="586.36" y1="101.00" x2="586.36" y2="844.70" stroke="#b8b8b8" stroke-width="0.6" />
+<line x1="644.84" y1="101.00" x2="644.84" y2="844.70" stroke="#b8b8b8" stroke-width="0.6" />
+<line x1="705.27" y1="101.00" x2="705.27" y2="844.70" stroke="#b8b8b8" stroke-width="0.6" />
+<line x1="765.70" y1="101.00" x2="765.70" y2="844.70" stroke="#b8b8b8" stroke-width="0.6" />
+<rect x="24.00" y="101.00" width="741.70" height="11.10" rx="0" fill="#f1f1f1" stroke="none" stroke-width="1" />
+<text x="28.00" y="109.50" font-size="8.8" fill="#1a1a1a" text-anchor="start" font-weight="700" >1.0 Project Management</text>
+<text x="36.00" y="120.40" font-size="8.3" fill="#1a1a1a" text-anchor="start" font-weight="700" >1.1.1  Project charter and sponsor sign-off</text>
+<rect x="297.85" y="113.70" width="9.75" height="7.90" rx="0" fill="#b42318" stroke="#b42318" stroke-width="1" />
+<text x="36.00" y="131.50" font-size="8.3" fill="#333333" text-anchor="start" >1.1.2  Stakeholder register and analysis</text>
+<rect x="297.85" y="125.20" width="9.75" height="7.10" rx="0" fill="#d9dde1" stroke="#7d868e" stroke-width="0.8" />
+<text x="36.00" y="142.60" font-size="8.3" fill="#333333" text-anchor="start" >1.2.1  Scope statement and WBS</text>
+<rect x="311.49" y="136.30" width="9.75" height="7.10" rx="0" fill="#d9dde1" stroke="#7d868e" stroke-width="0.8" />
+<text x="36.00" y="153.70" font-size="8.3" fill="#333333" text-anchor="start" >1.2.2  Schedule, cost baseline and subsidiary plans</text>
+<rect x="325.14" y="147.40" width="9.75" height="7.10" rx="0" fill="#d9dde1" stroke="#7d868e" stroke-width="0.8" />
+<text x="36.00" y="164.80" font-size="8.3" fill="#333333" text-anchor="start" >1.3.1  Status reports, two-weekly demos and sponsor updates</text>
+<rect x="338.79" y="158.50" width="403.52" height="7.10" rx="0" fill="#ffffff" stroke="#7d868e" stroke-width="0.8" stroke-dasharray="3 2" />
+<text x="36.00" y="175.90" font-size="8.3" fill="#333333" text-anchor="start" >1.3.2  Risk, issue and change control</text>
+<rect x="338.79" y="169.60" width="403.52" height="7.10" rx="0" fill="#ffffff" stroke="#7d868e" stroke-width="0.8" stroke-dasharray="3 2" />
+<text x="36.00" y="187.00" font-size="8.3" fill="#1a1a1a" text-anchor="start" font-weight="700" >1.4.1  Final acceptance and closure report</text>
+<rect x="742.31" y="180.30" width="9.75" height="7.90" rx="0" fill="#b42318" stroke="#b42318" stroke-width="1" />
+<text x="36.00" y="198.10" font-size="8.3" fill="#1a1a1a" text-anchor="start" font-weight="700" >1.4.2  Lessons learned and archive</text>
+<rect x="754.00" y="191.40" width="3.90" height="7.90" rx="0" fill="#b42318" stroke="#b42318" stroke-width="1" />
+<rect x="24.00" y="200.90" width="741.70" height="11.10" rx="0" fill="#f1f1f1" stroke="none" stroke-width="1" />
+<text x="28.00" y="209.40" font-size="8.8" fill="#1a1a1a" text-anchor="start" font-weight="700" >2.0 Requirements and Design</text>
+<text x="36.00" y="220.30" font-size="8.3" fill="#1a1a1a" text-anchor="start" font-weight="700" >2.1.1  Discovery interviews and baseline measures</text>
+<rect x="311.49" y="213.60" width="23.39" height="7.90" rx="0" fill="#b42318" stroke="#b42318" stroke-width="1" />
+<text x="36.00" y="231.40" font-size="8.3" fill="#333333" text-anchor="start" >2.1.2  Requirements specification (D1)</text>
+<rect x="338.79" y="225.10" width="23.39" height="7.10" rx="0" fill="#d9dde1" stroke="#7d868e" stroke-width="0.8" />
+<text x="36.00" y="242.50" font-size="8.3" fill="#333333" text-anchor="start" >2.2.1  Wireframes and design system</text>
+<rect x="338.79" y="236.20" width="23.39" height="7.10" rx="0" fill="#d9dde1" stroke="#7d868e" stroke-width="0.8" />
+<text x="36.00" y="253.60" font-size="8.3" fill="#333333" text-anchor="start" >2.2.2  Clickable prototype and parent walkthrough (D2)</text>
+<rect x="366.08" y="247.30" width="23.39" height="7.10" rx="0" fill="#d9dde1" stroke="#7d868e" stroke-width="0.8" />
+<text x="36.00" y="264.70" font-size="8.3" fill="#333333" text-anchor="start" >2.3.1  Privacy impact assessment draft</text>
+<rect x="366.08" y="258.40" width="23.39" height="7.10" rx="0" fill="#d9dde1" stroke="#7d868e" stroke-width="0.8" />
+<text x="36.00" y="275.80" font-size="8.3" fill="#333333" text-anchor="start" >2.3.2  DPO review and approval (D3)</text>
+<rect x="393.37" y="269.50" width="23.39" height="7.10" rx="0" fill="#d9dde1" stroke="#7d868e" stroke-width="0.8" />
+<rect x="24.00" y="278.60" width="741.70" height="11.10" rx="0" fill="#f1f1f1" stroke="none" stroke-width="1" />
+<text x="28.00" y="287.10" font-size="8.8" fill="#1a1a1a" text-anchor="start" font-weight="700" >3.0 Learning Content Catalog</text>
+<text x="36.00" y="298.00" font-size="8.3" fill="#333333" text-anchor="start" >3.1.1  Source selection and reuse permissions</text>
+<rect x="338.79" y="291.70" width="37.04" height="7.10" rx="0" fill="#d9dde1" stroke="#7d868e" stroke-width="0.8" />
+<text x="36.00" y="309.10" font-size="8.3" fill="#333333" text-anchor="start" >3.2.1  Adapt 80 activities, stories and rhymes</text>
+<rect x="379.72" y="302.80" width="64.33" height="7.10" rx="0" fill="#d9dde1" stroke="#7d868e" stroke-width="0.8" />
+<text x="36.00" y="320.20" font-size="8.3" fill="#333333" text-anchor="start" >3.2.2  Translate items to Filipino and Hiligaynon</text>
+<rect x="447.95" y="313.90" width="46.79" height="7.10" rx="0" fill="#d9dde1" stroke="#7d868e" stroke-width="0.8" />
+<text x="36.00" y="331.30" font-size="8.3" fill="#333333" text-anchor="start" >3.3.1  Content reviewer sign-off (D4)</text>
+<rect x="447.95" y="325.00" width="31.19" height="7.10" rx="0" fill="#d9dde1" stroke="#7d868e" stroke-width="0.8" />
+<text x="36.00" y="342.40" font-size="8.3" fill="#333333" text-anchor="start" >3.3.2  Load the reviewed catalog into the database</text>
+<rect x="502.53" y="336.10" width="5.85" height="7.10" rx="0" fill="#d9dde1" stroke="#7d868e" stroke-width="0.8" />
+<rect x="24.00" y="345.20" width="741.70" height="11.10" rx="0" fill="#f1f1f1" stroke="none" stroke-width="1" />
+<text x="28.00" y="353.70" font-size="8.8" fill="#1a1a1a" text-anchor="start" font-weight="700" >4.0 Backend API and Database</text>
+<text x="36.00" y="364.60" font-size="8.3" fill="#1a1a1a" text-anchor="start" font-weight="700" >4.1.1  API contract and data model</text>
+<rect x="338.79" y="357.90" width="23.39" height="7.90" rx="0" fill="#b42318" stroke="#b42318" stroke-width="1" />
+<text x="36.00" y="375.70" font-size="8.3" fill="#1a1a1a" text-anchor="start" font-weight="700" >4.1.2  Cloud project, environments and CI</text>
+<rect x="366.08" y="369.00" width="5.85" height="7.90" rx="0" fill="#b42318" stroke="#b42318" stroke-width="1" />
+<text x="36.00" y="386.80" font-size="8.3" fill="#1a1a1a" text-anchor="start" font-weight="700" >4.2.1  Authentication and child profile service</text>
+<rect x="371.92" y="380.10" width="27.29" height="7.90" rx="0" fill="#b42318" stroke="#b42318" stroke-width="1" />
+<text x="36.00" y="397.90" font-size="8.3" fill="#1a1a1a" text-anchor="start" font-weight="700" >4.2.2  Activity planning and observation services</text>
+<rect x="399.22" y="391.20" width="27.29" height="7.90" rx="0" fill="#b42318" stroke="#b42318" stroke-width="1" />
+<text x="36.00" y="409.00" font-size="8.3" fill="#333333" text-anchor="start" >4.3.1  Catalog service</text>
+<rect x="366.08" y="402.70" width="19.49" height="7.10" rx="0" fill="#d9dde1" stroke="#7d868e" stroke-width="0.8" />
+<text x="36.00" y="420.10" font-size="8.3" fill="#1a1a1a" text-anchor="start" font-weight="700" >4.3.2  Journal and weekly summary services</text>
+<rect x="426.51" y="413.40" width="27.29" height="7.90" rx="0" fill="#b42318" stroke="#b42318" stroke-width="1" />
+<text x="36.00" y="431.20" font-size="8.3" fill="#1a1a1a" text-anchor="start" font-weight="700" >4.3.3  AI suggestion service and fallback</text>
+<rect x="461.60" y="424.50" width="29.24" height="7.90" rx="0" fill="#b42318" stroke="#b42318" stroke-width="1" />
+<rect x="24.00" y="434.00" width="741.70" height="11.10" rx="0" fill="#f1f1f1" stroke="none" stroke-width="1" />
+<text x="28.00" y="442.50" font-size="8.8" fill="#1a1a1a" text-anchor="start" font-weight="700" >5.0 Flutter Android App</text>
+<text x="36.00" y="453.40" font-size="8.3" fill="#333333" text-anchor="start" >5.1.1  App project, theme and navigation</text>
+<rect x="385.57" y="447.10" width="23.39" height="7.10" rx="0" fill="#d9dde1" stroke="#7d868e" stroke-width="0.8" />
+<text x="36.00" y="464.50" font-size="8.3" fill="#333333" text-anchor="start" >5.1.2  Sign-in and API client</text>
+<rect x="408.96" y="458.20" width="13.65" height="7.10" rx="0" fill="#d9dde1" stroke="#7d868e" stroke-width="0.8" />
+<text x="36.00" y="475.60" font-size="8.3" fill="#333333" text-anchor="start" >5.2.1  Child profile screens</text>
+<rect x="422.61" y="469.30" width="13.65" height="7.10" rx="0" fill="#d9dde1" stroke="#7d868e" stroke-width="0.8" />
+<text x="36.00" y="486.70" font-size="8.3" fill="#333333" text-anchor="start" >5.2.2  Milestone observation screens</text>
+<rect x="436.25" y="480.40" width="15.60" height="7.10" rx="0" fill="#d9dde1" stroke="#7d868e" stroke-width="0.8" />
+<text x="36.00" y="497.80" font-size="8.3" fill="#333333" text-anchor="start" >5.3.1  Activity library screens</text>
+<rect x="451.85" y="491.50" width="27.29" height="7.10" rx="0" fill="#d9dde1" stroke="#7d868e" stroke-width="0.8" />
+<text x="36.00" y="508.90" font-size="8.3" fill="#333333" text-anchor="start" >5.3.2  Today and activity planning screens</text>
+<rect x="479.14" y="502.60" width="19.49" height="7.10" rx="0" fill="#d9dde1" stroke="#7d868e" stroke-width="0.8" />
+<text x="36.00" y="520.00" font-size="8.3" fill="#1a1a1a" text-anchor="start" font-weight="700" >5.4.1  Private journal screens</text>
+<rect x="490.84" y="513.30" width="15.60" height="7.90" rx="0" fill="#b42318" stroke="#b42318" stroke-width="1" />
+<text x="36.00" y="531.10" font-size="8.3" fill="#1a1a1a" text-anchor="start" font-weight="700" >5.4.2  Weekly summary screens</text>
+<rect x="506.43" y="524.40" width="11.70" height="7.90" rx="0" fill="#b42318" stroke="#b42318" stroke-width="1" />
+<text x="36.00" y="542.20" font-size="8.3" fill="#1a1a1a" text-anchor="start" font-weight="700" >5.5.1  AI helper screens and fallback states</text>
+<rect x="518.13" y="535.50" width="15.60" height="7.90" rx="0" fill="#b42318" stroke="#b42318" stroke-width="1" />
+<rect x="24.00" y="545.00" width="741.70" height="11.10" rx="0" fill="#f1f1f1" stroke="none" stroke-width="1" />
+<text x="28.00" y="553.50" font-size="8.8" fill="#1a1a1a" text-anchor="start" font-weight="700" >6.0 Testing and Quality</text>
+<text x="36.00" y="564.40" font-size="8.3" fill="#333333" text-anchor="start" >6.1.1  Test plan and test cases</text>
+<rect x="366.08" y="558.10" width="9.75" height="7.10" rx="0" fill="#d9dde1" stroke="#7d868e" stroke-width="0.8" />
+<text x="36.00" y="575.50" font-size="8.3" fill="#1a1a1a" text-anchor="start" font-weight="700" >6.1.2  System and regression testing</text>
+<rect x="533.72" y="568.80" width="27.29" height="7.90" rx="0" fill="#b42318" stroke="#b42318" stroke-width="1" />
+<text x="36.00" y="586.60" font-size="8.3" fill="#1a1a1a" text-anchor="start" font-weight="700" >6.2.1  Device and accessibility testing</text>
+<rect x="561.01" y="579.90" width="15.60" height="7.90" rx="0" fill="#b42318" stroke="#b42318" stroke-width="1" />
+<text x="36.00" y="597.70" font-size="8.3" fill="#1a1a1a" text-anchor="start" font-weight="700" >6.3.1  Security review and fixes</text>
+<rect x="561.01" y="591.00" width="15.60" height="7.90" rx="0" fill="#b42318" stroke="#b42318" stroke-width="1" />
+<text x="36.00" y="608.80" font-size="8.3" fill="#1a1a1a" text-anchor="start" font-weight="700" >6.4.1  Usability testing and fixes</text>
+<rect x="561.01" y="602.10" width="15.60" height="7.90" rx="0" fill="#b42318" stroke="#b42318" stroke-width="1" />
+<rect x="24.00" y="611.60" width="741.70" height="11.10" rx="0" fill="#f1f1f1" stroke="none" stroke-width="1" />
+<text x="28.00" y="620.10" font-size="8.8" fill="#1a1a1a" text-anchor="start" font-weight="700" >7.0 Pilot</text>
+<text x="36.00" y="631.00" font-size="8.3" fill="#1a1a1a" text-anchor="start" font-weight="700" >7.1.1  Pilot onboarding at two centers</text>
+<rect x="576.61" y="624.30" width="13.65" height="7.90" rx="0" fill="#b42318" stroke="#b42318" stroke-width="1" />
+<text x="36.00" y="642.10" font-size="8.3" fill="#1a1a1a" text-anchor="start" font-weight="700" >7.2.1  Eight-week pilot with support</text>
+<rect x="590.26" y="635.40" width="109.17" height="7.90" rx="0" fill="#b42318" stroke="#b42318" stroke-width="1" />
+<text x="36.00" y="653.20" font-size="8.3" fill="#1a1a1a" text-anchor="start" font-weight="700" >7.3.1  Pilot evaluation report (D8)</text>
+<rect x="699.42" y="646.50" width="13.65" height="7.90" rx="0" fill="#b42318" stroke="#b42318" stroke-width="1" />
+<rect x="24.00" y="656.00" width="741.70" height="11.10" rx="0" fill="#f1f1f1" stroke="none" stroke-width="1" />
+<text x="28.00" y="664.50" font-size="8.8" fill="#1a1a1a" text-anchor="start" font-weight="700" >8.0 Release, Training and Handover</text>
+<text x="36.00" y="675.40" font-size="8.3" fill="#333333" text-anchor="start" >8.1.1  Training materials (D9)</text>
+<rect x="533.72" y="669.10" width="27.29" height="7.10" rx="0" fill="#d9dde1" stroke="#7d868e" stroke-width="0.8" />
+<text x="36.00" y="686.50" font-size="8.3" fill="#333333" text-anchor="start" >8.1.2  CDW training sessions</text>
+<rect x="713.07" y="680.20" width="3.90" height="7.10" rx="0" fill="#d9dde1" stroke="#7d868e" stroke-width="0.8" />
+<text x="36.00" y="697.60" font-size="8.3" fill="#1a1a1a" text-anchor="start" font-weight="700" >8.2.1  Post-pilot fixes</text>
+<rect x="713.07" y="690.90" width="13.65" height="7.90" rx="0" fill="#b42318" stroke="#b42318" stroke-width="1" />
+<text x="36.00" y="708.70" font-size="8.3" fill="#1a1a1a" text-anchor="start" font-weight="700" >8.2.2  Google Play release (D10)</text>
+<rect x="726.71" y="702.00" width="9.75" height="7.90" rx="0" fill="#b42318" stroke="#b42318" stroke-width="1" />
+<text x="36.00" y="719.80" font-size="8.3" fill="#333333" text-anchor="start" >8.3.1  Handover package (D11)</text>
+<rect x="576.61" y="713.50" width="13.65" height="7.10" rx="0" fill="#d9dde1" stroke="#7d868e" stroke-width="0.8" />
+<text x="36.00" y="730.90" font-size="8.3" fill="#1a1a1a" text-anchor="start" font-weight="700" >8.3.2  Maintainer training and handover sign-off</text>
+<rect x="736.46" y="724.20" width="5.85" height="7.90" rx="0" fill="#b42318" stroke="#b42318" stroke-width="1" />
+<rect x="24.00" y="733.70" width="741.70" height="11.10" rx="0" fill="#f1f1f1" stroke="none" stroke-width="1" />
+<text x="28.00" y="742.20" font-size="8.8" fill="#1a1a1a" text-anchor="start" font-weight="700" >Milestones</text>
+<text x="36.00" y="753.10" font-size="8.3" fill="#1a1a1a" text-anchor="start" >Charter signed</text>
+<path d="M305.6,746.1 l4.3,4.3 l-4.3,4.3 l-4.3,-4.3 Z" fill="#1a1a1a"/>
+<text x="312.65" y="753.10" font-size="7.6" fill="#555555" text-anchor="start" >8 Jan 2027</text>
+<text x="36.00" y="764.20" font-size="8.3" fill="#1a1a1a" text-anchor="start" >Design and privacy approved</text>
+<path d="M414.8,757.2 l4.3,4.3 l-4.3,4.3 l-4.3,-4.3 Z" fill="#1a1a1a"/>
+<text x="421.81" y="764.20" font-size="7.6" fill="#555555" text-anchor="start" >5 Mar 2027</text>
+<text x="36.00" y="775.30" font-size="8.3" fill="#1a1a1a" text-anchor="start" >Catalog reviewed</text>
+<path d="M477.2,768.3 l4.3,4.3 l-4.3,4.3 l-4.3,-4.3 Z" fill="#1a1a1a"/>
+<text x="484.19" y="775.30" font-size="7.6" fill="#555555" text-anchor="start" >6 Apr 2027</text>
+<text x="36.00" y="786.40" font-size="8.3" fill="#1a1a1a" text-anchor="start" >All features built</text>
+<path d="M531.8,779.4 l4.3,4.3 l-4.3,4.3 l-4.3,-4.3 Z" fill="#1a1a1a"/>
+<text x="538.77" y="786.40" font-size="7.6" fill="#555555" text-anchor="start" >4 May 2027</text>
+<text x="36.00" y="797.50" font-size="8.3" fill="#1a1a1a" text-anchor="start" >Pilot starts</text>
+<path d="M590.3,790.5 l4.3,4.3 l-4.3,4.3 l-4.3,-4.3 Z" fill="#1a1a1a"/>
+<text x="597.26" y="797.50" font-size="7.6" fill="#555555" text-anchor="start" >3 Jun 2027</text>
+<text x="36.00" y="808.60" font-size="8.3" fill="#1a1a1a" text-anchor="start" >Pilot evaluation report</text>
+<path d="M711.1,801.6 l4.3,4.3 l-4.3,4.3 l-4.3,-4.3 Z" fill="#1a1a1a"/>
+<text x="704.12" y="808.60" font-size="7.6" fill="#555555" text-anchor="end" >4 Aug 2027</text>
+<text x="36.00" y="819.70" font-size="8.3" fill="#1a1a1a" text-anchor="start" >Google Play release</text>
+<path d="M734.5,812.7 l4.3,4.3 l-4.3,4.3 l-4.3,-4.3 Z" fill="#1a1a1a"/>
+<text x="727.51" y="819.70" font-size="7.6" fill="#555555" text-anchor="end" >16 Aug 2027</text>
+<text x="36.00" y="830.80" font-size="8.3" fill="#1a1a1a" text-anchor="start" >Handover</text>
+<path d="M740.4,823.8 l4.3,4.3 l-4.3,4.3 l-4.3,-4.3 Z" fill="#1a1a1a"/>
+<text x="733.36" y="830.80" font-size="7.6" fill="#555555" text-anchor="end" >19 Aug 2027</text>
+<text x="36.00" y="841.90" font-size="8.3" fill="#1a1a1a" text-anchor="start" >Project closed</text>
+<path d="M756.0,834.9 l4.3,4.3 l-4.3,4.3 l-4.3,-4.3 Z" fill="#1a1a1a"/>
+<text x="748.95" y="841.90" font-size="7.6" fill="#555555" text-anchor="end" >27 Aug 2027</text>
+<line x1="24.00" y1="844.70" x2="765.70" y2="844.70" stroke="#1a1a1a" stroke-width="0.8" />
+<line x1="24.00" y1="101.00" x2="765.70" y2="101.00" stroke="#1a1a1a" stroke-width="0.8" />
+<text x="765.70" y="855.70" font-size="8.3" fill="#555555" text-anchor="end" >166 working days, 4 Jan 2027 to 27 Aug 2027</text>
+<text x="28.00" y="866.70" font-size="10" fill="#1a1a1a" text-anchor="start" font-weight="700" >Cumulative planned cost (₱)</text>
+<line x1="292.00" y1="878.70" x2="292.00" y2="1053.70" stroke="#b8b8b8" stroke-width="0.6" />
+<line x1="352.43" y1="878.70" x2="352.43" y2="1053.70" stroke="#b8b8b8" stroke-width="0.6" />
+<line x1="407.01" y1="878.70" x2="407.01" y2="1053.70" stroke="#b8b8b8" stroke-width="0.6" />
+<line x1="467.44" y1="878.70" x2="467.44" y2="1053.70" stroke="#b8b8b8" stroke-width="0.6" />
+<line x1="525.93" y1="878.70" x2="525.93" y2="1053.70" stroke="#b8b8b8" stroke-width="0.6" />
+<line x1="586.36" y1="878.70" x2="586.36" y2="1053.70" stroke="#b8b8b8" stroke-width="0.6" />
+<line x1="644.84" y1="878.70" x2="644.84" y2="1053.70" stroke="#b8b8b8" stroke-width="0.6" />
+<line x1="705.27" y1="878.70" x2="705.27" y2="1053.70" stroke="#b8b8b8" stroke-width="0.6" />
+<line x1="765.70" y1="878.70" x2="765.70" y2="1053.70" stroke="#b8b8b8" stroke-width="0.6" />
+<line x1="292.00" y1="1053.70" x2="765.70" y2="1053.70" stroke="#1a1a1a" stroke-width="0.9" />
+<text x="287.00" y="1056.70" font-size="8.3" fill="#555555" text-anchor="end" >₱0</text>
+<line x1="292.00" y1="1024.53" x2="765.70" y2="1024.53" stroke="#b8b8b8" stroke-width="0.6" />
+<text x="287.00" y="1027.53" font-size="8.3" fill="#555555" text-anchor="end" >₱200,000</text>
+<line x1="292.00" y1="995.37" x2="765.70" y2="995.37" stroke="#b8b8b8" stroke-width="0.6" />
+<text x="287.00" y="998.37" font-size="8.3" fill="#555555" text-anchor="end" >₱400,000</text>
+<line x1="292.00" y1="966.20" x2="765.70" y2="966.20" stroke="#b8b8b8" stroke-width="0.6" />
+<text x="287.00" y="969.20" font-size="8.3" fill="#555555" text-anchor="end" >₱600,000</text>
+<line x1="292.00" y1="937.03" x2="765.70" y2="937.03" stroke="#b8b8b8" stroke-width="0.6" />
+<text x="287.00" y="940.03" font-size="8.3" fill="#555555" text-anchor="end" >₱800,000</text>
+<line x1="292.00" y1="907.87" x2="765.70" y2="907.87" stroke="#b8b8b8" stroke-width="0.6" />
+<text x="287.00" y="910.87" font-size="8.3" fill="#555555" text-anchor="end" >₱1,000,000</text>
+<line x1="292.00" y1="878.70" x2="765.70" y2="878.70" stroke="#b8b8b8" stroke-width="0.6" />
+<text x="287.00" y="881.70" font-size="8.3" fill="#555555" text-anchor="end" >₱1,200,000</text>
+<text x="322.22" y="1064.70" font-size="9" fill="#555555" text-anchor="middle" font-weight="700" >Jan</text>
+<text x="379.72" y="1064.70" font-size="9" fill="#555555" text-anchor="middle" font-weight="700" >Feb</text>
+<text x="437.23" y="1064.70" font-size="9" fill="#555555" text-anchor="middle" font-weight="700" >Mar</text>
+<text x="496.69" y="1064.70" font-size="9" fill="#555555" text-anchor="middle" font-weight="700" >Apr</text>
+<text x="556.14" y="1064.70" font-size="9" fill="#555555" text-anchor="middle" font-weight="700" >May</text>
+<text x="615.60" y="1064.70" font-size="9" fill="#555555" text-anchor="middle" font-weight="700" >Jun</text>
+<text x="675.05" y="1064.70" font-size="9" fill="#555555" text-anchor="middle" font-weight="700" >Jul</text>
+<text x="735.48" y="1064.70" font-size="9" fill="#555555" text-anchor="middle" font-weight="700" >Aug</text>
+<text x="287.00" y="1064.70" font-size="8.5" fill="#555555" text-anchor="end" >2027</text>
+<line x1="292.00" y1="895.74" x2="765.70" y2="895.74" stroke="#b42318" stroke-width="1.3" stroke-dasharray="6 3" />
+<text x="296.00" y="891.74" font-size="8.8" fill="#b42318" text-anchor="start" font-weight="700" >Budget with contingency ₱1,083,185</text>
+<path d="M297.8,1053.7 L350.5,1036.7 L405.1,1005.0 L465.5,981.8 L524.0,964.0 L584.4,939.2 L642.9,928.4 L703.3,919.2 L756.0,910.1" fill="none" stroke="#1a1a1a" stroke-width="2" />
+<circle cx="297.8" cy="1053.7" r="2.6" fill="#fff" stroke="#1a1a1a" stroke-width="1.3"/>
+<circle cx="350.5" cy="1036.7" r="2.6" fill="#fff" stroke="#1a1a1a" stroke-width="1.3"/>
+<text x="353.48" y="1048.70" font-size="7.8" fill="#555555" text-anchor="start" >₱116,592</text>
+<circle cx="405.1" cy="1005.0" r="2.6" fill="#fff" stroke="#1a1a1a" stroke-width="1.3"/>
+<text x="408.06" y="1017.03" font-size="7.8" fill="#555555" text-anchor="start" >₱333,760</text>
+<circle cx="465.5" cy="981.8" r="2.6" fill="#fff" stroke="#1a1a1a" stroke-width="1.3"/>
+<text x="468.50" y="993.78" font-size="7.8" fill="#555555" text-anchor="start" >₱493,164</text>
+<circle cx="524.0" cy="964.0" r="2.6" fill="#fff" stroke="#1a1a1a" stroke-width="1.3"/>
+<text x="526.98" y="976.04" font-size="7.8" fill="#555555" text-anchor="start" >₱614,820</text>
+<circle cx="584.4" cy="939.2" r="2.6" fill="#fff" stroke="#1a1a1a" stroke-width="1.3"/>
+<text x="587.41" y="951.18" font-size="7.8" fill="#555555" text-anchor="start" >₱785,264</text>
+<circle cx="642.9" cy="928.4" r="2.6" fill="#fff" stroke="#1a1a1a" stroke-width="1.3"/>
+<text x="645.89" y="940.35" font-size="7.8" fill="#555555" text-anchor="start" >₱859,514</text>
+<circle cx="703.3" cy="919.2" r="2.6" fill="#fff" stroke="#1a1a1a" stroke-width="1.3"/>
+<text x="706.32" y="931.18" font-size="7.8" fill="#555555" text-anchor="start" >₱922,395</text>
+<circle cx="756.0" cy="910.1" r="2.6" fill="#fff" stroke="#1a1a1a" stroke-width="1.3"/>
+<text x="749.95" y="948.10" font-size="8.8" fill="#1a1a1a" text-anchor="end" font-weight="700" >Baseline ₱984,714</text>
+<text x="765.70" y="1076.70" font-size="7.8" fill="#555555" text-anchor="end" >Baseline excludes the contingency reserve; budget = baseline + 10%</text>
+</svg>

@@ -99,48 +99,9 @@ Level 1 is a deliverable branch, level 2 a sub-deliverable and level 3 a work pa
     - 8.3.1 Handover package (D11)
     - 8.3.2 Maintainer training and handover sign-off
 
-```mermaid
-flowchart LR
-  P["0 LittleSteps project"]
-  P --> N1_0["1.0 Project Management"]
-  N1_0 --> N1_1["1.1 Initiation"]
-  N1_0 --> N1_2["1.2 Planning"]
-  N1_0 --> N1_3["1.3 Monitoring and Control"]
-  N1_0 --> N1_4["1.4 Closing"]
-  P --> N2_0["2.0 Requirements and Design"]
-  N2_0 --> N2_1["2.1 Discovery and Requirements"]
-  N2_0 --> N2_2["2.2 UI/UX Design"]
-  N2_0 --> N2_3["2.3 Privacy"]
-  P --> N3_0["3.0 Learning Content Catalog"]
-  N3_0 --> N3_1["3.1 Sources and Permissions"]
-  N3_0 --> N3_2["3.2 Adaptation and Translation"]
-  N3_0 --> N3_3["3.3 Review and Loading"]
-  P --> N4_0["4.0 Backend API and Database"]
-  N4_0 --> N4_1["4.1 API Foundation"]
-  N4_0 --> N4_2["4.2 Core Services"]
-  N4_0 --> N4_3["4.3 Content, Reflection and AI Services"]
-  P --> N5_0["5.0 Flutter Android App"]
-  N5_0 --> N5_1["5.1 App Foundation"]
-  N5_0 --> N5_2["5.2 Child and Observation Screens"]
-  N5_0 --> N5_3["5.3 Library and Planning Screens"]
-  N5_0 --> N5_4["5.4 Reflection Screens"]
-  N5_0 --> N5_5["5.5 AI Helper Screens"]
-  P --> N6_0["6.0 Testing and Quality"]
-  N6_0 --> N6_1["6.1 Functional Testing"]
-  N6_0 --> N6_2["6.2 Device and Accessibility Testing"]
-  N6_0 --> N6_3["6.3 Security Review"]
-  N6_0 --> N6_4["6.4 Usability Testing"]
-  P --> N7_0["7.0 Pilot"]
-  N7_0 --> N7_1["7.1 Pilot Preparation"]
-  N7_0 --> N7_2["7.2 Pilot Operation"]
-  N7_0 --> N7_3["7.3 Pilot Evaluation"]
-  P --> N8_0["8.0 Release, Training and Handover"]
-  N8_0 --> N8_1["8.1 Training"]
-  N8_0 --> N8_2["8.2 Release"]
-  N8_0 --> N8_3["8.3 Handover"]
-```
+![Figure 7.1. Work breakdown structure to work-package level](figures/fig-7-1-wbs.png)
 
-*Figure 7.1. WBS chart to level 2. The work packages under each box are in the indented list above.*
+*Figure 7.1. WBS chart: the project, 8 branches, their level-2 groups and all 49 work packages.*
 
 ## 7.2 WBS Dictionary
 

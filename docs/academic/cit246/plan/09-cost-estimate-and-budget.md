@@ -103,16 +103,7 @@ Each work package's cost is spread evenly over its working days; monthly figures
 | August 2027 | ₱62,319 | ₱984,714 |
 | **Baseline (excluding contingency)** | | **₱984,714** |
 
-```mermaid
-xychart-beta
-  title "Cumulative planned cost (₱ thousands)"
-  x-axis [Jan, Feb, Mar, Apr, May, Jun, Jul, Aug]
-  y-axis "₱ thousands" 0 --> 1100
-  line [117, 334, 493, 615, 785, 860, 922, 985]
-  bar [117, 217, 159, 122, 170, 74, 63, 62]
-```
-
-*Figure 9.1. Cost baseline: bars are the monthly planned cost, the line is the cumulative cost (the S-curve).*
+The cumulative cost curve (S-curve) for this baseline, with the ₱1,083,185 budget including contingency, is drawn under the Gantt chart on the same time axis in Figure 8.2 (Section 8.4).
 
 ## 9.4 Assumptions
 
