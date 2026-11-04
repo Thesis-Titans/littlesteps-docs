@@ -7,9 +7,11 @@ Needs: Python 3.8+ standard library only. For PNG output, one of
            or in ~/.cache/puppeteer), or
          - ImageMagick `convert` (fallback, lower text quality).
        Without either, only the SVG files are written.
-Reads: data/schedule-and-cost.csv, data/cost-baseline-by-month.csv, and the WBS levels (07), milestones (08) and
-       org chart (11) in the sibling .md files. Writes ../figures/fig-*.svg and fig-*.png.
-Every ID, name, date and number in a figure comes from those files. PNGs are A4 at 300 dpi (2480x3508 / 3508x2480).
+Reads ONLY these files in data/: schedule-and-cost.csv, cost-baseline-by-month.csv, wbs-levels.csv (WBS levels 0-2),
+       milestones.csv (name, date) and org-chart.csv (nodes, parent links, dotted links, outside-team nodes).
+       Writes ../figures/fig-*.svg and fig-*.png.
+Every ID, name, date and number in a figure comes from those files. The plan Markdown is NOT a data source: check_md()
+       only compares the 07 WBS list and the 08 milestone table with the data files and fails loudly if they drift. PNGs are A4 at 300 dpi (2480x3508 / 3508x2480).
 """
 import csv, datetime as dt, glob, os, re, shutil, subprocess, sys, tempfile
 from html import escape
@@ -120,17 +122,36 @@ def load():
     with open(os.path.join(HERE, "cost-baseline-by-month.csv"), encoding="utf-8") as f:
         for r in csv.DictReader(f):
             months.append((r["Month"], int(r["Planned cost (PHP)"]), int(r["Cumulative (PHP)"])))
-    wbs = read("07-work-breakdown-structure.md")
-    levels = {m.group(1): m.group(2) for m in re.finditer(r'N\d_\d\["(\d\.\d) ([^"]+)"\]', wbs)}
-    root = re.search(r"\*\*0\. (.+?)\*\*", wbs).group(1)
-    ms = []
-    sec = read("08-schedule.md").split("## 8.5 Milestones")[1]
-    for m in re.finditer(r"^\| ([^|]+?) \| (\d+ \w+ \d{4}) \|", sec, re.M):
-        ms.append((m.group(1), dt.datetime.strptime(m.group(2), "%d %b %Y").date()))
+    with open(os.path.join(HERE, "wbs-levels.csv"), encoding="utf-8") as f:
+        levels = {r["WBS"]: r["Name"] for r in csv.DictReader(f)}
+    root = levels.pop("0")
+    with open(os.path.join(HERE, "milestones.csv"), encoding="utf-8") as f:
+        ms = [(r["Milestone"], dt.date.fromisoformat(r["Date"])) for r in csv.DictReader(f)]
     return rows, months, levels, root, ms
 
 
 ROWS, MONTHS, LEVELS, ROOT, MILESTONES = load()
+
+
+def check_md():
+    """Fail loudly if the plan Markdown (07 list, 08 milestone table) no longer matches the data files."""
+    wbs = read("07-work-breakdown-structure.md")
+    md = {m.group(1): m.group(2) for m in re.finditer(r"^\s*- \*\*(\d\.\d) (.+?)\*\*\s*$", wbs, re.M)}
+    md_root = re.search(r"\*\*0\. (.+?)\*\*", wbs).group(1)
+    md_wp = {m.group(1): m.group(2) for m in re.finditer(r"^\s+- (\d\.\d\.\d) (.+?)\s*$", wbs, re.M)}
+    csv_wp = {r["id"]: r["name"] for r in ROWS}
+    sec = read("08-schedule.md").split("## 8.5 Milestones")[1]
+    tab = [(m.group(1), dt.datetime.strptime(m.group(2), "%d %b %Y").date())
+           for m in re.finditer(r"^\| ([^|]+?) \| (\d+ \w+ \d{4}) \|", sec, re.M)]
+    bad = []
+    if md != LEVELS: bad.append(f"07 WBS levels 1-2 differ from data/wbs-levels.csv: {sorted(set(md.items()) ^ set(LEVELS.items()))}")
+    if md_root != ROOT: bad.append(f"07 level-0 name {md_root!r} != wbs-levels.csv {ROOT!r}")
+    if md_wp != csv_wp: bad.append(f"07 work packages differ from data/schedule-and-cost.csv: {sorted(set(md_wp.items()) ^ set(csv_wp.items()))}")
+    if tab != MILESTONES: bad.append(f"08 section 8.5 milestone table differs from data/milestones.csv: {[x for x in tab + MILESTONES if (x in tab) != (x in MILESTONES)]}")
+    if bad: sys.exit("DRIFT between plan Markdown and data files; fix the .md or the CSV:\n  " + "\n  ".join(bad))
+
+
+check_md()
 BY = {r["id"]: r for r in ROWS}
 BASELINE = sum(r["cost"] for r in ROWS)
 assert BASELINE == MONTHS[-1][2], (BASELINE, MONTHS[-1])
@@ -228,13 +249,12 @@ def fig_wbs():
 
 # ---------------------------------------------------------------- Figure 11.1 org chart
 def fig_org():
-    src = read("11-resource-and-responsibility-plan.md").split("```mermaid")[1].split("```")[0]
-    nodes, solid, dotted = {}, [], []
-    for m in re.finditer(r'^\s*(\w+)\["(.+?)"\]', src, re.M):
-        a, b = m.group(2).split("<br/>")
-        nodes[m.group(1)] = (a, b)
-    for m in re.finditer(r'^\s*(\w+) (-->|-\.->) (\w+)', src, re.M):
-        (solid if m.group(2) == "-->" else dotted).append((m.group(1), m.group(3)))
+    nodes, solid, dotted, ext = {}, [], [], set()
+    with open(os.path.join(HERE, "org-chart.csv"), encoding="utf-8") as f:
+        for r in csv.DictReader(f):
+            nodes[r["ID"]] = (r["Title"], r["Subtitle"])
+            if r["Outside team"] == "Yes": ext.add(r["ID"])
+            if r["Parent"]: (solid if r["Link"] == "solid" else dotted).append((r["Parent"], r["ID"]))
     W = A4W
     s = Svg(W, 100)
     ty = title(s, "Figure 11.1", "Project organization chart. Solid lines show reporting; dotted lines show "
@@ -244,7 +264,6 @@ def fig_org():
     cw = (W - 2 * M - 5 * 12) / ncol
     X = lambda c: M + c * (cw + 12)
     pos = {}  # id -> (col, row, indent?)
-    ext = {t for _, t in dotted}
     pos["SP"] = (2.5, 0)   # centred over the four team columns 1..4
     pos["DPO"] = (0, 0); pos["CDW"] = (5, 0)
     pos["PM"] = (2.5, 1); pos["MT"] = (5, 1)
@@ -404,9 +423,9 @@ def fig_gantt():
         s.add(f'<circle cx="{xd(d):.1f}" cy="{yv(v):.1f}" r="2.6" fill="#fff" stroke="{INK}" stroke-width="1.3"/>')
         if i == 0: continue
         if i == len(pts) - 1:
-            s.text(xd(d) - 6, yv(v) + 38, f"Baseline {peso(v)}", 8.8, INK, True, "end")
+            s.text(xd(d) - 6, yv(v) + 50, f"Baseline {peso(v)}", 8.8, INK, True, "end")
         else:
-            s.text(xd(d) + 3, yv(v) + 12, peso(v), 7.8, SUB)
+            s.text(xd(d) + 3, yv(v) + (12 if i < len(pts) - 3 else 12), peso(v), 7.8, SUB)
     s.text(X1, cy1 + 23, f"Baseline excludes the contingency reserve; budget = baseline + 10%", 7.8, SUB, False, "end")
     s.h_used = cy1 + 30
     assert s.h_used < A4H - 8, s.h_used
@@ -449,11 +468,11 @@ def fig_network():
         sub[i] = k; occ[(l, depth[i], k)] = i
     lanek = [max([sub[i] for i in lane_of if lane_of[i] == l] + [0]) + 1 for l in range(len(LANES))]
     # geometry
-    LBLW, MX = 78, 16
-    NW, NH, SG = 41, 24, 3
+    LBLW, MX = 84, 16
+    NW, NH, SG = 41, 22, 2
     px0 = MX + LBLW
     pitch = (W - MX - px0) / ncol
-    NW = pitch - 10.5
+    NW = pitch - 12
     cx0 = lambda c: px0 + c * pitch                 # node left
     gapx = lambda g: (cx0(g) + NW, cx0(g + 1))       # gap between column g and g+1
 
@@ -522,8 +541,8 @@ def fig_network():
         hgt = lanek[l] * (NH + SG) - SG + 6
         s.rect(MX, top, W - 2 * MX, hgt, BAND if l % 2 == 0 else "#fafafa", "none")
         s.text(MX + 4, lane_y[l] + 9, LANE_NAME[l and LANES[l]] if False else LANE_NAME[LANES[l]].split(" ", 1)[0], 10, INK, True)
-        nm = wrap(LANE_NAME[LANES[l]].split(" ", 1)[1], 7.8, LBLW - 10)
-        for k, t in enumerate(nm): s.text(MX + 4, lane_y[l] + 19 + k * 9, t, 7.8, SUB)
+        nm = wrap(LANE_NAME[LANES[l]].split(" ", 1)[1], 8.4, LBLW - 8)
+        for k, t in enumerate(nm): s.text(MX + 4, lane_y[l] + 19 + k * 9.6, t, 8.4, SUB)
     # column guides
     for c in range(ncol):
         s.text(cx0(c) + NW / 2, plot_bottom + 9, str(c + 1), 7, MUTE, False, "middle")
@@ -554,7 +573,7 @@ def fig_network():
         for c, pts in paths:
             if c != crit: continue
             d = "M" + " L".join(f"{x:.1f},{y:.1f}" for x, y in pts)
-            col, sw = (CRIT, 1.9) if crit else ("#a9a9a9", 0.7)
+            col, sw = (CRIT, 1.9) if crit else ("#b4b4b4", 0.6)
             s.path(d, "none", col, sw, None, 'stroke-linejoin="round"')
             x, y = pts[-1]
             a = 3.4 if crit else 2.6
@@ -565,41 +584,45 @@ def fig_network():
         c = i in CRIT_IDS
         s.rect(x, y, NW, NH, CRIT if c else "#ffffff", CRIT if c else NC_S, 1.4 if c else 0.8, 2)
         fc = "#ffffff" if c else INK
-        s.text(x + NW / 2, y + 9.5, i, 8.6, fc, True, "middle")
-        s.text(x + NW / 2, y + 19, f'{r["dur"]}d F{r["float"]}', 7.2, "#ffffff" if c else SUB, False, "middle")
+        s.text(x + NW / 2, y + 9.8, i, 9.4, fc, True, "middle")  # 9.4 px = 7 pt at A4
+        s.text(x + NW / 2, y + 19, f'{r["dur"]}d F{r["float"]}', 8.2, "#ffffff" if c else SUB, False, "middle")
     # LOE bar
+    FK = 9.4  # key / legend font: 9.4 px = 7 pt at A4 landscape
     yb = plot_bottom + 14
-    s.rect(px0, yb, W - MX - px0, 10, "#ffffff", NC_S, 0.8, 0, "3 2")
-    s.text(MX, yb + 8, "Level of effort", 7.8, SUB, True)
+    s.rect(px0, yb, W - MX - px0, 13, "#ffffff", NC_S, 0.8, 0, "3 2")
+    s.text(MX, yb + 10, "Level of effort", FK, SUB, True)
     ids = " and ".join(r["id"] for r in loe)
-    s.text(px0 + 6, yb + 8, f'{ids}: monitoring and control, {loe[0]["dur"]} working days '
-           f'({fmt(loe[0]["start"])} to {fmt(loe[0]["fin"])}), no dependencies', 7.6, SUB)
-    # key (names)
-    ky = yb + 20
-    s.line(MX, ky - 6, W - MX, ky - 6, INK, 0.8)
+    s.text(px0 + 6, yb + 10, f'{ids}: monitoring and control, {loe[0]["dur"]} working days '
+           f'({fmt(loe[0]["start"])} to {fmt(loe[0]["fin"])}), no dependencies', FK, SUB)
+    # key (names): three columns, id + full name
+    ky = yb + 26
+    s.line(MX, ky - 8, W - MX, ky - 8, INK, 0.8)
     items = [r for r in net]
-    ncols = 5
+    ncols = 4
     per = -(-len(items) // ncols)
     colw = (W - 2 * MX) / ncols
+    KH = 10.8
     for k, r in enumerate(items):
-        cx, cy = MX + (k // per) * colw, ky + 4 + (k % per) * 8.4
+        cx, cy = MX + (k // per) * colw, ky + 4 + (k % per) * KH
         c = r["id"] in CRIT_IDS
-        s.text(cx, cy, r["id"], 7.3, CRIT if c else SUB, True)
-        s.text(cx + 20, cy, fit(r["name"], 7.3, colw - 28, c), 7.3, INK, c)
-    ky2 = ky + 4 + per * 8.4 + 5
+        s.text(cx, cy, r["id"], FK, CRIT if c else SUB, True)
+        s.text(cx + 28, cy, fit(r["name"], FK, colw - 36, c), FK, INK, c)
+    ky2 = ky + 4 + per * KH + 6
     s.line(MX, ky2 - 6, W - MX, ky2 - 6, LINE, 0.6)
     # legend + total
-    lx = MX
-    s.rect(lx, ky2, 26, 10, CRIT, CRIT, 1.4, 2); s.text(lx + 32, ky2 + 8, "Critical activity", 7.8, SUB)
-    s.rect(lx + 100, ky2, 26, 10, "#fff", NC_S, 0.8, 2); s.text(lx + 132, ky2 + 8, "Other activity", 7.8, SUB)
-    s.line(lx + 200, ky2 + 5, lx + 226, ky2 + 5, CRIT, 1.9); s.text(lx + 232, ky2 + 8, "Critical dependency", 7.8, SUB)
-    s.line(lx + 322, ky2 + 5, lx + 348, ky2 + 5, "#a9a9a9", 0.7); s.text(lx + 354, ky2 + 8, "Other dependency", 7.8, SUB)
-    s.text(lx + 440, ky2 + 8, "In each box:  id,  duration in working days (d),  total float (F)", 7.8, SUB)
-    s.text(W - MX, ky2 + 8, f"Critical path: {len(CRIT_IDS)} activities, {TOTAL_DAYS} working days, finish {fmt(PROJ_END)}",
-           9.5, CRIT, True, "end")
-    s.text(MX, ky2 + 21, "Note: arrows are finish-to-start; edges run in the channels between boxes and lanes. "
-           f'Level-of-effort items {ids} have no dependencies and are drawn as a bar outside the network.', 7.3, MUTE)
-    s.h_used = ky2 + 24
+    x = MX
+    def item(draw, label):
+        nonlocal x
+        draw(x); s.text(x + 32, ky2 + 9, label, FK, SUB); x += 32 + tw(label, FK) + 18
+    item(lambda x: s.rect(x, ky2, 26, 11, CRIT, CRIT, 1.4, 2), "Critical activity")
+    item(lambda x: s.rect(x, ky2, 26, 11, "#fff", NC_S, 0.8, 2), "Other activity")
+    item(lambda x: s.line(x, ky2 + 5.5, x + 26, ky2 + 5.5, CRIT, 1.9), "Critical dependency")
+    item(lambda x: s.line(x, ky2 + 5.5, x + 26, ky2 + 5.5, "#a9a9a9", 0.7), "Other dependency")
+    s.text(x, ky2 + 9, "In each box:  id,  duration in working days (d),  total float (F)", FK, SUB)
+    s.text(W - MX, ky2 + 24, f"Critical path: {len(CRIT_IDS)} activities, {TOTAL_DAYS} working days, finish {fmt(PROJ_END)}",
+           10.5, CRIT, True, "end")
+    s.text(MX, ky2 + 24, "Note: arrows are finish-to-start; edges run in the channels between boxes and lanes.", 8.8, SUB)
+    s.h_used = ky2 + 30
     print("net used", s.h_used, "plot_bottom", plot_bottom, "vcount", vcount, "hcount", hcount, lanek); assert s.h_used < H - 4, s.h_used
     return s
 

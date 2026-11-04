@@ -229,6 +229,6 @@
 <circle cx="703.3" cy="919.2" r="2.6" fill="#fff" stroke="#1a1a1a" stroke-width="1.3"/>
 <text x="706.32" y="931.18" font-size="7.8" fill="#555555" text-anchor="start" >₱922,395</text>
 <circle cx="756.0" cy="910.1" r="2.6" fill="#fff" stroke="#1a1a1a" stroke-width="1.3"/>
-<text x="749.95" y="948.10" font-size="8.8" fill="#1a1a1a" text-anchor="end" font-weight="700" >Baseline ₱984,714</text>
+<text x="749.95" y="960.10" font-size="8.8" fill="#1a1a1a" text-anchor="end" font-weight="700" >Baseline ₱984,714</text>
 <text x="765.70" y="1076.70" font-size="7.8" fill="#555555" text-anchor="end" >Baseline excludes the contingency reserve; budget = baseline + 10%</text>
 </svg>
