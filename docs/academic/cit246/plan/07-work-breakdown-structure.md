@@ -100,7 +100,7 @@ Level 1 is a deliverable branch, level 2 a sub-deliverable and level 3 a work pa
     - 8.3.2 Maintainer training and handover sign-off
 
 ```mermaid
-flowchart TB
+flowchart LR
   P["0 LittleSteps project"]
   P --> N1_0["1.0 Project Management"]
   N1_0 --> N1_1["1.1 Initiation"]
