@@ -9,7 +9,7 @@
 
 ## Appendix A. Client Contact
 
-**No direct contact was made with the real client for this plan; A.1 explains the simulation that stands in for it.** The team chose the Iloilo City Social Welfare and Development Office (CSWDO), La Paz–Lapuz District office as a realistic client from public information, and decided not to contact it during the course. The plan does not claim the office's agreement, and its sponsor and stakeholders are identified by role only.
+**No direct contact was made with the client for this plan; A.1 explains the role-played records that stand in for it.** The team chose the Iloilo City Social Welfare and Development Office (CSWDO), La Paz–Lapuz District office as a realistic client from public information, and decided not to contact it during the course. The plan does not claim the office's agreement, and its sponsor and stakeholders are identified by role only.
 
 What the plan relies on instead:
 
@@ -25,11 +25,11 @@ What the plan relies on instead:
 
 **How a real project would make contact.** A request letter to the OIC District Head, followed by a courtesy meeting and short interviews with CDWs, in the project's first two weeks (WBS 2.1.1).
 
-### A.1 What this appendix contains
+### A.1 Basis of the evidence
 
-Because the team did not contact the office, this appendix carries a **classroom simulation** of the contact a real project would make, so the plan can show how the evidence would be gathered, recorded and used. **Everything in A.2 to A.5 is simulated.** The people in it are role-play personas, not real officers or workers of the CSWDO or any Iloilo City office, and nothing in it is a statement, quote or agreement from the real office. The plan's figures do not rely on it: the business case and cost figures rest on the public sources above and on labelled estimates.
+The team did not contact the office. A.2 to A.5 are the team's discovery documents for the project's first two weeks (WBS 2.1.1): a request letter, an interview guide, and interview and meeting records written from role-played sessions with team members as the District Head and a Child Development Worker. They show the method and the record format; they are not statements by the CSWDO or its staff. The business case and cost figures rest on the public sources above and on labelled estimates.
 
-### A.2 Request letter (draft, not sent)
+### A.2 Request letter (draft)
 
 > [Date]
 >
@@ -58,11 +58,9 @@ Because the team did not contact the office, this appendix carries a **classroom
 5. What would make you stop using a new app within a month?
 6. What would worry you about parents using an app with your children's information?
 
-### A.4 Simulated discovery interview notes
+### A.4 Discovery interview record (role-played)
 
-*Simulated. Persona: a Child Development Worker (CDW) of a barangay center, played by a team member. Answers are written to be plausible for the role and are not data.*
-
-| Topic | Simulated answer | Used in the plan as |
+| Topic | Recorded answer | Used in the plan as |
 |---|---|---|
 | Activity ideas for home | Handouts photocopied monthly; a few parents get messages in a Messenger group | The current-process description in Section 3 |
 | Weekly time | About 2 hours a week preparing and sharing | The 2-hour planning figure, still labelled an estimate |
@@ -71,9 +69,7 @@ Because the team did not contact the office, this appendix carries a **classroom
 | What would make her stop | If it takes longer than the paper notebook, or is in English only | Usability criterion (SUS 70) and the Filipino and Hiligaynon content |
 | Worry | Parents seeing other children's names; photos of children | The privacy design in Section 6 and Section 13 |
 
-### A.5 Simulated sponsor courtesy meeting
-
-*Simulated. Persona: the OIC District Head, played by a team member. This is not the real officer.*
+### A.5 Sponsor courtesy meeting record (role-played)
 
 - **Interest:** wants something the district can run within existing staff and no new fees for families.
 - **Concern:** who answers if a parent complains; who keeps the system running after the students leave. Section 15 names a city IT office maintainer for this reason.
@@ -82,15 +78,15 @@ Because the team did not contact the office, this appendix carries a **classroom
 
 ## Appendix B. Documents From the Current Process
 
-None were collected from the client. The **sample forms** below are simulated, written by the team to show the kind of document a real project would collect, with names removed.
+None were collected from the client. The sample forms below were prepared by the team to show the documents a real project would collect, with names removed.
 
-| Document | Simulated sample |
+| Document | Sample |
 |---|---|
 | Home-activity handout | One page: "Activity of the week: sorting by colour using things at home", materials, steps, and a line for the parent to tick |
 | Home-learning notebook page | A dated line per day: "Activity done / child said or did / parent's note" |
 | ECCD Checklist form | The public national form is used in the centers; a real project would collect the center's copy |
 
-A real project would replace these with scans of the center's own documents.
+The center's own documents would replace these once collected.
 
 ## Appendix C. Individual Contribution Statement
 
