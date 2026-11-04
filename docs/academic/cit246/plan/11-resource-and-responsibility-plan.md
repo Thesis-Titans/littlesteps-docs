@@ -1,12 +1,5 @@
 # 11. Resource and Responsibility Plan
 
-**Plan section:** 11  
-**Version:** 1.1 draft, 4 November 2026  
-**Status:** Draft for team review. The organizational chart and responsibility assignment matrix follow Schwalbe, *Information Technology Project Management*, Chapter 9.  
-**Related Documents:** [Project Charter](04-project-charter.md), [Work Breakdown Structure](07-work-breakdown-structure.md), [Procurement Plan](14-procurement-plan.md)
-
----
-
 ## 11.1 Project Organizational Chart
 
 ![Figure 11.1. Project organization chart](figures/fig-11-1-org-chart.png)
@@ -15,7 +8,7 @@
 
 ## 11.2 Responsibility Assignment Matrix (RACI)
 
-**R** responsible (does the work), **A** accountable (approves; one per row), **C** consulted, **I** informed. Each row has exactly one accountable person (A). Rows cover every level-2 item of the WBS in Section 7; 5.1–5.3 and 5.4–5.5 are shown together because they share the same people.
+**R** responsible, **A** accountable (one per row), **C** consulted, **I** informed. Rows cover every level-2 WBS item in Section 7; 5.1–5.3 and 5.4–5.5 are combined because they share the same people.
 
 | WBS | Sponsor | PM (Mark) | BA/QA lead (Faith) | Coordinator (Nherie) | Dev A | Dev B | UX | QA tester | Content reviewer | DPO |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -50,22 +43,21 @@
 | Resource | Allocation | When |
 |---|---|---|
 | Project manager | 30–100% (40% average) | Whole project |
-| Business analyst and quality lead | 50–100% in discovery, design, testing and evaluation | Whole project, part-time between phases |
-| Stakeholder and content coordinator | 100% during catalog work and the pilot | January–August (4 Jan to 27 Aug 2027) |
-| Developers A and B | 100% each, never more than two at once (Section 8.1) | Late January (API contract) to August |
-| UI/UX designer | Full time in design, 30–50% in testing and training | January–February, May |
-| QA tester | Full time in testing | February (test plan), May, August |
+| Business analyst and quality lead | 50–100% | Whole project |
+| Stakeholder and content coordinator | 100% | 4 Jan–27 Aug 2027 |
+| Developers A and B | 100% each, two at most (Section 8.1) | Late January to August |
+| UI/UX designer | Full time in design; 30–50% later | January–February, May |
+| QA tester | Full time in testing | February, May, August |
 | Content reviewer and translator | Per item | March–April |
 
 ## 11.4 Skills Required and Gaps
 
 | Skill | Needed for | Team has it? | How the gap is covered |
 |---|---|---|---|
-| Project management (scope, schedule, cost, risk) | 1.0 | Yes (CIT 246) | — |
-| Requirements and usability testing | 2.1, 6.4 | Partly | Quality lead uses the course's UI/UX specification and walkthrough guide |
-| Flutter and Dart | 5.0 | Partly (CC 207B) | Contract experienced Flutter developers (Section 14) |
-| Node.js, TypeScript and Firebase | 4.0 | Partly | Contracted developers; team reviews the code |
+| Requirements and usability testing | 2.1, 6.4 | Partly | Quality lead follows the course's UI/UX specification |
+| Flutter and Dart | 5.0 | Partly (CC 207B) | Contract developers (Section 14) |
+| Node.js, TypeScript and Firebase | 4.0 | Partly | Contracted developers; team reviews code |
 | Early-childhood development content | 3.0 | **No** | Contract an ECCD content reviewer |
-| Filipino and Hiligaynon translation | 3.2.2, 8.1 | Partly | Contract a translator; team checks for plain language |
+| Filipino and Hiligaynon translation | 3.2.2, 8.1 | Partly | Contract a translator |
 | Data privacy law (RA 10173) | 2.3 | **No** | Contract a privacy consultant; client's DPO approves |
 | App store release and signing | 8.2 | No | Developer A, using the handover runbook |

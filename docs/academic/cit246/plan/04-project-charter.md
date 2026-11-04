@@ -1,89 +1,73 @@
 # 4. Project Charter
 
-**Plan section:** 4 ◆ (Checkpoint 2)  
-**Version:** 1.1 draft, 4 November 2026  
-**Status:** Draft for team review, then for sponsor sign-off. The format follows Schwalbe, *Information Technology Project Management*, Table 4-1.  
-**Related Documents:** [Business Case](03-business-case.md), [Stakeholder Register](05-stakeholder-register.md), [Scope Statement](06-scope-statement.md)
-
----
-
-> **Practice timeline.** The dates below are for the CIT 246 planning exercise: an 8-month project for the client. They are not the team's course build schedule, which is in the [execution plan](../../../execution-plan.md).
-
 | Field | Entry |
 |---|---|
 | **Project title** | LittleSteps: Home Learning and Observation App for Barangay Child Development Centers |
-| **Client organization** | Iloilo City Social Welfare and Development Office (CSWDO), La Paz–Lapuz District office, which supervises the Child Development Centers in 37 barangays; pilot at two Child Development Centers in La Paz |
+| **Client organization** | Iloilo City Social Welfare and Development Office (CSWDO), La Paz–Lapuz District office; pilot at two Child Development Centers in La Paz |
 | **Authorization date** | On sponsor sign-off (target: 8 January 2027) |
 | **Project start date** | 4 January 2027 |
 | **Projected finish date** | 27 August 2027 (8 months) |
-| **Budget** | ₱1,083,185, including a 10% contingency reserve of ₱98,471 (bottom-up cost baseline, Section 9) |
+| **Budget** | ₱1,083,185, including a 10% contingency reserve of ₱98,471 (Section 9) |
 | **Project manager** | Mark Alvin Cadangin |
 
 ## 4.1 Key Schedule Milestones
 
 | Milestone | Target date |
 |---|---|
-| Charter signed by the sponsor | 8 January 2027 |
-| Design approved and privacy impact assessment approved by the DPO | 5 March 2027 |
-| 80 activity catalog items reviewed by the ECCD content reviewer | 6 April 2027 |
-| All features built (4 May); system testing starts 5 May | 4–5 May 2027 |
-| Pilot onboarding done; pilot starts at two Child Development Centers in La Paz | 3 June 2027 |
-| Pilot ends | 28 July 2027 |
-| Pilot evaluation report delivered | 4 August 2027 |
+| Charter signed | 8 January 2027 |
+| Design and privacy impact assessment approved | 5 March 2027 |
+| 80 catalog items reviewed | 6 April 2027 |
+| Features built; testing starts | 4–5 May 2027 |
+| Pilot at two Child Development Centers in La Paz | 3 June–28 July 2027 |
+| Pilot evaluation report | 4 August 2027 |
 | App published on Google Play | 16 August 2027 |
-| CDW training complete; system handed over to the maintainer | 19 August 2027 |
-| Project closed; lessons learned recorded | 27 August 2027 |
-
-The dates come from the schedule in Section 8.
+| CDW training complete; handover | 19 August 2027 |
+| Project closed; lessons learned | 27 August 2027 |
 
 ## 4.2 Project Objectives
 
-1. Give parents of children aged 0–5, and other caregivers who look after them at home, a free Flutter app, released on Android for the pilot, that keeps a private record of what they observe at home and suggests low-cost, screen-free activities matched to their child's age.
-2. Build a reviewed catalog of Philippine early-learning activities, stories and rhymes that CDWs can recommend with confidence.
-3. Protect children's and parents' data under the Data Privacy Act of 2012 (RA 10173), with no diagnostic scores or pass/fail labels.
-4. Hand over a running system, trained CDWs and a named maintainer so the app keeps working after the project ends.
+1. Give parents and other caregivers of children aged 0–5 a free Flutter app (Android for the pilot) that keeps a private record of home observations and suggests low-cost, screen-free activities.
+2. Build a reviewed catalog of Philippine early-learning activities, stories and rhymes.
+3. Protect data under the Data Privacy Act of 2012 (RA 10173), with no diagnostic scores or labels.
+4. Hand over a running system, trained CDWs and a maintainer.
 
 ## 4.3 Success Criteria
 
-The project succeeds when all of the following are met by the finish date, within the budget plus or minus 10% and the schedule plus or minus two weeks:
+The project succeeds when all criteria are met by the finish date, within budget plus or minus 10% and schedule plus or minus two weeks:
 
 | # | Criterion | Measure | Measured by |
 |---|---|---|---|
-| 1 | Pilot adoption | At least 30 households, mostly parents, across two Child Development Centers install the app and create a child profile | App records, counted without names |
-| 2 | Weekly use | At least 60% of pilot households use the app in at least 4 of the 8 pilot weeks | Weekly active households, from anonymous usage counts |
-| 3 | Records kept | At least 70% of pilot households record 4 or more observations or completed activities during the pilot | App records, counted without names |
-| 4 | Usability | Average System Usability Scale (SUS) score of 70 or higher from pilot parents and other caregivers; at least 85% task success on the five core tasks in moderated tests | SUS survey and usability test sheets |
-| 5 | Reviewed content | At least 80 catalog items covering all four domains and every age band, each with a recorded source and reviewer sign-off; zero unreviewed items shown to caregivers | Catalog review log |
-| 6 | Privacy and security | Privacy impact assessment approved by the Data Protection Officer; zero open high-severity findings in the pre-release security review | Signed assessment and review report |
-| 7 | CDW workload | CDW time spent preparing home-activity handouts falls by at least 50% against the baseline measured in Section 3 | CDW time log, before and during the pilot |
-| 8 | Handover | A named maintainer has completed handover training and can deploy an update unaided | Handover checklist signed by the maintainer |
+| 1 | Adoption | At least 30 households across two centers install the app and create a child profile | App records (no names) |
+| 2 | Weekly use | At least 60% of pilot households use the app in 4 or more of the 8 weeks | Anonymous usage counts |
+| 3 | Records kept | At least 70% of households record 4 or more observations or activities | App records (no names) |
+| 4 | Usability | System Usability Scale (SUS) average of 70 or higher; 85% task success on five core tasks | SUS survey, test sheets |
+| 5 | Content | At least 80 catalog items covering four domains and every age band, each with source and reviewer sign-off; none unreviewed | Catalog review log |
+| 6 | Privacy, security | Privacy impact assessment approved by the Data Protection Officer; no open high-severity security findings | Signed assessment, review report |
+| 7 | CDW workload | CDW handout time falls at least 50% against the Section 3 baseline | CDW time log |
+| 8 | Handover | A named maintainer can deploy an update unaided after training | Signed handover checklist |
 
 ## 4.4 Approach
 
-- **Discover first.** In the first two weeks, interview the OIC District Head, CDWs and parents to confirm the baseline in Section 3 (which rests on planning figures from the October 2026 interviews) and the requirements.
-- **Privacy by design.** Complete a privacy impact assessment before any real data is collected. Store only a nickname, an age band or birth month and year, and caregiver-entered records. Never send journal text or child identifiers to the AI service.
-- **Reviewed content only.** An ECCD content reviewer approves every catalog item, with its source recorded, before parents can see it.
-- **Iterative build.** Build the Flutter app and backend in two-week iterations, each ending with a demo to the district office. Test against local emulators with synthetic data until the pilot.
-- **Pilot before launch.** Run an 8-week pilot at two centers, measure the success criteria, and fix the top issues before publishing on Google Play.
-- **Plan the handover from the start.** Name the maintainer by the midpoint (May 2027) and involve them in the last two iterations.
+- **Discover first.** In the first two weeks, interview the OIC District Head, CDWs and parents to confirm the Section 3 baseline.
+- **Privacy by design.** Approve a privacy impact assessment before collecting real data. Store only a nickname, an age band or birth month and year, and caregiver records. Never send journal text or child identifiers to the AI service.
+- **Content only.** The reviewer approves every catalog item before parents see it.
+- **Iterative build.** Build in two-week iterations, each ending with a district office demo, using synthetic data until the pilot.
+- **Pilot before launch.** Run an 8-week pilot, measure the criteria and fix top issues before publishing.
+- **Plan the handover early.** Name the maintainer by May 2027 and involve them in the last two iterations.
 
 ## 4.5 Roles and Responsibilities
 
-| Role | Name | Organization or position | Responsibility |
-|---|---|---|---|
-| Project sponsor | Identified by role; no name is recorded | OIC District Head, CSWDO La Paz–Lapuz District office | Approves the charter, budget and major changes; accepts the final deliverables |
-| Project manager | Mark Alvin Cadangin | Project team, WVSU CICT | Plans and controls scope, schedule, cost and risk; reports to the sponsor; chairs the change control board |
-| Business analyst and quality lead | Mae Daniella Faith C. Benjamin | Project team, WVSU CICT | Requirements, acceptance criteria, test planning and usability evaluation |
-| Stakeholder and content coordinator | Nherie C. Acebuche | Project team, WVSU CICT | Stakeholder engagement, CDW and parent sessions, content review workflow, training materials |
-| Flutter and backend developers (2) | To be contracted | Contracted developers | Build and test the app and backend |
-| UI/UX designer | To be contracted | Part-time contractor | Screen design and usability fixes |
-| QA tester | To be contracted | Part-time contractor | Functional, device and regression testing |
-| ECCD content reviewer | To be identified | ECCD specialist or early-childhood educator | Reviews and signs off every catalog item |
-| Data Protection Officer | To be identified | Barangay or city DPO | Reviews the privacy impact assessment and data handling |
-| Child Development Workers | Pilot center staff | The two pilot Child Development Centers in La Paz | Recommend the app to families, run parent onboarding, give feedback |
-| Maintainer | To be named by May 2027 (the midpoint) | Named in Section 15 | Runs and updates the system after handover |
-
-The three project-team role assignments are proposals for the team to confirm. Signature and date cells are blank because nobody has signed.
+| Role | Name | Responsibility |
+|---|---|---|
+| Project sponsor | OIC District Head, CSWDO La Paz–Lapuz (by role) | Approves charter, budget and major changes; accepts deliverables |
+| Project manager | Mark Alvin Cadangin | Controls scope, schedule, cost, risk; reports to the sponsor; chairs change control |
+| Business analyst and quality lead | Mae Daniella Faith C. Benjamin | Requirements, acceptance, testing |
+| Stakeholder and content coordinator | Nherie C. Acebuche | Stakeholder engagement, CDW and parent sessions, content review, training |
+| Flutter and backend developers (2), UI/UX designer, QA tester | To be contracted | Build, design and test |
+| ECCD content reviewer | To be identified | Signs off every catalog item |
+| Data Protection Officer | To be identified | Reviews the privacy impact assessment |
+| Child Development Workers | Pilot center staff | Recommend the app, onboard parents |
+| Maintainer | To be named by May 2027 | Runs and updates the system after handover |
 
 ## 4.6 Sign-off
 
@@ -96,7 +80,7 @@ The three project-team role assignments are proposals for the team to confirm. S
 
 ## 4.7 Stakeholder Comments
 
-At the courtesy meeting on 27 October 2026 the OIC District Head expressed interest in a no-fee solution run by existing staff, asked who answers parents' complaints and who maintains the system after the project, and asked for a monthly summary report (Appendix A.5). Comments on the charter itself will be recorded at the charter review with the sponsor and CDWs. Other concerns the team expects:
+At the meeting on 27 October 2026 the OIC District Head wanted a no-fee solution run by existing staff, asked who answers parents' complaints and who maintains the system, and asked for a monthly summary report (Appendix A.5). Comments on the charter will be recorded at its review with the sponsor and CDWs. Expected concerns:
 
-- CDWs will want to know whether the app adds reporting work for CDWs. It does not; CDWs only recommend the app and run onboarding (see Section 5).
-- The Data Protection Officer will need to approve how children's data is stored before the pilot (success criterion 6).
+- CDWs will ask whether the app adds reporting work. It does not; they only recommend it and run onboarding (Section 5).
+- The Data Protection Officer must approve how children's data is stored before the pilot (success criterion 6).

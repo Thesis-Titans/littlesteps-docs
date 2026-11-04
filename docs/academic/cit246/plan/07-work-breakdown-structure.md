@@ -1,15 +1,8 @@
 # 7. Work Breakdown Structure
 
-**Plan section:** 7 ◆ (Checkpoint 3)  
-**Version:** 1.1 draft, 4 November 2026  
-**Status:** Draft for team review. The structure follows Schwalbe, *Information Technology Project Management*, Chapter 5, and the course's seven WBS rules: deliverable-oriented, the 100% rule, and a 1.0 Project Management branch.  
-**Related Documents:** [Scope Statement](06-scope-statement.md), [Schedule](08-schedule.md), [Cost Estimate and Budget](09-cost-estimate-and-budget.md)
-
----
-
 ## 7.1 WBS (indented list)
 
-Level 1 is a deliverable branch, level 2 a sub-deliverable and level 3 a work package. Work packages are the lowest level, where each one has an owner, a duration and a cost. Every product deliverable in the scope statement (D1–D11) appears in one work package, and nothing in the WBS falls outside the scope statement (the 100% rule).
+Level 1 is a deliverable branch, level 2 a sub-deliverable and level 3 a work package, the lowest level, which has an owner, a duration and a cost. Every deliverable in the scope statement (D1–D11) appears in a work package, and nothing falls outside the scope (the 100% rule).
 
 **0. LittleSteps: Home Learning and Observation App** (the whole project)
 
@@ -101,11 +94,11 @@ Level 1 is a deliverable branch, level 2 a sub-deliverable and level 3 a work pa
 
 ![Figure 7.1. Work breakdown structure to work-package level](figures/fig-7-1-wbs.png)
 
-*Figure 7.1. WBS chart: the project, 8 branches, their level-2 groups and all 49 work packages.*
+*Figure 7.1. WBS chart: the project, 8 branches, level-2 groups and all 49 work packages.*
 
 ## 7.2 WBS Dictionary
 
-Entries for eight work packages: the riskiest ones and those on the critical path. Durations and costs come from the schedule (Section 8) and cost estimate (Section 9).
+Six work packages: the riskiest and those on the critical path. Durations and costs are in Sections 8 and 9.
 
 ### 2.2.2 Clickable prototype and parent walkthrough (D2)
 
@@ -115,23 +108,6 @@ Entries for eight work packages: the riskiest ones and those on the critical pat
 | Not included | Building the app; visual design of marketing material. |
 | Owner | UI/UX designer, with the business analyst |
 | Output | Approved prototype (D2) and walkthrough findings |
-| Accepted by | Sponsor and a CDW representative |
-| Duration | 10 working days, 8 Feb 2027 to 19 Feb 2027 |
-| Predecessors | 2.2.1, 2.1.2 |
-| Cost | ₱24,300 |
-
-### 2.3.1 Privacy impact assessment draft
-
-| Field | Entry |
-|---|---|
-| Included | Data inventory of every stored item with its purpose and retention; consent and deletion flows; risk assessment under RA 10173; the consultant's review. |
-| Not included | Registration with the National Privacy Commission, if required, which is the client's own filing. |
-| Owner | Business analyst, with the privacy consultant |
-| Output | Privacy impact assessment draft, submitted to the DPO |
-| Accepted by | Data Protection Officer (in 2.3.2) |
-| Duration | 10 working days, 8 Feb 2027 to 19 Feb 2027 |
-| Predecessors | 2.1.2 |
-| Cost | ₱60,465 |
 
 ### 3.2.1 Adapt 80 activities, stories and rhymes
 
@@ -141,10 +117,6 @@ Entries for eight work packages: the riskiest ones and those on the critical pat
 | Not included | Writing new early-learning content; translation (3.2.2); review (3.3.1). |
 | Owner | Stakeholder and content coordinator |
 | Output | 80 draft catalog items with source records |
-| Accepted by | ECCD content reviewer (in 3.3.1) |
-| Duration | 25 working days, 15 Feb 2027 to 19 Mar 2027 |
-| Predecessors | 3.1.1 |
-| Cost | ₱38,700 |
 
 ### 4.3.3 AI suggestion service and fallback
 
@@ -154,23 +126,6 @@ Entries for eight work packages: the riskiest ones and those on the critical pat
 | Not included | Any AI use of journal text or child identifiers; model training. |
 | Owner | Developer A |
 | Output | AI suggestion service with tests |
-| Accepted by | Project manager, after QA |
-| Duration | 10 working days, 29 Mar 2027 to 12 Apr 2027 (critical path) |
-| Predecessors | 4.3.2, 4.3.1, 2.3.2 |
-| Cost | ₱13,650 |
-
-### 5.5.1 AI helper screens and fallback states
-
-| Field | Entry |
-|---|---|
-| Included | AI helper form, loading, suggestion, rate-limited and offline-fallback screens in Flutter, following the approved prototype. |
-| Not included | Changes to the AI service (4.3.3). |
-| Owner | Developer A |
-| Output | AI helper screens passing their test cases |
-| Accepted by | Business analyst and quality lead |
-| Duration | 6 working days, 27 Apr 2027 to 4 May 2027 (critical path) |
-| Predecessors | 5.4.2, 2.2.2 |
-| Cost | ₱8,190 |
 
 ### 6.4.1 Usability testing and fixes
 
@@ -180,10 +135,6 @@ Entries for eight work packages: the riskiest ones and those on the critical pat
 | Not included | The pilot itself (7.2.1). |
 | Owner | Business analyst and quality lead |
 | Output | Usability test report and fixes |
-| Accepted by | Sponsor |
-| Duration | 6 working days, 19 May 2027 to 26 May 2027 (critical path) |
-| Predecessors | 6.1.2 |
-| Cost | ₱16,380 |
 
 ### 7.2.1 Eight-week pilot with support
 
@@ -193,10 +144,6 @@ Entries for eight work packages: the riskiest ones and those on the critical pat
 | Not included | Recruiting beyond the two pilot centers; marketing. |
 | Owner | Stakeholder and content coordinator |
 | Output | Pilot data for the evaluation report |
-| Accepted by | Sponsor (in 7.3.1) |
-| Duration | 40 working days, 3 Jun 2027 to 28 Jul 2027 (critical path) |
-| Predecessors | 7.1.1 |
-| Cost | ₱80,080 |
 
 ### 8.3.2 Maintainer training and handover sign-off
 
@@ -206,7 +153,3 @@ Entries for eight work packages: the riskiest ones and those on the critical pat
 | Not included | Maintenance after the handover date. |
 | Owner | Project manager, with Developer A |
 | Output | Signed handover checklist (success criterion 8) |
-| Accepted by | Maintainer and sponsor |
-| Duration | 3 working days, 17 Aug 2027 to 19 Aug 2027 (critical path) |
-| Predecessors | 8.2.2, 8.3.1, 8.1.2 |
-| Cost | ₱5,925 |
