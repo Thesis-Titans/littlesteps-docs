@@ -1,7 +1,7 @@
 # 9. Cost Estimate and Budget
 
 **Plan section:** 9 ◆ (Checkpoint 3)  
-**Version:** 1.0 draft, 23 October 2026  
+**Version:** 1.1 draft, 4 November 2026  
 **Status:** Draft for team review. All amounts are in Philippine pesos.  
 **Related Documents:** [Work Breakdown Structure](07-work-breakdown-structure.md), [Schedule](08-schedule.md), [cost data (CSV)](data/schedule-and-cost.csv), [monthly baseline (CSV)](data/cost-baseline-by-month.csv)
 

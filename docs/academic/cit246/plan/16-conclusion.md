@@ -1,7 +1,7 @@
 # 16. Conclusion
 
 **Plan section:** 16  
-**Version:** 1.0 draft, 23 October 2026  
+**Version:** 1.1 draft, 4 November 2026  
 **Status:** Draft for team review.  
 **Related Documents:** [Business Case](03-business-case.md), [Project Charter](04-project-charter.md), [Cost Estimate and Budget](09-cost-estimate-and-budget.md)
 

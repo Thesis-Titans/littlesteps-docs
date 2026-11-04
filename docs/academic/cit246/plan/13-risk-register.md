@@ -1,7 +1,7 @@
 # 13. Risk Register
 
 **Plan section:** 13 ◆  
-**Version:** 1.0 draft, 23 October 2026  
+**Version:** 1.1 draft, 4 November 2026  
 **Status:** Draft for team review. The register follows the prioritized-risk format in Schwalbe, *Information Technology Project Management*, Table 3-10, with probability and impact rated as in Chapter 11.  
 **Related Documents:** [Stakeholder Register](05-stakeholder-register.md), [Schedule](08-schedule.md), [Cost Estimate and Budget](09-cost-estimate-and-budget.md), [Communications Plan](12-communications-plan.md)
 

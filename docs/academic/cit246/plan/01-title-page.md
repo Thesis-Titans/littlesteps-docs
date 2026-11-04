@@ -1,13 +1,11 @@
 # 1. Title Page
 
 **Plan section:** 1  
-**Version:** 1.0 draft, 23 October 2026  
+**Version:** 1.1 draft, 4 November 2026  
 **Status:** Draft. The section leads below are proposed; each member confirms theirs. The sponsor is identified by role only, because the client was researched and not contacted. Items in square brackets are still to be filled in.  
 **Related Documents:** [Executive Summary](02-executive-summary.md), [Project Charter](04-project-charter.md)
 
 ---
-
-<!-- Layout for the PDF: centered, A4, Arial 11. Keep everything below on one page. -->
 
 **LittleSteps: Home Learning and Observation App for Barangay Child Development Centers**
 
@@ -32,8 +30,8 @@ A Project Management Plan for the **Iloilo City Social Welfare and Development O
 
 ---
 
-**Before submitting**
+**Open items before submission** (tracked in the [README](../README.md#7-littlesteps-status-and-open-items))
 
-- [ ] Confirm with the instructor that three member names are correct for this group, since the brief's template mentions all five members.
-- [ ] Make sure Appendix 17 states that the client was identified from public sources and not contacted.
-- [ ] Name the PDF `CIT246_FinalProject_[GroupName].pdf`.
+- The instructor confirms that three member names are correct for this group.
+- The class section and the instructor's name are filled in above.
+- The signed contribution statement (Appendix C) is completed by each member.

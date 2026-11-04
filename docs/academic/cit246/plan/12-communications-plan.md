@@ -1,7 +1,7 @@
 # 12. Communications Plan
 
 **Plan section:** 12  
-**Version:** 1.0 draft, 23 October 2026  
+**Version:** 1.1 draft, 4 November 2026  
 **Status:** Draft for team review. The structure follows Schwalbe, *Information Technology Project Management*, Chapter 10.  
 **Related Documents:** [Stakeholder Register](05-stakeholder-register.md), [Risk Register](13-risk-register.md), [Change Control and Closing Plan](15-change-control-and-closing-plan.md)
 

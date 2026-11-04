@@ -1,7 +1,7 @@
 # 15. Change Control and Closing Plan
 
 **Plan section:** 15  
-**Version:** 1.0 draft, 23 October 2026  
+**Version:** 1.1 draft, 4 November 2026  
 **Status:** Draft for team review. Closing follows the course's "Closing: making it official" material and Schwalbe, *Information Technology Project Management*, Chapter 3.  
 **Related Documents:** [Scope Statement](06-scope-statement.md), [Communications Plan](12-communications-plan.md), [Risk Register](13-risk-register.md)
 

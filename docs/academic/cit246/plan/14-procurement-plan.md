@@ -1,7 +1,7 @@
 # 14. Procurement Plan
 
 **Plan section:** 14  
-**Version:** 1.0 draft, 23 October 2026  
+**Version:** 1.1 draft, 4 November 2026  
 **Status:** Draft for team review. The structure follows Schwalbe, *Information Technology Project Management*, Chapter 12.  
 **Related Documents:** [Cost Estimate and Budget](09-cost-estimate-and-budget.md), [Resource and Responsibility Plan](11-resource-and-responsibility-plan.md), [Risk Register](13-risk-register.md)
 

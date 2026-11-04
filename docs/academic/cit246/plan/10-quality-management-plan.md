@@ -1,7 +1,7 @@
 # 10. Quality Management Plan
 
 **Plan section:** 10  
-**Version:** 1.0 draft, 23 October 2026  
+**Version:** 1.1 draft, 4 November 2026  
 **Status:** Draft for team review. The structure follows Schwalbe, *Information Technology Project Management*, Chapter 8: quality planning, quality assurance and quality control.  
 **Related Documents:** [Scope Statement](06-scope-statement.md), [Work Breakdown Structure](07-work-breakdown-structure.md), [Resource and Responsibility Plan](11-resource-and-responsibility-plan.md)
 

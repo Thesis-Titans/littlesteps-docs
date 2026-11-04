@@ -1,7 +1,7 @@
 # 4. Project Charter
 
 **Plan section:** 4 ◆ (Checkpoint 2)  
-**Version:** 1.0 draft, 23 October 2026  
+**Version:** 1.1 draft, 4 November 2026  
 **Status:** Draft for team review, then for sponsor sign-off. The format follows Schwalbe, *Information Technology Project Management*, Table 4-1.  
 **Related Documents:** [Business Case](03-business-case.md), [Stakeholder Register](05-stakeholder-register.md), [Scope Statement](06-scope-statement.md)
 

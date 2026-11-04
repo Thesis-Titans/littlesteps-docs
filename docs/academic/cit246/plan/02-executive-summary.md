@@ -1,7 +1,7 @@
 # 2. Executive Summary
 
 **Plan section:** 2  
-**Version:** 1.0 draft, 23 October 2026  
+**Version:** 1.1 draft, 4 November 2026  
 **Status:** Draft, written after Sections 3–16. Keep it to one page in the PDF; update it if any figure in those sections changes.  
 **Related Documents:** [Business Case](03-business-case.md), [Project Charter](04-project-charter.md), [Schedule](08-schedule.md), [Cost Estimate and Budget](09-cost-estimate-and-budget.md)
 

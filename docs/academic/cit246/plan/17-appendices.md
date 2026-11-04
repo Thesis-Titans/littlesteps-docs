@@ -1,7 +1,7 @@
 # 17. Appendices
 
 **Plan section:** 17  
-**Version:** 1.0 draft, 23 October 2026  
+**Version:** 1.1 draft, 4 November 2026  
 **Status:** Draft for team review. Appendix C needs every member's signature before submission.  
 **Related Documents:** [CIT 246 Deliverables](../README.md), [Business Case](03-business-case.md)
 

@@ -1,7 +1,7 @@
 # 11. Resource and Responsibility Plan
 
 **Plan section:** 11  
-**Version:** 1.0 draft, 23 October 2026  
+**Version:** 1.1 draft, 4 November 2026  
 **Status:** Draft for team review. The organizational chart and responsibility assignment matrix follow Schwalbe, *Information Technology Project Management*, Chapter 9.  
 **Related Documents:** [Project Charter](04-project-charter.md), [Work Breakdown Structure](07-work-breakdown-structure.md), [Procurement Plan](14-procurement-plan.md)
 

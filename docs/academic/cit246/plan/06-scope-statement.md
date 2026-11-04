@@ -1,7 +1,7 @@
 # 6. Scope Statement
 
 **Plan section:** 6 ◆ (Checkpoint 2)  
-**Version:** 1.0 draft, 23 October 2026  
+**Version:** 1.1 draft, 4 November 2026  
 **Status:** Draft for team review, then for sponsor approval. The format follows Schwalbe, *Information Technology Project Management*, Chapter 5.  
 **Related Documents:** [Business Case](03-business-case.md), [Project Charter](04-project-charter.md), [Stakeholder Register](05-stakeholder-register.md), [Product Scope](../../../product-scope.md)
 

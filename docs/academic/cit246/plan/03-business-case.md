@@ -1,7 +1,7 @@
 # 3. Project Background and Business Case
 
 **Plan section:** 3 ◆ (Checkpoint 2)  
-**Version:** 1.0 draft, 23 October 2026  
+**Version:** 1.1 draft, 4 November 2026  
 **Status:** Draft for team review. The client was identified from public sources and was not contacted for this plan. City and district facts are sourced; figures marked *planning estimate* are the team's researched assumptions (see §3.6).  
 **Related Documents:** [Project Charter](04-project-charter.md), [Stakeholder Register](05-stakeholder-register.md), [Scope Statement](06-scope-statement.md), [Checkpoint 1 Concept](../checkpoint-1-concept.md)
 

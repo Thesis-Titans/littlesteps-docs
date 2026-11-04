@@ -1,7 +1,7 @@
 # 8. Schedule
 
 **Plan section:** 8 ◆ (Checkpoint 3)  
-**Version:** 1.0 draft, 23 October 2026  
+**Version:** 1.1 draft, 4 November 2026  
 **Status:** Draft for team review. Durations are in working days (Monday to Friday, excluding the holidays below).  
 **Related Documents:** [Work Breakdown Structure](07-work-breakdown-structure.md), [Cost Estimate and Budget](09-cost-estimate-and-budget.md), [schedule data (CSV)](data/schedule-and-cost.csv)
 

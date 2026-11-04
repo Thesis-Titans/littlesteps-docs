@@ -1,7 +1,7 @@
 # CIT 246 Presentation Outline
 
 **For:** the final presentation on 2 December 2026: 15 minutes plus 5 minutes of questions; every member speaks; slides are submitted with the document  
-**Version:** 1.0 draft, 23 October 2026  
+**Version:** 1.1 draft, 4 November 2026  
 **Related Documents:** [Executive Summary](02-executive-summary.md), [CIT 246 Deliverables](../README.md)
 
 ---

@@ -1,7 +1,7 @@
 # 7. Work Breakdown Structure
 
 **Plan section:** 7 ◆ (Checkpoint 3)  
-**Version:** 1.0 draft, 23 October 2026  
+**Version:** 1.1 draft, 4 November 2026  
 **Status:** Draft for team review. The structure follows Schwalbe, *Information Technology Project Management*, Chapter 5, and the course's seven WBS rules: deliverable-oriented, the 100% rule, and a 1.0 Project Management branch.  
 **Related Documents:** [Scope Statement](06-scope-statement.md), [Schedule](08-schedule.md), [Cost Estimate and Budget](09-cost-estimate-and-budget.md)
 
