@@ -13,7 +13,7 @@ A Project Management Plan for the **Iloilo City Social Welfare and Development O
 
 ---
 
-**Submitted by:** Thesis Titans, [section]
+**Submitted by:** Thesis Titans, BSIT 3A-SDT
 
 | Member | Sections led |
 |---|---|
@@ -33,5 +33,4 @@ A Project Management Plan for the **Iloilo City Social Welfare and Development O
 **Open items before submission** (tracked in the [README](../README.md#7-littlesteps-status-and-open-items))
 
 - The instructor confirms that three member names are correct for this group.
-- The class section and the instructor's name are filled in above.
 - The signed contribution statement (Appendix C) is completed by each member.
