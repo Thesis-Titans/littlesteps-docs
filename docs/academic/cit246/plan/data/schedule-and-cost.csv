@@ -24,7 +24,7 @@ WBS,Work package,Duration (working days),Predecessors,Start,Finish,Total float (
 4.2.2,Activity planning and observation services,10,4.2.1,2027-02-25,2027-03-10,0,Yes,DEV 1,13650,0,13650,Analogous: course M2
 4.3.1,Catalog service,8,4.1.1,2027-02-08,2027-02-17,9,No,DEV 1,10920,0,10920,Analogous: course M2
 4.3.2,Journal and weekly summary services,10,4.2.2,2027-03-11,2027-03-24,0,Yes,DEV 1,13650,0,13650,Analogous: course M3
-4.3.3,AI suggestion service and fallback,10,4.3.2 4.3.1 2.3.2,2027-03-25,2027-04-12,0,Yes,DEV 1,13650,0,13650,Analogous: course M4
+4.3.3,AI suggestion service and fallback,10,4.3.2 4.3.1 2.3.2,2027-03-29,2027-04-12,0,Yes,DEV 1,13650,0,13650,Analogous: course M4
 5.1.1,"App project, theme and navigation",8,2.2.1 4.3.1,2027-02-18,2027-03-01,9,No,DEV 1,10920,0,10920,Analogous: course Flutter setup
 5.1.2,Sign-in and API client,5,5.1.1 4.2.1,2027-03-02,2027-03-08,9,No,DEV 1,6825,0,6825,Analogous
 5.2.1,Child profile screens,5,5.1.2,2027-03-09,2027-03-15,9,No,DEV 1,6825,0,6825,Analogous
