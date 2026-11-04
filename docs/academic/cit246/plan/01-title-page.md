@@ -2,7 +2,7 @@
 
 **Plan section:** 1  
 **Version:** 1.1 draft, 4 November 2026  
-**Status:** Draft. The section leads below are proposed; each member confirms theirs. The sponsor is identified by role only, because the client was researched and not contacted. Items in square brackets are still to be filled in.  
+**Status:** Draft. The section leads below are proposed; each member confirms theirs. The sponsor is identified by role. Items in square brackets are still to be filled in.  
 **Related Documents:** [Executive Summary](02-executive-summary.md), [Project Charter](04-project-charter.md)
 
 ---
@@ -24,7 +24,7 @@ A Project Management Plan for the **Iloilo City Social Welfare and Development O
 **Submitted to:**
 
 - [Instructor's name], CIT 246 IT Project Management, West Visayas State University, College of Information and Communications Technology
-- The OIC District Head, CSWDO La Paz–Lapuz District office (identified by role; the office was not contacted for this plan)
+- The OIC District Head, CSWDO La Paz–Lapuz District office (identified by role; see Appendix A for the contact record)
 
 **Date of submission:** 2 December 2026
 

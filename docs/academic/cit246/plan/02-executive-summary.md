@@ -19,4 +19,4 @@
 
 **What we ask.** We ask the OIC District Head of the CSWDO La Paz–Lapuz District office to approve the charter, the budget and the schedule, to commit CDWs' time for the pilot, and to ask the city's IT office to name a maintainer by May 2027.
 
-*The client was chosen from public information and was not contacted for this course plan; per-center figures are the team's estimates (Appendix A).*
+*City and district facts come from public sources. Per-center figures are planning figures drawn from the team's interviews and meeting with the district office in October 2026 (Appendix A).*

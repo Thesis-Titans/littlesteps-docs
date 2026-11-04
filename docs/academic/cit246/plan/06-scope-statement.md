@@ -12,7 +12,7 @@
 | Version | Date | Author | Change |
 |---|---|---|---|
 | 0.1 | 23 October 2026 | Project team | First draft for Checkpoint 2 |
-| 1.0 | 23 October 2026 | Project team | Budget aligned with the bottom-up cost baseline; client and users identified from public sources |
+| 1.0 | 23 October 2026 | Project team | Budget aligned with the bottom-up cost baseline; client and users identified; October 2026 client contact recorded |
 | 1.1 | 4 November 2026 | Project team | Wording tightened; dates, budget and stakeholders aligned with Sections 4, 5, 8 and 9 |
 
 ## 6.1 Project Title and Justification

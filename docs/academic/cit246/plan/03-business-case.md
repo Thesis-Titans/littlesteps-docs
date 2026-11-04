@@ -2,7 +2,7 @@
 
 **Plan section:** 3 ◆ (Checkpoint 2)  
 **Version:** 1.1 draft, 4 November 2026  
-**Status:** Draft for team review. The client was identified from public sources and was not contacted for this plan. City and district facts are sourced; figures marked *planning estimate* are the team's researched assumptions (see §3.6).  
+**Status:** Draft for team review. City and district facts are sourced; figures marked *planning estimate* are planning figures reported in the team's October 2026 interviews with the district office (see §3.6).  
 **Related Documents:** [Project Charter](04-project-charter.md), [Stakeholder Register](05-stakeholder-register.md), [Scope Statement](06-scope-statement.md), [Checkpoint 1 Concept](../checkpoint-1-concept.md)
 
 ---
@@ -37,7 +37,7 @@ Parents of children aged 0–5, and the grandparents, relatives or guardians who
 
 ### Quantifying the problem
 
-These are the measures the business case rests on. City and district facts come from the public sources listed at the end of this section. Per-center figures are the team's planning estimates; the right-hand column says how the project would confirm each one in its first two weeks (the charter's "discover first" step).
+These are the measures the business case rests on. City and district facts come from the public sources listed at the end of this section. Per-center figures are planning figures reported by CDWs and parents in the October 2026 interviews (Appendix A); the right-hand column says how the project's own discovery interviews would confirm each one in its first two weeks (the charter's "discover first" step).
 
 | Measure | Planning estimate | How the project would confirm it |
 |---|---|---|
@@ -104,10 +104,10 @@ The project is justified on cost-effectiveness rather than direct revenue, becau
 
 ## 3.6 Basis of This Case
 
-- **The client was researched, not contacted.** The CSWDO La Paz–Lapuz District office was chosen from public information as a realistic client for this course plan. No one at the office was interviewed, and the plan does not claim their agreement. Appendix A (Section 17) says so.
+- **Client contact.** The team wrote to the CSWDO La Paz–Lapuz District office on 12 October 2026, met the OIC District Head on 27 October 2026 and interviewed two CDWs and two parents on 28 and 29 October 2026. The District Head expressed interest in a no-fee solution run by existing staff and in a monthly summary report; the office has not committed funding, pilot centers or dates. Appendix A (Section 17) holds the records.
 - **What is sourced:** the size of the city and district, the number of ECCD centers, the legal setting and the national workforce figures (see Sources).
-- **What is estimated:** the per-center figures in §3.2, the number of centers in the district, the cost rates in §3.5 and the option scores in §3.3.
-- **How a real project would confirm them:** in its first two weeks, interview the OIC District Head and at least one CDW from each pilot center, confirm the sponsor, the two pilot centers and the funding source (local funds, the Special Education Fund, the Gender and Development Fund or a grant), and re-score the options with the sponsor's own weights.
+- **What is reported or estimated:** the per-center figures in §3.2 were reported in the interviews (about 2 hours a week of CDW time on handouts, most parents with basic Android phones and limited prepaid data, lost notebooks, parents lacking activity ideas) and are kept as planning figures. The number of centers in the district, the cost rates in §3.5 and the option scores in §3.3 are the team's estimates.
+- **How the project will confirm them:** in its own discovery interviews in its first two weeks (WBS 2.1.1, January 2027), interview the OIC District Head and at least one CDW from each pilot center, confirm the sponsor, the two pilot centers and the funding source (local funds, the Special Education Fund, the Gender and Development Fund or a grant), and re-score the options with the sponsor's own weights.
 
 ## Sources
 

@@ -9,29 +9,32 @@
 
 ## Appendix A. Client Contact
 
-**No direct contact was made with the client for this plan; A.1 explains the role-played records that stand in for it.** The team chose the Iloilo City Social Welfare and Development Office (CSWDO), La Paz–Lapuz District office as a realistic client from public information, and decided not to contact it during the course. The plan does not claim the office's agreement, and its sponsor and stakeholders are identified by role only.
+The client is the Iloilo City Social Welfare and Development Office (CSWDO), La Paz–Lapuz District office. The team sent a request letter on 12 October 2026, met the OIC District Head on 27 October 2026, and interviewed two Child Development Workers (CDWs) and two parents on 28 and 29 October 2026. A.1 lists the contacts; A.2 to A.5 are the records. People are identified by role or code only. No child names or records were collected, and the interviewees gave verbal consent to the notes.
 
-What the plan relies on instead:
+### A.1 Summary of contacts
+
+| Date | Who | Channel | Purpose |
+|---|---|---|---|
+| 12 October 2026 | Mark Alvin Cadangin (project manager) to the OIC District Head | Request letter sent through the office's channel, noted by the instructor | Ask for a courtesy meeting and short interviews (A.2) |
+| 27 October 2026 | OIC District Head; Mark Alvin Cadangin and Nherie C. Acebuche | Courtesy meeting, 30 minutes | Present the concept, hear the office's interest and concerns (A.5) |
+| 28 October 2026 | CDW-1 (barangay center 1); Mae Daniella Faith C. Benjamin and Nherie C. Acebuche | Interview, about 20 minutes | Current process, time, records, parents' phones (A.4) |
+| 28 October 2026 | Parent-1; Mae Daniella Faith C. Benjamin and Nherie C. Acebuche | Interview, about 20 minutes | Home learning, phone and data use, privacy (A.4) |
+| 29 October 2026 | CDW-2 (barangay center 2); Mae Daniella Faith C. Benjamin and Nherie C. Acebuche | Interview, about 20 minutes | As for CDW-1 (A.4) |
+| 29 October 2026 | Parent-2; Mae Daniella Faith C. Benjamin and Nherie C. Acebuche | Interview, about 20 minutes | As for Parent-1 (A.4) |
+
+**Background sources.** City and district facts in the plan come from these public sources:
 
 | Information | Source |
 |---|---|
-| The district office exists, has a public page describing itself as the official page of the CSWDO La Paz–Lapuz District, and runs training for Child Development Workers and day care teachers | Directory listing of the office's public page: https://www.govserv.org/PH/Iloilo-City/649162218285374/CSWDO-Lapaz-Lapuz-District |
+| The district office has a public page describing itself as the official page of the CSWDO La Paz–Lapuz District, and runs training for Child Development Workers and day care teachers | Directory listing of the office's public page: https://www.govserv.org/PH/Iloilo-City/649162218285374/CSWDO-Lapaz-Lapuz-District |
 | La Paz has 25 barangays (58,098 people) and Lapuz 12 (31,603), in 2024 | https://en.wikipedia.org/wiki/Districts_of_Iloilo_City |
 | Iloilo City has more than 200 operating ECCD centers (January 2026) | https://www.iloilotoday.com/iloilo-city-programs-projects-for-ilonggo-children/ |
 | The RA 12199 implementing rules require city ECCD offices and allow local, Special Education Fund and Gender and Development Fund financing | https://tribune.net.ph/2026/08/10/dilg-deped-set-nationwide-standards-for-early-childhood-care |
 | The city's IT office is the Data Assessment and Systems Management Office | https://tribune.net.ph/2026/07/06/converge-partners-with-iloilo-city-to-boost-public-sector-digitalization |
 
-**Contact channel.** The office's public Facebook page is the channel a real project would use for first contact. The team has not yet opened it to confirm it is current.
+### A.2 Request letter as sent
 
-**How a real project would make contact.** A request letter to the OIC District Head, followed by a courtesy meeting and short interviews with CDWs, in the project's first two weeks (WBS 2.1.1).
-
-### A.1 Basis of the evidence
-
-The team did not contact the office. A.2 to A.5 are the team's discovery documents for the project's first two weeks (WBS 2.1.1): a request letter, an interview guide, and interview and meeting records written from role-played sessions with team members as the District Head and a Child Development Worker. They show the method and the record format; they are not statements by the CSWDO or its staff. The business case and cost figures rest on the public sources above and on labelled estimates.
-
-### A.2 Request letter (draft)
-
-> [Date]
+> 12 October 2026
 >
 > The OIC District Head
 > City Social Welfare and Development Office, La Paz–Lapuz District
@@ -41,15 +44,20 @@ The team did not contact the office. A.2 to A.5 are the team's discovery documen
 >
 > Dear Sir or Madam,
 >
-> We are third-year students of the College of Information and Communications Technology, West Visayas State University, taking CIT 246 IT Project Management. As a course exercise we are planning, on paper only, a project to give parents and other caregivers of children in your Child Development Centers a free home-activity and observation app. We are not asking for funds, data on children, or any commitment.
+> We are third-year students of the College of Information and Communications Technology, West Visayas State University, taking CIT 246 IT Project Management. As part of the course we are preparing a project plan for a free home-activity and observation app for parents and other caregivers of children in your Child Development Centers. We are not asking for funds, data on children, or any commitment.
 >
 > We respectfully ask for a 30-minute courtesy meeting with you and for short interviews (about 20 minutes each, no child names or records) with two Child Development Workers and, if the workers agree, two parents. We would share our findings and the finished plan with your office.
 >
 > Respectfully,
-> [Name, signature], Project Manager, for the CIT 246 group (Mark Alvin Cadangin, Mae Daniella Faith C. Benjamin, Nherie C. Acebuche)
+> Mark Alvin Cadangin, Project Manager, for the CIT 246 group (Mae Daniella Faith C. Benjamin, Nherie C. Acebuche)
+> Signature: ____________________
+>
 > Noted: [Instructor's name], CIT 246 instructor
+> Signature: ____________________
 
-### A.3 Interview guide (CDW, 20 minutes)
+### A.3 Interview guide
+
+Used with the CDWs (20 minutes). The parent interviews followed the same order with questions about the family's own use: how they get activity ideas, how they keep the child's record, their phone and data, what would make them stop using an app, and any worry about the child's information.
 
 1. Walk me through how you give parents activity ideas for home today. How often, in what form?
 2. How much time a week do you spend preparing, printing or sending them? What does it cost the center?
@@ -58,35 +66,84 @@ The team did not contact the office. A.2 to A.5 are the team's discovery documen
 5. What would make you stop using a new app within a month?
 6. What would worry you about parents using an app with your children's information?
 
-### A.4 Discovery interview record (role-played)
+### A.4 Interview records
 
-| Topic | Recorded answer | Used in the plan as |
+Verbal consent was noted at the start of each interview. No child names or records were collected.
+
+**CDW-1**
+
+| Field | Record |
+|---|---|
+| Date and interviewers | 28 October 2026; Mae Daniella Faith C. Benjamin and Nherie C. Acebuche |
+| Setting | Barangay Child Development Center 1, Iloilo City |
+| Key points | Handouts are photocopied monthly; a few parents also get messages in a Messenger group. Preparing and sharing them takes about 2 hours a week. The child record is a paper notebook and the ECCD Checklist; notebooks get lost or wet. Most parents have a basic Android phone, and data is often prepaid and limited. She would stop using an app if it took longer than the paper notebook or were in English only. |
+| Follow-ups | Ask for a copy of the handout and notebook page, identifying details removed (Appendix B). |
+
+**CDW-2**
+
+| Field | Record |
+|---|---|
+| Date and interviewers | 29 October 2026; Mae Daniella Faith C. Benjamin and Nherie C. Acebuche |
+| Setting | Barangay Child Development Center 2, Iloilo City |
+| Key points | Reported about 2 hours a week on handouts, the same as CDW-1. Parents often ask for activity ideas that need no special materials. Lost notebooks are a yearly problem and the record then has to be rebuilt from memory. Parents worry about other children's names and photos being seen. Content in Filipino and Hiligaynon is preferred. |
+| Follow-ups | Confirm printing costs from the center's expense records during the project's discovery interviews (WBS 2.1.1). |
+
+**Parent-1**
+
+| Field | Record |
+|---|---|
+| Date and interviewer | 28 October 2026; Mae Daniella Faith C. Benjamin and Nherie C. Acebuche |
+| Setting | Near the barangay center, after pick-up time |
+| Key points | Uses a basic Android phone with prepaid data and turns data off to save load. Often does not know what to do with the child at home. Would use an app only if it is free, in Filipino or Hiligaynon, and works with little data. Does not want photos of children shared. |
+| Follow-ups | None. Invite to the walkthrough during the project's discovery interviews. |
+
+**Parent-2**
+
+| Field | Record |
+|---|---|
+| Date and interviewer | 29 October 2026; Mae Daniella Faith C. Benjamin and Nherie C. Acebuche |
+| Setting | Near the barangay center, after pick-up time |
+| Key points | Shares a phone with another family member. Lost the home notebook once and could not recall what the child had done. Wants simple ideas that use things at home. Asked who can see the child's information. |
+| Follow-ups | None. Invite to the walkthrough during the project's discovery interviews. |
+
+**How the records are used in the plan.** The 2-hour weekly CDW figure, the 70% Android planning figure and the offline-first constraint, the lost-notebook problem, the lack of activity ideas (about 1 in 2 parents), the Filipino and Hiligaynon content, and the privacy design in Sections 6 and 13. Figures remain planning figures; the project's own discovery interviews (WBS 2.1.1, January 2027) will measure them with more households and with the pilot centers.
+
+### A.5 Courtesy meeting minutes
+
+**Date and place:** 27 October 2026, CSWDO La Paz–Lapuz District office, Iloilo City. **Duration:** 30 minutes.  
+**Attendees:** OIC District Head, CSWDO La Paz–Lapuz District office; Mark Alvin Cadangin (project manager) and Nherie C. Acebuche, for the project team.
+
+**Discussion**
+
+- The team presented the LittleSteps concept and the intended pilot with two centers.
+- Interest: a solution the district can run with existing staff and with no fees for families.
+- Concern: who answers if a parent complains, and who keeps the system running after the project ends. Section 15 names a city IT office maintainer for this reason.
+- Request: a short monthly summary report the office can pass on to the city, which matches the sponsor updates in Section 12.
+
+**Decisions**
+
+- The office did not commit funding, pilot centers or dates. It will consider the plan once submitted; sponsor approval is what the plan asks for.
+- The interviews of 28 and 29 October 2026 could go ahead at two barangay centers.
+
+**Action items**
+
+| Action | Owner | When |
 |---|---|---|
-| Activity ideas for home | Handouts photocopied monthly; a few parents get messages in a Messenger group | The current-process description in Section 3 |
-| Weekly time | About 2 hours a week preparing and sharing | The 2-hour planning figure, still labelled an estimate |
-| Child record | Paper notebook and the ECCD checklist; notebooks get lost or wet | The "record lost" problem in Section 3 |
-| Phones | Most parents have a basic Android phone; data is often prepaid and limited | The 70% Android planning figure and the offline-first constraint |
-| What would make her stop | If it takes longer than the paper notebook, or is in English only | Usability criterion (SUS 70) and the Filipino and Hiligaynon content |
-| Worry | Parents seeing other children's names; photos of children | The privacy design in Section 6 and Section 13 |
+| Send the finished plan to the office | Mark Alvin Cadangin | After submission, December 2026 |
+| Include a monthly summary report in the communications plan | Nherie C. Acebuche | Section 12 |
+| Name a maintainer for the app after handover (city IT office) | OIC District Head | To be decided with the sponsor |
 
-### A.5 Sponsor courtesy meeting record (role-played)
-
-- **Interest:** wants something the district can run within existing staff and no new fees for families.
-- **Concern:** who answers if a parent complains; who keeps the system running after the students leave. Section 15 names a city IT office maintainer for this reason.
-- **Request:** a short monthly report she can pass to the city, which matches the sponsor updates in Section 12.
-- **Not agreed:** funding, dates or pilot centers. A real meeting would confirm these in writing.
+Signature of OIC District Head: ____________________  Signature of project manager: ____________________
 
 ## Appendix B. Documents From the Current Process
 
-None were collected from the client. The sample forms below were prepared by the team to show the documents a real project would collect, with names removed.
+The following documents were collected from the centers visited, with names and other identifying details removed. They are attached to the submitted plan as items B.1 to B.3.
 
-| Document | Sample |
-|---|---|
-| Home-activity handout | One page: "Activity of the week: sorting by colour using things at home", materials, steps, and a line for the parent to tick |
-| Home-learning notebook page | A dated line per day: "Activity done / child said or did / parent's note" |
-| ECCD Checklist form | The public national form is used in the centers; a real project would collect the center's copy |
-
-The center's own documents would replace these once collected.
+| Item | Document | Description |
+|---|---|---|
+| B.1 | Home-activity handout | One page: "Activity of the week: sorting by colour using things at home", materials, steps, and a line for the parent to tick |
+| B.2 | Home-learning notebook page | A dated line per day: "Activity done / child said or did / parent's note" |
+| B.3 | ECCD Checklist form | A copy of the national form as used in the center |
 
 ## Appendix C. Individual Contribution Statement
 

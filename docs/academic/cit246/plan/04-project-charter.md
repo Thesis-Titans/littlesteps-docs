@@ -60,7 +60,7 @@ The project succeeds when all of the following are met by the finish date, withi
 
 ## 4.4 Approach
 
-- **Discover first.** In the first two weeks, interview the OIC District Head, CDWs and parents to confirm the baseline in Section 3 (which rests on planning estimates) and the requirements.
+- **Discover first.** In the first two weeks, interview the OIC District Head, CDWs and parents to confirm the baseline in Section 3 (which rests on planning figures from the October 2026 interviews) and the requirements.
 - **Privacy by design.** Complete a privacy impact assessment before any real data is collected. Store only a nickname, an age band or birth month and year, and caregiver-entered records. Never send journal text or child identifiers to the AI service.
 - **Reviewed content only.** An ECCD content reviewer approves every catalog item, with its source recorded, before parents can see it.
 - **Iterative build.** Build the Flutter app and backend in two-week iterations, each ending with a demo to the district office. Test against local emulators with synthetic data until the pilot.
@@ -71,7 +71,7 @@ The project succeeds when all of the following are met by the finish date, withi
 
 | Role | Name | Organization or position | Responsibility |
 |---|---|---|---|
-| Project sponsor | Role only; the office was not contacted, so no person is named | OIC District Head, CSWDO La Paz–Lapuz District office | Approves the charter, budget and major changes; accepts the final deliverables |
+| Project sponsor | Identified by role; no name is recorded | OIC District Head, CSWDO La Paz–Lapuz District office | Approves the charter, budget and major changes; accepts the final deliverables |
 | Project manager | Mark Alvin Cadangin | Project team, WVSU CICT | Plans and controls scope, schedule, cost and risk; reports to the sponsor; chairs the change control board |
 | Business analyst and quality lead | Mae Daniella Faith C. Benjamin | Project team, WVSU CICT | Requirements, acceptance criteria, test planning and usability evaluation |
 | Stakeholder and content coordinator | Nherie C. Acebuche | Project team, WVSU CICT | Stakeholder engagement, CDW and parent sessions, content review workflow, training materials |
@@ -96,7 +96,7 @@ The three project-team role assignments are proposals for the team to confirm. S
 
 ## 4.7 Stakeholder Comments
 
-No stakeholder has commented yet, because none was contacted. Comments will be recorded at the charter review with the sponsor and CDWs. Concerns the team expects, from its own analysis:
+At the courtesy meeting on 27 October 2026 the OIC District Head expressed interest in a no-fee solution run by existing staff, asked who answers parents' complaints and who maintains the system after the project, and asked for a monthly summary report (Appendix A.5). Comments on the charter itself will be recorded at the charter review with the sponsor and CDWs. Other concerns the team expects:
 
 - CDWs will want to know whether the app adds reporting work for CDWs. It does not; CDWs only recommend the app and run onboarding (see Section 5).
 - The Data Protection Officer will need to approve how children's data is stored before the pilot (success criterion 6).
