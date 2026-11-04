@@ -31,7 +31,7 @@ The course evaluates the final project through two primary categories:
 ### 1. API Integration (25 pts)
 - **Custom REST API:** Express + TypeScript backend in `littlesteps-api` implementing the canonical [API Reference & Integration Guide](../../api-reference.md) and [OpenAPI 3.1 specification](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml).
 - **External Data API Integration (Open Library REST API):**
-  - Live query integration with the **Internet Archive's Open Library REST API** (`openlibrary.org/subjects/picture_books.json`) to dynamically search, paginate, and render real-world children's literature and book cover images ([ADR-010](../../architecture-decisions.md)).
+  - Live query integration with the **Internet Archive's Open Library REST API** (`openlibrary.org/subjects/picture_books.json`) to dynamically search, paginate, and render real-world children's literature and book cover images ([ADR-010](../../architecture-decisions.md)). The API side is merged; the React Storybooks section is in progress ([React #48](https://github.com/Thesis-Titans/littlesteps-react/issues/48)).
   - Server-side in-memory caching (60-minute TTL) to optimize network efficiency and protect against upstream rate limits.
 - **External AI Augmentation (Google Gemini API with 3-Tier Fallback):**
   - **Tier 1 (Cloud Primary):** Google Gemini 1.5 Flash for the activity recommendation helper and storybook companion activity generator ([ADR-008](../../architecture-decisions.md), [ADR-010](../../architecture-decisions.md); server-side Cloud Function, synthetic non-PII prompts only, 8-second execution timeout).
