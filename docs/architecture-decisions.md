@@ -253,7 +253,7 @@ graph TD
 ---
 
 ### ADR-012: Child Profile Age Rules and Ownership Responses
-- **Status:** Accepted for the contract (decisions D1 and D4 recorded 30 October 2026 in [API PR #24](https://github.com/Thesis-Titans/littlesteps-api/pull/24); D2 and D3 were decided in the contract review and Mark may still review them; D2 and D3 decided in the contract review). The four profile routes are implemented and merged in API [PR #26](https://github.com/Thesis-Titans/littlesteps-api/pull/26) and [PR #29](https://github.com/Thesis-Titans/littlesteps-api/pull/29) ([API #8](https://github.com/Thesis-Titans/littlesteps-api/issues/8)); rate limiting is still planned. D5 (deletion execution) and D6 (production retention) are open.
+- **Status:** Accepted for the contract (decisions D1 and D4 recorded 30 October 2026 in [API PR #24](https://github.com/Thesis-Titans/littlesteps-api/pull/24); D2 and D3 were decided in the contract review and Mark may still review them; D2 and D3 decided in the contract review). The four profile routes are implemented and merged in API [PR #26](https://github.com/Thesis-Titans/littlesteps-api/pull/26) and [PR #29](https://github.com/Thesis-Titans/littlesteps-api/pull/29) ([API #8](https://github.com/Thesis-Titans/littlesteps-api/issues/8)); rate limiting is still planned. D5 (deletion execution) and D6 (production retention) were decided on 4 November 2026 (see Decision).
 - **Context:** The child profile stores a nickname and a birth month, not an exact birth date. Age bands drive catalog navigation and must not go stale. Ownership failures must not reveal whether another caregiver's child exists. Source: `docs/child-profile-contract.md` in `littlesteps-api`.
 - **Options Considered:**
   1. *Store the age band only:* simple, but the band goes stale and cannot be corrected from a birth month.
@@ -272,4 +272,5 @@ graph TD
 - **Consequences:**
   - *Positive:* no stale bands, no exact birth dates stored, no ownership disclosure through status codes.
   - *Trade-off:* a caregiver cannot tell a mistyped ID from a foreign one; a child older than 71 months keeps the last band until the profile is edited.
-  - *Open:* D5 and D6 block deletion implementation and production retention policy.
+  - *D5 (decided 4 November 2026):* deletion runs inside the request. A child is removed with its subcollections by a recursive delete, then the API returns `204`. An account is removed child by child, then the caregiver document, then the Firebase Auth user last. Every step can be repeated, so a failure returns `500` and the client retries. Only the fact and id of a deletion are logged, never the content. No Firestore backups are configured.
+  - *D6 (decided 4 November 2026):* no automatic deletion. Data stays until the caregiver deletes it. The 12-month inactivity idea is dropped for now and must be revisited before any real deployment.
