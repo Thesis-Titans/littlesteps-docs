@@ -44,7 +44,7 @@ flowchart TB
 
 ## 11.2 Responsibility Assignment Matrix (RACI)
 
-**R** responsible (does the work), **A** accountable (approves; one per row), **C** consulted, **I** informed. Every level-2 WBS item has one accountable person.
+**R** responsible (does the work), **A** accountable (approves; one per row), **C** consulted, **I** informed. Each row has exactly one accountable person (A). Rows cover every level-2 item of the WBS in Section 7; 5.1–5.3 and 5.4–5.5 are shown together because they share the same people.
 
 | WBS | Sponsor | PM (Mark) | BA/QA lead (Faith) | Coordinator (Nherie) | Dev A | Dev B | UX | QA tester | Content reviewer | DPO |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -80,10 +80,10 @@ flowchart TB
 |---|---|---|
 | Project manager | 30–100% (40% average) | Whole project |
 | Business analyst and quality lead | 50–100% in discovery, design, testing and evaluation | Whole project, part-time between phases |
-| Stakeholder and content coordinator | 100% during catalog work and the pilot | January–August |
-| Developers A and B | 100% each, never more than two at once (Section 8.1) | February–August |
+| Stakeholder and content coordinator | 100% during catalog work and the pilot | January–August (4 Jan to 27 Aug 2027) |
+| Developers A and B | 100% each, never more than two at once (Section 8.1) | Late January (API contract) to August |
 | UI/UX designer | Full time in design, 30–50% in testing and training | January–February, May |
-| QA tester | Full time in testing | January (test plan), May, August |
+| QA tester | Full time in testing | February (test plan), May, August |
 | Content reviewer and translator | Per item | March–April |
 
 ## 11.4 Skills Required and Gaps

@@ -17,9 +17,9 @@ A Project Management Plan for the **Iloilo City Social Welfare and Development O
 
 | Member | Sections led |
 |---|---|
-| Mark Alvin Cadangin (project manager) | 2. Executive Summary, 3. Business Case, 4. Project Charter, 7. WBS, 8. Schedule, 9. Cost Estimate, 13. Risk Register, 16. Conclusion |
+| Mark Alvin Cadangin (project manager) | 2. Executive Summary, 3. Business Case, 4. Project Charter, 7. WBS, 8. Schedule, 9. Cost Estimate, 13. Risk Register, 16. Conclusion, 1. Title Page |
 | Mae Daniella Faith C. Benjamin | 6. Scope Statement, 10. Quality Management Plan, 15. Change Control and Closing Plan |
-| Nherie C. Acebuche | 5. Stakeholder Register, 11. Resource and Responsibility Plan, 12. Communications Plan, 14. Procurement Plan |
+| Nherie C. Acebuche | 5. Stakeholder Register, 11. Resource and Responsibility Plan, 12. Communications Plan, 14. Procurement Plan, 17. Appendices |
 
 **Submitted to:**
 

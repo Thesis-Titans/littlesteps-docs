@@ -35,9 +35,9 @@ Each member lists the sections they led and signs below. By signing, every membe
 
 | Member | Sections led | Other contributions | Signature | Date |
 |---|---|---|---|---|
-| Mark Alvin Cadangin | 2, 3, 4, 7, 8, 9, 13, 16 | [other contributions] | | |
+| Mark Alvin Cadangin | 1, 2, 3, 4, 7, 8, 9, 13, 16 | [other contributions] | | |
 | Mae Daniella Faith C. Benjamin | 6, 10, 15 | [other contributions] | | |
-| Nherie C. Acebuche | 5, 11, 12, 14 | [other contributions] | | |
+| Nherie C. Acebuche | 5, 11, 12, 14, 17 | [other contributions] | | |
 
 The brief's template mentions "all five members". This plan is written by the three-member CIT 246 group; confirm with the instructor that three signatures are correct.
 

@@ -12,11 +12,12 @@
 | Version | Date | Author | Change |
 |---|---|---|---|
 | 0.1 | 23 October 2026 | Project team | First draft for Checkpoint 2 |
-| 1.0 | 23 October 2026 | Project team | Budget aligned with the bottom-up cost baseline; client and users confirmed |
+| 1.0 | 23 October 2026 | Project team | Budget aligned with the bottom-up cost baseline; client and users identified from public sources |
+| 1.1 | 4 November 2026 | Project team | Wording tightened; dates, budget and stakeholders aligned with Sections 4, 5, 8 and 9 |
 
 ## 6.1 Project Title and Justification
 
-**LittleSteps: Home Learning and Observation App for Barangay Child Development Centers.** Parents of children aged 0–5 keep home observations in notebooks that get lost, run out of low-cost activity ideas, and are offered apps that misuse data or show diagnostic-style scores. The [business case](03-business-case.md) compares four options and recommends building LittleSteps.
+**LittleSteps: Home Learning and Observation App for Barangay Child Development Centers.** Parents of children aged 0–5 keep home observations in notebooks that get lost, run out of low-cost activity ideas, and are offered apps that may misuse data or show diagnostic-style scores. The [business case](03-business-case.md) compares four options and recommends building LittleSteps.
 
 ## 6.2 Product Scope Description
 
@@ -75,8 +76,8 @@ The following are explicitly **outside** the project:
 
 ## 6.5 Constraints
 
-- **Budget:** ₱1,083,185 including a 10% contingency reserve (charter and Section 9); changes above ₱50,000 need the sponsor's approval (Section 15).
-- **Duration:** 8 months, 4 January to 27 August 2027.
+- **Budget:** ₱1,083,185, which is a ₱984,714 cost baseline plus a 10% contingency reserve of ₱98,471 (charter and Section 9); changes above ₱50,000 need the sponsor's approval (Section 15).
+- **Duration:** 8 months, 4 January to 27 August 2027 (166 working days, Section 8).
 - **Law and policy:** the Data Privacy Act of 2012 (RA 10173) and its implementing rules; the ECCD System Act of 2025 (RA 12199) and its implementing rules signed on 5 August 2026, which set up city ECCD offices and govern how the app relates to the official ECCD program.
 - **Platform:** one Flutter codebase for Android, iOS and the web; the pilot is tested and released on Android, which most parents use, on entry-level phones with limited storage and intermittent mobile data.
 - **Content:** no catalog item is shown to parents until the content reviewer approves it with a recorded source and reuse permission.
@@ -86,7 +87,7 @@ The following are explicitly **outside** the project:
 ## 6.6 Assumptions
 
 - The district office names two pilot Child Development Centers in La Paz, and their CDWs can attend two training sessions and the two-weekly demos.
-- At least 30 pilot households have an Android phone with mobile data or Wi-Fi at least weekly (to be confirmed by the survey in Section 3).
+- At least 30 pilot households have an Android phone with mobile data or Wi-Fi at least weekly (to be confirmed by the survey in Section 3.2).
 - The ECCD Council and DepEd source materials can be adapted for the catalog with attribution, subject to the content reviewer's check.
 - A Data Protection Officer is available to review the privacy impact assessment within two weeks.
 - Cloud and AI service prices stay within 20% of October 2026 prices for the project's duration.

@@ -12,7 +12,7 @@
 ## 8.1 Software and Calendar
 
 - **Software:** the activity list, critical path (forward and backward pass) and costs were calculated with a short Python script, [schedule_model.py](data/schedule_model.py), and exported to [schedule-and-cost.csv](data/schedule-and-cost.csv), which opens in Excel or Google Sheets and can be imported into GanttProject or ProjectLibre. The network diagram and Gantt chart are drawn with Mermaid from the same data, so they always match the table. For the printed PDF, the Gantt chart may be redrawn in GanttProject from the CSV for readability.
-- **Calendar:** 4 Jan 2027 to 27 Aug 2027, 166 working days. Non-working holidays: Maundy Thursday (1 April); Good Friday (2 April); Araw ng Kagitingan (9 April); Iloilo City Charter Day (25 August).
+- **Calendar:** 4 Jan 2027 to 27 Aug 2027, 166 working days. Non-working holidays in the calendar: Maundy Thursday (25 March), Good Friday (26 March), Araw ng Kagitingan (9 April) and Iloilo City Charter Day (25 August). Labor Day, Independence Day and Ninoy Aquino Day fall on weekends in 2027. Eid'l Fitr and Eid'l Adha are declared by proclamation and are not yet known; a weekday holiday would move later dates by one day without changing the order of work.
 - **Resources:** two developers. Developer A builds the backend (4.1.2–4.3.3) and then the journal, weekly summary and AI helper screens (5.4–5.5). Developer B builds the catalog service (4.3.1) and then the remaining screens (5.1–5.3). The schedule never needs more than two developers on the same day.
 
 ## 8.2 Activity List
@@ -46,7 +46,7 @@ Each activity is a WBS work package. Total float is how many working days an act
 | **4.2.2** | **Activity planning and observation services** | 10 | Analogous: course M2 | 4.2.1 | 25 Feb 2027 | 10 Mar 2027 | 0 |
 | 4.3.1 | Catalog service | 8 | Analogous: course M2 | 4.1.1 | 8 Feb 2027 | 17 Feb 2027 | 9 |
 | **4.3.2** | **Journal and weekly summary services** | 10 | Analogous: course M3 | 4.2.2 | 11 Mar 2027 | 24 Mar 2027 | 0 |
-| **4.3.3** | **AI suggestion service and fallback** | 10 | Analogous: course M4 | 4.3.2, 4.3.1, 2.3.2 | 25 Mar 2027 | 12 Apr 2027 | 0 |
+| **4.3.3** | **AI suggestion service and fallback** | 10 | Analogous: course M4 | 4.3.2, 4.3.1, 2.3.2 | 29 Mar 2027 | 12 Apr 2027 | 0 |
 | 5.1.1 | App project, theme and navigation | 8 | Analogous: course Flutter setup | 2.2.1, 4.3.1 | 18 Feb 2027 | 1 Mar 2027 | 9 |
 | 5.1.2 | Sign-in and API client | 5 | Analogous | 5.1.1, 4.2.1 | 2 Mar 2027 | 8 Mar 2027 | 9 |
 | 5.2.1 | Child profile screens | 5 | Analogous | 5.1.2 | 9 Mar 2027 | 15 Mar 2027 | 9 |
@@ -207,7 +207,7 @@ flowchart LR
 
 **Critical path:** 1.1.1 → 2.1.1 → 4.1.1 → 4.1.2 → 4.2.1 → 4.2.2 → 4.3.2 → 4.3.3 → 5.4.1 → 5.4.2 → 5.5.1 → 6.1.2 → (6.2.1, 6.3.1 and 6.4.1 in parallel) → 7.1.1 → 7.2.1 → 7.3.1 → 8.2.1 → 8.2.2 → 8.3.2 → 1.4.1 → 1.4.2 = 166 working days.
 
-**Why this is the critical path.** The longest chain runs through the backend and app work of Developer A: the API contract, cloud setup, the four backend services, then the journal, weekly summary and AI helper screens. The AI service (4.3.3) cannot start until the Data Protection Officer approves the privacy impact assessment and the journal service exists, and the AI helper screens come last because they depend on everything else. After that, testing, the fixed eight-week pilot, its evaluation, release and handover follow one after another. The content catalog path has 9–11 days of float (up to 16 days for reviewer sign-off) and the design path 13–17 days (up to 43 days for the clickable prototype), so delays there do not move the finish date unless they exceed that float. The two places a slip is most likely to hurt are the backend services and the pilot start, so these get the closest weekly tracking (Section 12).
+**Why this is the critical path.** The longest chain runs through the backend and app work of Developer A: the API contract, cloud setup, the four backend services, then the journal, weekly summary and AI helper screens. The AI service (4.3.3) cannot start until the Data Protection Officer approves the privacy impact assessment and the journal service exists, and the AI helper screens come last because they depend on everything else. After that, testing, the fixed eight-week pilot, its evaluation, release and handover follow one after another. The content catalog and Flutter screen path (3.x and 5.1–5.3) is the nearest to critical, with 9–11 days of float (16 for reviewer sign-off); the design path has 13–17 days (43 for the clickable prototype). A delay there does not move the finish date unless it exceeds that float. The two places a slip is most likely to hurt are the backend services and the pilot start, so these get the closest weekly tracking (Section 12).
 
 ## 8.4 Gantt Chart
 
@@ -216,7 +216,7 @@ gantt
   title LittleSteps project schedule (2027)
   dateFormat YYYY-MM-DD
   axisFormat %b
-  excludes weekends 2027-04-01 2027-04-02 2027-04-09 2027-08-25
+  excludes weekends 2027-03-25 2027-03-26 2027-04-09 2027-08-25
   section 1.0 Project Management
   1.1.1 Project charter and sponsor sign-off :crit, a111, 2027-01-04, 5d
   1.1.2 Stakeholder register and analysis :a112, 2027-01-04, 5d
@@ -246,7 +246,7 @@ gantt
   4.2.2 Activity planning and observation serv :crit, a422, 2027-02-25, 10d
   4.3.1 Catalog service :a431, 2027-02-08, 8d
   4.3.2 Journal and weekly summary services :crit, a432, 2027-03-11, 10d
-  4.3.3 AI suggestion service and fallback :crit, a433, 2027-03-25, 10d
+  4.3.3 AI suggestion service and fallback :crit, a433, 2027-03-29, 10d
   section 5.0 Flutter Android App
   5.1.1 App project, theme and navigation :a511, 2027-02-18, 8d
   5.1.2 Sign-in and API client :a512, 2027-03-02, 5d
@@ -296,7 +296,7 @@ gantt
 | Design and privacy approved | 5 Mar 2027 | 2.3.2 DPO review and approval (D3) |
 | Catalog reviewed | 6 Apr 2027 | 3.3.1 Content reviewer sign-off (D4) |
 | All features built | 4 May 2027 | 5.5.1 AI helper screens and fallback states |
-| Pilot starts | 3 Jun 2027 | 7.1.1 Pilot onboarding at two centers |
+| Pilot starts | 3 Jun 2027 | 7.1.1 Pilot onboarding at two centers (ends 2 Jun); first day of 7.2.1 |
 | Pilot evaluation report | 4 Aug 2027 | 7.3.1 Pilot evaluation report (D8) |
 | Google Play release | 16 Aug 2027 | 8.2.2 Google Play release (D10) |
 | Handover | 19 Aug 2027 | 8.3.2 Maintainer training and handover sign-off |

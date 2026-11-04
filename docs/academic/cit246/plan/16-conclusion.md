@@ -9,7 +9,7 @@
 
 ## 16.1 The Value to the Client
 
-For the CSWDO La Paz–Lapuz District office, LittleSteps gives parents in its 37 barangays a free, private way to keep track of their child's learning at home and to find short, screen-free activities that use what they already have. It does this without diagnostic scores, without selling data and without adding reporting work for Child Development Workers. In the planning estimates, each center saves about 80 CDW hours and ₱4,500 in printing a year, and fewer families lose their child's home record. It also gives the city a tested, low-cost tool for meeting its new duties under the ECCD System Act that it can extend to its other districts.
+For the CSWDO La Paz–Lapuz District office, LittleSteps gives parents in its 37 barangays a free, private way to keep track of their child's learning at home and to find short, screen-free activities that use what they already have. It does this without diagnostic scores, without selling data and without adding reporting work for Child Development Workers. At the planning estimates, the app could free up to about 80 CDW hours and ₱4,500 in printing per center each year, and fewer families would lose their child's home record. The charter's target is more modest: a 50% cut in handout time. It also gives the city a tested, low-cost tool, usable for its duties under the ECCD System Act (RA 12199), that it could extend to its other districts.
 
 ## 16.2 What the Sponsor Is Asked to Approve
 

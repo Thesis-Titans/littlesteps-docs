@@ -1,14 +1,17 @@
 """CIT 246 plan model: WBS, CPM schedule and bottom-up cost baseline.
 
-Usage: python3 schedule_model.py <output-folder>. Writes the CSV files in this folder and a model.json used to generate sections 7-9.
+Usage: python3 schedule_model.py <output-folder>. Writes the two CSV files and a model.json (used to generate sections 7-9) to that folder.
+Holidays not in the calendar: Labor Day (1 May), Independence Day (12 June) and Ninoy Aquino Day (21 Aug) fall on weekends in 2027;
+Eid'l Fitr and Eid'l Adha are set by proclamation and are not known yet.
 """
 import csv, datetime as dt, json, os, sys
 from collections import defaultdict
 
 START = dt.date(2027, 1, 4)
 HOLIDAYS = {
-    dt.date(2027, 4, 1): "Maundy Thursday",
-    dt.date(2027, 4, 2): "Good Friday",
+    # Easter Sunday 2027 is 28 March
+    dt.date(2027, 3, 25): "Maundy Thursday",
+    dt.date(2027, 3, 26): "Good Friday",
     dt.date(2027, 4, 9): "Araw ng Kagitingan",
     dt.date(2027, 8, 25): "Iloilo City Charter Day",
 }
@@ -153,6 +156,11 @@ for i in ids:
     w = wp[i]; per = w["cost"] / w["dur"]
     for k in range(w["es"], w["ef"]):
         monthly[DAYS[k].strftime("%Y-%m")] += per
+
+# round cumulative cost, so the rounded months add up exactly to the baseline total
+_c = _p = 0
+for m in sorted(monthly):
+    _c += monthly[m]; monthly[m] = round(_c) - _p; _p = round(_c)
 
 # developer load check
 devload = defaultdict(float)

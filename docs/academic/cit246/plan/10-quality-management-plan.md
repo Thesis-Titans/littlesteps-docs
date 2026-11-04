@@ -9,7 +9,7 @@
 
 ## 10.1 Quality Objectives
 
-LittleSteps is acceptable when parents can use it easily on an entry-level phone, it never misleads them about their child's development, and children's data is protected. The quality lead (Mae Daniella Faith C. Benjamin) owns this plan; the project manager makes sure it is followed.
+LittleSteps is acceptable when parents can use it easily on an entry-level phone, it never misleads them about their child's development, and children's data is protected. The quality lead (Mae Daniella Faith C. Benjamin) owns this plan and the project manager makes sure it is followed. Every deliverable below has one named acceptor, who signs only when its measures are met; the person who produced a deliverable never accepts it.
 
 ## 10.2 Acceptance Criteria for the Main Deliverables
 
@@ -21,9 +21,9 @@ LittleSteps is acceptable when parents can use it easily on an entry-level phone
 | D4 Activity catalog | At least 80 items; every age band and all four domains covered; 100% of items have a source, reviewer and review date; 0 items with diagnostic wording | Catalog review log and a wording check | ECCD content reviewer |
 | D5 Backend API | 100% of endpoints reject unauthenticated requests; 0 cross-account access in tests; automated tests pass; median response under 500 ms on the pilot setup | Automated tests and the security review | Project manager, after QA |
 | D6 Flutter app | All test cases pass on Android 10+ phones with 3 GB of RAM; core screens load within 3 seconds on 4G; text contrast at least 4.5:1; touch targets at least 48 px; 0 open severity 1–2 defects | Test reports from 6.1.2 and 6.2.1 | Sponsor, after QA sign-off |
-| D7 Test reports | Every requirement traced to a passed test or an accepted known issue | Quality lead review | Quality lead |
-| D8 Pilot evaluation | Reports success criteria 1–4 and 7 with figures and method | Sponsor review | Sponsor |
-| D9 Training materials | Available in English, Filipino and Hiligaynon; every pilot CDW trained; a parent can install and sign in using only the quick-start sheet | Trial with two parents | OIC District Head |
+| D7 Test reports | Every requirement traced to a passed test or an accepted known issue | Quality lead review | Project manager |
+| D8 Pilot evaluation | Reports success criteria 1–4 and 7 with figures and method | Sponsor review of the report against the charter | Sponsor |
+| D9 Training materials | Available in English, Filipino and Hiligaynon; every pilot CDW trained; a parent can install and sign in using only the quick-start sheet | Trial with two parents | Sponsor (OIC District Head) |
 | D10 Google Play release | Listing approved by Google; privacy notice linked; app signed with the client's key | Release checklist | Sponsor |
 | D11 Handover package | The maintainer deploys one update unaided using the runbook | Handover checklist | Maintainer and sponsor |
 

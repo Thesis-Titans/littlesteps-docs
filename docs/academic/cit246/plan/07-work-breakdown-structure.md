@@ -194,7 +194,7 @@ Entries for eight work packages: the riskiest ones and those on the critical pat
 | Owner | Developer A |
 | Output | AI suggestion service with tests |
 | Accepted by | Project manager, after QA |
-| Duration | 10 working days, 25 Mar 2027 to 12 Apr 2027 (critical path) |
+| Duration | 10 working days, 29 Mar 2027 to 12 Apr 2027 (critical path) |
 | Predecessors | 4.3.2, 4.3.1, 2.3.2 |
 | Cost | ₱13,650 |
 

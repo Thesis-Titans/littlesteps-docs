@@ -26,7 +26,7 @@
 | Charter signed by the sponsor | 8 January 2027 |
 | Design approved and privacy impact assessment approved by the DPO | 5 March 2027 |
 | 80 activity catalog items reviewed by the ECCD content reviewer | 6 April 2027 |
-| All features built; system testing starts | 4 May 2027 |
+| All features built (4 May); system testing starts 5 May | 4–5 May 2027 |
 | Pilot onboarding done; pilot starts at two Child Development Centers in La Paz | 3 June 2027 |
 | Pilot ends | 28 July 2027 |
 | Pilot evaluation report delivered | 4 August 2027 |
@@ -60,18 +60,18 @@ The project succeeds when all of the following are met by the finish date, withi
 
 ## 4.4 Approach
 
-- **Discover first.** Interview the OIC District Head, CDWs and parents in the first two weeks to confirm the baseline in Section 3 and the requirements.
+- **Discover first.** In the first two weeks, interview the OIC District Head, CDWs and parents to confirm the baseline in Section 3 (which rests on planning estimates) and the requirements.
 - **Privacy by design.** Complete a privacy impact assessment before any real data is collected. Store only a nickname, an age band or birth month and year, and caregiver-entered records. Never send journal text or child identifiers to the AI service.
 - **Reviewed content only.** An ECCD content reviewer approves every catalog item, with its source recorded, before parents can see it.
 - **Iterative build.** Build the Flutter app and backend in two-week iterations, each ending with a demo to the district office. Test against local emulators with synthetic data until the pilot.
 - **Pilot before launch.** Run an 8-week pilot at two centers, measure the success criteria, and fix the top issues before publishing on Google Play.
-- **Plan the handover from the start.** Name the maintainer by the midpoint and involve them in the last two iterations.
+- **Plan the handover from the start.** Name the maintainer by the midpoint (May 2027) and involve them in the last two iterations.
 
 ## 4.5 Roles and Responsibilities
 
 | Role | Name | Organization or position | Responsibility |
 |---|---|---|---|
-| Project sponsor | Identified by role; not contacted for this plan | OIC District Head, CSWDO La Paz–Lapuz District office | Approves the charter, budget and major changes; accepts the final deliverables |
+| Project sponsor | Role only; the office was not contacted, so no person is named | OIC District Head, CSWDO La Paz–Lapuz District office | Approves the charter, budget and major changes; accepts the final deliverables |
 | Project manager | Mark Alvin Cadangin | Project team, WVSU CICT | Plans and controls scope, schedule, cost and risk; reports to the sponsor; chairs the change control board |
 | Business analyst and quality lead | Mae Daniella Faith C. Benjamin | Project team, WVSU CICT | Requirements, acceptance criteria, test planning and usability evaluation |
 | Stakeholder and content coordinator | Nherie C. Acebuche | Project team, WVSU CICT | Stakeholder engagement, CDW and parent sessions, content review workflow, training materials |
@@ -81,9 +81,9 @@ The project succeeds when all of the following are met by the finish date, withi
 | ECCD content reviewer | To be identified | ECCD specialist or early-childhood educator | Reviews and signs off every catalog item |
 | Data Protection Officer | To be identified | Barangay or city DPO | Reviews the privacy impact assessment and data handling |
 | Child Development Workers | Pilot center staff | The two pilot Child Development Centers in La Paz | Recommend the app to families, run parent onboarding, give feedback |
-| Maintainer | To be named by the midpoint | Named in Section 15 | Runs and updates the system after handover |
+| Maintainer | To be named by May 2027 (the midpoint) | Named in Section 15 | Runs and updates the system after handover |
 
-The three project-team roles are proposed for the team to confirm.
+The three project-team role assignments are proposals for the team to confirm. Signature and date cells are blank because nobody has signed.
 
 ## 4.6 Sign-off
 
@@ -96,7 +96,7 @@ The three project-team roles are proposed for the team to confirm.
 
 ## 4.7 Stakeholder Comments
 
-To be recorded at the charter review with the sponsor and CDWs. Issues already raised during planning:
+No stakeholder has commented yet, because none was contacted. Comments will be recorded at the charter review with the sponsor and CDWs. Concerns the team expects, from its own analysis:
 
-- The CDW network will want to know whether the app adds reporting work for CDWs. It does not; CDWs only recommend the app and run onboarding (see Section 5).
+- CDWs will want to know whether the app adds reporting work for CDWs. It does not; CDWs only recommend the app and run onboarding (see Section 5).
 - The Data Protection Officer will need to approve how children's data is stored before the pilot (success criterion 6).
