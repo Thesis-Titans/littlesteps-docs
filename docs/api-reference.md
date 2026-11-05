@@ -105,6 +105,8 @@ Base URL (Local Emulator): `http://127.0.0.1:5001/{projectId}/asia-southeast1/ap
 | :--- | :--- | :---: | :--- | :--- | :--- |
 | `GET` | `/health` | None | Public liveness probe | `200 OK`<br/>`{ "status": "ok" }` | `500` |
 | `GET` | `/api/v1/me` | Bearer | Return the authenticated Firebase UID (email and `createdAt` are planned, not implemented) | `200 OK`<br/>`{ "uid": "abc" }` (planned additions: `email`, `createdAt`) | `401 UNAUTHENTICATED` |
+| `GET` | `/api/v1/me/export` | Bearer | Download all records for the signed-in caregiver and their children as JSON (`profile`, `children`, `plans`, `observations`, `journalEntries`) | `200 OK`<br/>`{ "exportedAt": "...", "profile": { "uid": "..." }, "children": [...], "plans": [...], "observations": [...], "journalEntries": [...] }` | `401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` (cross-account attempt) |
+| `DELETE` | `/api/v1/me` | Bearer | Permanently delete the signed-in caregiver's children (with subcollections), caregiver profile document, and Firebase Auth user (decision D5) | `204 No Content` | `401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND`<br/>`500 INTERNAL_ERROR`<br/>`503 SERVICE_UNAVAILABLE` |
 
 ### 4.2 Child Profile Management (FR-01)
 
@@ -116,7 +118,7 @@ Base URL (Local Emulator): `http://127.0.0.1:5001/{projectId}/asia-southeast1/ap
 | `POST` | `/api/v1/children` | Bearer | Create a child profile: `nickname` plus exactly one of `birthMonthYear` (`YYYY-MM`) or `ageBand` | `201 Created`<br/>profile object (as above; no `birthMonthYear` when `ageBand` was sent) | `400 INVALID_INPUT` (shape, extra fields, both or neither age source)<br/>`401 UNAUTHENTICATED`<br/>`422 UNPROCESSABLE_ENTITY` (birth month in the future or over 71 months ago; or the caregiver already has 20 children)<br/>`503 SERVICE_UNAVAILABLE` (transaction aborted by contention after the server's retries; see below) |
 | `GET` | `/api/v1/children/:childId` | Bearer | Retrieve a child profile | `200 OK`<br/>profile object | `401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` (missing, another caregiver's, or malformed id) |
 | `PATCH` | `/api/v1/children/:childId` | Bearer | Update `nickname` and/or exactly one of `birthMonthYear` or `ageBand` | `200 OK`<br/>updated profile object | `400 INVALID_INPUT` / `INVALID_JSON` (empty update, nulls, both age sources)<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` (missing, another caregiver's, or malformed id)<br/>`422 UNPROCESSABLE_ENTITY`<br/>`503 SERVICE_UNAVAILABLE` (contention) |
-| `DELETE`| `/api/v1/children/:childId` | Bearer | Cascading deletion of child and observations (planned; not part of the child profile contract) | `204 No Content` | `401`<br/>`404` |
+| `DELETE`| `/api/v1/children/:childId` | Bearer | Hard cascade deletion of the owned child and all subcollections (`plans`, `milestone_observations`, `journal_entries`, `weekly_summaries`) via recursive delete (decision D5) | `204 No Content` | `401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` (missing, another caregiver's, or malformed id)<br/>`500 INTERNAL_ERROR`<br/>`503 SERVICE_UNAVAILABLE` |
 
 Rules from the contract (implemented, api PRs #26 and #29):
 * **Age bands:** `0-5m`, `6-11m`, `12-23m`, `24-35m`, `36-47m`, `48-59m`, `60-71m`. They are educational navigation categories, not clinical classifications.
