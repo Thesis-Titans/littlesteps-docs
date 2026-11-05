@@ -67,7 +67,7 @@ graph TD
     subgraph "375px Mobile Viewport Zones"
         Top["Hard to Reach (Top 20%)<br/>Secondary info: Brand mark, Child avatar switcher"]
         Mid["Comfortable Reach (Middle 45%)<br/>Content cards, Activity steps, Observation prompts"]
-        Bottom["Natural Thumb Zone (Bottom 35%)<br/>Primary actions: Bottom navigation bar, 'Add to Plan', 'Mark Complete'"]
+        Bottom["Natural Thumb Zone (Bottom 35%)<br/>Primary actions: Bottom navigation bar, 'Add to plan', 'Mark complete'"]
     end
 ```
 
@@ -115,7 +115,7 @@ Parents read LittleSteps in short bursts, often one-handed, sometimes in their s
 - **Standard reassurance line (team wording, not a CDC quote):** "Children develop at different rates. Talk to a health professional if you have concerns."
 - **Point to real people.** For worries about development, name "your pediatrician or barangay health worker".
 - **Translate cleanly.** Plain English carries into Filipino and Hiligaynon. Each language gets its own review by a fluent speaker.
-- **Sentence case everywhere.** Headings, buttons, tabs, alerts, badges and form labels use sentence case ("Add to today's plan", "Not seen yet", "Not a diagnostic tool"), never Title Case. Proper nouns (*LittleSteps*, *Maya*, *Open Library*, *Tagalog*, *Hiligaynon*), standard acronyms (*AI*, *JSON*, *WCAG*, *CDC*), and single navigation tab names (*Today*, *Explore*, *Milestones*, *Journal*) keep their capitalized forms.
+- **Sentence case everywhere.** Headings, buttons, tabs, alerts, badges and form labels use sentence case ("Add to plan", "Not seen yet", "Not a diagnostic tool"), never Title Case. Action buttons use "Add to plan" as the standard button label (with "Add to today's plan" as contextual variant when explicitly adding to today). Proper nouns (*LittleSteps*, *Maya*, *Open Library*, *Tagalog*, *Hiligaynon*), standard acronyms (*AI*, *JSON*, *WCAG*, *CDC*), and single navigation tab names (*Today*, *Explore*, *Milestones*, *Journal*) keep their capitalized forms.
 - **No AI slop and no buzzwords.** Never use marketing fluff, robotic jargon or filler phrases ("delve", "supercharge", "unlock", "empower", "seamless", "revolutionize", "smart", "magic"). Say plainly what the feature does, what the child did, or what the parent can try.
 
 | Instead of | Say | Note |
@@ -290,7 +290,7 @@ Every user journey in the Figma prototype must include all five interaction stat
 | Journey / Screen | 1. Populated (Default) | 2. Empty State | 3. Loading (Skeleton) | 4. Error / Permission-denied (`{ error: { code, message } }`) | 5. Offline (Simulated) / AI Fallback |
 |---|---|---|---|---|---|
 | **J1: Child Profile** | Maya (14m) & Liam (48m) with age-band badges. | "No children added yet. Add your child to get ideas for their age." | Profile card pulse skeleton. | `INVALID_INPUT`: "Add a nickname, then pick a birth month and year or an age range." (Nickname 1–50 characters; birth month within the last 71 months.)<br/>At the cap of 20 children: "You can add up to 20 children." (the add actions are replaced by the note "You have added the most children you can (20).")<br/>`503`, a transient failure on saving: "Please try again in a moment." | Last-viewed profile shown with offline badge; editing disabled with "Reconnect to save changes." |
-| **J2: Daily Plan** | 2 scheduled activities with completion toggles. | "No activities planned for today. Want a quick idea? Most take 10 minutes or less." | Activity card pulse skeleton. | `NOT_FOUND`: "This activity isn't available anymore. It was taken off our list. The rest of your plan is still here." | "You're offline. This activity wasn't marked complete." with Retry. |
+| **J2: Daily Plan** | 2 scheduled activities with completion toggles. | "No activities planned for today. Want a quick idea? Most take 10 minutes or less." | Activity card pulse skeleton. | `RESOURCE_NOT_FOUND`: "This activity isn't available anymore. It was taken off our list. The rest of your plan is still here." | "You're offline. This activity wasn't marked complete." with Retry. |
 | **J3: Milestones** | Prompts grouped by kind of play (Thinking, Moving, Talking, Feelings) with "Seen on [date]" and 2–3 "Look for" signs. | "Nothing noted yet. Look for small moments during play." | Milestone prompt pulse skeleton. | `INTERNAL_ERROR`: Safe error banner; zero stack traces exposed. | "You're offline. Your observation wasn't saved." Entered text stays on screen with Retry. |
 | **J4: Private Journal** | Date-stamped notes with `🔒 Private` badge. | "Your journal is private to you. Jot down a memory or funny moment." | Note list pulse skeleton. | `INVALID_INPUT`: "Notes can be up to 2,000 characters. Please make this one a little shorter." (The 2,000-character limit comes from the [Data Model](data-model.md); the API's separate 100KB request-body limit is never the user-facing note limit.) | "You're offline. Your note wasn't saved." Draft stays on screen with Retry; `🔒 Private` badge still visible. |
 | **J5: Learning Library** | Filterable activity cards with a "Source: early learning guide · still being checked" line. | "No activities match these filters. Try clearing 'Materials'." | Catalog grid pulse skeleton. | `SERVICE_UNAVAILABLE`: "The activity list didn't load. Check your connection, then choose Retry." | "You're offline. Activities marked 'Available offline' still open." Others show "Needs a connection." |
@@ -454,7 +454,7 @@ Source: Figma file `yqUHW4lOuuly4jDPNMkMVI`, page `02 · Components`, read on 20
 | Component | Figma frame | States | React | Flutter |
 |---|---|---|---|---|
 | Activity card | `Card / Activity`, `Card / Catalog item`, `Pill / Material`, `Cover / Activity`, `Card / Book` | Planned, Completed, Default, Focus | Not built | `Card.outlined` |
-| Milestone row | `Row / Milestone prompt`, `Card / Milestones preview` | Observed, Not yet observed | Not built | `Card.outlined` |
+| Milestone row | `Row / Milestone prompt`, `Card / Milestones preview` | Seen on [date], Not seen yet (statuses: `observed`, `not_yet_observed`) | Not built | `Card.outlined` |
 | Journal note | `Card / Journal note`, `Form / New journal note` | Default | Not built | `Card.outlined`, `TextFormField` |
 | Weekly reflection | `Card / Weekly summary`, `Week totals`, `Domain counts`, `Moments noticed`, `Reflection prompt` | Default | Not built | `Card.outlined` |
 | Idea helper | `Card / Idea helper entry`, `Panel / Idea helper` | Form, Suggestion, Fallback, Loading, Rate limited | Not built | `Card`, `AlertDialog` or sheet |

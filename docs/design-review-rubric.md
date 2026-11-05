@@ -27,7 +27,7 @@ These come from the specification and DESIGN.md.
 - Wording follows spec §2.6: everyday words, short and calm, no blame, errors say what happened and what is still safe, buttons name the action, AI output labelled "Suggested by AI". No catalog, domain, observation, assessment, analytics, generate or JSON on screen.
 - No streaks, scores, delay labels, urgency or countdowns.
 - Offline and failed-save messages never say something was saved when it was not.
-- Sentence case for headings and buttons ("Add to today's plan"), not Title Case.
+- Sentence case for headings and buttons ("Add to plan"), not Title Case.
 - Illustration only as set in spec §10.2; decorative brand colors never on text or controls.
 
 ## 3. Interaction and accessibility (code and frames)
