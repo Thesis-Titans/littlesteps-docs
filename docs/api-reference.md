@@ -177,11 +177,11 @@ Behaviour on `main`:
 
 ### 4.6 Weekly Summary (FR-05)
 
-> **Planned, not built.** These routes are not in `openapi.yaml` yet (api #12).
+Implemented in `littlesteps-api` PR #54 (Issue #12) and documented in `openapi/openapi.yaml`. Returns a deterministic, non-diagnostic reflection summary aggregating completed activities, developmental domain coverage, and recorded milestone observations over a 7-day UTC ISO calendar week.
 
 | Method | Path | Auth | Purpose | Success (Status / Body) | Error Codes |
 | :--- | :--- | :---: | :--- | :--- | :--- |
-| `GET` | `/api/v1/children/:childId/summary/weekly` | Bearer | Deterministic factual aggregation of completed activities | `200 OK`<br/>`{ "weekStarting": "2026-10-26", "totalActivities": 4, "domains": {...} }` | `401`<br/>`404` |
+| `GET` | `/api/v1/children/:childId/summary/weekly` | Bearer | Deterministic factual aggregation of completed activities and milestone observations for an owned child (optional `?week=YYYY-Www`, defaults to current ISO week) | `200 OK`<br/>`{ "id": "2026-W45", "weekStartDate": "2026-11-02", "weekEndDate": "2026-11-08", "completedActivityCount": 4, "observedMilestoneCount": 2, "totalPlannedActivities": 5, "domainDistribution": { "cognitive": 1, "motor": 2, "language": 1, "socioEmotional": 0 }, "topActivityIds": ["act-synth-001"], "reflectionPrompt": "...", "generatedAt": "..." }` | `400 INVALID_INPUT`<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` |
 
 ---
 

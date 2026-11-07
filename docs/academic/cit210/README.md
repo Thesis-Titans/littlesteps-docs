@@ -87,8 +87,8 @@ The class presentation accounts for **35 points (35%)** of the total grade and w
 |---|---|---|
 | **API Contract & Schemas** | Sprint 1 (Oct 26 – Nov 1) | Canonical OpenAPI 3.1 contract active in `littlesteps-api`; auth emulator integration tests verified |
 | **Authentication & Profile CRUD** | Sprint 1 (Oct 26 – Nov 1) | Completed: Express route controllers merged (API PRs #26, #29), React client screens merged (React PR #35), auth token validation verified (M1) |
-| **Activity Catalog & Routine Planning** | Sprint 2 (Nov 2 – Nov 8) | In progress: Catalog API (API PR #20) and planning endpoints (API PR #39) merged; React Catalog UI merged (React PR #39); Routine schedule UI in progress (M2) |
-| **Observation Journal & Weekly Summary** | Sprint 2 (Nov 2 – Nov 8) | Planned: caregiver-scoped private notes and deterministic weekly recaps (M3) |
-| **Gemini AI Recommender & Fallback** | Sprint 2 (Nov 2 – Nov 8) | In progress: Server-side recommendations with 8s timeout, rate limiting, and deterministic fallback merged (API PRs #28, #33, #34); React IdeaHelper UI merged (React PR #39) (M4) |
+| **Activity Catalog & Routine Planning** | Sprint 2 (Nov 2 – Nov 8) | Completed: Catalog API (API PR #20) and planning endpoints (API PR #39) merged; React Catalog UI (React PR #39) and Today planning & completion (React PR #44) merged; Firestore composite indexes merged (API PR #53) (M2) |
+| **Observation Journal & Weekly Summary** | Sprint 2 (Nov 2 – Nov 8) | Weekly summary API (API PR #54) and caregiver export/deletion API (API PR #51) merged; observation journal API in progress (api #11); React reflection UI in progress (react #10) (M3) |
+| **Gemini AI Recommender & Fallback** | Sprint 2 (Nov 2 – Nov 8) | Server-side recommendations with 8s timeout, rate limiting, and deterministic fallback merged (API PRs #28, #33, #34); React IdeaHelper UI merged (React PR #39); cross-feature authorization regression suite merged (API PR #52) (M4) |
 | **Live Demo Rehearsal & Backup Video** | Wrap-up (Nov 26 – Dec 1) | Planned for M5 release gate prior to Dec 2 presentation |
 
