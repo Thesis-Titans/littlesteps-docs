@@ -230,6 +230,34 @@ To satisfy the CIT 210 requirement for a live external REST Data API, `littleste
 * **`CatalogActivity` fields:** `id`, `title`, `type`, `language`, `setting`, `ageBand`, `domain`, `durationMinutes` (1-180), `durationEstimate`, `materials`, `instructions` (array of steps), `provenanceSource`, `status` (`reviewed_approved`, `synthetic_fixture`; the OpenAPI draft also lists `draft`, which `data-model.md` does not) and `limitations`.
 * **Empty until reviewed:** production serves an empty catalog (`total: 0`, `items: []`, and `404` by id) until reviewed content is loaded. Synthetic engineering fixtures are never served as approved content.
 
+### 5.3 Weather Hint: `GET /api/v1/catalog/weather`
+
+> **Implemented in littlesteps-api PR #56** (7 November 2026), per ADR-009 and FR-02/FR-06.
+
+* **Access:** Public read-only (unauthenticated).
+* **Query parameters (all optional):**
+  - `latitude` (number, -90 to 90, default `10.72` for Iloilo City): rounded to 2 decimal places.
+  - `longitude` (number, -180 to 180, default `122.56` for Iloilo City): rounded to 2 decimal places.
+  Invalid values return `400 INVALID_INPUT`.
+* **Privacy boundary:** The endpoint accepts only coarse coordinates rounded to 2 decimal places (~1.1 km). No caregiver, child, or device GPS data is ever received or sent upstream.
+* **Upstream Service:** Open-Meteo Forecast API (`https://api.open-meteo.com/v1/forecast`).
+* **Caching & Resilience:** 1-hour in-memory cache (`Cache-Control: public, max-age=3600`) with `X-Cache` header (`HIT` or `MISS`). On timeout (>3s), non-200 upstream response, or invalid payload, the server returns a neutral fallback (`condition: "unavailable"`, `suggestedSetting: "either"`, `hint: null`) with `Cache-Control: public, max-age=60`.
+* **Client Response Format:**
+  ```json
+  {
+    "condition": "cloudy",
+    "rainChance": 10,
+    "heatFlag": false,
+    "suggestedSetting": "outdoor",
+    "hint": "Good weather for outdoor play · Outdoor ideas",
+    "provenance": {
+      "source": "Open-Meteo",
+      "attribution": "Weather data by Open-Meteo.com",
+      "license": "CC BY 4.0"
+    }
+  }
+  ```
+
 ---
 
 ## 6. External AI Augmentation & 3-Tier Fallback Engine (FR-06)
@@ -284,9 +312,13 @@ Suggests up to three reviewed catalog activities for an age band, using only non
 * **Privacy boundary:** the request carries no child or caregiver identifiers. The provider prompt contains only age band, time, setting, cleaned materials (lowercased, control characters removed, truncated, de-duplicated), language, the pick count, and the id, title, domain and materials of candidate catalog items. It never contains user ID, token, email, child data, observations or journal text. Logs record only the event name, tier, latency and error class, never prompts, replies, materials or user identifiers.
 * **Fallback behaviour:** the provider call is bounded at 8 seconds and its reply must pick only candidate ids and pass output validation. On timeout, error, invalid output, no provider configured, or no eligible candidates, the endpoint returns `200` with the deterministic Tier 3 ranking (`source: "catalog_fallback"`, `tier: 3`, no AI badge). Tier 2 (Ollama) is planned and not part of this slice.
 
-#### `POST /api/v1/ai/story-activity` (planned, not in OpenAPI)
-Generates companion play and discussion activities based on a real book selected from the Open Library catalog.
-* **Request Payload:**
+#### `POST /api/v1/ai/story-activity`
+
+> **Status:** implemented and merged in littlesteps-api PR #55 (7 November 2026), per ADR-010 and FR-06.
+
+Generates companion play and discussion activities based on a real book selected from the Open Library catalog, using only non-identifying parameters. Requires a Bearer token and is protected by the same hourly AI rate limits as recommendations (10/hr per user, 30/hr per IP).
+
+* **Request Payload (strict):** unknown or identifying fields (`childId`, `nickname`, `notes`, `journalText`) are rejected with `400 INVALID_INPUT`.
   ```json
   {
     "bookTitle": "The Very Hungry Caterpillar",
@@ -312,18 +344,19 @@ Generates companion play and discussion activities based on a real book selected
     }
   }
   ```
+* **Resilience and Fallback:** Bounded at 8 seconds. If provider is unconfigured, times out, throws, or provider output fails schema or non-diagnostic denylist validation, the endpoint gracefully falls back to deterministic Tier 3 catalog ranking matched on age band and subjects (`tier: 3`, `source: "catalog"`, `badge: null`).
 
 ### 6.2 The 3-Tier Fallback Hierarchy
 
 ```
-/ai/story-activity (planned):
+/ai/story-activity (implemented, api PR #55):
 [Tier 1: Cloud LLM]  ──(Fails: Timeout > 8s, error)──>  [Tier 2: Local AI]  ──(Fails: Offline)──>  [Tier 3: Catalog Rule]
 
 /ai/recommendations (implemented, api PR #28):
 [Tier 1: Cloud LLM]  ──(Any provider failure: timeout > 8s, error, invalid output, none configured)──>  [Tier 3: Catalog Rule]
 ```
 
-The Tier 1 to Tier 2 step applies to `/api/v1/ai/story-activity` only, and that route is planned. `/api/v1/ai/recommendations` has no Tier 2: any provider failure goes straight to Tier 3 (`src/ai/ai-service.ts`).
+The Tier 1 to Tier 2 step applies to `/api/v1/ai/story-activity` (Tier 2 Ollama is optional for local demo), while `/api/v1/ai/recommendations` falls directly to Tier 3 on any failure (`src/ai/ai-service.ts`).
 
 1. **Tier 1 (Google Gemini - Cloud Primary):**
    - Called using server-side `@google/genai` or REST endpoint.
