@@ -3,7 +3,7 @@
 **Status:** Canonical Data Architecture Baseline  
 **Governing Standard:** ISO/IEC/IEEE 42010:2022 (Data Viewpoint) & RA 10173 (Data Privacy Act of 2012)  
 **Owner:** Mark Alvin Cadangin (Technical Lead) & Justin (Backend Lead)  
-**Last Reviewed:** 2026-10-26  
+**Last Reviewed:** 2026-11-08  
 **Related Documents:** [API Reference & Integration Guide](api-reference.md), [Architecture Decisions](architecture-decisions.md) (ADR-003, ADR-004, ADR-010), [Security, Privacy, and AI Safeguards](security-privacy-ai.md) (NFR-SEC-02, NFR-PRIV-01..03)
 
 ---

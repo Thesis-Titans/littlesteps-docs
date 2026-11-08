@@ -3,7 +3,7 @@
 **Status:** Canonical Interface Specification Baseline  
 **Governing Standard:** OpenAPI 3.1.0 & ISO/IEC/IEEE 42010:2022 (Interface View)  
 **Owner:** Mark Alvin Cadangin (Technical Lead) & Justin (Backend Lead)  
-**Last Reviewed:** 2026-11-03  
+**Last Reviewed:** 2026-11-08  
 **Related Documents:** [Architecture Decisions](architecture-decisions.md) (ADR-001, ADR-003, ADR-010), [Data Model Specification](data-model.md), [Security, Privacy, and AI Safeguards](security-privacy-ai.md), [CIT 210 Deliverables](academic/cit210/README.md)
 
 ---
@@ -167,13 +167,15 @@ Behaviour on `main`:
 
 ### 4.5 Private Observation Journal (FR-03)
 
-> **Planned, not built.** These routes are not in `openapi.yaml` yet (api #11).
+Implemented in `littlesteps-api` PR #57 (Issue #11) and documented in `openapi/openapi.yaml`. Provides confidential qualitative observation notes for an owned child. In accordance with NFR-PRIV-02, journal contents are strictly excluded from AI prompts and telemetry.
 
 | Method | Path | Auth | Purpose | Success (Status / Body) | Error Codes |
 | :--- | :--- | :---: | :--- | :--- | :--- |
-| `GET` | `/api/v1/children/:childId/journal` | Bearer | List private observation journal entries | `200 OK`<br/>`{ "entries": [ { "id": "j1", "title": "First steps", ... } ] }` | `401`<br/>`404` |
-| `POST` | `/api/v1/children/:childId/journal` | Bearer | Create a private journal note | `201 Created`<br/>`{ "id": "j1", ... }` | `400 INVALID_INPUT`<br/>`401`<br/>`404` |
-| `DELETE`| `/api/v1/children/:childId/journal/:id`| Bearer | Permanently delete journal note | `204 No Content` | `401`<br/>`404` |
+| `GET` | `/api/v1/children/:childId/journal` | Bearer | List private observation journal entries (optional `?date=YYYY-MM-DD`), ordered reverse-chronologically | `200 OK`<br/>`[ { "id": "uuid", "childId": "uuid", "entryDate": "2026-11-05", "content": "...", "linkedMilestoneId": "...", "linkedActivityId": "...", "createdAt": "...", "updatedAt": "..." } ]` | `400 INVALID_INPUT`<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` |
+| `POST` | `/api/v1/children/:childId/journal` | Bearer | Create a private journal note | `201 Created`<br/>`{ "id": "uuid", "childId": "uuid", "entryDate": "2026-11-05", "content": "...", "createdAt": "...", "updatedAt": "..." }` | `400 INVALID_INPUT`<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND`<br/>`422 UNPROCESSABLE_ENTITY` |
+| `GET` | `/api/v1/children/:childId/journal/:entryId` | Bearer | Retrieve a single private journal entry | `200 OK`<br/>`{ "id": "uuid", ... }` | `401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` |
+| `PATCH` | `/api/v1/children/:childId/journal/:entryId` | Bearer | Update entry content, date, or linked items | `200 OK`<br/>`{ "id": "uuid", ... }` | `400 INVALID_INPUT`<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND`<br/>`422 UNPROCESSABLE_ENTITY` |
+| `DELETE`| `/api/v1/children/:childId/journal/:entryId`| Bearer | Permanently delete journal note | `204 No Content` | `401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` |
 
 ### 4.6 Weekly Summary (FR-05)
 
