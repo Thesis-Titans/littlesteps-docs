@@ -72,7 +72,7 @@ components:
 
 # LittleSteps Design System (DESIGN.md)
 
-**Status:** Draft for team review  
+**Status:** Active Design System Reference (Reviewed)  
 **Owner:** Nherie (Frontend Lead) & Faith (Usability Lead); drafted by Mark Alvin Cadangin (Technical Lead)  
 **Last Reviewed:** 2026-10-31  
 **Governing Standard:** WCAG 2.2 AA and ISO 9241  

@@ -1,6 +1,6 @@
 # LittleSteps Design Review Rubric
 
-**Status:** Draft for team review  
+**Status:** Active Design System Reference (Reviewed)  
 **Owner:** Mark Alvin Cadangin (Technical Lead)  
 **Last Reviewed:** 2026-10-31  
 **Governing Standard:** WCAG 2.2 AA  

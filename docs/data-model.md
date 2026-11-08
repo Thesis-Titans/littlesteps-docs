@@ -18,7 +18,7 @@ flowchart TD
         CG["<b>caregivers/{caregiverUid}</b><br/><i>(Root Account Record)</i>"]
         CH["<b>children/{childId}</b><br/><i>(Child Profile Record)</i>"]
         MO["<b>milestone_observations/{obsId}</b><br/><i>(Qualitative Milestone Checks · FR-01)</i>"]
-        SA["<b>scheduled_activities/{schedId}</b><br/><i>(Daily Routine Planning & Logs · FR-02)</i>"]
+        SA["<b>plans/{planId}</b><br/><i>(Daily Routine Planning & Logs · FR-02)</i>"]
         JE["<b>journal_entries/{entryId}</b><br/><i>(Private Qualitative Notes · FR-03)</i>"]
         WS["<b>weekly_summaries/{summaryId}</b><br/><i>(Calculated Reflection Recaps · FR-05)</i>"]
 
@@ -85,8 +85,8 @@ Caregiver observation recorded against a reviewed milestone prompt.
 
 ---
 
-### 2.4 Scheduled Activity (`.../children/{childId}/scheduled_activities/{schedId}`)
-A learning activity added to the daily routine or completed.
+### 2.4 Scheduled Activity Plans (`.../children/{childId}/plans/{planId}`)
+A learning activity added to the daily routine or completed (stored under the `plans` subcollection in Firestore and exposed via `/children/{childId}/plans`).
 
 | Field | Type | Required | Description & Constraints |
 | :--- | :--- | :---: | :--- |
@@ -181,7 +181,7 @@ The following are proposed data-handling requirements informed by Republic Act N
 1. **Data Minimization:** No biometric data, exact GPS coordinates, or official national IDs are collected. Coarse age bands are preferred over exact birth dates.
 2. **Right to Rectification:** Caregivers can edit child details, journal notes, and observation records at any time.
 3. **Right to Erasure (Hard Cascade Deletion):**
-   - Deleting a child profile must trigger a server-side process that deletes all associated subcollection documents (`milestone_observations`, `scheduled_activities`, `journal_entries`, `weekly_summaries`).
+   - Deleting a child profile must trigger a server-side process that deletes all associated subcollection documents (`milestone_observations`, `plans`, `journal_entries`).
    - Deleting a caregiver account must trigger a server-side process that deletes associated child records and caregiver documents.
 4. **Data Export:** The API must support a structured JSON export of all records associated with a caregiver's UID upon verified request.
 5. **Proposed Retention Rule:** Synthetic demo records should be reset with the emulator environment. Decision of 4 November 2026: no automatic deletion; data stays until the caregiver deletes it, and the 12-month inactivity idea is dropped for now. Confirm lawful purpose and notice before any real deployment. No fixed retention period was found in RA 10173; Sec. 11(e) requires retention only as long as necessary. The period is a team policy and is not yet approved.
