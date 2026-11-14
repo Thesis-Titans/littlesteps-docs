@@ -274,3 +274,51 @@ graph TD
   - *Trade-off:* a caregiver cannot tell a mistyped ID from a foreign one; a child older than 71 months keeps the last band until the profile is edited.
   - *D5 (decided 4 November 2026):* deletion runs inside the request. A child is removed with its subcollections by a recursive delete, then the API returns `204`. An account is removed child by child, then the caregiver document, then the Firebase Auth user last. Every step can be repeated, so a failure returns `500` and the client retries. Only the fact and id of a deletion are logged, never the content. No Firestore backups are configured.
   - *D6 (decided 4 November 2026):* no automatic deletion. Data stays until the caregiver deletes it. The 12-month inactivity idea is dropped for now and must be revisited before any real deployment.
+
+---
+
+### ADR-013: Closed-Loop Multi-API Integration and Conversational Play Assistant
+- **Status:** Accepted (14 November 2026)
+- **Context:**
+  1. *CIT 210 External API Utility:* Course evaluation criteria (25 points) require that external API integrations provide direct, practical utility within the application workflow rather than decorative viewing. An integration that only displays book covers without connecting to user action risks low scoring.
+  2. *Philippine Caregiver Context:* Filipino parents at home frequently do not own the foreign children's literature returned by default Open Library subject queries. The platform requires both a live search capability (to look up books caregivers actually have at home) and an immediately accessible set of in-app Philippine ECCD nursery rhymes (*Bahay Kubo*, *Tong Tong Tong Pakitong-kitong*).
+  3. *AI / LLM Utilization & Safety:* The project requires demonstrable LLM capabilities. However, an unguided open medical chatbot violates the clinical non-diagnostic invariant, invites prompt injections, and risks generating unsafe physical play advice for infants.
+- **Options Considered:**
+  1. *Passive Open Library Book Display Only:* Display book covers and subject tags; play idea button shows a dead-end "Done" dialog. (Rejected: low academic utility; disconnected from daily planning).
+  2. *Open Clinical Chatbot:* A free-form conversational chat interface roleplaying as a pediatric assistant. (Rejected: severe safety hazard, violates non-diagnostic baseline, violates RA 10173 child privacy).
+  3. *Closed-Loop Multi-API Architecture with Bounded Conversational Play Assistant (Chosen):*
+     - Connect Open Library companion play ideas directly into the daily routine schedule (`onPlan` &rarr; `POST /api/v1/children/:id/plans`).
+     - Provide live book search (`GET /api/v1/catalog/books/search?q={query}`) with in-memory caching.
+     - Include full-text readable public-domain Philippine ECCD action songs and rhymes.
+     - Provide a bounded **Conversational Play & Routine Adaptation Assistant** powered by Gemini 3.5 Flash Lite with strict pediatric non-diagnostic guardrails, returning structured play ideas with an inline "Add to today's plan" action.
+- **Decision:**
+  - Implement a closed-loop Storybook-to-Plan pipeline: caregivers select or search any book, generate an AI play companion activity, and click "Add to today's plan" to write directly to Firestore.
+  - Expose `GET /api/v1/catalog/books/search` in `littlesteps-api` proxying Open Library's search API.
+  - Add in-app readable Philippine ECCD sing-along action rhymes under Explore ("Read & Sing Together") with complete lyrics and motor movement prompts.
+  - Implement `POST /api/v1/ai/chat` for conversational play suggestions. The system prompt enforces:
+    - Persona: Warm, encouraging early-childhood play companion.
+    - Pediatric Guardrail: Any question regarding sickness, symptoms, medication, speech delays, or autism/ADHD developmental screening must be warmly redirected to a licensed pediatrician or barangay health worker.
+    - Output: Conversational advice plus a structured activity payload with a direct "Add to today's plan" button.
+- **Consequences:**
+  - *Positive:* Fully satisfies CIT 210's API integration rubric by creating a meaningful, bidirectional data flow between external APIs (Open Library, Open-Meteo, Gemini) and user persistence (Firestore daily plan); prevents hallucinated or dangerous medical advice; solves the physical book availability barrier for Philippine families.
+  - *Trade-off:* Requires maintaining server-side search routing, conversational schema validation, and guardrail regression tests.
+
+---
+
+### ADR-014: Today Screen Header Streamlining and Elimination of Redundant Hero Callouts
+- **Status:** Accepted (14 November 2026)
+- **Context:**
+  - Heuristic evaluation (Heuristic #8: Aesthetic & Minimalist Design; Heuristic #2: Match Between System & Real World) revealed that the `.today-hero` green banner (`border-left: 4px solid var(--color-brand-forest)`) created visual confusion. Caregivers frequently mistook it for an active system alert, warning, or callout rather than a friendly greeting.
+  - Furthermore, having "Today", "For Maya · 12-23 months", "Good afternoon!", "Today's plan for Maya · 12-23m", and "Maya's plan for today" within 250px created extreme textual redundancy (an "echo chamber").
+  - Moving the banner from full-width to inside the main column did not resolve the false alert affordance.
+- **Options Considered:**
+  1. *Retain `.today-hero` full-width banner:* Creates an awkward horizontal stripe pushing content below the fold.
+  2. *Retain `.today-hero` inside main column:* Looks like an un-dismissible notification callout sitting atop the plan card.
+  3. *Eliminate `.today-hero` callout box and integrate greeting into header (Chosen):* Remove the callout box entirely and render the time-of-day greeting within `ScreenHeader` subtitle.
+- **Decision:**
+  - Remove the `.today-hero` container and its alert-like styling (`border-left: 4px solid`).
+  - Integrate the time-of-day greeting directly into the `ScreenHeader` subtitle: `${getTimeGreeting()}! Here's ${nickname}'s play plan for today.`
+  - Allow the main column to start cleanly with the daily plan section (`${nickname}'s plan for today`), matching the original Figma component specification.
+- **Consequences:**
+  - *Positive:* Eliminates false alert affordances, removes 5-way text redundancy, reclaims ~100px of vertical viewport height, restores clean visual hierarchy, and aligns with Nielsen Heuristics #8 and #2.
+  - *Trade-off:* Test assertions targeting `.today-hero` must be updated to target the integrated `ScreenHeader` greeting.

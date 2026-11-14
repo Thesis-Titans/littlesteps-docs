@@ -114,15 +114,15 @@ The following baseline improvements were completed prior to team evaluation:
 1. **Standardized Iconography**: Eradicated all informal unicode emojis from user-facing screens and replaced them with SVG icons conforming to design tokens.
 2. **Copywriter Tone Cleanup**: Removed AI buzzwords (*"Find a personalized play idea in seconds"*) in favor of clear, grounded caregiver copy.
 3. **Balanced Responsive Layout**: Removed the rigid 70ch width clamp that previously caused severe blank voids on wide desktop displays; added responsive 2-column input grid and multi-column suggestion cards.
-4. **Header Streamlining**: Removed duplicate subtitle greetings and redesigned the time-of-day welcome into a polished accent banner.
-5. **Main Column Layout Balance (H8)**: Moved the greeting banner inside the main column above the plan activities, eliminating awkward full-width spanning and balancing the vertical column height against the right sidebar widgets.
+4. **Header Streamlining & Alert Affordance Cleanup (H8 & H2)**: Identified that the green `.today-hero` banner (`border-left: 4px solid var(--color-brand-forest)`) created false alert affordances (users mistook it for an active system notification) and produced 5-way text redundancy ("Today", "For Maya", "Good afternoon!", "Today's plan for Maya", "Maya's plan for today"). Resolved by eliminating the callout container and integrating the time-of-day greeting cleanly into the `ScreenHeader` subtitle (`[getTimeGreeting()]! Here's [nickname]'s play plan for today.`).
+5. **Closed-Loop Storybook Integration**: Replaced the dead-end "Done" dialog button in Storybooks with an actionable "Add to today's plan" button, directly connecting Open Library play suggestions to Firestore daily schedules.
 6. **Offline Safety Invariant**: Enforced strict offline guards ensuring no false claims of success are ever displayed when disconnected.
 
 ---
 
 ## 5. Architectural & Domain Clarifications
 
-### 5.1 Why the AI Feature Uses a Structured Form Instead of an Open Chatbot
+### 5.1 Why the AI Feature Uses a Structured Form Alongside Guided Dialogue
 - **Child Safety & Halucination Prevention**: Free-form conversational models can hallucinate unsafe or physically hazardous play for infants (e.g. choking hazards, toxic materials, unsafe water play). LittleSteps binds AI outputs strictly to approved, verified Philippine ECCD curriculum activities.
 - **Strict Non-Diagnostic Safeguard**: Open chatbots frequently generate unverified clinical opinions. LittleSteps is strictly a home play companion and must never provide diagnostic medical assessments.
 - **Privacy & Data Minimization (RA 10173)**: Gemini API free-tier terms allow Google to log prompts for model training. To protect child privacy, zero child names, locations, caregiver IDs, or private journal notes are sent to the AI.
@@ -131,7 +131,21 @@ The following baseline improvements were completed prior to team evaluation:
 ### 5.2 Why Book Contents Cannot Be Read Inside the App
 - **Open Library API Scope & Copyright**: Open Library is an open bibliographic catalog metadata service (titles, authors, subjects, covers). It does not provide open digital distribution of copyrighted children's picture books.
 - **Screen-Free Play Philosophy**: LittleSteps exists to reduce passive infant screen time and encourage interactive, physical caregiver-child bonding. The Storybooks shelf inspires physical reading at home, and the "Get a play idea" button uses AI to generate real-world play activities based on the book's themes.
+- **In-App Philippine Rhyme Solution**: To support families without foreign children's books at home, LittleSteps provides in-app readable public-domain Philippine nursery rhymes (*Bahay Kubo*, *Tong Tong Tong Pakitong-kitong*) with complete lyrics and motor action prompts under Explore.
 
 ### 5.3 Deterministic Catalog Fallback vs. Dynamic AI Recommendations
 - When running in offline or unconfigured environments, the backend falls back to Tier 3 (Deterministic Catalog Matcher). Its ranking formula (`domain match -> material overlap -> duration -> id ascending`) contains zero randomness by design to ensure test reproducibility, which produces identical top-ranked recommendations for identical inputs.
 - When `GEMINI_MODEL=gemini-3.5-flash-lite` is connected with a valid API key, the badge displays "Suggested by AI" with dynamic, personalized rationale. Selecting different domains, durations, or household materials dynamically reshuffles the suggestions.
+
+### 5.4 Conversational Play Assistant Guardrails & Non-Diagnostic Invariant
+- **Play & Routine Bounding Only**: The Conversational Play Assistant is strictly scoped to everyday household play ideas, activity duration adjustments, and play adaptations for siblings.
+- **Pediatric Non-Diagnostic Guardrail**: The system prompt strictly prohibits diagnosing illnesses, assessing developmental delays, or prescribing therapy. When asked clinical questions (*"Is Maya delayed because she isn't walking?"*, *"What medicine for fever?"*), the assistant warmly responds with:
+  > *"I can only help with everyday play and routine ideas. For health or developmental questions, please check with your pediatrician or local barangay health worker."*
+- **Actionable Closed-Loop Integration**: Every conversational recommendation returns a structured activity payload accompanied by an "Add to today's plan" button that writes directly to Firestore.
+
+### 5.5 Closed-Loop External API Integration (Fulfilling CIT 210 with Practical Utility)
+- Rather than passive data viewing, LittleSteps establishes a bidirectional data flow:
+  1. Caregivers search Open Library for books they own (`GET /api/v1/catalog/books/search`).
+  2. Gemini drafts a screen-free companion play activity based on the book's themes (`POST /api/v1/ai/story-activity`).
+  3. The caregiver clicks "Add to today's plan", saving the scheduled activity directly to their child's daily routine in Firestore (`POST /api/v1/children/:id/plans`).
+- Combined with Open-Meteo weather forecasts dynamically filtering indoor/outdoor play routines, this multi-API ecosystem directly enhances application utility and daily user workflow.

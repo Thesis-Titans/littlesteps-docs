@@ -30,14 +30,19 @@ The course evaluates the final project through two primary categories:
 
 ### 1. API Integration (25 pts)
 - **Custom REST API:** Express + TypeScript backend in `littlesteps-api` implementing the canonical [API Reference & Integration Guide](../../api-reference.md) and [OpenAPI 3.1 specification](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml).
-- **External Data API Integration (Open Library REST API):**
-  - Live query integration with the **Internet Archive's Open Library REST API** (`openlibrary.org/subjects/picture_books.json`) to dynamically search, paginate, and render real-world children's literature and book cover images ([ADR-010](../../architecture-decisions.md)). The API side is merged; the React Storybooks section is in progress ([React #48](https://github.com/Thesis-Titans/littlesteps-react/issues/48)).
+- **External Data API Integration (Open Library REST API & Closed-Loop Pipeline):**
+  - Live query integration with the **Internet Archive's Open Library REST API** (`openlibrary.org/subjects/picture_books.json` and `openlibrary.org/search.json?q={query}`) to dynamically search, paginate, and render real-world children's literature ([ADR-010](../../architecture-decisions.md), [ADR-013](../../architecture-decisions.md)).
+  - **Closed-Loop Daily Plan Ingestion:** Rather than passive viewing, Open Library books connect directly to user action: caregivers generate AI-adapted screen-free play companions and schedule them into Today's routine via `onPlan` writing to Firestore (`POST /api/v1/children/:id/plans`).
   - Server-side in-memory caching (60-minute TTL) to optimize network efficiency and protect against upstream rate limits.
+- **Environmental Context API (Open-Meteo Forecast REST API):**
+  - Live weather forecast querying (`GET /api/v1/catalog/weather`) providing real-time environmental routine adaptation (rain/heat alerts preselecting indoor or outdoor play filters) without device GPS tracking ([ADR-009](../../architecture-decisions.md)).
 - **External AI Augmentation (Google Gemini API with 3-Tier Fallback):**
-  - **Tier 1 (Cloud Primary):** Google Gemini 1.5 Flash for the activity recommendation helper and storybook companion activity generator ([ADR-008](../../architecture-decisions.md), [ADR-010](../../architecture-decisions.md); server-side Cloud Function, synthetic non-PII prompts only, 8-second execution timeout).
-  - **Tier 2 (Local Edge AI Fallback):** Local Ollama (`qwen2.5-coder:7b`) on `localhost:11434` for 100% offline development and live presentation resilience.
+  - **Tier 1 (Cloud Primary):** Google Gemini 3.5 Flash Lite powering:
+    1. *Structured Activity Helper:* 4-variable constraint matching against reviewed curriculum activities (`POST /api/v1/ai/recommendations`).
+    2. *Storybook Play Companion:* Screen-free companion play activity generation from book metadata (`POST /api/v1/ai/story-activity`).
+    3. *Conversational Play Assistant:* Guided dialogue for household play adaptations with strict pediatric non-diagnostic guardrails (`POST /api/v1/ai/chat`), returning actionable play suggestions with direct "Add to Today's Plan" scheduling buttons.
+  - **Tier 2 (Local Edge AI Fallback):** Local Ollama (`qwen2.5-coder:7b`) on `localhost:11434` for 100% offline development and presentation resilience.
   - **Tier 3 (Deterministic Rule-Based Catalog):** Instant fallback to verified Philippine curriculum activities if external APIs time out, rate limit, or fail ([ADR-006](../../architecture-decisions.md)).
-- **Optional Stretch:** Open-Meteo forecast API for weather-aware outdoor suggestions ([ADR-009](../../architecture-decisions.md); optional enhancement, first item dropped if schedule slips).
 - **Dynamic Data Flow:** Bidirectional client-server communication with JSON payloads and bearer-token authentication.
 
 ### 2. Client-Side Interface & Usability (20 pts)

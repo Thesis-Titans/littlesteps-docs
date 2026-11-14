@@ -221,7 +221,18 @@ To satisfy the CIT 210 requirement for a live external REST Data API, `littleste
 * **Licence note:** Open Library data is published with no new rights asserted by the Internet Archive; the licensing page notes that existing rights issues may apply to some contributions ([Open Library licensing](https://openlibrary.org/developers/licensing)).
 * **Offline Resilience:** If Open Library times out or returns an error, the API returns a curated local backup JSON list with HTTP status 200 and `"provenance": { "source": "local-fallback" }` and `Cache-Control: public, max-age=60`.
 
-### 5.2 Learning Catalog: `GET /api/v1/catalog/activities` and `/api/v1/catalog/activities/:id`
+### 5.2 Endpoint Specification: `GET /api/v1/catalog/books/search`
+* **Access:** Public read-only (unauthenticated).
+* **Query Parameters:**
+  - `q` (string, required, 1 to 100 characters): Search terms (e.g. book title, author, or keyword). Missing or empty query returns `400 INVALID_INPUT`.
+  - `limit` (integer, optional, default: `10`, max: `20`): Page size.
+* **Upstream Service:** `https://openlibrary.org/search.json?q={q}&limit={limit}`
+* **Server-Side In-Memory Cache:** Responses are cached in memory for **60 minutes** (`Cache-Control: public, max-age=3600`).
+* **Client Response Format:** Same book collection format as `/catalog/books` (fields: `id`, `title`, `authors`, `coverUrl`, `subjects`, `provenance`).
+* **Closed-Loop Planning:** Books returned by this search can be passed to `POST /api/v1/ai/story-activity` to generate an AI play companion that can be scheduled directly to the child's daily routine (`POST /api/v1/children/:id/plans`).
+* **Offline Resilience:** On upstream failure or network interruption, returns a curated search fallback list matching common search queries.
+
+### 5.3 Learning Catalog: `GET /api/v1/catalog/activities` and `/api/v1/catalog/activities/:id`
 
 > **Implemented in littlesteps-api PR #20** (OpenAPI version 0.2.0, review fixes in PR #23), using synthetic fixtures until the source review in Docs #3 is complete.
 
@@ -232,7 +243,7 @@ To satisfy the CIT 210 requirement for a live external REST Data API, `littleste
 * **`CatalogActivity` fields:** `id`, `title`, `type`, `language`, `setting`, `ageBand`, `domain`, `durationMinutes` (1-180), `durationEstimate`, `materials`, `instructions` (array of steps), `provenanceSource`, `status` (`reviewed_approved`, `synthetic_fixture`; the OpenAPI draft also lists `draft`, which `data-model.md` does not) and `limitations`.
 * **Empty until reviewed:** production serves an empty catalog (`total: 0`, `items: []`, and `404` by id) until reviewed content is loaded. Synthetic engineering fixtures are never served as approved content.
 
-### 5.3 Weather Hint: `GET /api/v1/catalog/weather`
+### 5.4 Weather Hint: `GET /api/v1/catalog/weather`
 
 > **Implemented in littlesteps-api PR #56** (7 November 2026), per ADR-009 and FR-02/FR-06.
 
@@ -347,6 +358,61 @@ Generates companion play and discussion activities based on a real book selected
   }
   ```
 * **Resilience and Fallback:** Bounded at 8 seconds. If provider is unconfigured, times out, throws, or provider output fails schema or non-diagnostic denylist validation, the endpoint gracefully falls back to deterministic Tier 3 catalog ranking matched on age band and subjects (`tier: 3`, `source: "catalog"`, `badge: null`).
+
+#### `POST /api/v1/ai/chat`
+
+Conversational play & routine adaptation assistant. Supports interactive caregiver dialogue regarding everyday household play, duration adjustments, and play adaptations across sibling age differences, while strictly redirecting medical or diagnostic inquiries. Requires a Bearer token and is rate-limited (20/hr per user, 60/hr per IP).
+
+* **Request Payload (strict):**
+  - `message` (string, required, 1 to 500 characters): Caregiver's conversational question.
+  - `ageBand` (string, required): One of `0-5m`, `6-11m`, `12-23m`, `24-35m`, `36-47m`, `48-59m`, `60-71m`.
+  - `childNickname` (string, optional, max 50 characters): Coarse child nickname for conversational greeting; no surnames or birth dates permitted.
+
+  ```json
+  {
+    "message": "What can I play with Maya using an empty cardboard box?",
+    "ageBand": "12-23m",
+    "childNickname": "Maya"
+  }
+  ```
+
+* **Standard Play Response Payload:**
+  ```json
+  {
+    "reply": "An empty cardboard box makes a wonderful peek-a-boo tunnel or drum! Here is a simple 10-minute game to try together.",
+    "suggestedActivity": {
+      "title": "Box Peek-a-Boo & Drumming",
+      "domain": "cognitive",
+      "durationMinutes": 10,
+      "instructions": "Place the box on its side so your child can crawl through or hide toys inside. Tap the sides to make rhythm sounds together.",
+      "materials": ["cardboard box"],
+      "safetyNotice": "Check for staples or sharp tape edges before play."
+    },
+    "provenance": {
+      "tier": 1,
+      "source": "gemini-3.5-flash-lite",
+      "badge": "Suggested by AI",
+      "disclaimer": "Observational play suggestion only. Not developmental assessment."
+    }
+  }
+  ```
+
+* **Pediatric Non-Diagnostic Guardrail:**
+  If the input contains clinical, medical, symptom, or developmental delay inquiries (e.g. fever, speech delay, autism/ADHD screening), the assistant strictly refuses diagnostic advice:
+  ```json
+  {
+    "reply": "I can only help with everyday play and routine ideas. For health or developmental questions, please consult your pediatrician or local barangay health worker.",
+    "suggestedActivity": null,
+    "provenance": {
+      "tier": 1,
+      "source": "gemini-3.5-flash-lite",
+      "badge": "Suggested by AI",
+      "disclaimer": "Observational play suggestion only. Not developmental assessment."
+    }
+  }
+  ```
+
+* **Closed-Loop Routine Planning:** When `suggestedActivity` is present, the client displays an inline **"Add to today's plan"** button that invokes `POST /api/v1/children/:id/plans`, persisting the activity directly to Firestore.
 
 ### 6.2 The 3-Tier Fallback Hierarchy
 

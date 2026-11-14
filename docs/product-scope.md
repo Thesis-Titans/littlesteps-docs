@@ -25,9 +25,10 @@ The table below defines the planned system scope. Inclusion does not mean a capa
 | :--- | :--- | :--- |
 | **User Roles** | Single authenticated caregiver role (parent/guardian managing one or more child profiles). | Multi-tenant school/daycare administration, teacher-student rosters, public social profiles. |
 | **Developmental Guidance** | Educational milestone observation prompts sourced from DepEd ECCD / CDC milestones with clear attributions. | Automated clinical diagnoses, developmental quotient (DQ) scores, developmental delay categorizations. |
-| **Activity Catalog** | Curated Philippine rhymes, stories, motor, cognitive, and sensory activities spanning 7 age bands. | E-commerce purchasing of toys/materials, paid content paywalls, external ad networks. |
+| **Activity Catalog** | Curated Philippine rhymes, stories, motor, cognitive, and sensory activities spanning 7 age bands; live Open Library book search for caregiver-owned books; in-app readable public-domain Philippine action songs and rhymes; closed-loop daily routine scheduling. | E-commerce purchasing of toys/materials, paid content paywalls, external ad networks, digital piracy or redistribution of copyrighted full-text books. |
 | **Messaging & Social** | Private caregiver observation journal strictly isolated per user account. | In-app direct messaging, public forums, community comment threads, photo sharing with other users. |
-| **AI Integration** | Server-side semantic activity recommender constrained strictly to the reviewed catalog, plus a storybook companion that drafts one short play idea from a book's public metadata; both labeled as AI, non-diagnostic, and backed by deterministic catalog fallback. | Unconstrained generative text models diagnosing symptoms, conversational AI roleplaying as a pediatrician. |
+| **AI Integration** | Server-side semantic activity recommender (Idea Helper); storybook play companion drafting short play ideas from public book metadata; conversational play & routine adaptation assistant answering caregiver questions regarding household play adaptations, with direct "Add to Today's Plan" actions and 3-tier fallback (Gemini &rarr; Ollama &rarr; Deterministic catalog). | Unconstrained generative text models diagnosing symptoms or illnesses, conversational AI roleplaying as a pediatrician or child psychologist, automated psychometric or delay labeling, open unguided clinical chatbots. |
+| **External APIs** | Open Library REST API (bibliographic search & subject metadata), Open-Meteo REST API (coarse city-level weather forecast for indoor/outdoor play hints), Google Gemini API (structured recommendations & conversational play assistance). | Continuous device GPS tracking, commercial paid weather radars, DRM content streaming services, external social media platforms. |
 | **Hardware & Sensors** | Standard responsive web browsers and mobile application touch interfaces. | Wearable biometric monitors, IoT camera streaming, automated video behavioral tracking. |
 
 ---
@@ -112,10 +113,10 @@ Per CC 207B requirements, a 5-member team must deliver at least 6 core features 
 ### FR-04: Story, Rhyme, and Learning Activity Library
 - **Primary Actor:** Caregiver
 - **Preconditions:** None for viewing public reviewed catalog; authenticated to save/schedule.
-- **Inputs:** Age-band filter (0–71 mos), domain filter (Cognitive, Motor, Language, Socio-Emotional), language filter (English, Filipino, Hiligaynon), required materials keyword search, storybook subject tags.
-- **Processing:** Query engine executes multi-factor filtering against the reviewed activity catalog and queries the Open Library REST API for children's literature with server-side caching ([ADR-010](architecture-decisions.md)).
-- **Outputs:** Rich learning resource cards displaying activity title, source provenance attribution, age band, duration, instructions, materials list, and "Add to Daily Routine" action, plus dynamic children's book cards with covers.
-- **Verification Method:** Integration tests verifying catalog search, Open Library proxy responses, and provenance metadata validation.
+- **Inputs:** Age-band filter (0–71 mos), domain filter (Cognitive, Motor, Language, Socio-Emotional), language filter (English, Filipino, Hiligaynon), required materials keyword search, storybook subject tags, book title search query.
+- **Processing:** Query engine executes multi-factor filtering against the reviewed activity catalog, queries Open Library REST endpoints (`GET /api/v1/catalog/books` and `GET /api/v1/catalog/books/search`) with server-side caching ([ADR-010](architecture-decisions.md), [ADR-013](architecture-decisions.md)), and provides verified public-domain Philippine nursery rhymes with full in-app lyrics and action cues.
+- **Outputs:** Rich learning resource cards displaying activity title, source provenance attribution, age band, duration, instructions, materials list, and "Add to daily routine" action; searchable children's book cards with covers; and in-app sing-along lyrics for traditional Filipino rhymes (*Bahay Kubo*, *Tong Tong Tong Pakitong-kitong*).
+- **Verification Method:** Integration tests verifying catalog search, Open Library proxy responses, book search query routing, and provenance metadata validation.
 
 ### FR-05: Weekly Progress Summary
 - **Primary Actor:** Caregiver
@@ -125,14 +126,19 @@ Per CC 207B requirements, a 5-member team must deliver at least 6 core features 
 - **Outputs:** Formatted weekly reflection dashboard showing activity counts by domain, celebrated milestones, reflection prompts, and empty/low-data guidance cards.
 - **Verification Method:** Deterministic unit tests comparing known activity logs against calculated summary statistics; tests ensuring absence of diagnostic phraseology.
 
-### FR-06: AI Activity Suggestion Helper
+### FR-06: AI Activity Suggestion Helper & Conversational Play Assistant
 - **Primary Actor:** Caregiver
 - **Preconditions:** Caregiver authenticated; selected child profile with age band; network connectivity (or fallback triggered).
-- **Inputs:** Available materials on hand (e.g., "paper, spoons, cardboard box"), available time (e.g., "15 minutes"), environment (indoor/outdoor, preselected from the optional weather hint when it is on), language preference.
-- **Processing:** Server-side Firebase Cloud Function invokes the AI recommender (Gemini API, [ADR-008](architecture-decisions.md)) with strict data minimization (no child PII or journal text); model matches constraints to valid reviewed catalog IDs; server validates response against catalog schema; if AI fails or times out (8s), server executes deterministic rule-based catalog fallback.
-- **Outputs:** Tailored activity suggestion card clearly stamped with AI badge and disclaimer: *"Suggested by AI"* and the line *"You know your child best. Change it as you like, and stay close while you play."*, with one-click "Add to today's plan" and "Another idea" actions.
-- **Storybook Companion ([ADR-010](architecture-decisions.md)):** From a storybook card (FR-04), the caregiver can ask for a play idea. Only the book title, subject tags and the child's age band are sent. Unlike the activity helper, the model writes a new short idea (title, instructions, safety notice) instead of choosing a catalog ID; the server validates it against the response schema and the non-diagnostic term list, and if that check or the provider fails, it returns a reviewed catalog activity matched on age band and subject instead.
-- **Verification Method:** Unit tests for schema validation of AI outputs; timeout tests verifying deterministic fallback triggers reliably on provider error; tests confirming a storybook idea that fails validation is replaced by a catalog activity.
+- **Inputs:**
+  1. *Structured Idea Helper:* Available materials on hand (e.g., "paper, spoons, cardboard box"), available time (e.g., "15 minutes"), environment (indoor/outdoor, preselected from the optional weather hint when it is on), language preference.
+  2. *Storybook Companion:* Selected book title and subject tags from Open Library or caregiver book search.
+  3. *Conversational Play Assistant:* Conversational caregiver query regarding everyday household play, sibling adaptations, or time adjustments (e.g., *"What can I play with Maya using an empty shoe box?"*).
+- **Processing:** Server-side Firebase Cloud Function invokes the AI engine (Gemini API, [ADR-008](architecture-decisions.md), [ADR-013](architecture-decisions.md)) with strict data minimization (zero child PII, zero journal text, zero location tracking); model matches constraints to valid reviewed catalog IDs or formats structured play companion activities; enforces strict pediatric non-diagnostic system prompts (immediately redirecting medical, clinical, or developmental assessment questions to pediatricians or barangay health workers); if AI fails, rate limits, or times out (8s), server executes deterministic rule-based catalog fallback.
+- **Outputs:**
+  1. *Tailored Activity Suggestion Card:* Stamped with AI badge and disclaimer: *"Suggested by AI"* and *"You know your child best. Change it as you like, and stay close while you play."*, with direct "Add to today's plan" and "Another idea" actions.
+  2. *Storybook Play Companion:* Screen-free companion play idea with an actionable **"Add to today's plan"** button that writes directly to the child's daily schedule (`POST /api/v1/children/:id/plans`).
+  3. *Conversational Play Drawer:* Guided interactive dialogue offering play adaptations and household suggestions, where every suggestion includes an inline "Add to today's plan" button.
+- **Verification Method:** Unit tests for schema validation of AI outputs; timeout tests verifying deterministic fallback triggers reliably on provider error; non-diagnostic prompt injection tests verifying medical inquiries trigger healthcare worker referral responses; closed-loop planning integration tests verifying scheduled story play activities appear in the child's daily plan.
 
 ---
 
