@@ -115,4 +115,23 @@ The following baseline improvements were completed prior to team evaluation:
 2. **Copywriter Tone Cleanup**: Removed AI buzzwords (*"Find a personalized play idea in seconds"*) in favor of clear, grounded caregiver copy.
 3. **Balanced Responsive Layout**: Removed the rigid 70ch width clamp that previously caused severe blank voids on wide desktop displays; added responsive 2-column input grid and multi-column suggestion cards.
 4. **Header Streamlining**: Removed duplicate subtitle greetings and redesigned the time-of-day welcome into a polished accent banner.
-5. **Offline Safety Invariant**: Enforced strict offline guards ensuring no false claims of success are ever displayed when disconnected.
+5. **Main Column Layout Balance (H8)**: Moved the greeting banner inside the main column above the plan activities, eliminating awkward full-width spanning and balancing the vertical column height against the right sidebar widgets.
+6. **Offline Safety Invariant**: Enforced strict offline guards ensuring no false claims of success are ever displayed when disconnected.
+
+---
+
+## 5. Architectural & Domain Clarifications
+
+### 5.1 Why the AI Feature Uses a Structured Form Instead of an Open Chatbot
+- **Child Safety & Halucination Prevention**: Free-form conversational models can hallucinate unsafe or physically hazardous play for infants (e.g. choking hazards, toxic materials, unsafe water play). LittleSteps binds AI outputs strictly to approved, verified Philippine ECCD curriculum activities.
+- **Strict Non-Diagnostic Safeguard**: Open chatbots frequently generate unverified clinical opinions. LittleSteps is strictly a home play companion and must never provide diagnostic medical assessments.
+- **Privacy & Data Minimization (RA 10173)**: Gemini API free-tier terms allow Google to log prompts for model training. To protect child privacy, zero child names, locations, caregiver IDs, or private journal notes are sent to the AI.
+- **Cognitive Load for Parents**: Busy caregivers need actionable ideas in under 5 seconds with 3 simple taps, rather than crafting complex conversational prompts.
+
+### 5.2 Why Book Contents Cannot Be Read Inside the App
+- **Open Library API Scope & Copyright**: Open Library is an open bibliographic catalog metadata service (titles, authors, subjects, covers). It does not provide open digital distribution of copyrighted children's picture books.
+- **Screen-Free Play Philosophy**: LittleSteps exists to reduce passive infant screen time and encourage interactive, physical caregiver-child bonding. The Storybooks shelf inspires physical reading at home, and the "Get a play idea" button uses AI to generate real-world play activities based on the book's themes.
+
+### 5.3 Deterministic Catalog Fallback vs. Dynamic AI Recommendations
+- When running in offline or unconfigured environments, the backend falls back to Tier 3 (Deterministic Catalog Matcher). Its ranking formula (`domain match -> material overlap -> duration -> id ascending`) contains zero randomness by design to ensure test reproducibility, which produces identical top-ranked recommendations for identical inputs.
+- When `GEMINI_MODEL=gemini-3.5-flash-lite` is connected with a valid API key, the badge displays "Suggested by AI" with dynamic, personalized rationale. Selecting different domains, durations, or household materials dynamically reshuffles the suggestions.
