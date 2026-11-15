@@ -359,61 +359,6 @@ Generates companion play and discussion activities based on a real book selected
   ```
 * **Resilience and Fallback:** Bounded at 8 seconds. If provider is unconfigured, times out, throws, or provider output fails schema or non-diagnostic denylist validation, the endpoint gracefully falls back to deterministic Tier 3 catalog ranking matched on age band and subjects (`tier: 3`, `source: "catalog"`, `badge: null`).
 
-#### `POST /api/v1/ai/chat`
-
-Conversational play & routine adaptation assistant. Supports interactive caregiver dialogue regarding everyday household play, duration adjustments, and play adaptations across sibling age differences, while strictly redirecting medical or diagnostic inquiries. Requires a Bearer token and is rate-limited (20/hr per user, 60/hr per IP).
-
-* **Request Payload (strict):**
-  - `message` (string, required, 1 to 500 characters): Caregiver's conversational question.
-  - `ageBand` (string, required): One of `0-5m`, `6-11m`, `12-23m`, `24-35m`, `36-47m`, `48-59m`, `60-71m`.
-  - `childNickname` (string, optional, max 50 characters): Coarse child nickname for conversational greeting; no surnames or birth dates permitted.
-
-  ```json
-  {
-    "message": "What can I play with Maya using an empty cardboard box?",
-    "ageBand": "12-23m",
-    "childNickname": "Maya"
-  }
-  ```
-
-* **Standard Play Response Payload:**
-  ```json
-  {
-    "reply": "An empty cardboard box makes a wonderful peek-a-boo tunnel or drum! Here is a simple 10-minute game to try together.",
-    "suggestedActivity": {
-      "title": "Box Peek-a-Boo & Drumming",
-      "domain": "cognitive",
-      "durationMinutes": 10,
-      "instructions": "Place the box on its side so your child can crawl through or hide toys inside. Tap the sides to make rhythm sounds together.",
-      "materials": ["cardboard box"],
-      "safetyNotice": "Check for staples or sharp tape edges before play."
-    },
-    "provenance": {
-      "tier": 1,
-      "source": "gemini-3.5-flash-lite",
-      "badge": "Suggested by AI",
-      "disclaimer": "Observational play suggestion only. Not developmental assessment."
-    }
-  }
-  ```
-
-* **Pediatric Non-Diagnostic Guardrail:**
-  If the input contains clinical, medical, symptom, or developmental delay inquiries (e.g. fever, speech delay, autism/ADHD screening), the assistant strictly refuses diagnostic advice:
-  ```json
-  {
-    "reply": "I can only help with everyday play and routine ideas. For health or developmental questions, please consult your pediatrician or local barangay health worker.",
-    "suggestedActivity": null,
-    "provenance": {
-      "tier": 1,
-      "source": "gemini-3.5-flash-lite",
-      "badge": "Suggested by AI",
-      "disclaimer": "Observational play suggestion only. Not developmental assessment."
-    }
-  }
-  ```
-
-* **Closed-Loop Routine Planning:** When `suggestedActivity` is present, the client displays an inline **"Add to today's plan"** button that invokes `POST /api/v1/children/:id/plans`, persisting the activity directly to Firestore.
-
 ### 6.2 The 3-Tier Fallback Hierarchy
 
 ```
@@ -493,4 +438,4 @@ When presenting the API Integration during the **CIT 210 Code Defense / Presenta
 > 1. **Decomposition & Responsibility:** *"Our backend is an Express Node.js API hosted as a serverless Firebase Cloud Function. It serves as an authoritative gateway between the React frontend and Cloud Firestore. We enforce strict server-side validation using Zod and maintain a clean OpenAPI 3.1 contract."*
 > 2. **Authentication & BOLA Defense:** *"Every protected request carries a Firebase ID token. Our auth middleware cryptographically decodes the token on the server and derives the caregiver's UID directly from the verified signature. To prevent Broken Object Level Authorization (OWASP API1:2023), accessing an unowned child record returns HTTP 404 (our design choice, so an ID's existence is not revealed)."*
 > 3. **Dual-API Layering:** *"In response to our course requirements, we implemented a dual-API integration pipeline. First, we query the **Open Library REST API** to fetch authentic children's storybooks, managing query parameters, pagination, and server-side response caching. Second, we layer **Google Gemini AI** on top of the fetched book metadata to generate contextual, screen-free toddler play activities."*
-> 4. **Resilience & Fallbacks:** *"Our AI architecture implements a 3-tier fallback hierarchy: Cloud Gemini with an 8-second timeout $\to$ Local Ollama for offline demo resilience $\to$ Deterministic Philippine curriculum catalog. If any network or quota failure occurs, the application degrades gracefully without breaking the user experience."*
+> 4. **Resilience & Fallbacks:** *"Our AI architecture implements a 3-tier fallback hierarchy: Cloud Gemini with an 8-second timeout, then a deterministic Philippine curriculum catalog. A local Ollama tier is planned but not built. If any network or quota failure occurs, the application shows a catalog activity instead of an error."*

@@ -226,14 +226,6 @@ Sign-in and the settings, privacy-notice, about and help views cover PRQ-01 and 
 
 Off by default. When a caregiver chooses a city in Settings ("Weather for activity ideas"), Today shows a hint such as "Rain likely this afternoon · Indoor ideas" that applies the Indoor filter, and the AI helper preselects the matching setting. It carries the attribution "Weather data by Open-Meteo.com" and disappears silently when weather data is unavailable. See [ADR-009](architecture-decisions.md).
 
-### 5.4 Conversational Play Assistant (Play & Routine Adaptation)
-
-Accessible under Explore, the **Conversational Play Assistant** provides interactive, guided dialogue for parents seeking real-time play adaptations using household objects or managing play across sibling age differences ([ADR-013](architecture-decisions.md)).
-- **UI Presentation:** Clean drawer or side panel with quick conversation starters (*"Quick idea with a cardboard box"*, *"Calm indoor play for 10 minutes"*).
-- **Pediatric Non-Diagnostic Guardrail:** Free-form medical questions (sickness, medication, delays, diagnoses) trigger an immediate, empathetic redirection to licensed pediatricians or local barangay health workers.
-- **Closed-Loop Scheduling:** Every generated activity recommendation renders with an inline **"Add to today's plan"** button that writes directly to the child's Firestore schedule (`POST /api/v1/children/:id/plans`).
-- **Privacy & Minimization:** No child PII (surnames, exact birth dates, journal text) is ever transmitted to the LLM backend.
-
 ---
 
 ## 6. Design System Tokens & Foundations

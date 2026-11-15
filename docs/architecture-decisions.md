@@ -226,7 +226,7 @@ graph TD
   - Implement `POST /api/v1/ai/story-activity` to generate screen-free play ideas based on the fetched book metadata.
   - Standardize 3-tier AI fallback: if Gemini fails or times out (8 seconds), fall back to local Ollama (if running) or immediately to the verified deterministic curriculum activity catalog.
 - **Consequences:**
-  - *Positive:* Fully satisfies CIT 210's 25-pt API integration requirement by demonstrating real REST data integration alongside modern AI augmentation; guarantees 100% offline demo resilience via Ollama and deterministic catalog fallback.
+  - *Positive:* Fully satisfies CIT 210's 25-pt API integration requirement by demonstrating real REST data integration alongside modern AI augmentation; the deterministic catalog fallback keeps the app usable when Gemini fails (the Ollama tier is planned, not built).
   - *Trade-off:* Requires maintaining the proxy endpoint and mapping Open Library book schemas into LittleSteps card formats.
 
 ---
@@ -277,31 +277,26 @@ graph TD
 
 ---
 
-### ADR-013: Closed-Loop Multi-API Integration and Conversational Play Assistant
-- **Status:** Accepted (14 November 2026)
+### ADR-013: Closed-Loop Multi-API Integration, Free Chat Rejected
+- **Status:** Accepted (14 November 2026); amended 15 November 2026 to remove the conversational assistant.
 - **Context:**
-  1. *CIT 210 External API Utility:* Course evaluation criteria (25 points) require that external API integrations provide direct, practical utility within the application workflow rather than decorative viewing. An integration that only displays book covers without connecting to user action risks low scoring.
-  2. *Philippine Caregiver Context:* Filipino parents at home frequently do not own the foreign children's literature returned by default Open Library subject queries. The platform requires both a live search capability (to look up books caregivers actually have at home) and an immediately accessible set of in-app Philippine ECCD nursery rhymes (*Bahay Kubo*, *Tong Tong Tong Pakitong-kitong*).
-  3. *AI / LLM Utilization & Safety:* The project requires demonstrable LLM capabilities. However, an unguided open medical chatbot violates the clinical non-diagnostic invariant, invites prompt injections, and risks generating unsafe physical play advice for infants.
+  1. *CIT 210 External API Utility:* An external API must serve a real step in the caregiver's workflow, not only display data. A book list with no link to planning is decoration.
+  2. *Philippine Caregiver Context:* Many families do not own the foreign picture books that Open Library returns by default. Caregivers need to search for the books they actually have, and Explore needs in-app Philippine rhymes.
+  3. *AI Safety:* A free-text chat for parents of toddlers invites medical questions and prompt injection. A keyword blocklist is not a sound answer: the first version blocked ordinary play requests (the pattern for "pain" matched "paint").
 - **Options Considered:**
-  1. *Passive Open Library Book Display Only:* Display book covers and subject tags; play idea button shows a dead-end "Done" dialog. (Rejected: low academic utility; disconnected from daily planning).
-  2. *Open Clinical Chatbot:* A free-form conversational chat interface roleplaying as a pediatric assistant. (Rejected: severe safety hazard, violates non-diagnostic baseline, violates RA 10173 child privacy).
-  3. *Closed-Loop Multi-API Architecture with Bounded Conversational Play Assistant (Chosen):*
-     - Connect Open Library companion play ideas directly into the daily routine schedule (`onPlan` &rarr; `POST /api/v1/children/:id/plans`).
-     - Provide live book search (`GET /api/v1/catalog/books/search?q={query}`) with in-memory caching.
-     - Include full-text readable public-domain Philippine ECCD action songs and rhymes.
-     - Provide a bounded **Conversational Play & Routine Adaptation Assistant** powered by Gemini 3.5 Flash Lite with strict pediatric non-diagnostic guardrails, returning structured play ideas with an inline "Add to today's plan" action.
+  1. *Passive Open Library display only:* covers and tags with no link to planning. (Rejected: no utility.)
+  2. *Open clinical chatbot:* free-form chat answering developmental or health questions. (Rejected: violates the non-diagnostic boundary and RA 10173.)
+  3. *Conversational play assistant guarded by a keyword blocklist:* built and then removed. (Rejected: out of the product scope, absent from `openapi.yaml`, and the blocklist produced false blocks on play words. A free-text feature needs an intent check and a measured false-block rate before it can return.)
+  4. *Closed-loop multi-API architecture with catalog-constrained AI (Chosen).*
 - **Decision:**
-  - Implement a closed-loop Storybook-to-Plan pipeline: caregivers select or search any book, generate an AI play companion activity, and click "Add to today's plan" to write directly to Firestore.
-  - Expose `GET /api/v1/catalog/books/search` in `littlesteps-api` proxying Open Library's search API.
-  - Add in-app readable Philippine ECCD sing-along action rhymes under Explore ("Read & Sing Together") with complete lyrics and motor movement prompts.
-  - Implement `POST /api/v1/ai/chat` for conversational play suggestions. The system prompt enforces:
-    - Persona: Warm, encouraging early-childhood play companion.
-    - Pediatric Guardrail: Any question regarding sickness, symptoms, medication, speech delays, or autism/ADHD developmental screening must be warmly redirected to a licensed pediatrician or barangay health worker.
-    - Output: Conversational advice plus a structured activity payload with a direct "Add to today's plan" button.
+  - Closed loop: a caregiver searches or selects a book, gets a play idea from the story companion, and chooses "Add to today's plan", which writes to Firestore (`POST /api/v1/children/:id/plans`).
+  - `GET /api/v1/catalog/books/search` proxies the Open Library search API with an in-memory cache.
+  - In-app Philippine rhymes under Explore, shown as "Provisional Academic Reference — Pending Review" until the content review in Docs #3 is done. Rights to the lyrics are not yet confirmed.
+  - AI stays limited to the idea helper (`POST /api/v1/ai/recommendations`) and the story companion (`POST /api/v1/ai/story-activity`). Both pick from or are validated against reviewed content, use a fixed response schema and fall back to the catalog.
+  - `POST /api/v1/ai/chat` and its keyword blocklist are removed.
 - **Consequences:**
-  - *Positive:* Fully satisfies CIT 210's API integration rubric by creating a meaningful, bidirectional data flow between external APIs (Open Library, Open-Meteo, Gemini) and user persistence (Firestore daily plan); prevents hallucinated or dangerous medical advice; solves the physical book availability barrier for Philippine families.
-  - *Trade-off:* Requires maintaining server-side search routing, conversational schema validation, and guardrail regression tests.
+  - *Positive:* a real data flow from external APIs (Open Library, Open-Meteo, Gemini) to the caregiver's plan in Firestore, with a small and defensible AI surface.
+  - *Trade-off:* no free-text conversation. A catalog-grounded "Adapt this activity" action is under consideration instead.
 
 ---
 
