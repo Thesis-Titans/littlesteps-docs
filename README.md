@@ -52,7 +52,7 @@ All system-wide specifications live centrally in `docs/` and adhere to ISO/IEC/I
 - [Verification and traceability matrix](docs/traceability-matrix.md) (ISO 29148 / PMBOK): end-to-end traceability linking requirements and CIT 210 rubric items to test suites, tracking issues, and evidence.
 
 ### 2. Architecture, API & Security
-- [Architecture decisions](docs/architecture-decisions.md) (ISO/IEC/IEEE 42010): Architecture Decision Records (ADRs 001–010) detailing system topology, Firebase Cloud Functions, and Gemini AI integration.
+- [Architecture decisions](docs/architecture-decisions.md) (ISO/IEC/IEEE 42010): Architecture Decision Records (ADRs 001–014) detailing system topology, Firebase Cloud Functions, and Gemini AI integration.
 - [API reference and integration guide](docs/api-reference.md) (OpenAPI 3.1 & ISO 42010): REST endpoints catalog, Open Library data integration, 3-tier AI fallback engine, error codes, and sequence diagrams.
 - [Data model specification](docs/data-model.md) (IEEE 1016): Cloud Firestore collection hierarchies, entity schemas, and data lifecycle requirements.
 - [Security, privacy, and AI safeguards](docs/security-privacy-ai.md) (RA 10173 / RA 12199): mandatory token verification, BOLA non-leakage defenses, and child privacy guardrails.

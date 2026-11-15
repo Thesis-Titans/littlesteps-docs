@@ -29,7 +29,7 @@ Level 1: Organization Principles (Shared conventions, review boundaries, academi
    ▼
 Level 2: Canonical Project Documentation (`littlesteps-docs`)
    │      ├── Product Scope & Boundaries
-   │      ├── Architecture & ADRs (ADRs 001–010)
+   │      ├── Architecture & ADRs (ADRs 001–014)
    │      ├── API Reference & Open Library REST Integration
    │      ├── Security, Privacy & AI Guardrails
    │      ├── Research Register & Content Provenance
@@ -64,7 +64,7 @@ LittleSteps uses a **docs-as-code** workflow: Markdown documents are version-con
 | **ISO 9241 / Usability** | Prototype Traceability & Storyboards | [`docs/prototype-traceability-storyboards.md`](prototype-traceability-storyboards.md) | Provisional caregiver storyboards, minimal prototype scope (P0/P1), and 10-point walkthrough acceptance checklist for Docs Issue #15. |
 | **ISO 9241-11:2018** | Usability Field Protocol & User Research Guide | [`docs/parent-walkthrough-guide.md`](parent-walkthrough-guide.md) | Informal caregiver testing protocol, ethical consent script, task matrix, and findings template for M0 prototype evaluation. |
 | **IEEE 29148 / Statutory** | Domain Sourcing & Legislative Foundations | [`docs/philippine-content-provenance.md`](philippine-content-provenance.md) & [`docs/research-register.md`](research-register.md) | Statutory frameworks (RA 12199, RA 10173), official curriculum references, item-level citation schemas, and external regulatory registers. |
-| **ISO/IEC/IEEE 42010:2022** | Architecture Description | [`docs/architecture-decisions.md`](architecture-decisions.md) | Architecture Decision Records (ADRs 001–010), component topology, and selected architecture views. |
+| **ISO/IEC/IEEE 42010:2022** | Architecture Description | [`docs/architecture-decisions.md`](architecture-decisions.md) | Architecture Decision Records (ADRs 001–014), component topology, and selected architecture views. |
 | **IEEE 1016** | Software Design Description (**SDD**) — Data Model Detail | [`docs/data-model.md`](data-model.md) | Proposed Cloud Firestore collection hierarchies, entity schemas, caregiver ownership paths, and data lifecycle requirements. |
 | **OpenAPI 3.1 & ISO 42010** | Software Design Description (**SDD**) — Interface View | [`docs/api-reference.md`](api-reference.md) & [`littlesteps-api/openapi/openapi.yaml`](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml) | Machine-readable technical contract, Open Library REST integration, 3-tier AI fallback engine, request/response envelopes, and error codes. |
 | **PMBOK / ISO 21500** | Project Management Plan (**PMP**) — Scope & Schedule Baseline | [`docs/execution-plan.md`](execution-plan.md) | Delivery milestones (M0–M5), academic dates, work packages, dependencies, and the prototype validation gate. |
@@ -106,7 +106,7 @@ Evaluated under the [Official CIT 210 Final Project Evaluation Rubric](academic/
    - **Demo & Functionality (15 pts):** Stable live demonstration of core user journeys against local emulators with a rehearsed backup video.
 3. **Supporting Documentation:**
    - [Developer Onboarding Guide](getting-started.md) for reproducible full-stack local execution.
-   - [API Reference & Integration Guide](api-reference.md), Architecture decision records ([ADRs 001–010](architecture-decisions.md)), and [Traceability Matrix](traceability-matrix.md).
+   - [API Reference & Integration Guide](api-reference.md), Architecture decision records ([ADRs 001–014](architecture-decisions.md)), and [Traceability Matrix](traceability-matrix.md).
 
 ### 4.3 CIT 246: IT Project Management Plan
 1. **Checkpoint 1 Proposal (Due October 14, 2026):** One-page project concept covering Organization, Problem, Proposed System, and Possible Sponsor (A4, Arial 11), documented in [`docs/academic/cit246/checkpoint-1-concept.md`](academic/cit246/checkpoint-1-concept.md).
