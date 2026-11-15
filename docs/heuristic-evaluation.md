@@ -122,7 +122,7 @@ The following baseline improvements were completed prior to team evaluation:
 
 ## 5. Architectural & Domain Clarifications
 
-### 5.1 Why the AI Feature Uses a Structured Form Alongside Guided Dialogue
+### 5.1 Why the AI Feature Uses a Structured Form, Not Free Chat
 - **Child Safety & Halucination Prevention**: Free-form conversational models can hallucinate unsafe or physically hazardous play for infants (e.g. choking hazards, toxic materials, unsafe water play). LittleSteps binds AI outputs strictly to approved, verified Philippine ECCD curriculum activities.
 - **Strict Non-Diagnostic Safeguard**: Open chatbots frequently generate unverified clinical opinions. LittleSteps is strictly a home play companion and must never provide diagnostic medical assessments.
 - **Privacy & Data Minimization (RA 10173)**: Gemini API free-tier terms allow Google to log prompts for model training. To protect child privacy, zero child names, locations, caregiver IDs, or private journal notes are sent to the AI.
@@ -131,19 +131,13 @@ The following baseline improvements were completed prior to team evaluation:
 ### 5.2 Why Book Contents Cannot Be Read Inside the App
 - **Open Library API Scope & Copyright**: Open Library is an open bibliographic catalog metadata service (titles, authors, subjects, covers). It does not provide open digital distribution of copyrighted children's picture books.
 - **Screen-Free Play Philosophy**: LittleSteps exists to reduce passive infant screen time and encourage interactive, physical caregiver-child bonding. The Storybooks shelf inspires physical reading at home, and the "Get a play idea" button uses AI to generate real-world play activities based on the book's themes.
-- **In-App Philippine Rhyme Solution**: To support families without foreign children's books at home, LittleSteps provides in-app readable public-domain Philippine nursery rhymes (*Bahay Kubo*, *Tong Tong Tong Pakitong-kitong*) with complete lyrics and motor action prompts under Explore.
+- **In-App Philippine Rhyme Solution**: To support families without foreign children's books at home, LittleSteps provides in-app readable traditional Philippine nursery rhymes, shown as pending review until the content review (Docs #3) confirms sources and rights, (*Bahay Kubo*, *Tong Tong Tong Pakitong-kitong*) with complete lyrics and motor action prompts under Explore.
 
 ### 5.3 Deterministic Catalog Fallback vs. Dynamic AI Recommendations
 - When running in offline or unconfigured environments, the backend falls back to Tier 3 (Deterministic Catalog Matcher). Its ranking formula (`domain match -> material overlap -> duration -> id ascending`) contains zero randomness by design to ensure test reproducibility, which produces identical top-ranked recommendations for identical inputs.
 - When `GEMINI_MODEL=gemini-3.5-flash-lite` is connected with a valid API key, the badge displays "Suggested by AI" with dynamic, personalized rationale. Selecting different domains, durations, or household materials dynamically reshuffles the suggestions.
 
-### 5.4 Conversational Play Assistant Guardrails & Non-Diagnostic Invariant
-- **Play & Routine Bounding Only**: The Conversational Play Assistant is strictly scoped to everyday household play ideas, activity duration adjustments, and play adaptations for siblings.
-- **Pediatric Non-Diagnostic Guardrail**: The system prompt strictly prohibits diagnosing illnesses, assessing developmental delays, or prescribing therapy. When asked clinical questions (*"Is Maya delayed because she isn't walking?"*, *"What medicine for fever?"*), the assistant warmly responds with:
-  > *"I can only help with everyday play and routine ideas. For health or developmental questions, please check with your pediatrician or local barangay health worker."*
-- **Actionable Closed-Loop Integration**: Every conversational recommendation returns a structured activity payload accompanied by an "Add to today's plan" button that writes directly to Firestore.
-
-### 5.5 Closed-Loop External API Integration (Fulfilling CIT 210 with Practical Utility)
+### 5.4 Closed-Loop External API Integration (Fulfilling CIT 210 with Practical Utility)
 - Rather than passive data viewing, LittleSteps establishes a bidirectional data flow:
   1. Caregivers search Open Library for books they own (`GET /api/v1/catalog/books/search`).
   2. Gemini drafts a screen-free companion play activity based on the book's themes (`POST /api/v1/ai/story-activity`).
