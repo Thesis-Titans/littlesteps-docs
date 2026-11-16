@@ -142,6 +142,14 @@ classDiagram
 ```
 
 #### Prototype Layout & Component Hierarchy
+
+The progression from structural low-fidelity wireframes to compiled Material 3 high-fidelity screens is illustrated below:
+
+| Low-Fidelity Structural Wireframe | High-Fidelity Design System Prototype |
+|:---:|:---:|
+| ![Low-Fidelity Add Child Wireframe](figures/low-fi-add-child.png)<br/>*Fig 1.1: Low-Fidelity Add Child Wireframe (`Node 306:52`)* | ![High-Fidelity Children Management](figures/hi-fi-children.png)<br/>*Fig 1.2: High-Fidelity Child Profile & Age Brackets (`Node 119:6106`)* |
+| ![Low-Fidelity Today Dashboard](figures/low-fi-today.png)<br/>*Fig 1.3: Low-Fidelity Today Dashboard Wireframe (`Node 306:68`)* | ![High-Fidelity Today Screen](figures/hi-fi-today.png)<br/>*Fig 1.4: High-Fidelity Today Screen Prototype (`Node 73:214`)* |
+
 ```
 +-------------------------------------------------------------+
 | Low-Fidelity Wireframe             High-Fidelity Component  |
@@ -185,54 +193,57 @@ graph LR
 * **Files:** `lib/screens/children/child_profile_screen.dart`, `add_child_screen.dart`, `lib/services/children_service.dart`
 * **User Goal:** Register a toddler with a non-identifying nickname and birth month to establish their developmental baseline.
 * **Component Architecture:** Form managed via `TextEditingController` and `DropdownButtonFormField`. Implements validation rejecting empty names or names $>40$ characters. Automatically categorizes child into standard ECCD brackets (`0-5m`, `6-11m`, `12-23m`, `24-35m`, `36-47m`, `48-59m`, `60-71m`).
-* **Visual Wireframe Layout:**
-  ```
-  +---------------------------------------------+
-  | [<-] Add Child Profile                      |
-  +---------------------------------------------+
-  | Nickname (Optional / Non-PII):             |
-  | [ Maya                                    ] |
-  |                                             |
-  | Developmental Age Bracket:                  |
-  | [ 12-23 months (Toddler Explorer)       v ] |
-  |                                             |
-  | ℹ️ Notice: In compliance with RA 10173,      |
-  | exact birth dates and surnames are never    |
-  | stored. Coarse age bands protect privacy.   |
-  |                                             |
-  | [        Save Child Profile (48px)        ] |
-  +---------------------------------------------+
-  ```
+* **Visual Interface Artifact:**  
+  ![Feature 1: Child Profile Management](figures/hi-fi-children.png)  
+  *Fig 2.1: Child Profile Management & Age-Band Bracket Selection (`Node 119:6106`)*
 
 #### Feature 2: Today's Daily Routine Planning & Execution
 * **Files:** `lib/screens/today/today_screen.dart`, `lib/services/plan_service.dart`
 * **User Goal:** View, track, and complete the scheduled activities for the current day.
 * **Component Architecture:** `ListView.builder` rendering `ActivityCard` instances. Features interactive completion toggling that communicates asynchronously with `POST /api/v1/children/:id/plans`. Integrates an environmental weather alert widget providing real-time suggestions (e.g., indoor sensory play when rain is forecasted) via Open-Meteo.
+* **Visual Interface Artifact:**  
+  ![Feature 2: Today Routine and Weather Guidance](figures/hi-fi-today.png)  
+  *Fig 2.2: Daily Routine Execution & Environmental Weather Guidance (`Node 73:214`)*
 
 #### Feature 3: ECCD Early Learning Activity Catalog
 * **Files:** `lib/screens/explore/explore_screen.dart`, `activity_detail_screen.dart`
 * **User Goal:** Discover structured play ideas filtered by developmental need.
 * **Component Architecture:** Multi-factor filter header using `FilterChip` widgets allowing cross-filtering across 4 primary domains (Cognitive, Motor, Language, Socio-Emotional), indoor/outdoor settings, and time duration (`<10 mins`, `15-30 mins`). Shows complete preparation steps, materials required, and developmental purpose.
+* **Visual Interface Artifact:**  
+  ![Feature 3: ECCD Early Learning Activity Catalog](figures/hi-fi-activities.png)  
+  *Fig 2.3: ECCD Early Learning Activity Catalog with Domain Filtering (`Node 76:537`)*
 
 #### Feature 4: Storybooks & Regional Action Rhymes
 * **Files:** `lib/screens/explore/explore_screen.dart`, `lib/models/book.dart`
 * **User Goal:** Access culturally grounded action rhymes and literature without screens.
 * **Component Architecture:** Displays children's literature metadata fetched via Open Library and curated Philippine action rhymes (*Awit sa Pagpapatulog*, *Tong Tong Tong Pakitong-kitong*, *Lubi-Lubi*) complete with regional provenance tags (Tagalog, Hiligaynon, Cebuano) and guided physical hand-motion instructions for parents.
+* **Visual Interface Artifact:**  
+  ![Feature 4: Storybooks and Regional Action Rhymes](figures/hi-fi-storybooks.png)  
+  *Fig 2.4: Culturally Grounded Children's Storybooks & Traditional Action Rhymes (`Node 195:3931`)*
 
 #### Feature 5: Developmental Milestone Observations
 * **Files:** `lib/screens/milestones/milestones_screen.dart`, `lib/services/milestones_service.dart`
 * **User Goal:** Observe and record emergent toddler milestones during play.
 * **Component Architecture:** Domain-grouped checklist featuring non-clinical observational prompts (e.g., *"Can stack 2 blocks"*, *"Points to named objects"*). Records timestamped parental observations in Cloud Firestore without assigning diagnostic scoring.
+* **Visual Interface Artifact:**  
+  ![Feature 5: Developmental Milestone Observations](figures/hi-fi-milestones.png)  
+  *Fig 2.5: Non-Diagnostic Milestone Observation Checklist (`Node 85:1183`)*
 
 #### Feature 6: Private Caregiver Journal
 * **Files:** `lib/screens/journal/journal_screen.dart`, `lib/services/journal_service.dart`
 * **User Goal:** Log personal parenting notes, child preferences, and behavioral observations.
 * **Component Architecture:** Chronological notebook view with character-bounded input fields (enforcing a 2,000-character ceiling). Fully isolated from AI prompts to safeguard personal domestic reflections.
+* **Visual Interface Artifact:**  
+  ![Feature 6: Private Caregiver Journal](figures/hi-fi-journal.png)  
+  *Fig 2.6: Private Caregiver Journal with RA 10173 Isolation (`Node 85:1393`)*
 
 #### Feature 7: AI-Powered Play Helper & Companion Generator (Core AI Feature)
 * **Files:** `lib/screens/ai/ai_suggestions_screen.dart`, `lib/services/ai_service.dart`
 * **User Goal:** Transform ordinary household items into developmentally sound play ideas.
 * **Component Architecture:** Interactive multi-select chip interface capturing available materials (e.g., *Spoons, Plastic Cups, Cardboard Box*) and available duration. Asynchronously contacts the backend Gemini proxy, renders intermediate loading shimmer states, and parses structured output containing step-by-step guidance, pediatric safety warnings, and the mandatory `"Suggested by AI"` badge.
+* **Visual Interface Artifact:**  
+  ![Feature 7: AI Play Helper Suggestion](figures/hi-fi-ai-idea-helper.png)  
+  *Fig 2.7: AI Play Helper Personalized Recommendation & Pediatric Safety Notice (`Node 76:790`)*
 
 ---
 
