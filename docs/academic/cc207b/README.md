@@ -74,6 +74,8 @@ Honest disclosure in the AI Usage Log does not reduce the score. Undisclosed AI-
 
 ### 4.2 Software documentation
 
+The complete, compiled documentation package is maintained in [**Software Documentation Package**](software-documentation.md).
+
 | Section | Required contents |
 |---|---|
 | i. Overview and Introduction | App name; purpose and target users or client; technology stack (frameworks, SDKs, modules and packages) **with versions** |
