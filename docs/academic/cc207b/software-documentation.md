@@ -14,11 +14,11 @@
 
 | Member Name | Role & Engineering Scope | Syllabus Focus Area |
 |---|---|---|
-| **Mark Alvin Cadangin** | Team Leader & Systems Architect | AI-Powered Feature, System Architecture & Routing |
-| **Faith Pearl D. Vicedo** | Frontend Engineer (Catalog & Activities) | Layout Widgets & Responsive Interaction |
-| **Nherie Rose A. Frias** | Frontend Engineer (Profiles & Forms) | Forms & Bounded Input Validation |
-| **Justin Ray D. Tabaosares** | Client Engineer (Today Routine & Execution) | Asynchronous Operations, API Services & Weather Integration |
-| **Vincent O. Golez** | Client Engineer (Journal & Milestones) | Data Persistence & Caregiver Privacy Safeguards |
+| **Cadangin, Mark Alvin C.** | Team Leader & Systems Architect | AI-Powered Feature, System Architecture & Routing |
+| **Benjamin, Mae Daniella Faith C.** | Frontend Engineer (Catalog & Activities) | Layout Widgets & Responsive Interaction |
+| **Acebuche, Nherie C.** | Frontend Engineer (Profiles & Forms) | Forms & Bounded Input Validation |
+| **Ardeña, Justin Ace A.** | Client Engineer (Today Routine & Execution) | Asynchronous Operations, API Services & Weather Integration |
+| **Tamaño, Vincent John A.** | Client Engineer (Journal & Milestones) | Data Persistence & Caregiver Privacy Safeguards |
 
 ---
 
@@ -365,17 +365,17 @@ gantt
 
 | Member Name | Date | AI Tool Used | Specific Task / Prompt Summary | Code / Output Generated | Member Verification & Custom Modification |
 |---|---|---|---|---|---|
-| **Mark Alvin Cadangin** | 2026-11-07 | Gemini CLI / IDE Assistant | Scaffolding initial Flutter screen skeletons from high-fi Figma specs | Widget layouts for 5 core navigation tabs | Extracted inline widgets into modular files under `lib/screens/`; bound theme tokens from `AppTheme`. |
-| **Faith Pearl D. Vicedo** | 2026-11-10 | Gemini Web | Assistance debugging Dart asynchronous deserialization for catalog items | Dart `fromJson` factory methods for `Activity` models | Added fallback null-coalescing operators for missing image URLs and invalid duration types. |
-| **Nherie Rose A. Frias** | 2026-11-12 | IDE Assistant | Styling custom dropdown and segment buttons for form validation | Flutter `DropdownButtonFormField` styling snippet | Refactored padding, border radius, and focus rings to guarantee 48px touch targets. |
-| **Justin Ray D. Tabaosares** | 2026-11-14 | Gemini Web | Generating test fixture activities adhering to ECCD developmental domains | JSON fixtures representing sensory and fine-motor play ideas | Inspected steps against ECCD developmental guidelines; removed activities requiring unsafe household items. |
-| **Vincent O. Golez** | 2026-11-15 | IDE Assistant | Regular expressions for sanitizing storybook IDs and activity query strings | Dart string replacement regex `replace(/[^a-z0-9-]/g, '')` | Tested boundary conditions with uppercase inputs, emoji characters, and accented Latin glyphs. |
+| **Cadangin, Mark Alvin C.** | 2026-11-07 | Gemini CLI / IDE Assistant | Scaffolding initial Flutter screen skeletons from high-fi Figma specs | Widget layouts for 5 core navigation tabs | Extracted inline widgets into modular files under `lib/screens/`; bound theme tokens from `AppTheme`. |
+| **Benjamin, Mae Daniella Faith C.** | 2026-11-10 | Gemini Web | Assistance debugging Dart asynchronous deserialization for catalog items | Dart `fromJson` factory methods for `Activity` models | Added fallback null-coalescing operators for missing image URLs and invalid duration types. |
+| **Acebuche, Nherie C.** | 2026-11-12 | IDE Assistant | Styling custom dropdown and segment buttons for form validation | Flutter `DropdownButtonFormField` styling snippet | Refactored padding, border radius, and focus rings to guarantee 48px touch targets. |
+| **Ardeña, Justin Ace A.** | 2026-11-14 | Gemini Web | Generating test fixture activities adhering to ECCD developmental domains | JSON fixtures representing sensory and fine-motor play ideas | Inspected steps against ECCD developmental guidelines; removed activities requiring unsafe household items. |
+| **Tamaño, Vincent John A.** | 2026-11-15 | IDE Assistant | Regular expressions for sanitizing storybook IDs and activity query strings | Dart string replacement regex `replace(/[^a-z0-9-]/g, '')` | Tested boundary conditions with uppercase inputs, emoji characters, and accented Latin glyphs. |
 
 ---
 
 ## v. Individual Engineering Reflections (Appendix)
 
-### Reflection: Mark Alvin Cadangin (Team Leader & Systems Architect)
+### Reflection: Cadangin, Mark Alvin C. (Team Leader & Systems Architect)
 
 #### 1. Architectural Scope & Subsystem Ownership
 As the team leader and systems architect, my primary responsibility was establishing the multi-repository engineering foundation and bridging our Flutter client (`Thesis-Titans/littlesteps-flutter`) with our Express/TypeScript API proxy and Google Cloud Firestore. I authored the root application shell ([`ShellScreen`](../../../../littlesteps-flutter/lib/screens/shell_screen.dart)), the declarative front-controller router ([`AppRouter`](../../../../littlesteps-flutter/lib/routing/app_router.dart)), and the client-side AI integration layer ([`AiService`](../../../../littlesteps-flutter/lib/services/ai_service.dart)). I also established the shared design token system in [`AppTheme`](../../../../littlesteps-flutter/lib/theme/app_theme.dart), ensuring that visual styling adheres strictly to our WCAG 2.2 AA accessibility commitments.
@@ -393,7 +393,7 @@ If I were to rebuild the system from scratch, I would integrate an offline-first
 
 ---
 
-### Reflection: Faith Pearl D. Vicedo (Frontend Engineer — Catalog & Activities)
+### Reflection: Benjamin, Mae Daniella Faith C. (Frontend Engineer — Catalog & Activities)
 
 #### 1. Architectural Scope & Subsystem Ownership
 I was responsible for developing the Early Childhood Activity Catalog and Activity Details subsystems ([`ExploreScreen`](../../../../littlesteps-flutter/lib/screens/explore/explore_screen.dart) and [`ActivityDetailScreen`](../../../../littlesteps-flutter/lib/screens/explore/activity_detail_screen.dart)). My focus was translating the 7 ECCD developmental domains into an intuitive, responsive browsing interface that allows caregivers to filter play routines based on their physical setting, available time, and targeted developmental domain.
@@ -408,7 +408,7 @@ I learned the vital importance of defensive layout constraints in Flutter. In ea
 
 ---
 
-### Reflection: Nherie Rose A. Frias (Frontend Engineer — Profiles & Forms)
+### Reflection: Acebuche, Nherie C. (Frontend Engineer — Profiles & Forms)
 
 #### 1. Architectural Scope & Subsystem Ownership
 My primary engineering deliverable was the Child Profile Management and Form Validation subsystem ([`ChildProfileScreen`](../../../../littlesteps-flutter/lib/screens/children/child_profile_screen.dart) and [`AddChildScreen`](../../../../littlesteps-flutter/lib/screens/children/add_child_screen.dart)). My objective was to build an effortless, privacy-preserving onboarding experience where caregivers register their child, select their developmental age bracket, and manage profile settings without exposing sensitive personal identifiable information (PII).
@@ -426,7 +426,7 @@ This experience demonstrated that form design is fundamentally an exercise in de
 
 ---
 
-### Reflection: Justin Ray D. Tabaosares (Client Engineer — Routine & Weather Integration)
+### Reflection: Ardeña, Justin Ace A. (Client Engineer — Routine & Weather Integration)
 
 #### 1. Architectural Scope & Subsystem Ownership
 I developed the Today's Routine planning and execution dashboard ([`TodayScreen`](../../../../littlesteps-flutter/lib/screens/today/today_screen.dart)) and the daily plan service ([`PlanService`](../../../../littlesteps-flutter/lib/services/plan_service.dart)). This subsystem serves as the primary daily touchpoint for caregivers, rendering the day's scheduled activities, tracking completed tasks, and dynamically surfacing weather guidance fetched from Open-Meteo.
@@ -444,7 +444,7 @@ This bug reinforced a critical principle of distributed systems: third-party ser
 
 ---
 
-### Reflection: Vincent O. Golez (Client Engineer — Journal & Milestones)
+### Reflection: Tamaño, Vincent John A. (Client Engineer — Journal & Milestones)
 
 #### 1. Architectural Scope & Subsystem Ownership
 I was responsible for developing the Private Caregiver Journal ([`JournalScreen`](../../../../littlesteps-flutter/lib/screens/journal/journal_screen.dart)), the Developmental Milestones checklist ([`MilestonesScreen`](../../../../littlesteps-flutter/lib/screens/milestones/milestones_screen.dart)), and their backing persistence services. My architectural focus was guaranteeing absolute data privacy for family observations in strict compliance with the Philippine Data Privacy Act (RA 10173).
