@@ -27,7 +27,7 @@ Governed by the [Official Project Management Plan Brief](cit246/CIT246_Final_Pro
 
 ### 2. [CC 207B — Applications Development and Emerging Technologies](cc207b/README.md)
 Governed by the [Official CC 207B Final Project Requirements](cc207b/CC207B_Final_Project_Requirements.md). A Flutter application with at least six core features (including one user-facing AI feature), presented with a live demo and an Individual Code Defense.
-- **Software documentation:** overview with the technology stack and versions; functional requirements (packages and their purpose, low- and high-fidelity prototypes, core features with screenshots, Topic Coverage Matrix, AI Feature Specification); future enhancements and roadmap; AI Usage Log and individual reflections as appendices.
+- **[Software documentation](cc207b/software-documentation.md):** overview with the technology stack and versions; functional requirements (packages and their purpose, low- and high-fidelity prototypes, core features with screenshots, Topic Coverage Matrix, [AI Feature Specification](cc207b/ai-feature-specification.md)); future enhancements and roadmap; AI Usage Log and individual reflections as appendices.
 - **Presentation:** 5–10 minutes with a live demo, a backup video, and known limitations; 2–3 minutes of code defense per member.
 - **GitHub:** fork of the instructor's repository, feature branches, teammate-reviewed pull requests, secrets excluded, README with setup steps. Collaboration is graded from the commit and pull-request history.
 - **Self and peer assessment:** 10% self and 20% peer, with peer ratings based on contributions visible in GitHub.
