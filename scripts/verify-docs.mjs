@@ -212,6 +212,14 @@ export function verifyRepository(repoRoot) {
       const fileDir = path.dirname(filePath);
       const resolvedPath = path.resolve(fileDir, link.targetPath);
 
+      // Relative links must not escape the repository root. Cross-repository links must use canonical absolute URLs.
+      if (!resolvedPath.startsWith(repoRoot + path.sep) && resolvedPath !== repoRoot) {
+        errors.push(
+          `[BROKEN LINK] ${relFile}:${link.lineNum}: [${link.linkText}](${link.rawTarget}) -> Relative path escapes repository root: ${path.relative(repoRoot, resolvedPath)}. Use an absolute canonical URL for cross-repository links.`
+        );
+        continue;
+      }
+
       if (!fs.existsSync(resolvedPath)) {
         const itemType = link.isImage ? 'Image not found' : 'File not found';
         errors.push(

@@ -62,7 +62,7 @@ The AI helper ingests four bounded, structured inputs from the caregiver:
 5. **Storybook Context (`bookTitle`, `subjects`):** For story companions, bibliographic title and subject tags sourced from the Open Library catalog.
 
 ### 2.2 System Prompt & Pediatric Boundary Enforcement
-System prompts are engineered with non-negotiable boundaries implemented in [`src/ai/prompt.ts`](../../../../littlesteps-api/src/ai/prompt.ts):
+System prompts are engineered with non-negotiable boundaries implemented in [`src/ai/prompt.ts`](https://github.com/Thesis-Titans/littlesteps-api/blob/main/src/ai/prompt.ts):
 
 > **Non-Diagnostic System Prompt Invariant:**
 > *"You are the LittleSteps Early Childhood Play Assistant. Your role is exclusively to suggest safe, screen-free, everyday developmental play activities for caregivers and toddlers. You are strictly non-diagnostic and non-clinical. NEVER provide medical advice, evaluate developmental milestones, diagnose developmental delays, or label cognitive/physical conditions. If materials mentioned pose safety hazards (sharp objects, small choking hazards for children under 3, plastic bags), replace them with safe alternatives."*
@@ -187,7 +187,7 @@ LittleSteps is architected under the principles of **Privacy by Design** and sta
 - **Location Truncation:** Weather forecast queries round GPS coordinates to 2 decimal places ($\approx 1.1\text{ km}$ area), preventing geolocation tracking of homes.
 
 ### 7.2 Private Observation Isolation
-Caregivers record sensitive notes and milestone observations in the **Private Caregiver Journal** ([`src/features/journal/`](../../../../littlesteps-react/src/features/journal/)). These personal reflections:
+Caregivers record sensitive notes and milestone observations in the **Private Caregiver Journal** ([`src/features/journal/`](https://github.com/Thesis-Titans/littlesteps-react/tree/main/src/features/journal/)). These personal reflections:
 - Are encrypted in transit and stored in user-isolated Firestore collections.
 - Are **never** forwarded to Gemini, third-party analytics, or external logging systems.
 
