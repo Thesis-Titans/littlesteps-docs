@@ -82,7 +82,7 @@ Honest disclosure in the AI Usage Log does not reduce the score. Undisclosed AI-
 | iv. AI Usage Log (appendix) | Table described below |
 | v. Individual Reflections (appendix) | About half a page per member: what they built, one bug they fixed and how, and what they would do differently |
 
-The **AI Feature Specification** covers the AI service or model and package used, the inputs or prompts, sample outputs, how failures are handled and the fallback, known failure cases, why AI was the right tool, and privacy considerations.
+The [**AI Feature Specification**](ai-feature-specification.md) covers the AI service or model and package used, the inputs or prompts, sample outputs, how failures are handled and the fallback, known failure cases, why AI was the right tool, and privacy considerations.
 
 **Topic Coverage Matrix** columns: course topic, where applied (file and widget or class), brief description. Required rows: layout widgets, navigation and routing, forms and validation, asynchronous operations and API calls, data persistence, and the AI-powered feature.
 
