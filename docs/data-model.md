@@ -20,12 +20,14 @@ flowchart TD
         MO["<b>milestone_observations/{obsId}</b><br/><i>(Qualitative Milestone Checks · FR-01)</i>"]
         SA["<b>plans/{planId}</b><br/><i>(Daily Routine Planning & Logs · FR-02)</i>"]
         JE["<b>journal_entries/{entryId}</b><br/><i>(Private Qualitative Notes · FR-03)</i>"]
+        SB["<b>books/{bookId}</b><br/><i>(Saved Family Bookshelf · FR-04b)</i>"]
         WS["<b>weekly_summaries/{summaryId}</b><br/><i>(Calculated Reflection Recaps · FR-05)</i>"]
 
         CG -->|1:N| CH
         CH -->|1:N| MO
         CH -->|1:N| SA
         CH -->|1:N| JE
+        CH -->|1:N| SB
         CH -->|1:N| WS
     end
 
@@ -171,6 +173,22 @@ Authoritative developmental observation prompts derived from Philippine Early Le
 | `provenanceSource` | string | Yes | ECCD Checklist / DepEd Kindergarten Curriculum citation. |
 | `status` | string (enum) | Yes | `reviewed_approved`, `synthetic_fixture`. |
 
+---
+
+### 2.9 Saved Family Storybooks (`caregivers/{uid}/children/{childId}/books/{bookId}`)
+Caregiver-curated bookshelf of physical picture books available at home for interactive play routines (FR-04b).
+
+| Field | Type | Required | Description & Constraints |
+| :--- | :--- | :---: | :--- |
+| `id` | string | Yes | Open Library work key (e.g., `OL45804W`) or slug ID (1–100 chars). |
+| `childId` | string | Yes | Foreign key referencing the parent child record (UUIDv4). |
+| `caregiverId` | string | Yes | BOLA tenant guard matching the authenticated caregiver UID. |
+| `title` | string | Yes | Book title (1–200 characters). |
+| `authors` | array of str | Yes | Author names list (e.g., `["Eric Carle"]`). |
+| `coverUrl` | string | No | Secure HTTPS URL to cover artwork from Open Library. |
+| `subjects` | array of str | Yes | Curated subject and genre tags (e.g., `["Bedtime", "Animals"]`). |
+| `createdAt` | string | Yes | ISO 8601 UTC creation timestamp. |
+| `updatedAt` | string | Yes | ISO 8601 UTC last-updated timestamp. |
 
 ---
 
@@ -181,7 +199,7 @@ The following are proposed data-handling requirements informed by Republic Act N
 1. **Data Minimization:** No biometric data, exact GPS coordinates, or official national IDs are collected. Coarse age bands are preferred over exact birth dates.
 2. **Right to Rectification:** Caregivers can edit child details, journal notes, and observation records at any time.
 3. **Right to Erasure (Hard Cascade Deletion):**
-   - Deleting a child profile must trigger a server-side process that deletes all associated subcollection documents (`milestone_observations`, `plans`, `journal_entries`).
+   - Deleting a child profile must trigger a server-side process that deletes all associated subcollection documents (`milestone_observations`, `plans`, `journal_entries`, `books`).
    - Deleting a caregiver account must trigger a server-side process that deletes associated child records and caregiver documents.
 4. **Data Export:** The API must support a structured JSON export of all records associated with a caregiver's UID upon verified request.
 5. **Proposed Retention Rule:** Synthetic demo records should be reset with the emulator environment. Decision of 4 November 2026: no automatic deletion; data stays until the caregiver deletes it, and the 12-month inactivity idea is dropped for now. Confirm lawful purpose and notice before any real deployment. No fixed retention period was found in RA 10173; Sec. 11(e) requires retention only as long as necessary. The period is a team policy and is not yet approved.
