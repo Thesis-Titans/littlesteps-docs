@@ -179,6 +179,23 @@ Implemented in `littlesteps-api` PR #57 (Issue #11) and documented in `openapi/o
 
 ### 4.6 Weekly Summary (FR-05)
 
+### 4.7 Child Bookshelf & Family Storybooks (FR-04b)
+
+Implemented in `littlesteps-api` PR #65 and documented in `openapi/openapi.yaml`. Provides a permanent family bookshelf subcollection under `caregivers/{uid}/children/{childId}/books/{bookId}` where caregivers store picture books they own at home to generate interactive AI play ideas.
+
+| Method | Path | Auth | Purpose | Success (Status / Body) | Error Codes |
+| :--- | :--- | :---: | :--- | :--- | :--- |
+| `GET` | `/api/v1/children/:childId/books` | Bearer | List saved storybooks for the child, ordered reverse-chronologically | `200 OK`<br/>`{ "books": [ { "id": "OL45804W", "childId": "uuid", "title": "...", "authors": [...], "coverUrl": "...", "subjects": [...], "createdAt": "...", "updatedAt": "..." } ], "totalCount": 1 }` | `401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND`<br/>`503 SERVICE_UNAVAILABLE` |
+| `POST` | `/api/v1/children/:childId/books` | Bearer | Save or update a storybook metadata record (idempotent by book ID) | `201 Created`<br/>saved book object | `400 INVALID_INPUT`<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND`<br/>`503 SERVICE_UNAVAILABLE` |
+| `DELETE` | `/api/v1/children/:childId/books/:bookId` | Bearer | Permanently remove a saved storybook from the child's bookshelf | `204 No Content` | `401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND`<br/>`503 SERVICE_UNAVAILABLE` |
+
+Behaviour on `main`:
+* **Idempotency:** Re-saving a book with an existing `id` (e.g. Open Library ID `OL45804W`) updates the book metadata without creating duplicate records and preserves the original `createdAt` timestamp.
+* **Closed-Loop Play Planning:** Saved books can be selected from the child's bookshelf and passed directly to `POST /api/v1/ai/story-activity` to generate a tailored play companion, which is then added to the child's daily schedule via `POST /api/v1/children/:childId/plans`.
+* **Right to Erasure:** Deleting a child cascades to permanently delete all documents in their `books` subcollection.
+
+### 4.8 Weekly Summary (FR-05)
+
 Implemented in `littlesteps-api` PR #54 (Issue #12) and documented in `openapi/openapi.yaml`. Returns a deterministic, non-diagnostic reflection summary aggregating completed activities, developmental domain coverage, and recorded milestone observations over a 7-day UTC ISO calendar week.
 
 | Method | Path | Auth | Purpose | Success (Status / Body) | Error Codes |

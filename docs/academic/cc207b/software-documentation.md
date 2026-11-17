@@ -216,7 +216,7 @@ graph LR
 #### Feature 4: Storybooks & Regional Action Rhymes
 * **Files:** `lib/screens/explore/explore_screen.dart`, `lib/models/book.dart`
 * **User Goal:** Access culturally grounded action rhymes and literature without screens.
-* **Component Architecture:** Displays children's literature metadata fetched via Open Library and curated Philippine action rhymes (*Awit sa Pagpapatulog*, *Tong Tong Tong Pakitong-kitong*, *Lubi-Lubi*) complete with regional provenance tags (Tagalog, Hiligaynon, Cebuano) and guided physical hand-motion instructions for parents.
+* **Component Architecture:** Displays children's literature metadata fetched via Open Library, allows parents to curate books they own at home into a permanent Family Bookshelf (`POST /api/v1/children/:childId/books`), and provides curated Philippine action rhymes (*Awit sa Pagpapatulog*, *Tong Tong Tong Pakitong-kitong*, *Lubi-Lubi*) complete with regional provenance tags (Tagalog, Hiligaynon, Cebuano) and guided physical hand-motion instructions for parents.
 * **Visual Interface Artifact:**  
   ![Feature 4: Storybooks and Regional Action Rhymes](figures/hi-fi-storybooks.png)  
   *Fig 2.4: Culturally Grounded Children's Storybooks & Traditional Action Rhymes (`Node 195:3931`)*

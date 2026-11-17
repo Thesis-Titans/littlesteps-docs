@@ -317,3 +317,26 @@ graph TD
 - **Consequences:**
   - *Positive:* Eliminates false alert affordances, removes 5-way text redundancy, reclaims ~100px of vertical viewport height, restores clean visual hierarchy, and aligns with Nielsen Heuristics #8 and #2.
   - *Trade-off:* Test assertions targeting `.today-hero` must be updated to target the integrated `ScreenHeader` greeting.
+
+---
+
+### ADR-015: Saved Family Storybooks and Bookshelf Subcollection Architecture
+- **Status:** Accepted (17 November 2026)
+- **Context:**
+  - Field research and ECCD community observations revealed that parents frequently own or borrow physical picture books at home and need a frictionless method to curate these books within LittleSteps to generate active play routines on demand.
+  - While `GET /api/v1/catalog/books/search` and `POST /api/v1/ai/story-activity` allowed parents to search Open Library and generate companion play ideas, books were only persisted if immediately scheduled to Today's routine (`POST /api/v1/children/:id/plans`).
+  - Parents required a dedicated, permanent **"Our Bookshelf"** registry to save physical books they have at home so they can revisit them without repeating external Open Library searches.
+- **Options Considered:**
+  1. *Client-side local storage only (`localStorage`):* Quick to implement, but books would not synchronize across devices or survive cache clearing, and fails to provide a documented cloud persistence store operation for academic tracking.
+  2. *Top-level `caregivers/{uid}/books` collection:* Family-wide bookshelf. However, developmental appropriateness differs sharply between siblings (e.g. an infant at 6m vs. a preschooler at 48m).
+  3. *Child-scoped Firestore subcollection `caregivers/{uid}/children/{childId}/books/{bookId}` (Chosen):* Mirrors the proven multi-tenant subcollection isolation used by `plans`, `milestones`, and `journal`.
+- **Decision:**
+  - Implement `/api/v1/children/:childId/books` (`GET`, `POST`, `DELETE`) mounted under authenticated child routes.
+  - Store lightweight book metadata snapshots (`id`, `title`, `authors`, `coverUrl`, `subjects`, `createdAt`, `updatedAt`) using the Open Library work ID or sanitized slug as the document ID for natural idempotency.
+  - Enforce server-side Broken Object Level Authorization (BOLA) verifying `child.caregiverId === req.user.uid`.
+  - Include the bookshelf subcollection in cascade deletion when a child or caregiver profile is deleted (satisfying Data Privacy Act / RA 10173 and PRQ-02).
+  - Update `openapi.yaml` to formalize the OpenAPI 3.1.0 contract.
+- **Consequences:**
+  - *Positive:* Provides a true two-way cloud persistence pipeline for family storybooks, preserves sibling developmental separation, enables offline reading via client caching, guarantees natural idempotency, and satisfies academic requirements without architectural drift.
+  - *Trade-off:* Requires client synchronization across both React and Flutter clients.
+
