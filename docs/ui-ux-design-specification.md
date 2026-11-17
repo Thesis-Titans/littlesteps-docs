@@ -256,7 +256,7 @@ These values are Figma variables or effect styles; `tokens.css` and `app_tokens.
 - **Touch targets:** 48px for frequent and primary controls, 44px floor (§2.3).
 - **Shell:** top bar 60px, desktop sidebar 240px, mobile tab bar 72px (canonical in Figma and spec; 72px minimum; labels are one line from 360px, and at 320px two labels wrap and the bar grows to about 85px, so `scroll-padding-bottom` is 72px plus 16px).
 - **Elevation:** cards `0 1px 2px` and `0 4px 14px` at 4% and 6% of the primary text color; overlays `0 12px 32px` at 14%.
-- **Icons:** the 15 icons on Figma page `02 · Components` (today, explore, milestones, journal, thisWeek, lock, check, clock, info, sparkle, chevronDown, chevronRight, close, plus, wifiOff).
+- **Icons:** the 16 icons on Figma page `02 · Components` (today, explore, milestones, journal, thisWeek, lock, check, clock, info, sparkle, chevronDown, chevronRight, close, plus, wifiOff, user).
 
 ### 6.2 Typography Hierarchy
 Use **Inter**, loading only the four weights in use (Regular, Medium, Semi Bold, Bold), subset to Latin, to limit data cost on prepaid plans:
