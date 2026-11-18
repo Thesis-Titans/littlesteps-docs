@@ -22,12 +22,12 @@ flowchart TD
     ClientLayer -->|"HTTPS (JSON + Bearer ID Token)"| APIGateway
 
     subgraph GatewayLayer["LittleSteps API Gateway (Express on Cloud Functions v2)"]
-        APIGateway["<b>API Gateway Router</b><br/>• Token Verification (Firebase Admin JWT)<br/>• BOLA Ownership Guard (child.caregiverId === uid)<br/>• Zod Schema Validation (Standard 400 Bad Request)<br/>• Response Caching (1-Hour In-Memory Public Cache)"]
+        APIGateway["<b>API Gateway Router</b><br/>• Token Verification (Firebase Admin JWT)<br/>• BOLA Ownership Guard (child.caregiverId === uid)<br/>• Zod Schema Validation (Standard 400 Bad Request)<br/>• Cache-Control headers (1 hour; weather also cached in memory)"]
     end
 
     APIGateway -->|"Caregiver-Scoped CRUD"| Firestore[("Cloud Firestore<br/><code>/caregivers/{uid}/...</code>")]
     APIGateway -->|"Books & Covers Proxy"| OpenLibrary["Open Library REST API<br/>(Picture Books Catalog)"]
-    APIGateway -->|"AI Suggestion & Cascade"| AIEngine["<b>3-Tier AI Fallback Engine</b><br/>1. Cloud Gemini (8s timeout)<br/>2. Local Edge Ollama (qwen2.5-coder:7b)<br/>3. Deterministic ECCD Catalog Matcher"]
+    APIGateway -->|"AI Suggestion & Cascade"| AIEngine["<b>AI Fallback Engine</b><br/>Tier 1: Cloud Gemini (8s timeout)<br/>Tier 3: Reviewed Catalog Matcher<br/>(Tier 2: rule-based Adapt only)"]
 ```
 
 ### Why This Architecture Enhances Efficiency & Security (CIT 210 Presentation Focus)
@@ -48,30 +48,25 @@ sequenceDiagram
   participant API as Express API Gateway
   participant DB as Cloud Firestore
   participant ExtData as Open Library API
-  participant AI as 3-Tier AI Engine (Gemini/Ollama)
+  participant AI as Gemini (Tier 1)
 
   Parent->>Client: Open "Stories & Rhymes" tab
   Client->>API: GET /api/v1/catalog/books?subject=picture_books
-  alt In-Memory Cache Hit
-    API-->>Client: 200 OK (Cached Book JSON List)
-  else Cache Miss
-    API->>ExtData: GET /subjects/picture_books.json?limit=12
+  API->>ExtData: GET /subjects/picture_books.json?limit=12
+  alt Open Library answers
     ExtData-->>API: 200 OK (Raw Open Library JSON)
-    API->>API: Normalize Schema & Cache
-    API-->>Client: 200 OK (Normalized Book Cards)
+    API-->>Client: 200 OK (Normalized Book Cards, Cache-Control 1 hour)
+  else Open Library fails
+    API-->>Client: 200 OK (Local fallback book list, Cache-Control 60 s)
   end
 
   Parent->>Client: Tap "Suggest Play Idea for This Story"
   Client->>API: POST /api/v1/ai/story-activity { bookTitle: "..." }
-  critical 3-Tier AI Fallback Pipeline
+  critical AI Fallback Pipeline
     API->>AI: Tier 1: Query Gemini (8s timeout)
     AI-->>API: Success / Fail (timeout, error, invalid output)
-  option Tier 1 Fails
-    API->>AI: Tier 2: Query Local Ollama (localhost:11434)
-    AI-->>API: Success / Fail
-  option Tier 2 Fails or Disabled
-    API->>DB: Tier 3: Fetch Deterministic Verified Catalog Match
-    DB-->>API: Verified Curriculum Activity
+  option Tier 1 Fails or Not Configured
+    API->>API: Tier 3: Match a Reviewed Catalog Activity (age band, subjects)
   end
   API-->>Client: 200 OK { activity, provenance: { source, badge } }
   Client-->>Parent: Display Play Suggestion with Provenance Badge
@@ -322,7 +317,7 @@ Suggests up to three reviewed catalog activities for an age band, using only non
   | :--- | :--- |
   | `suggestions[]` | Each item has `activityId`, `title`, `whyPicked` (short plain reason) and `activity` (the full `CatalogActivity`). Only `reviewed_approved` catalog items are returned, and titles and instructions always come from the catalog, never from the provider. |
   | `source` | `"ai"` when the provider's picks passed validation, otherwise `"catalog_fallback"`. (This endpoint no longer uses the value `"catalog"`; that value remains for `/ai/story-activity`.) |
-  | `tier` | `1` (provider) or `3` (deterministic catalog). `2` (local Ollama) is reserved and not produced in this slice. |
+  | `tier` | `1` (provider) or `3` (deterministic catalog). `2` is used only by `/ai/adapt` for its rule-based adaptation. |
   | `provenance` | `badge` (`"Suggested by AI"` for tier 1, otherwise `null`), `label` (`"Our picks"` for fallback, otherwise `null`), `disclaimer` (`"Observational play suggestion only. Not developmental assessment."`), `guidance` (tier 1 only: `"You know your child best. Change it as you like, and stay close while you play."`), `model` (provider model name, or `null` for fallback) and `reviewed` (always `true`). |
   | `reason` | Present only as `"NO_REVIEWED_CONTENT"` when the catalog holds no reviewed items. |
 
@@ -340,7 +335,7 @@ Suggests up to three reviewed catalog activities for an age band, using only non
 * **Empty results:** with an empty reviewed catalog the response is `200` with `suggestions: []` and `reason: "NO_REVIEWED_CONTENT"`. When the catalog has content but nothing matches the request, the response is `200` with an empty `suggestions` list and no `reason`. Clients should show an empty state, not an error.
 * **Errors:** `400 INVALID_INPUT` with `details` (`{ "field", "issue" }`; an unknown field is reported as `"Unknown field"`), `401 UNAUTHENTICATED`, `500 INTERNAL_ERROR`. `429 RATE_LIMITED` with `Retry-After` (see section 6.2). Every authenticated request counts toward the limit, including one that later fails validation. A provider failure is never an error response.
 * **Privacy boundary:** the request carries no child or caregiver identifiers. The provider prompt contains only age band, time, setting, cleaned materials (lowercased, control characters removed, truncated, de-duplicated), language, the pick count, and the id, title, domain and materials of candidate catalog items. It never contains user ID, token, email, child data, observations or journal text. Logs record only the event name, tier, latency and error class, never prompts, replies, materials or user identifiers.
-* **Fallback behaviour:** the provider call is bounded at 8 seconds and its reply must pick only candidate ids and pass output validation. On timeout, error, invalid output, no provider configured, or no eligible candidates, the endpoint returns `200` with the deterministic Tier 3 ranking (`source: "catalog_fallback"`, `tier: 3`, no AI badge). Tier 2 (Ollama) is planned and not part of this slice.
+* **Fallback behaviour:** the provider call is bounded at 8 seconds and its reply must pick only candidate ids and pass output validation. On timeout, error, invalid output, no provider configured, or no eligible candidates, the endpoint returns `200` with the deterministic Tier 3 ranking (`source: "catalog_fallback"`, `tier: 3`, no AI badge). A local Ollama tier was planned but is not built.
 
 #### `POST /api/v1/ai/story-activity`
 
@@ -376,30 +371,28 @@ Generates companion play and discussion activities based on a real book selected
   ```
 * **Resilience and Fallback:** Bounded at 8 seconds. If provider is unconfigured, times out, throws, or provider output fails schema or non-diagnostic denylist validation, the endpoint gracefully falls back to deterministic Tier 3 catalog ranking matched on age band and subjects (`tier: 3`, `source: "catalog"`, `badge: null`).
 
-### 6.2 The 3-Tier Fallback Hierarchy
+### 6.2 The Fallback Hierarchy
 
 ```
-/ai/story-activity (implemented, api PR #55):
-[Tier 1: Cloud LLM]  ──(Fails: Timeout > 8s, error)──>  [Tier 2: Local AI]  ──(Fails: Offline)──>  [Tier 3: Catalog Rule]
-
-/ai/recommendations (implemented, api PR #28):
+/ai/recommendations (api PR #28) and /ai/story-activity (api PR #55):
 [Tier 1: Cloud LLM]  ──(Any provider failure: timeout > 8s, error, invalid output, none configured)──>  [Tier 3: Catalog Rule]
+
+/ai/adapt:
+[Tier 1: Cloud LLM]  ──(Any provider failure)──>  [Tier 2: Rule-based adaptation of the catalog activity]
 ```
 
-The Tier 1 to Tier 2 step applies to `/api/v1/ai/story-activity` (Tier 2 Ollama is optional for local demo), while `/api/v1/ai/recommendations` falls directly to Tier 3 on any failure (`src/ai/ai-service.ts`).
+Both play-idea endpoints fall straight from Tier 1 to Tier 3 (`src/ai/ai-service.ts`). A local Ollama tier was planned in ADR-010 but is not built. A circuit breaker skips Gemini for 60 seconds after 3 failures in a row.
 
 1. **Tier 1 (Google Gemini - Cloud Primary):**
    - Called using server-side `@google/genai` or REST endpoint.
    - Timeout bounded at **8 seconds** via `AbortSignal.timeout(8000)`.
    - Rate limit (implemented on `POST /api/v1/ai/recommendations`, api PR #33): 10 requests per signed-in user per UTC clock hour, counted in Firestore (`rate_limits`). If the store is unavailable the check fails open and the request proceeds. A per-address cap also applies (default 30 per hour, set with `AI_IP_LIMIT_PER_HOUR`, `0` disables it; the count is in memory per instance; `TRUST_PROXY_HOPS`, default 1, sets how many proxy hops are trusted when reading the address, to be verified on a deployed function before relying on it). Over either limit the API returns `429 RATE_LIMITED` with `Retry-After` set to the real number of seconds until the window resets (1 to 3600), not a fixed value. The window is a fixed clock hour, so a burst across an hour boundary can use up to twice the limit.
-2. **Tier 2 (Ollama - Local Offline AI Fallback):**
-   - Active when `LOCAL_AI_ENABLED=true` in development/demo environments.
-   - Pings `http://localhost:11434/api/generate` with model `qwen2.5-coder:7b`.
-   - Enables complete, offline AI demonstration during in-person academic evaluations if campus WiFi is degraded.
+2. **Tier 2 (Rule-based adaptation, `/ai/adapt` only):**
+   - When Gemini cannot adapt an activity, the API changes it with fixed rules (for example, swapping a missing material for a safe household item). It is not used by the play-idea endpoints. A local Ollama model was planned for this tier but is not built.
 3. **Tier 3 (Deterministic Rule-Based Catalog - Guaranteed Safety Net):**
-   - If Tier 1 and Tier 2 fail, the backend matches the domain and age group to pre-reviewed activities in [`docs/philippine-content-provenance.md`](philippine-content-provenance.md).
+   - If Tier 1 fails, the backend matches the domain and age group to pre-reviewed activities in [`docs/philippine-content-provenance.md`](philippine-content-provenance.md).
    - Zero latency, 100% deterministic, never crashes.
-   - For `/ai/story-activity`, Tier 3 returns a reviewed catalog activity matched on age band and the book's subjects, with `"tier": 3`, `"source": "catalog"` and no AI badge. A Tier 1 or 2 response that fails schema or non-diagnostic validation is also replaced this way.
+   - For `/ai/story-activity`, Tier 3 returns a reviewed catalog activity matched on age band and the book's subjects, with `"tier": 3`, `"source": "catalog"` and no AI badge. A Tier 1 response that fails schema or non-diagnostic validation is also replaced this way.
 
 ---
 
@@ -455,4 +448,4 @@ When presenting the API Integration during the **CIT 210 Code Defense / Presenta
 > 1. **Decomposition & Responsibility:** *"Our backend is an Express Node.js API hosted as a serverless Firebase Cloud Function. It serves as an authoritative gateway between the React frontend and Cloud Firestore. We enforce strict server-side validation using Zod and maintain a clean OpenAPI 3.1 contract."*
 > 2. **Authentication & BOLA Defense:** *"Every protected request carries a Firebase ID token. Our auth middleware cryptographically decodes the token on the server and derives the caregiver's UID directly from the verified signature. To prevent Broken Object Level Authorization (OWASP API1:2023), accessing an unowned child record returns HTTP 404 (our design choice, so an ID's existence is not revealed)."*
 > 3. **Dual-API Layering:** *"In response to our course requirements, we implemented a dual-API integration pipeline. First, we query the **Open Library REST API** to fetch authentic children's storybooks, managing query parameters, pagination, and server-side response caching. Second, we layer **Google Gemini AI** on top of the fetched book metadata to generate contextual, screen-free toddler play activities."*
-> 4. **Resilience & Fallbacks:** *"Our AI architecture implements a 3-tier fallback hierarchy: Cloud Gemini with an 8-second timeout, then a deterministic Philippine curriculum catalog. A local Ollama tier is planned but not built. If any network or quota failure occurs, the application shows a catalog activity instead of an error."*
+> 4. **Resilience & Fallbacks:** *"Our AI architecture falls back in steps: Cloud Gemini with an 8-second timeout, then a deterministic Philippine curriculum catalog. A local Ollama tier is planned but not built. If any network or quota failure occurs, the application shows a catalog activity instead of an error."*
