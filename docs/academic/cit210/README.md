@@ -40,7 +40,7 @@ The course evaluates the final project through two primary categories:
   - **Tier 1 (Cloud Primary):** Google Gemini 3.5 Flash Lite powering:
     1. *Structured Activity Helper:* 4-variable constraint matching against reviewed curriculum activities (`POST /api/v1/ai/recommendations`).
     2. *Storybook Play Companion:* Screen-free companion play activity generation from book metadata (`POST /api/v1/ai/story-activity`).
-  - **Tier 2 (Local Edge AI Fallback):** Planned, not built: a local Ollama model for offline development (see [ADR-010](../../architecture-decisions.md)). The code today goes from Gemini straight to Tier 3.
+  - **Tier 2:** used only by "Adapt this activity", which falls back to rule-based changes. A local Ollama model was planned for offline use but is not built (see [ADR-010](../../architecture-decisions.md)); play ideas go from Gemini straight to Tier 3.
   - **Tier 3 (Deterministic Rule-Based Catalog):** Instant fallback to verified Philippine curriculum activities if external APIs time out, rate limit, or fail ([ADR-006](../../architecture-decisions.md)).
 - **Dynamic Data Flow:** Bidirectional client-server communication with JSON payloads and bearer-token authentication.
 

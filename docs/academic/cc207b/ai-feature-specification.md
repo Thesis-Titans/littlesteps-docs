@@ -121,14 +121,15 @@ export const RecommendationResponseSchema = z.object({
 
 ## 4. Failure Handling, Timeout Limits, and Deterministic Fallback
 
-### 4.1 3-Tier Multi-Engine Fallback Pipeline
-To ensure high availability and prevent application hangs, the system operates across three tiers:
+### 4.1 Fallback Pipeline
+To prevent hangs and empty screens, a play-idea request goes to Gemini first and falls back to the reviewed catalog:
 
 | Tier | Engine / Strategy | Timeout / Bounds | When Activated |
 |:---:|:---|:---:|:---|
-| **Tier 1** | **Cloud Gemini 2.5 Flash Lite** | 8,000 ms timeout via `AbortController`; 32 KB payload memory cap | Standard authenticated request with active network. |
-| **Tier 2** | **In-Memory Caching & Rate Limiting** | 1-hour TTL cache; 10 req/hr user cap, 30 req/hr IP cap | Repeated or rapid queries; protects upstream quotas and controls costs. |
+| **Tier 1** | **Cloud Gemini** (model set in `GEMINI_MODEL`) | 8,000 ms timeout via `AbortController`; 64 KB reply cap; circuit breaker opens for 60 s after 3 failures | Standard authenticated request with active network. |
 | **Tier 3** | **Deterministic Catalog Fallback** | Instant local execution ($< 5\text{ms}$) | Cloud timeout, HTTP 5xx error, safety block, invalid JSON output, or network disruption. |
+
+Tier 2 is not used for play ideas: it is the rule-based fallback of the "Adapt this activity" endpoint. Requests are also rate limited (10 per user and 30 per address per hour); over the limit the API returns `429 RATE_LIMITED`, and the app shows a wait message instead of a fallback.
 
 ### 4.2 Graceful Client Degradation
 - If Tier 1 encounters any failure (network timeout, invalid JSON shape, or Google Safety Block `finishReason: "SAFETY"`), the server logs the incident with a correlated `requestId` and transparently invokes **Tier 3**.

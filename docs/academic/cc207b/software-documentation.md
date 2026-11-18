@@ -320,10 +320,9 @@ const RecommendationResponseSchema = z.object({
 });
 ```
 
-#### 4. Automated 3-Tier Fallback Mechanism
-1. **Tier 1 (Cloud Primary):** Live Gemini 2.5 Flash Lite inference with an 8-second timeout guard.
-2. **Tier 2 (Pre-computed Cache):** In-memory cache serving verified, pre-generated suggestions if cloud latency exceeds thresholds.
-3. **Tier 3 (Deterministic Curriculum Catalog):** Rule-based selector drawing directly from verified Philippine Early Childhood Care and Development (ECCD) activities. **Guarantees zero client crashes or empty screens.**
+#### 4. Automated Fallback Mechanism
+1. **Tier 1 (Cloud Primary):** Live Gemini inference (model set in `GEMINI_MODEL`) with an 8-second timeout guard.
+2. **Tier 3 (Deterministic Curriculum Catalog):** Rule-based selector drawing directly from verified Philippine Early Childhood Care and Development (ECCD) activities. **Guarantees zero client crashes or empty screens.**
 
 #### 5. Pediatric Safety & Prompt Injection Guardrails
 The system prompt injects immutable pediatric boundaries:

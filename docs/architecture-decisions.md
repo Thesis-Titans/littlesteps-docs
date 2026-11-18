@@ -32,7 +32,6 @@ graph TD
         AuthMiddleware["Token Verification Middleware<br/>(Firebase Admin SDK)"]
         BOLAAuth["Ownership & BOLA Authorization Engine<br/>(child.caregiverId === uid)"]
         AIService["AI Recommender & Companion Service<br/>(Server-side Gemini · ADR-008/010)"]
-        OllamaLocal["Local Edge Ollama Engine<br/>(Tier 2 Offline Fallback · ADR-010)"]
         FallbackService["Deterministic Fallback Engine<br/>(Rule-based Catalog Matcher)"]
     end
 
@@ -62,8 +61,7 @@ graph TD
     %% AI Recommendation flow
     BOLAAuth -->|"Request Suggestion"| AIService
     AIService -->|"Sanitized Constraints"| ExternalAI
-    ExternalAI -.->|"Timeout / Error"| OllamaLocal
-    OllamaLocal -.->|"Offline / Error"| FallbackService
+    ExternalAI -.->|"Timeout / Error / Invalid output"| FallbackService
     FallbackService -->|"Approved Items"| ReviewedCatalog
     AIService -->|"Validated Catalog IDs"| ReviewedCatalog
     BOLAAuth -->|"Weather Hint (optional, cached 1h)"| Weather
@@ -222,9 +220,9 @@ graph TD
      - Implement a 3-tier fallback engine: Cloud Gemini (Tier 1) -> Local Ollama (`localhost:11434`, Tier 2 offline dev/demo fallback) -> Deterministic Curriculum Catalog (Tier 3 safety net).
 - **Status of implementation (7 November 2026):** the catalog books proxy with its fallback list ([API PR #20](https://github.com/Thesis-Titans/littlesteps-api/pull/20), [#25](https://github.com/Thesis-Titans/littlesteps-api/pull/25)), `POST /api/v1/ai/recommendations` with its deterministic fallback ([API PR #28](https://github.com/Thesis-Titans/littlesteps-api/pull/28)), and `POST /api/v1/ai/story-activity` with catalog fallback ([API PR #55](https://github.com/Thesis-Titans/littlesteps-api/pull/55)) are implemented. The optional Open-Meteo weather hint endpoint is implemented in `GET /api/v1/catalog/weather` ([API PR #56](https://github.com/Thesis-Titans/littlesteps-api/pull/56)). The Tier 1 Gemini provider is implemented behind configuration ([API PR #34](https://github.com/Thesis-Titans/littlesteps-api/pull/34)): it needs `GEMINI_API_KEY` and `GEMINI_MODEL` (there is no default model), is off by default, uses a circuit breaker (3 failures open it for 60 seconds) and caps the reply at 64KB. A live smoke test is still pending before it is enabled. The React Storybooks screen is tracked in [React #48](https://github.com/Thesis-Titans/littlesteps-react/issues/48).
 - **Decision:**
-  - Implement `GET /api/v1/catalog/books` in `littlesteps-api` as a server-side proxy to Open Library with an in-memory 1-hour cache.
+  - Implement `GET /api/v1/catalog/books` in `littlesteps-api` as a server-side proxy to Open Library with a 1-hour `Cache-Control` header and a local fallback book list.
   - Implement `POST /api/v1/ai/story-activity` to generate screen-free play ideas based on the fetched book metadata.
-  - Standardize 3-tier AI fallback: if Gemini fails or times out (8 seconds), fall back to local Ollama (if running) or immediately to the verified deterministic curriculum activity catalog.
+  - Standardize AI fallback: if Gemini fails or times out (8 seconds), fall back to the verified deterministic curriculum activity catalog. The local Ollama tier in option 3 was planned but is not built (18 November 2026).
 - **Consequences:**
   - *Positive:* Fully satisfies CIT 210's 25-pt API integration requirement by demonstrating real REST data integration alongside modern AI augmentation; the deterministic catalog fallback keeps the app usable when Gemini fails (the Ollama tier is planned, not built).
   - *Trade-off:* Requires maintaining the proxy endpoint and mapping Open Library book schemas into LittleSteps card formats.
