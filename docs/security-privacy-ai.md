@@ -135,7 +135,7 @@ flowchart TD
 
 ### NFR-AI-05: Team Authorship & Code Defense Governance (CC 207B §3 AI Use Policy)
 - Using generative AI to write the application wholesale without comprehension is strictly prohibited.
-- AI-assisted development tools (e.g., IDE copilots for boilerplate or debugging) must adhere to course guidelines. For CC 207B (`littlesteps-flutter`), all AI use must be documented in the internal **AI Usage Log** per course requirement.
+- AI-assisted development tools (e.g., IDE copilots for boilerplate or debugging) must adhere to course guidelines. For CC 207B (the Flutter app in `CC-207B_26-27_Final-Project`), all AI use must be documented in the internal **AI Usage Log** per course requirement.
 - Across all codebases, every team member must personally understand, explain, and defend their committed contributions during code reviews and the **CC 207B Individual Code Defense**.
 
 ---

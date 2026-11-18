@@ -158,14 +158,14 @@ graph TD
 
 ### ADR-007: Docs-as-Code & PR-Gated Change Control
 - **Status:** Accepted
-- **Context:** Coordinating five team members across four repositories (`littlesteps-docs`, `littlesteps-api`, `littlesteps-react`, `littlesteps-flutter`) requires strict change control and branch management to prevent merge conflicts and preserve codebase integrity.
+- **Context:** Coordinating five team members across four repositories (`littlesteps-docs`, `littlesteps-api`, `littlesteps-react`, and the Flutter course fork `CC-207B_26-27_Final-Project`) requires strict change control and branch management to prevent merge conflicts and preserve codebase integrity.
 - **Options Considered:**
   1. *Direct Commits to Main:* Fast, but high risk of breaking shared builds and introducing unreviewed code.
   2. *Feature Branching with Mandatory Peer Review & CI Verification:* All work occurs on topic branches (`feat/*`, `docs/*`, `fix/*`), requires passing automated CI checks, and requires at least one teammate review.
 - **Decision:** Enforce branch protection on `main` across all repositories. Changes require a pull request, passing CI checks, and peer approval.
 - **Consequences:**
   - *Positive:* Clean git audit trail; satisfies CC 207B collaboration and peer review criteria.
-  - *Trade-off:* Requires team discipline in opening PRs and conducting timely code reviews. Branch protection is active on `littlesteps-docs`, `littlesteps-api`, and `littlesteps-react`. `littlesteps-flutter` operates under procedural peer review prior to official course fork setup.
+  - *Trade-off:* Requires team discipline in opening PRs and conducting timely code reviews. Branch protection is active on `littlesteps-docs`, `littlesteps-api`, `littlesteps-react` and the Flutter course fork.
 
 ---
 

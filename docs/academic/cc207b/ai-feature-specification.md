@@ -19,7 +19,7 @@ Rather than deploying an unconstrained conversational chatbot—which introduces
 ## 1. AI Service, Model, and Package Utilized
 
 ### 1.1 Architecture & Services
-The LittleSteps AI architecture adopts a **Zero-Client-Credential Server Proxy** model. The Flutter mobile app (`littlesteps-flutter`) and the React web app (`littlesteps-react`) never interact with AI foundation models directly. All requests pass through the Node.js/TypeScript backend (`littlesteps-api`).
+The LittleSteps AI architecture adopts a **Zero-Client-Credential Server Proxy** model. The Flutter mobile app (`BSIT-3A/LittleSteps`) and the React web app (`littlesteps-react`) never interact with AI foundation models directly. All requests pass through the Node.js/TypeScript backend (`littlesteps-api`).
 
 ```
 [Flutter Mobile / React Web]

@@ -16,7 +16,7 @@ The LittleSteps backend API (`littlesteps-api`) is an Express application writte
 flowchart TD
     subgraph ClientLayer["Presentation Layer (Clients)"]
         ReactApp["React 19 Web App<br/><code>littlesteps-react</code> (CIT 210)"]
-        FlutterApp["Cross-Platform Client<br/><code>littlesteps-flutter</code> (CC 207B)"]
+        FlutterApp["Cross-Platform Client<br/><code>BSIT-3A/LittleSteps</code> (CC 207B)"]
     end
 
     ClientLayer -->|"HTTPS (JSON + Bearer ID Token)"| APIGateway

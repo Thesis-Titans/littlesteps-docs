@@ -105,7 +105,7 @@ CC 207B grades a Flutter application built on the same API and data as the web c
   **Roles.** Everyone is full-stack; these are leanings. **Mark:** project lead and **technical lead**, owning the API contract, data model, sign-in, security rules and the AI service; reviews across features and merges. **Justin:** backend lead. **Nherie:** frontend lead. **Vincent:** backend and docs lead. **Faith:** frontend, backend support and QA. Mark, Faith and Nherie also carry CIT 246. GitHub teams: `@Thesis-Titans/littlesteps` (everyone), with `littlesteps-backend`, `littlesteps-frontend` and `littlesteps-docs` under it, plus `@Thesis-Titans/cit246`.
 
   **Feature pairs.** The backend and frontend owners of a feature agree the API request and response shape in the feature issue first, and Mark approves it. Partners review each other's pull requests; changes to the API contract, sign-in or the AI service also need Mark's review.
-- **Repository:** Flutter work happens in `Thesis-Titans/littlesteps-flutter` for now. If the course instructor provides a repository to fork, move the work there by pushing the full Git history (all branches and tags), never by copying files, so each member's commits survive. Pull-request reviews do not move with Git history, so ask the instructor early whether reviews in `littlesteps-flutter` count, or start using the course repository as soon as it exists.
+- **Repository:** Flutter work happens in the course fork `Thesis-Titans/CC-207B_26-27_Final-Project`, folder `BSIT-3A/LittleSteps` (moved 18 November 2026; the old `littlesteps-flutter` repository is archived). The app entered the fork as one scaffold commit; every member's feature commits and pull-request reviews happen in the fork, where CC 207B grades them.
 - **Platform:** Android phones (the [architecture](architecture-decisions.md) targets Dart on Android, and the personas use Android). Flutter stable channel with Material 3.
 - **Design source:** the reviewed 375px mobile-web frames, adapted to Material 3 widgets as listed in the [UI/UX Design Specification](ui-ux-design-specification.md) §9. Flutter screens are not prototyped separately.
 - **Collaboration is graded from history.** CC 207B grades the commit and pull-request history, and peer ratings (20% of each member's score) must cite contributions visible in GitHub. From now on each member commits their own work from their own account, including docs and planning, and reviews teammates' pull requests.
@@ -120,15 +120,15 @@ CC 207B grades a Flutter application built on the same API and data as the web c
 | At least one validated form with clear error feedback | Child profile form (J1), plus the observation and journal forms |
 | Data persistence (local storage or Firebase) | The shared API and Firestore, plus local storage for drafts and the dismissed advisory |
 | User-facing AI feature with graceful failure and data minimization | FR-06 AI helper, M4 |
-| Folders organized by purpose, with comments on significant code | littlesteps-flutter #2: `lib/screens`, `lib/widgets`, `lib/models`, `lib/services`, `assets/` and the comment convention |
-| README with setup and run steps; secrets excluded through `.gitignore` | littlesteps-flutter #2 |
-| Libraries and packages with their purpose; technology stack with versions | The README packages table from littlesteps-flutter #2, compiled into the documentation in M5 |
+| Folders organized by purpose, with comments on significant code | Scaffold commit: `lib/screens`, `lib/widgets`, `lib/models`, `lib/services`, `assets/` and the comment convention |
+| README with setup and run steps; secrets excluded through `.gitignore` | Scaffold commit |
+| Libraries and packages with their purpose; technology stack with versions | The README packages table from the scaffold commit, compiled into the documentation in M5 |
 | Low- and high-fidelity prototypes | High-fidelity Figma frames exist; low-fidelity wireframes still to create (§8) |
-| Documentation package (overview, functional requirements, Topic Coverage Matrix, AI Feature Specification, future enhancements and roadmap, AI Usage Log, individual reflections) | Prepared during M5 (littlesteps-flutter #13) |
+| Documentation package (overview, functional requirements, Topic Coverage Matrix, AI Feature Specification, future enhancements and roadmap, AI Usage Log, individual reflections) | Prepared during M5 (course fork #11) |
 | Self and peer assessment (30% of each member's score) | Contributions visible in the commit and pull-request history |
 | Forked repository, feature branches, teammate-reviewed pull requests | This section and §5 |
 
-- **Repository setup:** tracked in littlesteps-flutter #2 (folders, comment convention, `.gitignore`, README, packages list, contributor guide, templates and a CI check running `flutter analyze` and `flutter test`). Milestones M1–M5 exist. The repository is private, and branch protection on a private repository needs a paid GitHub plan, so either make it public like the other repositories or enforce teammate review by team agreement until it moves.
+- **Repository setup:** done in the scaffold commit of the course fork (folders, comment convention, `.gitignore`, README, contributor guide, pull request template and a CI check running format, `flutter analyze` and `flutter test`). Milestones M1–M5 exist there, and `main` requires one approving review.
 
 ### 1.4 CIT 246 Project Management Plan
 
@@ -338,7 +338,7 @@ Keep work in progress small. Do not start dependent feature work while a key con
 - **Data model and privacy lifecycle:** Agree on caregiver-child ownership, required profile fields, deletion behavior, and retention before implementing persistent child/journal records.
 - **Authentication:** Firebase token verification exists in the API scaffold, but Web sign-in and child-level authorization are not complete.
 - **Deployment:** Local emulator work comes first. Deployment is gated on billing, privacy, security, and configuration review.
-- **Mobile:** Flutter mirrors the React client in Sprints 3–4 (§1.2, §1.3). Open: whether the course instructor will provide a repository to fork, and whether reviews in `littlesteps-flutter` count toward CC 207B.
+- **Mobile:** Flutter mirrors the React client in Sprints 3–4 (§1.2, §1.3). The course repository fork is set up (`CC-207B_26-27_Final-Project`, folder `BSIT-3A/LittleSteps`); reviews there count toward CC 207B.
 - **Schedule and assignments:** set in §1.2 (sprint calendar) and §1.3 (feature owners). The schedule has no slack inside the build window; if a sprint slips, the weather hint is the first item reviewed for cutting at the 6 November check-in, then polish on the M5 audits, never the Flutter slices needed for the code defense.
 
 ## 8. Project setup cleanup and execution handoff
@@ -358,15 +358,15 @@ Last checked against GitHub on **31 October 2026** (Sprint 1, Day 6).
 **Done**
 
 - **Execution plan:** reviewed and merged in [Docs PR #13](https://github.com/Thesis-Titans/littlesteps-docs/pull/13), then revised in Docs PRs #29–#32 (repository renames, the Flutter restriction lifted, the Figma prototype gate and the design system review).
-- **Project board:** [Thesis-Titans LittleSteps Project #2](https://github.com/orgs/Thesis-Titans/projects/2) holds the issues from `littlesteps-docs`, `littlesteps-api`, `littlesteps-react` and `littlesteps-flutter` (Status Backlog / Ready / In Progress / Blocked / In Review / Done). Read the board for live counts; counts written here go stale.
+- **Project board:** [Thesis-Titans LittleSteps Project #2](https://github.com/orgs/Thesis-Titans/projects/2) holds the issues from `littlesteps-docs`, `littlesteps-api`, `littlesteps-react` and `CC-207B_26-27_Final-Project` (Status Backlog / Ready / In Progress / Blocked / In Review / Done). Read the board for live counts; counts written here go stale.
 - **Native milestones:** all four repos have M0–M5 milestones; execution issues are assigned to them.
 - **Sign-in + protected API client ([React #5](https://github.com/Thesis-Titans/littlesteps-react/issues/5)):** merged as PR #21 — `useAuth`, `AuthProvider`, `SignInForm`, 14 tests at merge.
 - **Design system ([React #22](https://github.com/Thesis-Titans/littlesteps-react/issues/22)):** merged as PR #26 — `tokens.css`, 12 shared components, `/dev/components` showcase, 26 tests at merge.
 - **App shell ([React #18](https://github.com/Thesis-Titans/littlesteps-react/issues/18)):** merged as PR #27 on 28 October — responsive shell with sidebar (1280px) and mobile bottom tab bar (375px), 5-tab routing (Today / Explore / Milestones / Journal / This week), `ChildContext` stub, protected routes, 32 passing tests. The browser check is still open (React #28, below).
 - **Learning catalog API ([API #9](https://github.com/Thesis-Titans/littlesteps-api/issues/9)):** merged as [API PR #20](https://github.com/Thesis-Titans/littlesteps-api/pull/20), with review fixes in PR #23 and corrected fallback book ids, licence wording and User-Agent contact in PR #25.
 - **Child profile contract ([API #7](https://github.com/Thesis-Titans/littlesteps-api/issues/7)):** merged as [API PR #21](https://github.com/Thesis-Titans/littlesteps-api/pull/21), with review fixes in PR #22 and decisions D1 and D4 recorded on 30 October in PR #24. This is a contract only; the routes are implemented and merged in API PRs #26 and #29. Decisions D5 (deletion execution) and D6 (production retention) are still open.
-- **Flutter scaffold + CI ([Flutter #2](https://github.com/Thesis-Titans/littlesteps-flutter/issues/2)):** merged as PR #18 — Flutter 3.47.6 project, Material 3 stub theme, GitHub Actions CI (analyze + test + format), zero analyze issues.
-- **Flutter AI Usage Log ([Flutter #14](https://github.com/Thesis-Titans/littlesteps-flutter/issues/14)):** merged as PR #15 — `docs/ai-usage-log.md` with CC 207B format.
+- **Flutter scaffold + CI (old `littlesteps-flutter` #2, archived):** merged as PR #18 — Flutter 3.47.6 project, Material 3 stub theme, GitHub Actions CI (analyze + test + format), zero analyze issues.
+- **Flutter AI Usage Log (old `littlesteps-flutter` #14, archived):** merged as PR #15 — `docs/ai-usage-log.md` with CC 207B format.
 - **Docs PRs #63–#67:** storybook spec alignment, Figma as canonical design source, parent-friendly wording, design system / app shell ownership split, and the app shell record for PRQ-02 — all merged.
 - **Docs PRs #68 and #69:** verified NELF, LRP and MATATAG editions recorded in the provenance register, with review fixes. These are source candidates only; [Docs #3](https://github.com/Thesis-Titans/littlesteps-docs/issues/3) stays open.
 - **Docs PR #72:** Sprint 1 status, traceability evidence and decision records updated; merged.

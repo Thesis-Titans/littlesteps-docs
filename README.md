@@ -23,7 +23,7 @@ The application has six core features:
 
 ### Technical Direction
 
-- **Frontend:** React for the web (`littlesteps-react`) and Flutter for mobile (`littlesteps-flutter`).
+- **Frontend:** React for the web (`littlesteps-react`) and Flutter for mobile (course fork `CC-207B_26-27_Final-Project`, folder `BSIT-3A/LittleSteps`).
 - **Backend:** A shared API and data model (`littlesteps-api`).
 - **Database and services:** Firebase Authentication, Cloud Functions (2nd Gen), and Cloud Firestore.
 - **AI:** A constrained helper for activity suggestions, not a diagnostic tool.
@@ -82,7 +82,7 @@ All system-wide specifications live centrally in `docs/` and adhere to ISO/IEC/I
 - [Documentation](https://github.com/Thesis-Titans/littlesteps-docs)
 - [API](https://github.com/Thesis-Titans/littlesteps-api)
 - [Web](https://github.com/Thesis-Titans/littlesteps-react)
-- [Mobile](https://github.com/Thesis-Titans/littlesteps-flutter) (private)
+- [Mobile](https://github.com/Thesis-Titans/CC-207B_26-27_Final-Project/tree/main/BSIT-3A/LittleSteps) (CC 207B course fork)
 
 ## Community & Contribution
 - [Contribution guidelines](CONTRIBUTING.md): branch conventions, verification expectations, synthetic data rules, and PR review workflow.
