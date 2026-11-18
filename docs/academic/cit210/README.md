@@ -79,7 +79,7 @@ The class presentation accounts for **35 points (35%)** of the total grade and w
    - Explanation of AI augmentation: prompt sanitization (zero child PII), 8s timeout bounding, and the fallback from Gemini to the deterministic catalog (a local Ollama tier is planned, not built).
    - Demonstration of request/response headers, token decoding (using local emulator tokens without exposing real credentials on screen), and error envelope propagation.
 3. **Demo & Functionality (15 pts):**
-   - Live demonstration of the working React web application against local Firebase emulators.
+   - Live demonstration of the working React web application against local Firebase emulators. Detailed environment architecture, physical machine assignments, network failure contingencies, and pre-flight checklist are documented in the [Demonstration Environment & Rehearsal Plan](demo-environment-and-rehearsal.md).
    - Verification of live child profile creation, routine planning, private journal recording, and catalog search.
    - Rehearsed backup video prepared to safeguard against unexpected hardware/network issues during live presentation.
 
