@@ -63,7 +63,7 @@ For Flutter (cross-platform) changes:
   - Color contrast must adhere to WCAG 2.2 AA (minimum 4.5:1 for body text, 7.1:1 for primary buttons).
 - **Public Barrel Interfaces:** Feature internals are accessed only through the feature's `index.ts` barrel.
 
-### 2. Cross-Platform Client (`littlesteps-flutter` · CC 207B)
+### 2. Cross-Platform Client (`CC-207B_26-27_Final-Project` · CC 207B)
 - **Multiplatform Capability:** Engineered with Flutter / Dart for cross-platform portability across Android, iOS, Web, and Desktop. Android serves as the primary evaluation and live demo device for CC 207B.
 - **Layered Architecture (CC 207B Requirement f):** Code is organized strictly by role:
   - `lib/screens/`: Top-level page views corresponding to the 6 core features.
@@ -111,8 +111,8 @@ Following the governance audit ([Docs Issue #2](https://github.com/Thesis-Titans
    - **Teammate PR Reviews:** During the feature execution phase, every pull request must be reviewed and approved by at least one teammate prior to merging into `main`. Collaboration is a graded criterion assessed directly from Git commit and PR review history.
    - **Continuous Contribution:** All 5 members must contribute commits throughout the project lifecycle, avoiding last-minute commits before the December 2, 2026 deadline.
    - **Individual Code Defense Readiness:** Each member must personally author, understand, and explain their committed code during the mandatory 2–3 minute individual code defense, including the ability to perform small live code edits (e.g., adding form fields, adjusting navigation).
-   - **AI Usage Log Compliance:** Any AI-assisted code generation (allowed only for snippets, debugging, or sample fixtures) must follow project AI governance. For CC 207B (`littlesteps-flutter`), all AI use must be documented in the shared AI Usage Log per course requirement. Wholesale generation of the app or unexplainable code is strictly prohibited.
+   - **AI Usage Log Compliance:** Any AI-assisted code generation (allowed only for snippets, debugging, or sample fixtures) must follow project AI governance. For CC 207B (the Flutter app), all AI use must be documented in the shared AI Usage Log per course requirement. Wholesale generation of the app or unexplainable code is strictly prohibited.
 6. **Mobile Repository:**
-   - `littlesteps-flutter` is open for changes. It is private, so the branch protection, required status checks, and project-board coverage above are not yet configured there.
+   - The Flutter app lives in the course fork `Thesis-Titans/CC-207B_26-27_Final-Project` (folder `BSIT-3A/LittleSteps`). Its `main` requires one approving review, CI runs format, analyze and test, and its issues are on the project board.
 7. **Synthetic Credentials & Exposure Verification:**
    - The test suite in `littlesteps-api/test/auth-emulator.test.ts` uses mock keys (`fake-api-key`) and local test passwords (`LocalTestPassword123!`). These values are strictly synthetic throwaway inputs for the ephemeral in-memory Firebase Auth Emulator and must never be reused in production, deployed environments, or real account credentials.

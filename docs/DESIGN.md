@@ -191,7 +191,7 @@ The full rules and the complete swap table live in specification [§2.6](ui-ux-d
 Read this file first, then the specification sections it links, before designing or reviewing any UI.
 
 1. **Order of authority:** Figma, then the specification, then this file, then code.
-2. **Tokens in code:** React reads `littlesteps-react/src/styles/tokens.css`; Flutter reads `littlesteps-flutter/lib/theme/app_tokens.dart`. The front matter keys here are short aliases. React names follow the Figma variable paths (`color/brand/forest` becomes `--color-brand-forest`); Dart uses camelCase equivalents.
+2. **Tokens in code:** React reads `littlesteps-react/src/styles/tokens.css`; Flutter reads `BSIT-3A/LittleSteps/lib/theme/app_tokens.dart` in the course fork. The front matter keys here are short aliases. React names follow the Figma variable paths (`color/brand/forest` becomes `--color-brand-forest`); Dart uses camelCase equivalents.
 
    | Front matter key | CSS variable |
    |---|---|
@@ -204,6 +204,6 @@ Read this file first, then the specification sections it links, before designing
 
    Not in the front matter: the font fallback stack, the 2 px focus ring width and offset, and the 16 px minimum body size. Read them in `tokens.css`. Desktop type sizes are React-only.
 3. **Reviewing:** check against the specification §8 checklist, WCAG 2.2 AA, the do's and don'ts above and the voice rules. Report findings with a location and a proposed fix; do not rewrite the design.
-4. **Flutter:** members write and can defend all Flutter code (Individual Code Defense, CC 207B). AI may advise, review and give teaching snippets of 15 lines or fewer, never whole screens or features. Log every use in `littlesteps-flutter/docs/ai-usage-log.md` before opening the pull request, and tick the box in the PR template. Members add the tokens Dart still lacks (Soft Green, the status colors, offline and error text, error border, focus, on-primary, the decorative brand colors) and the 44 px target, shell sizes and 2 px focus ring offset.
+4. **Flutter:** members write and can defend all Flutter code (Individual Code Defense, CC 207B). AI may advise, review and give teaching snippets of 15 lines or fewer, never whole screens or features. Log every use in `BSIT-3A/LittleSteps/docs/ai-usage-log.md` before opening the pull request, and tick the box in the PR template. Members add the tokens Dart still lacks (Soft Green, the status colors, offline and error text, error border, focus, on-primary, the decorative brand colors) and the 44 px target, shell sizes and 2 px focus ring offset.
 5. **Skills and plugins:** none are installed as of 2026-10-31. Design-review rules are applied as written rubrics, not as downloaded skills.
 6. **Decisions of 2026-10-31** (spec §10.6): illustration option A with the activity cover exception; motion tokens 120 ms (fast), 200 ms (base) and one standard easing, to be added to Figma and `tokens.css`; no photography of children or stock people; strict sentence case; one canonical non-diagnostic banner (wording in spec §2.6); 72 px tab bar. Low-fidelity wireframes (docs #44) are in progress.

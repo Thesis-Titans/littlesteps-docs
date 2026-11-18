@@ -13,7 +13,7 @@ LittleSteps is organized across multiple repositories under the [`Thesis-Titans`
 3. **Level 3 — Repository-Specific Documentation (`littlesteps-api`, `littlesteps-react`):** Codebase-specific quickstarts, environment variables, test scripts, and technical contracts (e.g., OpenAPI in `littlesteps-api`).
 
 > [!NOTE]
-> **Mobile Repository:** `littlesteps-flutter` is private and open for changes through the same branch-and-PR workflow. It does not yet have its own contributor guide, templates, CI, or branch protection.
+> **Mobile Repository:** the Flutter app lives in the course fork [`Thesis-Titans/CC-207B_26-27_Final-Project`](https://github.com/Thesis-Titans/CC-207B_26-27_Final-Project/tree/main/BSIT-3A/LittleSteps) under `BSIT-3A/LittleSteps`. It has its own contributing guide, pull request template, CI and branch protection (one approving review).
 
 ### Rights & Licensing Notice
 LittleSteps is a coordinated academic course project across Applications Development (CC 207B), Web Systems and Technologies (CIT 210), and IT Project Management (CIT 246). The project's intended policy is **All Rights Reserved (Academic Evaluation Only)**. While active repositories are public for academic course evaluation and faculty review, public visibility does not grant an open-source license for general reuse, modification, or redistribution. Do not introduce open-source licenses (MIT, Apache, GPL) without explicit review and approval from the project lead and course instructor.

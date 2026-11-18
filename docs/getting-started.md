@@ -36,10 +36,12 @@ LittleSteps uses a multi-repository structure where related repositories reside 
 mkdir -p littlesteps
 cd littlesteps
 
-# Clone the three active repositories:
+# Clone the active repositories:
 git clone https://github.com/Thesis-Titans/littlesteps-docs.git
 git clone https://github.com/Thesis-Titans/littlesteps-api.git
 git clone https://github.com/Thesis-Titans/littlesteps-react.git
+# Flutter app (CC 207B course fork; the app is in BSIT-3A/LittleSteps):
+git clone https://github.com/Thesis-Titans/CC-207B_26-27_Final-Project.git littlesteps-flutter
 ```
 
 Resulting directory tree:
@@ -48,7 +50,7 @@ littlesteps/
 ├── littlesteps-docs/       # Canonical architecture, scope, research, and provenance
 ├── littlesteps-api/        # TypeScript Express backend on Firebase Functions v2
 ├── littlesteps-react/      # React + TypeScript + Vite frontend
-└── littlesteps-flutter/    # Flutter mobile client (Dart / Android; Sprint 3–4)
+└── littlesteps-flutter/    # Flutter app, course fork; code in BSIT-3A/LittleSteps
 ```
 
 ---

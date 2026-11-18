@@ -13,7 +13,7 @@ LittleSteps is under active academic development. Only the latest commit on the 
 | **`littlesteps-docs`** | `main` | :white_check_mark: |
 | **`littlesteps-api`** | `main` | :white_check_mark: |
 | **`littlesteps-react`** | `main` | :white_check_mark: |
-| **`littlesteps-flutter`** | `main` | :white_check_mark: |
+| **`CC-207B_26-27_Final-Project`** (Flutter, `BSIT-3A/LittleSteps`) | `main` | :white_check_mark: |
 | All other branches / forks / historical tags | Older revisions | :x: |
 
 ---
@@ -42,7 +42,7 @@ Please submit vulnerability details through either of the following private chan
 
 ### Information to Include in Your Report
 To help us triage and verify the issue efficiently, please provide:
-- **Repository & Component:** Affected repository (`littlesteps-api`, `littlesteps-react`, `littlesteps-flutter`, or `littlesteps-docs`) and specific file paths or endpoints.
+- **Repository & Component:** Affected repository (`littlesteps-api`, `littlesteps-react`, `CC-207B_26-27_Final-Project` (Flutter), or `littlesteps-docs`) and specific file paths or endpoints.
 - **Vulnerability Category:** Description of the weakness (e.g., authorization bypass, broken access control, synthetic credential exposure, injection flaw, or sensitive data leak).
 - **Reproduction Steps:** Step-by-step instructions or proof-of-concept (POC) using **strictly synthetic test data**.
 - **Impact Assessment:** Potential consequence of the vulnerability if exploited.

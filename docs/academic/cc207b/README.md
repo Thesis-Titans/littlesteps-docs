@@ -5,7 +5,7 @@
 **Source:** Summarized from the instructor's [CC 207B Final Project Requirements](CC207B_Final_Project_Requirements.md). The instructor's brief is the authority wherever this page differs from it.  
 **Base Framework:** Flutter. The brief allows a web or mobile application; LittleSteps builds an Android mobile app.  
 **Team Composition:** 5 members, so at least 6 core features (the AI-powered feature counts as one)  
-**Repository:** `Thesis-Titans/littlesteps-flutter` until the course instructor creates the course repository to fork; the work then moves with its full Git history. See the [execution plan](../../execution-plan.md) §1.3.  
+**Repository:** [`Thesis-Titans/CC-207B_26-27_Final-Project`](https://github.com/Thesis-Titans/CC-207B_26-27_Final-Project/tree/main/BSIT-3A/LittleSteps), the team's fork of the instructor's course repository; the app is in `BSIT-3A/LittleSteps`. See the [execution plan](../../execution-plan.md) §1.3.  
 **Submission & Defense:** December 2, 2026. Files are submitted through an LMS assignment the instructor will create.
 
 ---
@@ -37,7 +37,7 @@ LittleSteps (5 members, 6 required): child profile, milestone observation prompt
 | c | At least one form with input validation and clear error feedback | Child profile form (J1); also the observation and journal forms |
 | d | Data persistence (local storage or a cloud database such as Firebase) | Firestore through the shared API; local storage for drafts and the dismissed advisory |
 | e | Asynchronous operations with visible loading, empty and error states | UI/UX spec §7 state matrix |
-| f | Folders organized by purpose (for example `screens`, `widgets`, `models`, `services`, `assets`), with comments describing each significant part of the code | To be set up in the Flutter project issue (littlesteps-flutter #2) |
+| f | Folders organized by purpose (for example `screens`, `widgets`, `models`, `services`, `assets`), with comments describing each significant part of the code | Done in the scaffold commit (`lib/screens`, `lib/widgets`, `lib/models`, `lib/services`, `lib/theme`, `lib/routing`) |
 
 ## 2. AI-Powered Feature Requirement
 
@@ -119,5 +119,5 @@ Five points are deducted from the project score raw for each calendar day late, 
 | UI follows the prototypes presented earlier | **Open:** confirm with the instructor which prototypes count. The Figma file has high-fidelity frames but no low-fidelity wireframes yet. |
 | Course repository to fork | **Open:** not yet created by the instructor |
 | Collaboration history | **At risk:** every commit so far is from one account. Members should commit and review their own work from now on. |
-| AI Usage Log | **Planned:** Mark to initialize AI Usage Log template in `littlesteps-flutter` under issue flutter #14; logging required for all AI-generated code, text, and assets in Flutter. |
-| Documentation package, presentation, reflections | Planned for M5 (littlesteps-flutter #13) |
+| AI Usage Log | **Done:** AI Usage Log template at `BSIT-3A/LittleSteps/docs/ai-usage-log.md`; logging required for all AI-generated code, text, and assets in Flutter. |
+| Documentation package, presentation, reflections | Planned for M5 (course fork #11) |
