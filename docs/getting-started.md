@@ -200,7 +200,40 @@ To verify that the frontend and backend communicate properly:
 
 ---
 
-## 6. Daily Development Rules & Boundaries
+## 6. Mobile Setup: `littlesteps-flutter`
+
+The Flutter app lives in the course fork under `BSIT-3A/LittleSteps` and talks to the same local API as the web client. Requirements: Flutter 3.47 (stable), and for Android an emulator or device on API 34 or newer with JDK 17 or 21.
+
+1. **Terminal 1**: start the API emulators with the demo catalog turned on. In `littlesteps-api/.env`, set:
+   ```bash
+   SERVE_SYNTHETIC_CATALOG=true
+   ```
+   Without it the catalog is empty, because no unreviewed content is served by default. Then:
+   ```bash
+   cd littlesteps-api
+   npm run build
+   npm run emulators -- --project demo-littlesteps
+   ```
+   Run `npm run build` again after pulling API changes, or the emulators keep running the old compiled code.
+2. **Terminal 2**: run the app.
+   ```bash
+   cd littlesteps-flutter/BSIT-3A/LittleSteps
+   flutter pub get
+   flutter run -d chrome
+   ```
+   For an Android emulator, use `flutter run -d <device id>` (see `flutter devices`). The app reaches the API at `http://10.0.2.2:5001/demo-littlesteps/asia-southeast1/api` on Android and at `localhost` on other platforms; no setting is needed.
+3. **Test user**: every route except the catalog needs a signed-in user. Open the Emulator UI at `http://127.0.0.1:4000`, go to **Authentication**, and add a test user with a synthetic email and password. In-app sign-in is built in the Flutter issue "Integrate caregiver sign-in and protected API client".
+4. **AI limit**: the AI helper allows 10 requests per hour per user, and the counter is kept in the Firestore emulator. Use a second test user if you hit the limit.
+5. **Before a pull request**:
+   ```bash
+   dart format .
+   flutter analyze
+   flutter test
+   ```
+
+---
+
+## 7. Daily Development Rules & Boundaries
 
 1. **Never Commit Directly to `main`**:
    - Always branch off `main` (e.g., `git checkout -b feat/<name>` or `chore/<name>`).
@@ -216,7 +249,7 @@ To verify that the frontend and backend communicate properly:
 
 ---
 
-## 7. Canonical Documentation Index
+## 8. Canonical Documentation Index
 
 - [API Reference & Integration Guide](api-reference.md) — Canonical OpenAPI endpoints, Open Library REST integration, 3-tier AI fallback, and error envelopes.
 - [Product Scope](product-scope.md) — 6 core features, app navigation age bands (0–71 months), non-diagnostic boundaries.
