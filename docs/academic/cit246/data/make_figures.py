@@ -104,9 +104,11 @@ def title(s, label, caption, sub, width):
 
 
 # ---------------------------------------------------------------- data
-def read(name):
-    with open(os.path.join(PLAN, name), encoding="utf-8") as f:
-        return f.read()
+def read(section):
+    """Return one numbered section ("7", "8", ...) of the combined plan."""
+    with open(os.path.join(PLAN, "CIT246_FinalProject_ThesisTitans.md"), encoding="utf-8") as f:
+        md = f.read()
+    return re.split(r"^# \d+\. ", md, flags=re.M)[int(section) - 1]
 
 
 def load():
@@ -121,7 +123,8 @@ def load():
     months = []
     with open(os.path.join(HERE, "cost-baseline-by-month.csv"), encoding="utf-8") as f:
         for r in csv.DictReader(f):
-            months.append((r["Month"], int(r["Planned cost (PHP)"]), int(r["Cumulative (PHP)"])))
+            months.append((r["Month"], int(r["Planned cost (PHP)"]), int(r["Cumulative (PHP)"]),
+                           int(r["Cost baseline cumulative (PHP)"])))
     with open(os.path.join(HERE, "wbs-levels.csv"), encoding="utf-8") as f:
         levels = {r["WBS"]: r["Name"] for r in csv.DictReader(f)}
     root = levels.pop("0")
@@ -135,12 +138,12 @@ ROWS, MONTHS, LEVELS, ROOT, MILESTONES = load()
 
 def check_md():
     """Fail loudly if the plan Markdown (07 list, 08 milestone table) no longer matches the data files."""
-    wbs = read("07-work-breakdown-structure.md")
+    wbs = read("7")
     md = {m.group(1): m.group(2) for m in re.finditer(r"^\s*- \*\*(\d\.\d) (.+?)\*\*\s*$", wbs, re.M)}
     md_root = re.search(r"\*\*0\. (.+?)\*\*", wbs).group(1)
     md_wp = {m.group(1): m.group(2) for m in re.finditer(r"^\s+- (\d\.\d\.\d) (.+?)\s*$", wbs, re.M)}
     csv_wp = {r["id"]: r["name"] for r in ROWS}
-    sec = read("08-schedule.md").split("## 8.5 Milestones")[1]
+    sec = read("8").split("## 8.5 Milestones")[1]
     tab = [(m.group(1), dt.datetime.strptime(m.group(2), "%d %b %Y").date())
            for m in re.finditer(r"^\| ([^|]+?) \| (\d+ \w+ \d{4}) \|", sec, re.M)]
     bad = []
@@ -155,8 +158,9 @@ check_md()
 BY = {r["id"]: r for r in ROWS}
 BASELINE = sum(r["cost"] for r in ROWS)
 assert BASELINE == MONTHS[-1][2], (BASELINE, MONTHS[-1])
+assert MONTHS[-1][3] == round(BASELINE * 1.10), MONTHS[-1]
 BUDGET = round(BASELINE * 1.10)
-assert BUDGET == 1083185, BUDGET
+assert BUDGET == 1059907, BUDGET
 CRIT_IDS = {r["id"] for r in ROWS if r["crit"]}
 assert len(ROWS) == 49 and len(CRIT_IDS) == 23
 HOLI = {dt.date(2027, 3, 25), dt.date(2027, 3, 26), dt.date(2027, 4, 9), dt.date(2027, 8, 25)}  # as schedule_model.py
@@ -349,7 +353,7 @@ def fig_gantt():
     s.rect(LBL + 95, ly - 8, 22, 8, NC, NC_S, 1); s.text(LBL + 122, ly, "Not critical", 9, SUB)
     s.rect(LBL + 185, ly - 8, 22, 8, "#ffffff", NC_S, 1, 0, "3 2"); s.text(LBL + 212, ly, "Level of effort", 9, SUB)
     s.add(f'<path d="M{LBL + 295},{ly - 9} l5,5 l-5,5 l-5,-5 Z" fill="{INK}"/>'); s.text(LBL + 305, ly, "Milestone", 9, SUB)
-    s.line(LBL + 360, ly - 4, LBL + 390, ly - 4, CRIT, 1.2, "5 3"); s.text(LBL + 395, ly, "Budget with contingency", 9, SUB)
+    s.line(LBL + 360, ly - 4, LBL + 390, ly - 4, CRIT, 1.2, "5 3"); s.text(LBL + 395, ly, "Project budget", 9, SUB)
     top = ly + 12
     # month header
     months = [dt.date(2027, m, 1) for m in range(1, 9)]
@@ -412,21 +416,21 @@ def fig_gantt():
     s.text(X0 - 5, cy1 + 11, "2027", 8.5, SUB, False, "end")
     # baseline line
     pts = [(PROJ_START, 0)]
-    for (mo, _, cum) in MONTHS:
+    for (mo, _, _, cum) in MONTHS:
         y_, m_ = map(int, mo.split("-"))
         end = (dt.date(y_ + (m_ == 12), m_ % 12 + 1, 1) - dt.timedelta(1))
         pts.append((min(end, PROJ_END), cum))
     s.line(X0, yv(BUDGET), X1, yv(BUDGET), CRIT, 1.3, "6 3")
-    s.text(X0 + 4, yv(BUDGET) - 4, f"Budget with contingency {peso(BUDGET)}", 8.8, CRIT, True)
+    s.text(X0 + 4, yv(BUDGET) - 4, f"Project budget {peso(BUDGET)} (no management reserve)", 8.8, CRIT, True)
     s.path("M" + " L".join(f"{xd(d):.1f},{yv(v):.1f}" for d, v in pts), "none", INK, 2)
     for i, (d, v) in enumerate(pts):
         s.add(f'<circle cx="{xd(d):.1f}" cy="{yv(v):.1f}" r="2.6" fill="#fff" stroke="{INK}" stroke-width="1.3"/>')
         if i == 0: continue
         if i == len(pts) - 1:
-            s.text(xd(d) - 6, yv(v) + 50, f"Baseline {peso(v)}", 8.8, INK, True, "end")
+            s.text(xd(d) - 6, yv(v) + 50, f"Cost baseline {peso(v)}", 8.8, INK, True, "end")
         else:
             s.text(xd(d) + 3, yv(v) + (12 if i < len(pts) - 3 else 12), peso(v), 7.8, SUB)
-    s.text(X1, cy1 + 23, f"Baseline excludes the contingency reserve; budget = baseline + 10%", 7.8, SUB, False, "end")
+    s.text(X1, cy1 + 23, "Cost baseline = estimates + 10% contingency reserve, spread by month", 7.8, SUB, False, "end")
     s.h_used = cy1 + 30
     assert s.h_used < A4H - 8, s.h_used
     return s
@@ -637,6 +641,10 @@ def find_chrome():
 
 
 def to_png(svg, png, w, h):
+    cv = shutil.which("convert")
+    if cv:
+        subprocess.run([cv, "-density", "300", svg, "-resize", f"{w}x{h}!", png], check=True)
+        return True
     chrome = find_chrome()
     if chrome:
         with tempfile.TemporaryDirectory() as td:
@@ -644,14 +652,11 @@ def to_png(svg, png, w, h):
             with open(html, "w") as f:
                 f.write(f'<html><body style="margin:0"><img src="file://{svg}" '
                         f'style="display:block;width:{w}px;height:{h}px"></body></html>')
-            subprocess.run([chrome, "--no-sandbox", "--hide-scrollbars", "--force-device-scale-factor=1",
+            subprocess.run([chrome, "--headless=new", "--no-sandbox", "--hide-scrollbars", "--force-device-scale-factor=1",
                             f"--window-size={w},{h}", f"--screenshot={png}", "file://" + html],
                            check=True, capture_output=True)
-        return True
-    cv = shutil.which("convert")
-    if cv:
-        subprocess.run([cv, "-density", "300", svg, "-resize", f"{w}x{h}!", png], check=True)
-        return True
+        if os.path.exists(png) and os.path.getsize(png) > 0:
+            return True
     print("no browser or ImageMagick: PNG skipped for", svg)
     return False
 

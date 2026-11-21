@@ -29,35 +29,35 @@ ROLE_NAMES = {
 # id, name, duration (working days), predecessors, resources {role: FTE}, other costs [(label, amount)], basis
 WP = [
  # 1.0 Project management (1.3 is level of effort, costed separately)
- ("1.1.1","Project charter and sponsor sign-off",5,[],{"PM":1,"BA":.5},[],"Analogous: charter work on past course projects"),
- ("1.1.2","Stakeholder register and analysis",5,[],{"CC":1,"PM":.2},[],"Analogous"),
- ("1.2.1","Scope statement and WBS",5,["1.1.1"],{"PM":.8,"BA":.8},[],"Analogous"),
- ("1.2.2","Schedule, cost baseline and subsidiary plans",5,["1.2.1","1.1.2"],{"PM":1,"BA":.3,"CC":.3},[],"Analogous"),
+ ("1.1.1","Project charter and sponsor sign-off",5,[],{"PM":1,"BA":.5},[],"Analogous: charter work on the team's past projects"),
+ ("1.1.2","Stakeholder register and analysis",5,[],{"CC":1},[],"Analogous"),
+ ("1.2.1","Scope statement and WBS",5,["1.1.1"],{"PM":.8},[],"Analogous"),
+ ("1.2.2","Schedule, cost baseline and subsidiary plans",5,["1.2.1","1.1.2"],{"PM":.8},[],"Analogous"),
  ("1.4.1","Final acceptance and closure report",3,["8.3.2"],{"PM":1,"BA":.5},[],"Analogous"),
  ("1.4.2","Lessons learned and archive",2,["1.4.1"],{"PM":1,"BA":.5,"CC":.5},[],"Analogous"),
  # 2.0 Requirements and design
  ("2.1.1","Discovery interviews and baseline measures",10,["1.1.1"],{"BA":1,"CC":1,"PM":.2},[],"Parametric: 8 interviews at about 1 day each plus analysis"),
  ("2.1.2","Requirements specification (D1)",10,["2.1.1"],{"BA":1},[],"Parametric: 6 features plus supporting functions, about 1.5 days each"),
- ("2.2.1","Wireframes and design system",10,["2.1.1"],{"UX":1,"BA":.3},[],"Analogous: the course prototype's design system"),
- ("2.2.2","Clickable prototype and parent walkthrough (D2)",10,["2.2.1","2.1.2"],{"UX":1,"BA":.5,"CC":.3},[],"Analogous"),
- ("2.3.1","Privacy impact assessment draft",10,["2.1.2"],{"BA":.5,"PM":.2},[("Privacy consultant",50000)],"Expert judgment (consultant quote assumption)"),
- ("2.3.2","DPO review and approval (D3)",10,["2.3.1"],{"PM":.1},[],"Assumed DPO turnaround of two weeks"),
+ ("2.2.1","Wireframes and design system",10,["2.1.1"],{"UX":1},[],"Analogous: the 2026 prototype's design system"),
+ ("2.2.2","Clickable prototype and parent walkthrough (D2)",10,["2.2.1","2.1.2"],{"UX":1,"BA":.5},[],"Analogous"),
+ ("2.3.1","Privacy impact assessment draft",10,["2.1.2"],{"BA":.5,"PM":.2},[("Privacy consultant",50000)],"Expert judgment (consultant's fixed fee)"),
+ ("2.3.2","DPO review and approval (D3)",10,["2.3.1"],{"PM":.1},[],"Expert judgment: two-week DPO review"),
  # 3.0 Learning content catalog
  ("3.1.1","Source selection and reuse permissions",15,["2.1.1"],{"CC":1},[],"Parametric: about 12 candidate sources"),
- ("3.2.1","Adapt 80 activities, stories and rhymes",25,["3.1.1"],{"CC":1,"BA":.2},[],"Parametric: 80 items at about 3 hours each"),
+ ("3.2.1","Adapt 80 activities, stories and rhymes",25,["3.1.1"],{"CC":1},[],"Parametric: 80 items at about 3 hours each"),
  ("3.2.2","Translate items to Filipino and Hiligaynon",15,["3.2.1"],{"CC":.3},[("Translator: 160 item translations × ₱300",48000)],"Parametric: per-item translation rate"),
  ("3.3.1","Content reviewer sign-off (D4)",10,["3.2.1"],{"CC":.3},[("ECCD content reviewer: 80 items × ₱750",60000)],"Parametric: per-item review honorarium"),
  ("3.3.2","Load the reviewed catalog into the database",3,["3.3.1","3.2.2","4.3.1","5.3.2"],{"DEV":.5},[],"Analogous"),
  # 4.0 Backend
- ("4.1.1","API contract and data model",10,["2.1.1"],{"DEV":2},[],"Analogous: course API contract; drafted alongside the requirements"),
- ("4.1.2","Cloud project, environments and CI",3,["4.1.1"],{"DEV":1},[("Cloud and AI services during build and testing, 2 months × ₱5,000",10000)],"Analogous: reuses the course project's setup scripts"),
- ("4.2.1","Authentication and child profile service",10,["4.1.2"],{"DEV":1},[],"Analogous: course M1"),
- ("4.2.2","Activity planning and observation services",10,["4.2.1"],{"DEV":1},[],"Analogous: course M2"),
- ("4.3.1","Catalog service",8,["4.1.1"],{"DEV":1},[],"Analogous: course M2"),
- ("4.3.2","Journal and weekly summary services",10,["4.2.2"],{"DEV":1},[],"Analogous: course M3"),
- ("4.3.3","AI suggestion service and fallback",10,["4.3.2","4.3.1","2.3.2"],{"DEV":1},[],"Analogous: course M4"),
+ ("4.1.1","API contract and data model",10,["2.1.1"],{"DEV":2},[],"Analogous: the 2026 prototype's API contract; drafted alongside the requirements"),
+ ("4.1.2","Cloud project, environments and CI",3,["4.1.1"],{"DEV":1},[("Cloud and AI services during build and testing, 2 months × ₱5,000",10000)],"Analogous: reuses the 2026 prototype's setup scripts"),
+ ("4.2.1","Authentication and child profile service",10,["4.1.2"],{"DEV":1},[],"Analogous: 2026 prototype (sign-in and child profiles)"),
+ ("4.2.2","Activity planning and observation services",10,["4.2.1"],{"DEV":1},[],"Analogous: 2026 prototype (planning and observations)"),
+ ("4.3.1","Catalog service",8,["4.1.1"],{"DEV":1},[],"Analogous: 2026 prototype (catalog)"),
+ ("4.3.2","Journal and weekly summary services",10,["4.2.2"],{"DEV":1},[],"Analogous: 2026 prototype (journal and weekly summary)"),
+ ("4.3.3","AI suggestion service and fallback",10,["4.3.2","4.3.1","2.3.2"],{"DEV":1},[],"Analogous: 2026 prototype (AI helper)"),
  # 5.0 Flutter app
- ("5.1.1","App project, theme and navigation",8,["2.2.1","4.3.1"],{"DEV":1},[],"Analogous: course Flutter setup"),
+ ("5.1.1","App project, theme and navigation",8,["2.2.1","4.3.1"],{"DEV":1},[],"Analogous: the 2026 prototype's Flutter setup"),
  ("5.1.2","Sign-in and API client",5,["5.1.1","4.2.1"],{"DEV":1},[],"Analogous"),
  ("5.2.1","Child profile screens",5,["5.1.2"],{"DEV":1},[],"Analogous"),
  ("5.2.2","Milestone observation screens",6,["5.2.1","4.2.2"],{"DEV":1},[],"Analogous"),
@@ -132,7 +132,7 @@ crit = [i for i in order if wp[i]["float"] == 0]
 # --- level-of-effort for 1.3 (from end of 1.2.2 to start of 1.4.1) ---
 loe_start, loe_end = wp["1.2.2"]["ef"], wp["1.4.1"]["es"]
 loe_days = loe_end - loe_start
-LOE = [("1.3.1","Status reports, two-weekly demos and sponsor updates",{"PM":.3}),("1.3.2","Risk, issue and change control",{"PM":.1,"BA":.1})]
+LOE = [("1.3.1","Status reports, two-weekly demos and sponsor updates",{"PM":.3}),("1.3.2","Risk, issue and change control",{"PM":.2})]
 
 # --- costs ---
 def labour(res, days): return sum(RATES[r] * f * days for r, f in res.items())

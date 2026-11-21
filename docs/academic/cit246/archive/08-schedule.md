@@ -66,7 +66,7 @@ Each activity is a WBS work package; all dates are in 2027. Basis of the duratio
 
 Activity-on-node diagram: each box shows the WBS number and duration, and arrows are finish-to-start dependencies.
 
-![Figure 8.1. Network diagram with the critical path](figures/fig-8-1-network.png)
+![Figure 8.1. Network diagram with the critical path](../figures/fig-8-1-network.png)
 
 *Figure 8.1. Network diagram by WBS branch (rows) and dependency depth (columns). Red boxes and heavy arrows are the critical path; levels of effort 1.3.1 and 1.3.2 are shown as a bar outside the network.*
 
@@ -76,7 +76,7 @@ Activity-on-node diagram: each box shows the WBS number and duration, and arrows
 
 ## 8.4 Gantt Chart
 
-![Figure 8.2. Gantt chart and cumulative cost baseline](figures/fig-8-2-gantt-cost.png)
+![Figure 8.2. Gantt chart and cumulative cost baseline](../figures/fig-8-2-gantt-cost.png)
 
 *Figure 8.2. Gantt chart (red bars are on the critical path; diamonds are milestones) with the cumulative cost baseline (S-curve) and the budget with contingency on the same time axis.*
 

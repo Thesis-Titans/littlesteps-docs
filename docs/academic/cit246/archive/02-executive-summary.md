@@ -4,7 +4,7 @@
 
 **The proposed system.** LittleSteps is a free Flutter app (one codebase, piloted on Android) for parents and other caregivers of children aged 0–5. They keep a private record of what they notice, plan screen-free activities from 80 reviewed Philippine activities, stories and rhymes, see a factual weekly summary, and ask an AI helper for ideas that fit their materials. It never scores or labels a child, and journal notes never leave the parent's account.
 
-**The cost.** **₱1,083,185**, including a 10% contingency reserve of ₱98,471, built bottom-up from 49 work packages. Running costs after handover are about ₱5,000 a month.
+**The cost.** **₱1,059,907**, including a 10% contingency reserve of ₱96,355, built bottom-up from 49 work packages. Running costs after handover are about ₱5,000 a month.
 
 **The duration.** Eight months, **4 January to 27 August 2027** (166 working days), including an eight-week pilot at two Child Development Centers in La Paz from 3 June to 28 July 2027.
 
