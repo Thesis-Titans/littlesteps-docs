@@ -7,7 +7,7 @@
 | **Authorization date** | On sponsor sign-off (target: 8 January 2027) |
 | **Project start date** | 4 January 2027 |
 | **Projected finish date** | 27 August 2027 (8 months) |
-| **Budget** | ₱1,083,185, including a 10% contingency reserve of ₱98,471 (Section 9) |
+| **Budget** | ₱1,059,907, including a 10% contingency reserve of ₱96,355 (Section 9) |
 | **Project manager** | Mark Alvin Cadangin |
 
 ## 4.1 Key Schedule Milestones

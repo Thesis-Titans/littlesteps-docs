@@ -92,7 +92,7 @@ Level 1 is a deliverable branch, level 2 a sub-deliverable and level 3 a work pa
     - 8.3.1 Handover package (D11)
     - 8.3.2 Maintainer training and handover sign-off
 
-![Figure 7.1. Work breakdown structure to work-package level](figures/fig-7-1-wbs.png)
+![Figure 7.1. Work breakdown structure to work-package level](../figures/fig-7-1-wbs.png)
 
 *Figure 7.1. WBS chart: the project, 8 branches, level-2 groups and all 49 work packages.*
 

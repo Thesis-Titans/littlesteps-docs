@@ -1,0 +1,15 @@
+ID,Title,Subtitle,Parent,Link,Outside team
+SP,Project sponsor,"OIC District Head, CSWDO La Paz–Lapuz District",,,No
+DPO,Data Protection Officer,client's DPO,SP,dotted,Yes
+CDW,Child Development Workers,two pilot centers,SP,dotted,Yes
+PM,Project manager,Mark Alvin Cadangin,SP,solid,No
+MT,Maintainer,city IT office designee,PM,dotted,Yes
+BA,Business analyst and quality lead,Mae Daniella Faith C. Benjamin,PM,solid,No
+CC,Stakeholder and content coordinator,Nherie C. Acebuche,PM,solid,No
+DA,Developer A,(backend and app) contracted,PM,solid,No
+DB,Developer B (app),contracted,PM,solid,No
+PC,Privacy consultant,contracted,BA,dotted,Yes
+UX,UI/UX designer,part-time contractor,BA,solid,No
+QA,QA tester,part-time contractor,BA,solid,No
+CR,ECCD content reviewer,contracted specialist,CC,solid,No
+TR,Translator,contracted,CC,solid,No

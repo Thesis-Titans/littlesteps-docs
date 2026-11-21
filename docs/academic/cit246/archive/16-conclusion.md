@@ -9,7 +9,7 @@ For the CSWDO La Paz–Lapuz District office, LittleSteps gives parents in its 3
 The OIC District Head is asked to approve:
 
 1. The project charter and this plan as the project baseline.
-2. A budget of **₱1,083,185**, including a 10% contingency reserve of ₱98,471, from the funding source the office confirms.
+2. A budget of **₱1,059,907**, including a 10% contingency reserve of ₱96,355, from the funding source the office confirms.
 3. The schedule from **4 January to 27 August 2027**, with an eight-week pilot at two Child Development Centers in La Paz from 3 June to 28 July 2027.
 4. The CDWs' time for training, the pilot and two-weekly feedback.
 5. A request to the city's IT office to name a maintainer by May 2027.
