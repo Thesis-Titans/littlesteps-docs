@@ -42,7 +42,7 @@ LittleSteps is designed as a **caregiver-facing digital companion** rather than 
 4. Providing private, observational developmental tracking without clinical jargon or anxiety-inducing diagnostic claims.
 
 ![LittleSteps System and Solution Architecture](figures/fig-system-solution-architecture.svg)  
-*Fig 1.0: LittleSteps System & Solution Architecture — Translating digital companion guidance into screen-free physical caregiver-toddler interaction.*
+*Fig 1.0: LittleSteps System and Solution Architecture — Caregiver-facing digital companion facilitating offline, screen-free physical child play.*
 
 ### 3. Technology Stack & Architectural Decision Matrix
 
@@ -67,8 +67,8 @@ The engineering stack was selected to satisfy cross-platform performance, strict
 
 The client application strictly adheres to the principle of **dependency minimization** to maintain rapid build times, small compiled APK binaries, and absolute code audibility:
 
-![Flutter Client Package Dependency Architecture](figures/fig-client-package-dependencies.svg)  
-*Fig 1.1: Flutter Client Package Dependency Architecture — Minimalist dependency tree ensuring sound null-safety and zero bridge serialization overhead.*
+![Flutter Client Package Dependencies](figures/fig-client-package-dependencies.svg)  
+*Fig 1.1: Flutter Client Package Dependencies — Core framework and third-party dependencies utilized in BSIT-3A/LittleSteps.*
 
 1. **`flutter/material.dart` (Core Framework):**  
    - *Purpose:* Provides Material 3 adaptive UI components (`Scaffold`, `NavigationBar`, `Card`, `FilledButton`, `TextField`, `DropdownButtonFormField`).
@@ -160,8 +160,8 @@ The progression from structural low-fidelity wireframes to compiled Material 3 h
 
 LittleSteps implements **seven (7) fully functional core user flows**, exceeding the six-feature requirement for a 5-member project team:
 
-![LittleSteps Shell Navigation & Seven Core Features](figures/fig-shell-features-hierarchy.svg)  
-*Fig 2.0: LittleSteps Shell Navigation & Core Features Architecture — Five-tab NavigationBar mapped across seven core functional user flows.*
+![Shell Navigation and Core Features Architecture](figures/fig-shell-features-hierarchy.svg)  
+*Fig 2.0: Shell Navigation and Core Features Architecture — Root ShellScreen architecture mapping five navigation tabs to seven implemented core user flows.*
 
 #### Feature 1: Child Profile & Age-Band Bracket Management
 * **Files:** `lib/screens/children/child_profile_screen.dart`, `add_child_screen.dart`, `lib/services/children_service.dart`
@@ -240,8 +240,8 @@ LittleSteps implements **seven (7) fully functional core user flows**, exceeding
 
 In fulfillment of CC 207B § 2.a.ii.5, this section provides the formal engineering specification for the user-facing Artificial Intelligence integration:
 
-![LittleSteps AI Fallback Architecture and Safety Pipeline](figures/fig-ai-pipeline-fallback.svg)  
-*Fig 2.8: LittleSteps AI Fallback Architecture & Pediatric Safety Pipeline — Catalog-grounded generative selection with deterministic 3-tier fallback and non-diagnostic filtering.*
+![AI Selection Pipeline and Fallback Architecture](figures/fig-ai-pipeline-fallback.svg)  
+*Fig 2.8: AI Selection Pipeline and Fallback Architecture — Catalog-grounded recommendation workflow with deterministic 3-tier fallback and pediatric safety filters.*
 *(Note: Tier 2 deterministic rule-based fallback is reserved for the separate Activity Adaptation endpoint `/api/v1/ai/adapt-activity`).*
 
 #### 1. AI Service, Model & Package Architecture

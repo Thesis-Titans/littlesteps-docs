@@ -21,8 +21,8 @@ Rather than deploying an unconstrained conversational chatbot—which introduces
 ### 1.1 Architecture & Services
 The LittleSteps AI architecture adopts a **Zero-Client-Credential Server Proxy** model. The Flutter mobile app (`BSIT-3A/LittleSteps`) and the React web app (`littlesteps-react`) never interact with AI foundation models directly. All requests pass through the Node.js/TypeScript backend (`littlesteps-api`).
 
-![LittleSteps AI Fallback Architecture and Safety Pipeline](figures/fig-ai-pipeline-fallback.svg)  
-*Fig 1.1: LittleSteps AI Fallback Architecture & Pediatric Safety Pipeline — Catalog-grounded generative selection with deterministic 3-tier fallback and non-diagnostic filtering.*
+![AI Selection Pipeline and Fallback Architecture](figures/fig-ai-pipeline-fallback.svg)  
+*Fig 1.1: AI Selection Pipeline and Fallback Architecture — Catalog-grounded recommendation workflow with deterministic 3-tier fallback and pediatric safety filters.*
 
 ### 1.2 Model Selection & Packages
 - **Primary Foundation Model:** **Google Gemini 2.5 Flash Lite** (`gemini-2.5-flash-lite`).
