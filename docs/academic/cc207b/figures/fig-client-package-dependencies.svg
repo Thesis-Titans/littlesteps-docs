@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="300" viewBox="0 0 800 300" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="310" viewBox="0 0 800 310" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'>
   <defs>
     <filter id="shadow-pkg" x="-2%" y="-3%" width="104%" height="108%" filterUnits="userSpaceOnUse">
       <feDropShadow dx="0" dy="1.5" stdDeviation="2.5" flood-color="#000000" flood-opacity="0.06"/>
@@ -6,12 +6,12 @@
   </defs>
 
   <!-- Background -->
-  <rect width="800" height="300" fill="#FFFFFF" rx="6" stroke="#D1DCD1" stroke-width="1"/>
+  <rect width="800" height="310" fill="#FFFFFF" rx="6" stroke="#D1DCD1" stroke-width="1"/>
 
   <!-- Header -->
-  <text x="28" y="30" font-size="14.5" font-weight="700" fill="#1F634D">Figure 1.1: Flutter Client Package Dependencies</text>
-  <text x="28" y="46" font-size="11" fill="#5A655F">Core framework and third-party dependencies utilized in BSIT-3A/LittleSteps</text>
-  <line x1="28" y1="56" x2="772" y2="56" stroke="#E2E8E2" stroke-width="1"/>
+  <text x="25" y="30" font-size="14.5" font-weight="700" fill="#1F634D">Figure 1.1: Flutter Client Package Dependencies</text>
+  <text x="25" y="46" font-size="11" fill="#5A655F">Core framework and third-party dependencies utilized in BSIT-3A/LittleSteps</text>
+  <line x1="25" y1="56" x2="775" y2="56" stroke="#E2E8E2" stroke-width="1"/>
 
   <!-- Root Package -->
   <g transform="translate(260, 72)">
@@ -21,82 +21,86 @@
 
   <!-- Connector Spine -->
   <line x1="400" y1="114" x2="400" y2="138" stroke="#1F634D" stroke-width="1.8"/>
-  <line x1="85" y1="138" x2="715" y2="138" stroke="#1F634D" stroke-width="1.8"/>
+  <line x1="94" y1="138" x2="706" y2="138" stroke="#1F634D" stroke-width="1.8"/>
 
-  <!-- Drop lines with arrowheads -->
-  <line x1="85" y1="138" x2="85" y2="154" stroke="#1F634D" stroke-width="1.8"/>
-  <polygon points="81,150 85,158 89,150" fill="#1F634D"/>
+  <!-- Drop lines with arrowheads into 5 equal columns -->
+  <line x1="94" y1="138" x2="94" y2="154" stroke="#1F634D" stroke-width="1.8"/>
+  <polygon points="90,150 94,158 98,150" fill="#1F634D"/>
 
-  <line x1="235" y1="138" x2="235" y2="154" stroke="#1F634D" stroke-width="1.8"/>
-  <polygon points="231,150 235,158 239,150" fill="#1F634D"/>
+  <line x1="247" y1="138" x2="247" y2="154" stroke="#1F634D" stroke-width="1.8"/>
+  <polygon points="243,150 247,158 251,150" fill="#1F634D"/>
 
   <line x1="400" y1="138" x2="400" y2="154" stroke="#1F634D" stroke-width="1.8"/>
   <polygon points="396,150 400,158 404,150" fill="#1F634D"/>
 
-  <line x1="565" y1="138" x2="565" y2="154" stroke="#1F634D" stroke-width="1.8"/>
-  <polygon points="561,150 565,158 569,150" fill="#1F634D"/>
+  <line x1="553" y1="138" x2="553" y2="154" stroke="#1F634D" stroke-width="1.8"/>
+  <polygon points="549,150 553,158 557,150" fill="#1F634D"/>
 
-  <line x1="715" y1="138" x2="715" y2="154" stroke="#1F634D" stroke-width="1.8"/>
-  <polygon points="711,150 715,158 719,150" fill="#1F634D"/>
+  <line x1="706" y1="138" x2="706" y2="154" stroke="#1F634D" stroke-width="1.8"/>
+  <polygon points="702,150 706,158 710,150" fill="#1F634D"/>
 
   <!-- Package 1: flutter/material.dart -->
-  <g transform="translate(20, 158)">
-    <rect width="130" height="96" rx="4" fill="#FFFFFF" stroke="#D1DCD1" stroke-width="1.2" filter="url(#shadow-pkg)"/>
-    <rect width="130" height="22" rx="4" fill="#F4F2E8"/>
-    <text x="65" y="15" font-size="9" font-weight="700" fill="#2D312E" text-anchor="middle">flutter/material.dart</text>
-    <text x="8" y="36" font-size="8" font-weight="600" fill="#1F634D">Material 3 UI Framework</text>
+  <g transform="translate(25, 158)">
+    <rect width="138" height="114" rx="4" fill="#FFFFFF" stroke="#D1DCD1" stroke-width="1.2" filter="url(#shadow-pkg)"/>
+    <rect width="138" height="22" rx="4" fill="#F4F2E8"/>
+    <text x="69" y="15" font-size="8.5" font-weight="700" fill="#2D312E" text-anchor="middle">flutter/material.dart</text>
+    <text x="8" y="36" font-size="8" font-weight="600" fill="#1F634D">Material 3 UI Layer</text>
     <text x="8" y="50" font-size="7.5" fill="#5A655F">• Scaffold, NavigationBar</text>
     <text x="8" y="62" font-size="7.5" fill="#5A655F">• Card, Form fields, Chips</text>
     <text x="8" y="74" font-size="7.5" fill="#5A655F">• Token-based theming</text>
-    <text x="8" y="86" font-size="7.5" fill="#71717A">Core SDK component</text>
+    <line x1="8" y1="84" x2="130" y2="84" stroke="#E2E8E2" stroke-width="0.8"/>
+    <text x="69" y="99" font-size="7.5" fill="#71717A" text-anchor="middle">Core SDK component</text>
   </g>
 
   <!-- Package 2: package:http -->
-  <g transform="translate(170, 158)">
-    <rect width="130" height="122" rx="4" fill="#FFFFFF" stroke="#1F634D" stroke-width="1.2" filter="url(#shadow-pkg)"/>
-    <rect width="130" height="22" rx="4" fill="#1F634D"/>
-    <text x="65" y="15" font-size="9" font-weight="700" fill="#FFFFFF" text-anchor="middle">package:http (^1.6.0)</text>
+  <g transform="translate(178, 158)">
+    <rect width="138" height="114" rx="4" fill="#FFFFFF" stroke="#1F634D" stroke-width="1.2" filter="url(#shadow-pkg)"/>
+    <rect width="138" height="22" rx="4" fill="#1F634D"/>
+    <text x="69" y="15" font-size="8.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">package:http (^1.6.0)</text>
     <text x="8" y="36" font-size="8" font-weight="600" fill="#1F634D">Asynchronous Networking</text>
     <text x="8" y="50" font-size="7.5" fill="#5A655F">• Centralized ApiClient</text>
     <text x="8" y="62" font-size="7.5" fill="#5A655F">• Bearer token headers</text>
     <text x="8" y="74" font-size="7.5" fill="#5A655F">• 8s timeout protection</text>
-    <rect x="6" y="88" width="118" height="24" rx="3" fill="#E2E8E2"/>
-    <text x="65" y="103" font-size="7.5" font-weight="600" fill="#1F634D" text-anchor="middle">lib/services/api_client.dart</text>
+    <rect x="6" y="86" width="126" height="20" rx="3" fill="#E2E8E2"/>
+    <text x="69" y="100" font-size="8.2" font-weight="500" fill="#1F634D" text-anchor="middle">lib/services/api_client.dart</text>
   </g>
 
   <!-- Package 3: package:intl -->
-  <g transform="translate(325, 158)">
-    <rect width="150" height="96" rx="4" fill="#FFFFFF" stroke="#D1DCD1" stroke-width="1.2" filter="url(#shadow-pkg)"/>
-    <rect width="150" height="22" rx="4" fill="#F4F2E8"/>
-    <text x="75" y="15" font-size="9" font-weight="700" fill="#2D312E" text-anchor="middle">package:intl (^0.20.3)</text>
+  <g transform="translate(331, 158)">
+    <rect width="138" height="114" rx="4" fill="#FFFFFF" stroke="#D1DCD1" stroke-width="1.2" filter="url(#shadow-pkg)"/>
+    <rect width="138" height="22" rx="4" fill="#F4F2E8"/>
+    <text x="69" y="15" font-size="8.5" font-weight="700" fill="#2D312E" text-anchor="middle">package:intl (^0.20.3)</text>
     <text x="8" y="36" font-size="8" font-weight="600" fill="#1F634D">Date &amp; Chronology</text>
     <text x="8" y="50" font-size="7.5" fill="#5A655F">• Coarse birthMonth parsing</text>
     <text x="8" y="62" font-size="7.5" fill="#5A655F">• ISO-8601 formatting</text>
     <text x="8" y="74" font-size="7.5" fill="#5A655F">• ECCD age bracket math</text>
-    <text x="8" y="86" font-size="7.5" fill="#71717A">Dart standard utility</text>
+    <line x1="8" y1="84" x2="130" y2="84" stroke="#E2E8E2" stroke-width="0.8"/>
+    <text x="69" y="99" font-size="7.5" fill="#71717A" text-anchor="middle">Dart standard utility</text>
   </g>
 
   <!-- Package 4: package:cupertino_icons -->
-  <g transform="translate(495, 158)">
-    <rect width="140" height="96" rx="4" fill="#FFFFFF" stroke="#D1DCD1" stroke-width="1.2" filter="url(#shadow-pkg)"/>
-    <rect width="140" height="22" rx="4" fill="#F4F2E8"/>
-    <text x="70" y="15" font-size="9" font-weight="700" fill="#2D312E" text-anchor="middle">package:cupertino_icons</text>
+  <g transform="translate(484, 158)">
+    <rect width="138" height="114" rx="4" fill="#FFFFFF" stroke="#D1DCD1" stroke-width="1.2" filter="url(#shadow-pkg)"/>
+    <rect width="138" height="22" rx="4" fill="#F4F2E8"/>
+    <text x="69" y="15" font-size="8.5" font-weight="700" fill="#2D312E" text-anchor="middle">package:cupertino_icons</text>
     <text x="8" y="36" font-size="8" font-weight="600" fill="#1F634D">Vector Iconography</text>
     <text x="8" y="50" font-size="7.5" fill="#5A655F">• Navigation tab icons</text>
     <text x="8" y="62" font-size="7.5" fill="#5A655F">• High-contrast glyphs</text>
     <text x="8" y="74" font-size="7.5" fill="#5A655F">• Status view indicators</text>
-    <text x="8" y="86" font-size="7.5" fill="#71717A">v1.0.8 &#8226; Native icons</text>
+    <line x1="8" y1="84" x2="130" y2="84" stroke="#E2E8E2" stroke-width="0.8"/>
+    <text x="69" y="99" font-size="7.5" fill="#71717A" text-anchor="middle">v1.0.8 &#8226; Native icons</text>
   </g>
 
   <!-- Package 5: package:flutter_lints -->
-  <g transform="translate(650, 158)">
-    <rect width="130" height="96" rx="4" fill="#FFFFFF" stroke="#D1DCD1" stroke-width="1.2" filter="url(#shadow-pkg)"/>
-    <rect width="130" height="22" rx="4" fill="#F4F2E8"/>
-    <text x="65" y="15" font-size="9" font-weight="700" fill="#2D312E" text-anchor="middle">package:flutter_lints</text>
+  <g transform="translate(637, 158)">
+    <rect width="138" height="114" rx="4" fill="#FFFFFF" stroke="#D1DCD1" stroke-width="1.2" filter="url(#shadow-pkg)"/>
+    <rect width="138" height="22" rx="4" fill="#F4F2E8"/>
+    <text x="69" y="15" font-size="8.5" font-weight="700" fill="#2D312E" text-anchor="middle">package:flutter_lints</text>
     <text x="8" y="36" font-size="8" font-weight="600" fill="#1F634D">Static Code Analysis</text>
-    <text x="8" y="50" font-size="7.5" fill="#5A655F">• Effective Dart standards</text>
+    <text x="8" y="50" font-size="7.5" fill="#5A655F">• Effective Dart rules</text>
     <text x="8" y="62" font-size="7.5" fill="#5A655F">• Sound null-safety checks</text>
     <text x="8" y="74" font-size="7.5" fill="#5A655F">• Code quality compliance</text>
-    <text x="8" y="86" font-size="7.5" fill="#71717A">v6.0.0 &#8226; Dev dependency</text>
+    <line x1="8" y1="84" x2="130" y2="84" stroke="#E2E8E2" stroke-width="0.8"/>
+    <text x="69" y="99" font-size="7.5" fill="#71717A" text-anchor="middle">v6.0.0 &#8226; Dev dependency</text>
   </g>
 </svg>
