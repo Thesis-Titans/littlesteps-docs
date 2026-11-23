@@ -42,7 +42,7 @@ LittleSteps is designed as a **caregiver-facing digital companion** rather than 
 4. Providing private, observational developmental tracking without clinical jargon or anxiety-inducing diagnostic claims.
 
 ![LittleSteps System and Solution Architecture](figures/fig-system-solution-architecture.svg)  
-*Fig 1.0: LittleSteps System and Solution Architecture — Caregiver-facing digital companion facilitating offline, screen-free physical child play.*
+*Figure 1.1: LittleSteps System and Solution Architecture — Caregiver-facing digital companion facilitating offline, screen-free physical child play.*
 
 ### 3. Technology Stack & Architectural Decision Matrix
 
@@ -68,7 +68,7 @@ The engineering stack was selected to satisfy cross-platform performance, strict
 The client application strictly adheres to the principle of **dependency minimization** to maintain rapid build times, small compiled APK binaries, and absolute code audibility:
 
 ![Flutter Client Package Dependencies](figures/fig-client-package-dependencies.svg)  
-*Fig 1.1: Flutter Client Package Dependencies — Core framework and third-party dependencies utilized in BSIT-3A/LittleSteps.*
+*Figure 2.1: Flutter Client Package Dependencies — Core framework and third-party dependencies utilized in BSIT-3A/LittleSteps.*
 
 1. **`flutter/material.dart` (Core Framework):**  
    - *Purpose:* Provides Material 3 adaptive UI components (`Scaffold`, `NavigationBar`, `Card`, `FilledButton`, `TextField`, `DropdownButtonFormField`).
@@ -130,8 +130,8 @@ The progression from structural low-fidelity wireframes to compiled Material 3 h
 
 | Low-Fidelity Structural Wireframe | High-Fidelity Design System Prototype |
 |:---:|:---:|
-| ![Low-Fidelity Add Child Wireframe](figures/low-fi-add-child.png)<br/>*Fig 1.1: Low-Fidelity Add Child Wireframe (`Node 306:52`)* | ![High-Fidelity Children Management](figures/hi-fi-children.png)<br/>*Fig 1.2: High-Fidelity Child Profile & Age Brackets (`Node 119:6106`)* |
-| ![Low-Fidelity Today Dashboard](figures/low-fi-today.png)<br/>*Fig 1.3: Low-Fidelity Today Dashboard Wireframe (`Node 306:68`)* | ![High-Fidelity Today Screen](figures/hi-fi-today.png)<br/>*Fig 1.4: High-Fidelity Today Screen Prototype (`Node 73:214`)* |
+| ![Low-Fidelity Add Child Wireframe](figures/low-fi-add-child.png)<br/>*Figure 2.2: Low-Fidelity Add Child Wireframe (`Node 306:52`)* | ![High-Fidelity Children Management](figures/hi-fi-children.png)<br/>*Figure 2.3: High-Fidelity Child Profile & Age Brackets (`Node 119:6106`)* |
+| ![Low-Fidelity Today Dashboard](figures/low-fi-today.png)<br/>*Figure 2.4: Low-Fidelity Today Dashboard Wireframe (`Node 306:68`)* | ![High-Fidelity Today Screen](figures/hi-fi-today.png)<br/>*Figure 2.5: High-Fidelity Today Screen Prototype (`Node 73:214`)* |
 
 ```
 +-------------------------------------------------------------+
@@ -161,7 +161,7 @@ The progression from structural low-fidelity wireframes to compiled Material 3 h
 LittleSteps implements **seven (7) fully functional core user flows**, exceeding the six-feature requirement for a 5-member project team:
 
 ![Shell Navigation and Core Features Architecture](figures/fig-shell-features-hierarchy.svg)  
-*Fig 2.0: Shell Navigation and Core Features Architecture — Root ShellScreen architecture mapping five navigation tabs to seven implemented core user flows.*
+*Figure 2.6: Shell Navigation and Core Features Architecture — Root ShellScreen architecture mapping five navigation tabs to seven implemented core user flows.*
 
 #### Feature 1: Child Profile & Age-Band Bracket Management
 * **Files:** `lib/screens/children/child_profile_screen.dart`, `add_child_screen.dart`, `lib/services/children_service.dart`
@@ -169,7 +169,7 @@ LittleSteps implements **seven (7) fully functional core user flows**, exceeding
 * **Component Architecture:** Form managed via `TextEditingController` and `DropdownButtonFormField`. Implements validation rejecting empty names or names $>40$ characters. Automatically categorizes child into standard ECCD brackets (`0-5m`, `6-11m`, `12-23m`, `24-35m`, `36-47m`, `48-59m`, `60-71m`).
 * **Visual Interface Artifact:**  
   ![Feature 1: Child Profile Management](figures/hi-fi-children.png)  
-  *Fig 2.1: Child Profile Management & Age-Band Bracket Selection (`Node 119:6106`)*
+  *Figure 2.7: Child Profile Management & Age-Band Bracket Selection (`Node 119:6106`)*
 
 #### Feature 2: Today's Daily Routine Planning & Execution
 * **Files:** `lib/screens/today/today_screen.dart`, `lib/services/plan_service.dart`
@@ -177,7 +177,7 @@ LittleSteps implements **seven (7) fully functional core user flows**, exceeding
 * **Component Architecture:** `ListView.builder` rendering `ActivityCard` instances. Features interactive completion toggling that communicates asynchronously with `POST /api/v1/children/:id/plans`. Integrates an environmental weather alert widget providing real-time suggestions (e.g., indoor sensory play when rain is forecasted) via Open-Meteo.
 * **Visual Interface Artifact:**  
   ![Feature 2: Today Routine and Weather Guidance](figures/hi-fi-today.png)  
-  *Fig 2.2: Daily Routine Execution & Environmental Weather Guidance (`Node 73:214`)*
+  *Figure 2.8: Daily Routine Execution & Environmental Weather Guidance (`Node 73:214`)*
 
 #### Feature 3: ECCD Early Learning Activity Catalog
 * **Files:** `lib/screens/explore/explore_screen.dart`, `activity_detail_screen.dart`, `lib/widgets/idea_helper_card.dart`
@@ -185,7 +185,7 @@ LittleSteps implements **seven (7) fully functional core user flows**, exceeding
 * **Component Architecture:** Multi-factor filter header using `FilterChip` widgets allowing cross-filtering across 4 primary domains (Cognitive, Motor, Language, Socio-Emotional), indoor/outdoor settings, and time duration (`<10 mins`, `15-30 mins`). Shows complete preparation steps, materials required, and developmental purpose. Co-locates the in-situ `IdeaHelperCard` at the top of the feed to provide one-tap access to AI activity generation. When the caregiver has no registered child profile, the screen gracefully renders the canonical `NoChildrenView` onboarding prompt.
 * **Visual Interface Artifact:**  
   ![Feature 3: ECCD Early Learning Activity Catalog](figures/hi-fi-activities.png)  
-  *Fig 2.3: ECCD Early Learning Activity Catalog with Domain Filtering (`Node 76:537`)*
+  *Figure 2.9: ECCD Early Learning Activity Catalog with Domain Filtering (`Node 76:537`)*
 
 #### Feature 4: Storybooks & Regional Action Rhymes
 * **Files:** `lib/screens/explore/explore_screen.dart`, `lib/models/book.dart`
@@ -193,7 +193,7 @@ LittleSteps implements **seven (7) fully functional core user flows**, exceeding
 * **Component Architecture:** Displays children's literature metadata fetched via Open Library, allows parents to curate books they own at home into a permanent Family Bookshelf (`POST /api/v1/children/:childId/books`), and provides curated Philippine action rhymes (*Awit sa Pagpapatulog*, *Tong Tong Tong Pakitong-kitong*, *Lubi-Lubi*) complete with regional provenance tags (Tagalog, Hiligaynon, Cebuano) and guided physical hand-motion instructions for parents.
 * **Visual Interface Artifact:**  
   ![Feature 4: Storybooks and Regional Action Rhymes](figures/hi-fi-storybooks.png)  
-  *Fig 2.4: Culturally Grounded Children's Storybooks & Traditional Action Rhymes (`Node 195:3931`)*
+  *Figure 2.10: Culturally Grounded Children's Storybooks & Traditional Action Rhymes (`Node 195:3931`)*
 
 #### Feature 5: Developmental Milestone Observations
 * **Files:** `lib/screens/milestones/milestones_screen.dart`, `lib/services/milestones_service.dart`
@@ -201,7 +201,7 @@ LittleSteps implements **seven (7) fully functional core user flows**, exceeding
 * **Component Architecture:** Domain-grouped checklist featuring non-clinical observational prompts (e.g., *"Can stack 2 blocks"*, *"Points to named objects"*). Records timestamped parental observations in Cloud Firestore without assigning diagnostic scoring.
 * **Visual Interface Artifact:**  
   ![Feature 5: Developmental Milestone Observations](figures/hi-fi-milestones.png)  
-  *Fig 2.5: Non-Diagnostic Milestone Observation Checklist (`Node 85:1183`)*
+  *Figure 2.11: Non-Diagnostic Milestone Observation Checklist (`Node 85:1183`)*
 
 #### Feature 6: Private Caregiver Journal
 * **Files:** `lib/screens/journal/journal_screen.dart`, `lib/services/journal_service.dart`
@@ -209,7 +209,7 @@ LittleSteps implements **seven (7) fully functional core user flows**, exceeding
 * **Component Architecture:** Chronological notebook view with character-bounded input fields (enforcing a 2,000-character ceiling). Fully isolated from AI prompts to safeguard personal domestic reflections.
 * **Visual Interface Artifact:**  
   ![Feature 6: Private Caregiver Journal](figures/hi-fi-journal.png)  
-  *Fig 2.6: Private Caregiver Journal with RA 10173 Isolation (`Node 85:1393`)*
+  *Figure 2.12: Private Caregiver Journal with RA 10173 Isolation (`Node 85:1393`)*
 
 #### Feature 7: AI-Powered Play Helper & Companion Generator (Core AI Feature)
 * **Files:** `lib/screens/ai/ai_suggestions_screen.dart`, `lib/widgets/idea_helper_card.dart`, `lib/services/ai_service.dart`
@@ -217,7 +217,7 @@ LittleSteps implements **seven (7) fully functional core user flows**, exceeding
 * **Component Architecture:** Initiated via the in-situ `IdeaHelperCard` located on the Explore tab or via the `/ai-suggest` route. Captures available materials (e.g., *Spoons, Plastic Cups, Cardboard Box*), setting, and available duration. Asynchronously contacts the backend Gemini proxy, renders intermediate loading shimmer states, and parses structured output containing step-by-step guidance, pediatric safety warnings, and the mandatory `"Suggested by AI"` badge. The detached top-right AppBar brain icon was deliberately replaced by the in-situ feed card to comply with thumb-zone ergonomics and prevent icon ambiguity.
 * **Visual Interface Artifact:**  
   ![Feature 7: AI Play Helper Suggestion](figures/hi-fi-ai-idea-helper.png)  
-  *Fig 2.7: AI Play Helper Personalized Recommendation & Pediatric Safety Notice (`Node 76:790`)*
+  *Figure 2.13: AI Play Helper Personalized Recommendation & Pediatric Safety Notice (`Node 76:790`)*
 
 ---
 
@@ -241,7 +241,7 @@ LittleSteps implements **seven (7) fully functional core user flows**, exceeding
 In fulfillment of CC 207B § 2.a.ii.5, this section provides the formal engineering specification for the user-facing Artificial Intelligence integration:
 
 ![AI Selection Pipeline and Fallback Architecture](figures/fig-ai-pipeline-fallback.svg)  
-*Fig 2.8: AI Selection Pipeline and Fallback Architecture — Catalog-grounded recommendation workflow with deterministic 3-tier fallback and pediatric safety filters.*
+*Figure 2.14: AI Selection Pipeline and Fallback Architecture — Catalog-grounded recommendation workflow with deterministic 3-tier fallback and pediatric safety filters.*
 *(Note: Tier 2 deterministic rule-based fallback is reserved for the separate Activity Adaptation endpoint `/api/v1/ai/adapt-activity`).*
 
 #### 1. AI Service, Model & Package Architecture

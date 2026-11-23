@@ -9,7 +9,7 @@
   <rect width="800" height="310" fill="#FFFFFF" rx="6" stroke="#D1DCD1" stroke-width="1"/>
 
   <!-- Header -->
-  <text x="25" y="30" font-size="14.5" font-weight="700" fill="#1F634D">Figure 1.1: Flutter Client Package Dependencies</text>
+  <text x="25" y="30" font-size="14.5" font-weight="700" fill="#1F634D">Flutter Client Package Dependencies</text>
   <text x="25" y="46" font-size="11" fill="#5A655F">Core framework and third-party dependencies utilized in BSIT-3A/LittleSteps</text>
   <line x1="25" y1="56" x2="775" y2="56" stroke="#E2E8E2" stroke-width="1"/>
 

@@ -9,7 +9,7 @@
   <rect width="800" height="350" fill="#FFFFFF" rx="6" stroke="#D1DCD1" stroke-width="1"/>
 
   <!-- Header -->
-  <text x="28" y="30" font-size="14.5" font-weight="700" fill="#1F634D">Figure 1.0: LittleSteps System and Solution Architecture</text>
+  <text x="28" y="30" font-size="14.5" font-weight="700" fill="#1F634D">LittleSteps System and Solution Architecture</text>
   <text x="28" y="46" font-size="11" fill="#5A655F">Caregiver-facing digital companion facilitating offline, screen-free physical child play</text>
   <line x1="28" y1="56" x2="772" y2="56" stroke="#E2E8E2" stroke-width="1"/>
 
