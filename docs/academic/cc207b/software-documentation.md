@@ -41,16 +41,8 @@ LittleSteps is designed as a **caregiver-facing digital companion** rather than 
 3. Preserving cultural heritage through curated Philippine folk rhymes and action songs in regional languages (Tagalog, Hiligaynon, Cebuano).
 4. Providing private, observational developmental tracking without clinical jargon or anxiety-inducing diagnostic claims.
 
-```mermaid
-flowchart LR
-    A["Caregiver Inputs<br/>(Child Age Band, Available Time, Materials)"] --> B["LittleSteps Client<br/>(Flutter Mobile App)"]
-    B --> C["Backend Proxy API<br/>(Node.js / Express on Firebase)"]
-    C --> D["Gemini 2.5 Flash Lite<br/>(Structured Play Recommender)"]
-    C --> E["ECCD Activity Catalog<br/>(Curated Fallback Engine)"]
-    D -. Fallback .-> E
-    C --> F["Google Cloud Firestore<br/>(Private Encrypted Persistence)"]
-    B --> G["Screen-Free Physical Play<br/>(Caregiver + Toddler Interaction)"]
-```
+![LittleSteps System and Solution Architecture](figures/fig-system-solution-architecture.svg)  
+*Fig 1.0: LittleSteps System & Solution Architecture — Translating digital companion guidance into screen-free physical caregiver-toddler interaction.*
 
 ### 3. Technology Stack & Architectural Decision Matrix
 
@@ -75,17 +67,8 @@ The engineering stack was selected to satisfy cross-platform performance, strict
 
 The client application strictly adheres to the principle of **dependency minimization** to maintain rapid build times, small compiled APK binaries, and absolute code audibility:
 
-```mermaid
-graph TD
-    App["littlesteps_flutter (Root Package)"]
-    App --> Material["flutter/material.dart<br/>(Material 3 Components & Theming)"]
-    App --> HTTP["package:http (^1.6.0)<br/>(Async Network Client)"]
-    App --> Intl["package:intl (^0.20.3)<br/>(Date Manipulation)"]
-    App --> Cupertino["package:cupertino_icons (^1.0.8)<br/>(Vector Iconography)"]
-    App --> Lints["package:flutter_lints (^6.0.0)<br/>(Dev Dependency: Effective Dart Rules)"]
-    
-    HTTP --> ApiClient["lib/services/api_client.dart<br/>(Singleton Gateway with Token Header & Timeout Guards)"]
-```
+![Flutter Client Package Dependency Architecture](figures/fig-client-package-dependencies.svg)  
+*Fig 1.1: Flutter Client Package Dependency Architecture — Minimalist dependency tree ensuring sound null-safety and zero bridge serialization overhead.*
 
 1. **`flutter/material.dart` (Core Framework):**  
    - *Purpose:* Provides Material 3 adaptive UI components (`Scaffold`, `NavigationBar`, `Card`, `FilledButton`, `TextField`, `DropdownButtonFormField`).
@@ -177,17 +160,8 @@ The progression from structural low-fidelity wireframes to compiled Material 3 h
 
 LittleSteps implements **seven (7) fully functional core user flows**, exceeding the six-feature requirement for a 5-member project team:
 
-```mermaid
-graph LR
-    Shell["ShellScreen (5-Tab NavigationBar)"]
-    Shell --> F1["Feature 1: Child Profile & Age Brackets"]
-    Shell --> F2["Feature 2: Today Routine & Weather Hints"]
-    Shell --> F3["Feature 3: ECCD Activity Catalog"]
-    Shell --> F4["Feature 4: Storybooks & Folk Rhymes"]
-    Shell --> F5["Feature 5: Milestone Observations"]
-    Shell --> F6["Feature 6: Private Caregiver Journal"]
-    Shell --> F7["Feature 7: AI Play Helper (Emerging Tech)"]
-```
+![LittleSteps Shell Navigation & Seven Core Features](figures/fig-shell-features-hierarchy.svg)  
+*Fig 2.0: LittleSteps Shell Navigation & Core Features Architecture — Five-tab NavigationBar mapped across seven core functional user flows.*
 
 #### Feature 1: Child Profile & Age-Band Bracket Management
 * **Files:** `lib/screens/children/child_profile_screen.dart`, `add_child_screen.dart`, `lib/services/children_service.dart`
@@ -266,27 +240,8 @@ graph LR
 
 In fulfillment of CC 207B § 2.a.ii.5, this section provides the formal engineering specification for the user-facing Artificial Intelligence integration:
 
-```mermaid
-stateDiagram-v2
-    [*] --> RequestInitiated: Caregiver taps "Generate Play Ideas"
-    RequestInitiated --> CloudInference: Dispatch to Gemini 2.5 Flash Lite
-    
-    state CloudInference {
-        [*] --> PromptExecution
-        PromptExecution --> ZodValidation: Response Received
-        ZodValidation --> Tier1Success: Valid Schema & Passes Denylist (200 OK)
-        ZodValidation --> FallbackTriggered: Schema Mismatch / Denylist Hit
-        PromptExecution --> FallbackTriggered: Timeout (>8s) / 5xx Error / Network Failure
-    }
-    
-    Tier1Success --> UI_Render: Render with "Suggested by AI" Badge
-    
-    FallbackTriggered --> CatalogLookup: Query Approved ECCD Catalog Pool
-    CatalogLookup --> Tier3Success: Deterministic ECCD Catalog Pick
-    
-    Tier3Success --> UI_Render: Render with "Our picks" Attribution
-    UI_Render --> [*]
-```
+![LittleSteps AI Fallback Architecture and Safety Pipeline](figures/fig-ai-pipeline-fallback.svg)  
+*Fig 2.8: LittleSteps AI Fallback Architecture & Pediatric Safety Pipeline — Catalog-grounded generative selection with deterministic 3-tier fallback and non-diagnostic filtering.*
 *(Note: Tier 2 deterministic rule-based fallback is reserved for the separate Activity Adaptation endpoint `/api/v1/ai/adapt-activity`).*
 
 #### 1. AI Service, Model & Package Architecture

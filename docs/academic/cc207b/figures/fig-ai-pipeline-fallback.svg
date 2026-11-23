@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="480" viewBox="0 0 800 480" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif'>
+  <defs>
+    <filter id="shadow" x="-3%" y="-4%" width="106%" height="112%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.07"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#1F634D"/>
+    </marker>
+    <marker id="arrow-fallback" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#C85A32"/>
+    </marker>
+    <marker id="arrow-muted" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#5A655F"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="480" fill="#FDFDFB" rx="8" stroke="#E2E8E2" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <text x="32" y="36" font-size="16" font-weight="700" fill="#1F634D">Figure 2.8: LittleSteps AI Fallback Architecture &amp; Safety Pipeline</text>
+  <text x="32" y="54" font-size="11.5" fill="#5A655F">Catalog-grounded generative selection with deterministic 3-tier fallback and pediatric boundary enforcement</text>
+  <line x1="32" y1="66" x2="768" y2="66" stroke="#E2E8E2" stroke-width="1.2"/>
+
+  <!-- Layer 1: Client Layer (Flutter Mobile App) -->
+  <g transform="translate(32, 85)">
+    <rect width="210" height="340" rx="6" fill="#FFFFFF" stroke="#1F634D" stroke-width="1.5" filter="url(#shadow)"/>
+    <rect width="210" height="36" rx="6" fill="#1F634D"/>
+    <rect y="30" width="210" height="6" fill="#1F634D"/>
+    <text x="105" y="23" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">LittleSteps Flutter Client</text>
+    <text x="105" y="52" font-size="10" font-weight="600" fill="#5A655F" text-anchor="middle">In-situ IdeaHelperCard (Explore)</text>
+
+    <!-- Inputs Box -->
+    <rect x="14" y="65" width="182" height="110" rx="4" fill="#F7F7ED" stroke="#D1DCD1" stroke-width="1"/>
+    <text x="22" y="82" font-size="10.5" font-weight="700" fill="#2D312E">Caregiver Bounded Inputs:</text>
+    <text x="24" y="100" font-size="9.5" fill="#5A655F">• Age Band: &quot;12-23m&quot; (derived)</text>
+    <text x="24" y="116" font-size="9.5" fill="#5A655F">• Setting: &quot;indoor&quot; | &quot;outdoor&quot;</text>
+    <text x="24" y="132" font-size="9.5" fill="#5A655F">• Duration: 10–60 minutes</text>
+    <text x="24" y="148" font-size="9.5" fill="#5A655F">• Materials: Free text (&le;100 ch)</text>
+    <text x="24" y="164" font-size="8.5" font-style="italic" fill="#C85A32">*No child names, gender, or PII</text>
+
+    <!-- UI Response Rendering -->
+    <rect x="14" y="190" width="182" height="135" rx="4" fill="#F4F2E8" stroke="#D1DCD1" stroke-width="1"/>
+    <text x="22" y="208" font-size="10.5" font-weight="700" fill="#2D312E">UI Provenance Display:</text>
+    
+    <rect x="22" y="218" width="110" height="18" rx="3" fill="#3B7EA1"/>
+    <text x="77" y="231" font-size="9" font-weight="700" fill="#FFFFFF" text-anchor="middle">Suggested by AI</text>
+    <text x="24" y="250" font-size="9" fill="#5A655F">Tier 1: Cloud Gemini pick</text>
+
+    <rect x="22" y="262" width="70" height="18" rx="3" fill="#1F634D"/>
+    <text x="57" y="275" font-size="9" font-weight="700" fill="#FFFFFF" text-anchor="middle">Our picks</text>
+    <text x="24" y="294" font-size="9" fill="#5A655F">Tier 3: Reviewed curriculum</text>
+
+    <text x="22" y="314" font-size="8.5" font-style="italic" fill="#5A655F">&quot;Observational play only...&quot;</text>
+  </g>
+
+  <!-- Connection: Client to Gateway -->
+  <path d="M 242 165 L 282 165" stroke="#1F634D" stroke-width="1.8" fill="none" marker-end="url(#arrow)"/>
+  <text x="262" y="157" font-size="8.5" font-weight="600" fill="#1F634D" text-anchor="middle">HTTPS</text>
+  <text x="262" y="177" font-size="8" fill="#5A655F" text-anchor="middle">Bearer Auth</text>
+
+  <!-- Layer 2: API Gateway Proxy -->
+  <g transform="translate(284, 85)">
+    <rect width="190" height="340" rx="6" fill="#FFFFFF" stroke="#1F634D" stroke-width="1.5" filter="url(#shadow)"/>
+    <rect width="190" height="36" rx="6" fill="#1F634D"/>
+    <rect y="30" width="190" height="6" fill="#1F634D"/>
+    <text x="95" y="23" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">littlesteps-api Gateway</text>
+    <text x="95" y="52" font-size="10" font-weight="600" fill="#5A655F" text-anchor="middle">Zero-Credential Server Proxy</text>
+
+    <!-- Guardrails Box -->
+    <rect x="12" y="65" width="166" height="120" rx="4" fill="#F9FAFB" stroke="#E2E8E2" stroke-width="1"/>
+    <text x="20" y="82" font-size="10" font-weight="700" fill="#2D312E">Security &amp; Rate Guards:</text>
+    <text x="20" y="98" font-size="9" fill="#5A655F">• Sliding Rate Limiter</text>
+    <text x="28" y="112" font-size="8.5" fill="#71717A">(10 req/hr user, 30 req/hr IP)</text>
+    <text x="20" y="128" font-size="9" fill="#5A655F">• Zod Schema Input Sanitizer</text>
+    <text x="20" y="144" font-size="9" fill="#5A655F">• Request ID Correlation</text>
+    <text x="20" y="160" font-size="9" fill="#5A655F">• Private GEMINI_API_KEY</text>
+    <text x="28" y="174" font-size="8.5" fill="#71717A">(Never exposed to mobile)</text>
+
+    <!-- Dispatch Decision Box -->
+    <rect x="12" y="196" width="166" height="115" rx="4" fill="#F4F2E8" stroke="#D1DCD1" stroke-width="1"/>
+    <text x="20" y="214" font-size="10" font-weight="700" fill="#2D312E">Selection Pipeline:</text>
+    <text x="20" y="230" font-size="9" fill="#5A655F">1. Fetch reviewed ECCD pool</text>
+    <text x="20" y="246" font-size="9" fill="#5A655F">2. Pre-filter by Age &amp; Setting</text>
+    <text x="20" y="262" font-size="9" fill="#5A655F">3. Inject candidates in prompt</text>
+    <text x="20" y="278" font-size="9" fill="#5A655F">4. Enforce Non-Diagnostic</text>
+    <text x="28" y="292" font-size="8.5" fill="#C85A32">denylist verification</text>
+  </g>
+
+  <!-- Connectors from Gateway to Tiers -->
+  <path d="M 474 145 L 518 145" stroke="#1F634D" stroke-width="1.8" fill="none" marker-end="url(#arrow)"/>
+  <text x="496" y="137" font-size="8.5" font-weight="600" fill="#1F634D" text-anchor="middle">Primary</text>
+
+  <path d="M 474 275 L 518 310" stroke="#C85A32" stroke-width="1.8" stroke-dasharray="4 3" fill="none" marker-end="url(#arrow-fallback)"/>
+  <text x="496" y="306" font-size="8.5" font-weight="700" fill="#C85A32" text-anchor="middle">Fallback</text>
+
+  <!-- Layer 3: Tier 1 (Cloud Gemini) -->
+  <g transform="translate(520, 85)">
+    <rect width="248" height="150" rx="6" fill="#FFFFFF" stroke="#3B7EA1" stroke-width="1.5" filter="url(#shadow)"/>
+    <rect width="248" height="28" rx="6" fill="#3B7EA1"/>
+    <rect y="22" width="248" height="6" fill="#3B7EA1"/>
+    <text x="124" y="19" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">Tier 1: Cloud Gemini 2.5 Flash Lite</text>
+
+    <text x="14" y="44" font-size="9.5" font-weight="700" fill="#2D312E">Foundation Model Execution:</text>
+    <text x="14" y="58" font-size="9" fill="#5A655F">• SDK: @google/genai (v0.1.1)</text>
+    <text x="14" y="72" font-size="9" fill="#5A655F">• Timeout Guard: 8,000ms AbortController</text>
+    <text x="14" y="86" font-size="9" fill="#5A655F">• Circuit Breaker: 60s cooldown after 3 fails</text>
+    <text x="14" y="102" font-size="9.5" font-weight="700" fill="#2D312E">Post-Processing Validation:</text>
+    <text x="14" y="116" font-size="9" fill="#5A655F">• Output Zod schema check (ReplySchema)</text>
+    <text x="14" y="130" font-size="9" fill="#5A655F">• 27-term Non-Diagnostic Denylist verification</text>
+  </g>
+
+  <!-- Connector: Tier 1 failure drops to Tier 3 -->
+  <path d="M 644 235 L 644 265" stroke="#C85A32" stroke-width="1.5" stroke-dasharray="3 3" fill="none" marker-end="url(#arrow-fallback)"/>
+  <rect x="580" y="240" width="128" height="16" rx="2" fill="#FDF3EE" stroke="#E8B4A2" stroke-width="0.8"/>
+  <text x="644" y="252" font-size="8" font-weight="600" fill="#C85A32" text-anchor="middle">Timeout / Schema / Safety Fail</text>
+
+  <!-- Layer 4: Tier 3 (Deterministic Catalog Fallback) -->
+  <g transform="translate(520, 275)">
+    <rect width="248" height="150" rx="6" fill="#FFFFFF" stroke="#1F634D" stroke-width="1.5" filter="url(#shadow)"/>
+    <rect width="248" height="28" rx="6" fill="#1F634D"/>
+    <rect y="22" width="248" height="6" fill="#1F634D"/>
+    <text x="124" y="19" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">Tier 3: Deterministic ECCD Catalog</text>
+
+    <text x="14" y="44" font-size="9.5" font-weight="700" fill="#2D312E">Offline Guaranteed Fallback Pool:</text>
+    <text x="14" y="58" font-size="9" fill="#5A655F">• Verified Philippine ECCD Council benchmarks</text>
+    <text x="14" y="72" font-size="9" fill="#5A655F">• Instant local execution (&lt;5ms, zero network)</text>
+    <text x="14" y="86" font-size="9" fill="#5A655F">• Keyword &amp; age-band semantic ranking</text>
+    <text x="14" y="102" font-size="9.5" font-weight="700" fill="#2D312E">Caregiver Experience Guarantee:</text>
+    <text x="14" y="116" font-size="9" fill="#5A655F">• Zero empty screens, hangs, or alert crashes</text>
+    <text x="14" y="130" font-size="9" fill="#5A655F">• Labeled &quot;Our picks&quot; with transparent disclaimer</text>
+  </g>
+
+  <!-- Bottom Return Path to Client -->
+  <path d="M 520 200 L 484 200 L 484 230 L 250 230" stroke="#1F634D" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 520 375 L 250 375 L 250 280" stroke="#C85A32" stroke-width="1.5" stroke-dasharray="4 3" fill="none" marker-end="url(#arrow-fallback)"/>
+
+  <!-- Footer Note -->
+  <text x="32" y="458" font-size="9" fill="#71717A">Architectural Note: Tier 2 rule-based adaptation is reserved for single-activity adaptation (/api/v1/ai/adapt-activity). Rate limit (429) returns actionable cooldown notice without silent fallback.</text>
+</svg>

@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="380" viewBox="0 0 800 380" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif'>
+  <defs>
+    <filter id="shadow-feat" x="-3%" y="-4%" width="106%" height="112%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.07"/>
+    </filter>
+    <marker id="arr-feat" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#1F634D"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="380" fill="#FDFDFB" rx="8" stroke="#E2E8E2" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <text x="32" y="32" font-size="15" font-weight="700" fill="#1F634D">Figure 2.0: LittleSteps Shell Navigation &amp; Seven Core Features</text>
+  <text x="32" y="48" font-size="11" fill="#5A655F">Unified shell architecture mapping 5 navigation tabs into 7 fully implemented core functional flows</text>
+  <line x1="32" y1="58" x2="768" y2="58" stroke="#E2E8E2" stroke-width="1.2"/>
+
+  <!-- Root Shell Box -->
+  <g transform="translate(240, 75)">
+    <rect width="320" height="52" rx="6" fill="#1F634D" filter="url(#shadow-feat)"/>
+    <text x="160" y="24" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">ShellScreen (Root Application Host)</text>
+    <text x="160" y="41" font-size="9.5" fill="#E2E8E2" text-anchor="middle">Shell AppBar &bull; ChildChip &bull; AccountSheet &bull; 5-Tab NavigationBar</text>
+  </g>
+
+  <!-- Connector Spine -->
+  <path d="M 400 127 L 400 155" stroke="#1F634D" stroke-width="1.8" fill="none"/>
+  <path d="M 85 155 L 715 155" stroke="#1F634D" stroke-width="1.8" fill="none"/>
+
+  <!-- Vertical drops to 5 Tabs -->
+  <path d="M 85 155 L 85 175" stroke="#1F634D" stroke-width="1.8" fill="none" marker-end="url(#arr-feat)"/>
+  <path d="M 235 155 L 235 175" stroke="#1F634D" stroke-width="1.8" fill="none" marker-end="url(#arr-feat)"/>
+  <path d="M 400 155 L 400 175" stroke="#1F634D" stroke-width="1.8" fill="none" marker-end="url(#arr-feat)"/>
+  <path d="M 555 155 L 555 175" stroke="#1F634D" stroke-width="1.8" fill="none" marker-end="url(#arr-feat)"/>
+  <path d="M 715 155 L 715 175" stroke="#1F634D" stroke-width="1.8" fill="none" marker-end="url(#arr-feat)"/>
+
+  <!-- Tab 1: Today -->
+  <g transform="translate(25, 178)">
+    <rect width="120" height="175" rx="5" fill="#FFFFFF" stroke="#D1DCD1" stroke-width="1.2" filter="url(#shadow-feat)"/>
+    <rect width="120" height="24" rx="5" fill="#F4F2E8"/>
+    <text x="60" y="16" font-size="10" font-weight="700" fill="#2D312E" text-anchor="middle">Tab 1: Today</text>
+    <text x="10" y="42" font-size="9" font-weight="700" fill="#1F634D">Feature 2:</text>
+    <text x="10" y="56" font-size="9" font-weight="600" fill="#2D312E">Daily Routine &amp;</text>
+    <text x="10" y="68" font-size="9" font-weight="600" fill="#2D312E">Weather Hints</text>
+    <text x="10" y="88" font-size="8" fill="#5A655F">• Activity checkoff</text>
+    <text x="10" y="100" font-size="8" fill="#5A655F">• Open-Meteo alerts</text>
+    <text x="10" y="112" font-size="8" fill="#5A655F">• Optimistic sync</text>
+    <text x="10" y="124" font-size="8" fill="#5A655F">• Revert action</text>
+    <rect x="8" y="145" width="104" height="20" rx="3" fill="#E2E8E2"/>
+    <text x="60" y="158" font-size="8" font-weight="600" fill="#1F634D" text-anchor="middle">lib/screens/today</text>
+  </g>
+
+  <!-- Tab 2: Explore -->
+  <g transform="translate(165, 178)">
+    <rect width="140" height="175" rx="5" fill="#FFFFFF" stroke="#1F634D" stroke-width="1.5" filter="url(#shadow-feat)"/>
+    <rect width="140" height="24" rx="5" fill="#1F634D"/>
+    <text x="70" y="16" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">Tab 2: Explore</text>
+    
+    <text x="8" y="38" font-size="8.5" font-weight="700" fill="#1F634D">Feature 3: ECCD Catalog</text>
+    <text x="8" y="50" font-size="7.8" fill="#5A655F">• 4 domains &amp; setting filters</text>
+    <text x="8" y="62" font-size="7.8" fill="#5A655F">• EmptyView &amp; NoChildrenView</text>
+
+    <line x1="8" y1="72" x2="132" y2="72" stroke="#E2E8E2" stroke-width="1"/>
+
+    <text x="8" y="86" font-size="8.5" font-weight="700" fill="#3B7EA1">Feature 7: AI Helper</text>
+    <text x="8" y="98" font-size="7.8" fill="#5A655F">• In-situ IdeaHelperCard</text>
+    <text x="8" y="110" font-size="7.8" fill="#5A655F">• Gemini 2.5 Flash Lite</text>
+    <text x="8" y="122" font-size="7.8" fill="#5A655F">• 3-Tier fallback to catalog</text>
+    <text x="8" y="134" font-size="7.8" fill="#5A655F">• Suggested by AI badge</text>
+
+    <rect x="8" y="145" width="124" height="20" rx="3" fill="#E2E8E2"/>
+    <text x="70" y="158" font-size="8" font-weight="600" fill="#1F634D" text-anchor="middle">lib/screens/explore</text>
+  </g>
+
+  <!-- Tab 3: Books -->
+  <g transform="translate(325, 178)">
+    <rect width="130" height="175" rx="5" fill="#FFFFFF" stroke="#D1DCD1" stroke-width="1.2" filter="url(#shadow-feat)"/>
+    <rect width="130" height="24" rx="5" fill="#F4F2E8"/>
+    <text x="65" y="16" font-size="10" font-weight="700" fill="#2D312E" text-anchor="middle">Tab 3: Books</text>
+    <text x="10" y="42" font-size="9" font-weight="700" fill="#1F634D">Feature 4:</text>
+    <text x="10" y="56" font-size="9" font-weight="600" fill="#2D312E">Storybooks &amp;</text>
+    <text x="10" y="68" font-size="9" font-weight="600" fill="#2D312E">Regional Rhymes</text>
+    <text x="10" y="88" font-size="8" fill="#5A655F">• Open Library shelf</text>
+    <text x="10" y="100" font-size="8" fill="#5A655F">• Hiligaynon / Tagalog</text>
+    <text x="10" y="112" font-size="8" fill="#5A655F">• Physical hand motions</text>
+    <text x="10" y="124" font-size="8" fill="#5A655F">• Story companion AI</text>
+    <rect x="8" y="145" width="114" height="20" rx="3" fill="#E2E8E2"/>
+    <text x="65" y="158" font-size="8" font-weight="600" fill="#1F634D" text-anchor="middle">lib/screens/bookshelf</text>
+  </g>
+
+  <!-- Tab 4: Milestones -->
+  <g transform="translate(475, 178)">
+    <rect width="130" height="175" rx="5" fill="#FFFFFF" stroke="#D1DCD1" stroke-width="1.2" filter="url(#shadow-feat)"/>
+    <rect width="130" height="24" rx="5" fill="#F4F2E8"/>
+    <text x="65" y="16" font-size="10" font-weight="700" fill="#2D312E" text-anchor="middle">Tab 4: Milestones</text>
+    <text x="10" y="42" font-size="9" font-weight="700" fill="#1F634D">Feature 5:</text>
+    <text x="10" y="56" font-size="9" font-weight="600" fill="#2D312E">Developmental</text>
+    <text x="10" y="68" font-size="9" font-weight="600" fill="#2D312E">Observations</text>
+    <text x="10" y="88" font-size="8" fill="#5A655F">• Non-clinical prompts</text>
+    <text x="10" y="100" font-size="8" fill="#5A655F">• Domain checklists</text>
+    <text x="10" y="112" font-size="8" fill="#5A655F">• Observation sheets</text>
+    <text x="10" y="124" font-size="8" fill="#5A655F">• Zero diagnostic label</text>
+    <rect x="8" y="145" width="114" height="20" rx="3" fill="#E2E8E2"/>
+    <text x="65" y="158" font-size="8" font-weight="600" fill="#1F634D" text-anchor="middle">lib/screens/milestones</text>
+  </g>
+
+  <!-- Tab 5: Journal + Child Profile -->
+  <g transform="translate(625, 178)">
+    <rect width="150" height="175" rx="5" fill="#FFFFFF" stroke="#D1DCD1" stroke-width="1.2" filter="url(#shadow-feat)"/>
+    <rect width="150" height="24" rx="5" fill="#F4F2E8"/>
+    <text x="75" y="16" font-size="10" font-weight="700" fill="#2D312E" text-anchor="middle">Tab 5: Journal / Profile</text>
+    <text x="10" y="38" font-size="8.5" font-weight="700" fill="#1F634D">Feature 6: Private Journal</text>
+    <text x="10" y="50" font-size="7.8" fill="#5A655F">• 2,000-char bounded notes</text>
+    <text x="10" y="62" font-size="7.8" fill="#5A655F">• Strict RA 10173 isolation</text>
+    
+    <line x1="8" y1="72" x2="142" y2="72" stroke="#E2E8E2" stroke-width="1"/>
+
+    <text x="10" y="86" font-size="8.5" font-weight="700" fill="#1F634D">Feature 1: Child Profile</text>
+    <text x="10" y="98" font-size="7.8" fill="#5A655F">• Coarse birthMonth only</text>
+    <text x="10" y="110" font-size="7.8" fill="#5A655F">• 7 ECCD Age Brackets</text>
+    <text x="10" y="122" font-size="7.8" fill="#5A655F">• Form input validation</text>
+
+    <rect x="8" y="145" width="134" height="20" rx="3" fill="#E2E8E2"/>
+    <text x="75" y="158" font-size="8" font-weight="600" fill="#1F634D" text-anchor="middle">lib/screens/children &amp; journal</text>
+  </g>
+</svg>

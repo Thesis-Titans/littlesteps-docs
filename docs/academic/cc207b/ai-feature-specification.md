@@ -21,24 +21,8 @@ Rather than deploying an unconstrained conversational chatbot—which introduces
 ### 1.1 Architecture & Services
 The LittleSteps AI architecture adopts a **Zero-Client-Credential Server Proxy** model. The Flutter mobile app (`BSIT-3A/LittleSteps`) and the React web app (`littlesteps-react`) never interact with AI foundation models directly. All requests pass through the Node.js/TypeScript backend (`littlesteps-api`).
 
-```
-[Flutter Mobile / React Web]
-            │
-            │ HTTPS (Bearer Token, Age Band, Materials, Constraints)
-            ▼
-┌────────────────────────────────────────────────────────┐
-│               littlesteps-api Gateway                  │
-│  - Input validation via Zod schemas                    │
-│  - Rate limiting (10 req/hr user, 30 req/hr IP)        │
-│  - Request ID correlation & memory-capped buffer       │
-└───────────────────────────┬────────────────────────────┘
-                            │
-              ┌─────────────┴─────────────┐
-              ▼                           ▼
-   [Tier 1: Cloud Gemini]      [Tier 3: Catalog Fallback]
-    Google Gemini 2.5 Flash     Deterministic ECCD Catalog
-    via @google/genai SDK       (Guaranteed offline pick)
-```
+![LittleSteps AI Fallback Architecture and Safety Pipeline](figures/fig-ai-pipeline-fallback.svg)  
+*Fig 1.1: LittleSteps AI Fallback Architecture & Pediatric Safety Pipeline — Catalog-grounded generative selection with deterministic 3-tier fallback and non-diagnostic filtering.*
 
 ### 1.2 Model Selection & Packages
 - **Primary Foundation Model:** **Google Gemini 2.5 Flash Lite** (`gemini-2.5-flash-lite`).
