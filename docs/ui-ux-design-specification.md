@@ -341,7 +341,7 @@ The Flutter app (CC 207B) uses the reviewed 375px mobile-web frames as its desig
 | Design tokens (§6.1, §6.3) | `ThemeData` with a custom `ColorScheme`, plus a `ThemeExtension` for status colors | One source of truth; no hard-coded colors in widgets. |
 | Type styles (§6.2) | `TextTheme` using Inter bundled as an app asset | Bundle the font rather than downloading it at runtime, to avoid data cost. |
 | Bottom tab bar (5 tabs) | `NavigationBar` with five destinations | Labels always shown. |
-| Top bar with child chip | `AppBar` with the "For [child]" chip and the account avatar as actions | The system back gesture and the `AppBar` back button replace the "‹ Back" text links. |
+| Top bar with child chip | `AppBar` with `BrandLogo`, conditional `ChildChip`, and account avatar | Child chip displays only when `activeChild != null` to eliminate dead clicks. Brand logo taps navigate to Today. No standalone unlabelled AI icon in `AppBar`. |
 | Account menu | `showModalBottomSheet` | Same items, including Help and support. |
 | Cards | `Card.outlined` | Borders use `color/border/subtle`. |
 | Primary and secondary buttons | `FilledButton` and `OutlinedButton` | |
@@ -418,6 +418,8 @@ Empty states (§7) use the title-and-action pattern first. Under option A, a lea
 4. **Sentence case:** decided 2026-10-31, strict sentence case for all headings, labels and actions (§2.6).
 5. **Mobile tab bar:** decided 2026-10-31, 72px canonical height (§6.1a).
 6. **Non-diagnostic banner:** decided 2026-10-31, canonical title and body standardized (§2.6).
+7. **Child Chip Conditional Visibility:** decided 2026-11-23, omit the `ChildChip` from the shell `AppBar` when no child profiles exist (`activeChild == null`) to avoid misleading dead clicks. All child-dependent tabs render the canonical `NoChildrenView` onboarding view.
+8. **Idea Helper Ergonomic Placement:** decided 2026-11-23, remove detached brain icon from the mobile `AppBar` actions and co-locate `IdeaHelperCard` within the Explore tab directly above the activity catalog.
 
 ---
 
@@ -445,7 +447,7 @@ Source: Figma file `yqUHW4lOuuly4jDPNMkMVI`, page `02 · Components`, read on 20
 |---|---|---|---|---|
 | Sidebar item | `Nav / Sidebar item` | Default, Active, each with Focus | `SideNav` (built) | n/a (mobile frames only) |
 | Bottom tab | `Nav / Bottom tab` | Default, Active, each with Focus | `BottomTabBar` (built) | `NavigationBar` |
-| Child switcher | `Child switcher`, `Child context / Switcher` | Default, Focus | `ChildSwitcher` (built) | `AppBar` chip |
+| Child switcher | `Child switcher`, `Child context / Switcher` | Default, Focus, Hidden when no children | `ChildSwitcher` (built) | `ChildChip` (conditional) |
 | Shells | `Shell / Desktop sidebar`, `Shell / Mobile top bar`, `Shell / Mobile tab bar` | n/a | `AppShell`, `TopBar`, `ScreenHeader` (built) | `AppBar`, `NavigationBar` |
 | Account menu | `Sheet / Account menu`, `Row / Settings item` | Default, Focus | `AccountLink`, account screens (built) | `showModalBottomSheet` |
 
@@ -457,7 +459,7 @@ Source: Figma file `yqUHW4lOuuly4jDPNMkMVI`, page `02 · Components`, read on 20
 | Milestone row | `Row / Milestone prompt`, `Card / Milestones preview` | Seen on [date], Not seen yet (statuses: `observed`, `not_yet_observed`) | Not built | `Card.outlined` |
 | Journal note | `Card / Journal note`, `Form / New journal note` | Default | Not built | `Card.outlined`, `TextFormField` |
 | Weekly reflection | `Card / Weekly summary`, `Week totals`, `Domain counts`, `Moments noticed`, `Reflection prompt` | Default | Not built | `Card.outlined` |
-| Idea helper | `Card / Idea helper entry`, `Panel / Idea helper` | Form, Suggestion, Fallback, Loading, Rate limited | Not built | `Card`, `AlertDialog` or sheet |
+| Idea helper | `Card / Idea helper entry`, `Panel / Idea helper` | Form, Suggestion, Fallback, Loading, Rate limited | Not built | `IdeaHelperCard` (in Explore tab), `AiSuggestionsScreen` |
 | Observation form | `Form / Record observation` | Default | Not built | `TextFormField` |
 
 ### 11.4 Forms and account
@@ -476,7 +478,7 @@ Source: Figma file `yqUHW4lOuuly4jDPNMkMVI`, page `02 · Components`, read on 20
 | Advisory banner | `Banner / Advisory` | Default | `NonDiagnosticNotice` (built) | Styled `Card` |
 | Inline alert | `Alert / Inline` | Error, Offline | `InlineAlert` (built) | Styled `Card` in the scroll view |
 | Skeleton | `Skeleton` | Card, Row, Profile | `Skeleton` (built) | Placeholder shapes |
-| Empty and denied | `State / Empty`, `State / Empty week`, `State / Access denied` | One each | `EmptyState` (built); session problems are handled by `ProtectedRoute` | Styled `Card` |
+| Empty and denied | `State / Empty`, `State / Empty week`, `State / Access denied` | One each | `EmptyState` (built); session problems are handled by `ProtectedRoute` | `NoChildrenView` (onboarding across tabs), `EmptyStateView` |
 | Dialogs | `Dialog / Confirm delete note`, `Confirm delete child records`, `Discard draft` | One each | `ConfirmDialog` (built; not yet used for the note and records deletes) | `AlertDialog` |
 
 ### 11.6 Gaps and Wireframe Requirements (Issue #44)

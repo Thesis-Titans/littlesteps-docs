@@ -44,8 +44,8 @@ The LittleSteps AI architecture adopts a **Zero-Client-Credential Server Proxy**
 - **Primary Foundation Model:** **Google Gemini 2.5 Flash Lite** (`gemini-2.5-flash-lite`).
   - *Selection Rationale:* Chosen for high-throughput, low-latency ($< 1.5\text{s}$) response generation, strong JSON schema adherence, and adjustable Google Safety Settings.
 - **Backend SDK:** `@google/genai` (v0.1.1) running in Node.js runtime.
-- **Client Integration:** 
-  - Mobile: Flutter `package:http` communicating with REST endpoints `/api/v1/ai/recommendations` and `/api/v1/ai/story-activity`.
+- **Client Integration & Entry Points:** 
+  - Mobile (Flutter): In-situ `IdeaHelperCard` mounted within `ExploreScreen` that automatically captures the active child's nickname and age band, linking directly to `AiSuggestionsScreen` (`/ai-suggest`) communicating via `package:http` with REST endpoints `/api/v1/ai/recommendations` and `/api/v1/ai/story-activity`. Replaces isolated AppBar icon actions to optimize one-handed thumb-zone ergonomics.
   - Web: Native `fetch` with TypeScript client wrappers in `src/features/ai/api.ts`.
 - **Security Boundary:** API keys (`GEMINI_API_KEY`) reside exclusively in server-side environment variables. No credentials, tokens, or cloud secrets exist within the Flutter mobile binary or React web bundles.
 

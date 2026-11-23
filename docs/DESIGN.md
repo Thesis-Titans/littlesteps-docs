@@ -128,7 +128,7 @@ Two frame sizes: **1280** (desktop) and **375** (mobile). Mobile is designed fir
 
 - **Spacing scale:** 4, 8, 12, 16, 24, 32 px. Adjacent touch targets stay at least 8 px apart.
 - **Touch targets:** frequent and primary controls are at least **48 × 48 px**; secondary links may go to **44 × 44**, never lower. WCAG 2.5.8 requires only 24 × 24; ours is for one-handed comfort.
-- **App shell:** top bar 60 px, side navigation 240 px on desktop, bottom tab bar 72 px (five tabs). The 72 px height is decided (spec §10.6) and is in `tokens.css` (react PR #36); at 320 px two-line labels make the bar taller, so scroll padding adds 16 px.
+- **App shell:** top bar 60 px, side navigation 240 px on desktop, bottom tab bar 72 px (five tabs). The 72 px height is decided (spec §10.6) and is in `tokens.css` (react PR #36); at 320 px two-line labels make the bar taller, so scroll padding adds 16 px. The mobile top bar hosts `BrandLogo` (vector emblem + wordmark), conditional `ChildChip` (visible only when `activeChild != null`), and caregiver avatar. When no children are registered, tabs render the standardized `NoChildrenView` onboarding state.
 - **Five states on every screen:** populated, empty, loading, error or permission denied, offline or AI fallback. Journeys J1 to J7 are in specification [§7](ui-ux-design-specification.md).
 
 ## Elevation & Depth
@@ -155,7 +155,7 @@ The shared set is built once in Figma (page `02 · Components`) and mirrored in 
 | Skeleton, EmptyState | Loading, nothing yet | Static under reduced motion. Empty states say what will appear and how to add the first item, with no blame. |
 | ConfirmDialog | Permanent actions only | The button names the action ("Delete Maya's records"), never "OK". Cancel has focus first. |
 | UndoToast, SuccessNotice | Reversible actions, confirmations | At least 10 seconds, pause on hover or focus, announced politely. |
-| App shell | Top bar, bottom tabs, side nav | Tab labels may wrap. Focus is never covered by a bar. |
+| App shell | Top bar, bottom tabs, side nav | Tab labels may wrap. Focus is never covered by a bar. Top bar omits child chip when activeChild is null. |
 
 Full props and states are in the [React components README](https://github.com/Thesis-Titans/littlesteps-react/blob/main/src/components/README.md).
 
