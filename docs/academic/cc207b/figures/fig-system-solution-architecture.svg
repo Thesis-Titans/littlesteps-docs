@@ -3,12 +3,6 @@
     <filter id="shadow-sys" x="-3%" y="-4%" width="106%" height="112%" filterUnits="userSpaceOnUse">
       <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.07"/>
     </filter>
-    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 1 L 8 5 L 0 9 z" fill="#1F634D"/>
-    </marker>
-    <marker id="arr-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 1 L 8 5 L 0 9 z" fill="#C85A32"/>
-    </marker>
   </defs>
 
   <!-- Background -->
@@ -34,7 +28,8 @@
   </g>
 
   <!-- Connection A -> B -->
-  <path d="M 167 147 L 195 147" stroke="#1F634D" stroke-width="1.8" fill="none" marker-end="url(#arr-green)"/>
+  <line x1="167" y1="147" x2="191" y2="147" stroke="#1F634D" stroke-width="2"/>
+  <polygon points="189,143 197,147 189,151" fill="#1F634D"/>
 
   <!-- Node B: LittleSteps Flutter Client -->
   <g transform="translate(197, 80)">
@@ -51,8 +46,9 @@
   </g>
 
   <!-- Connection B -> C -->
-  <path d="M 352 147 L 380 147" stroke="#1F634D" stroke-width="1.8" fill="none" marker-end="url(#arr-green)"/>
-  <text x="366" y="139" font-size="8" font-weight="600" fill="#1F634D" text-anchor="middle">HTTPS</text>
+  <line x1="352" y1="147" x2="376" y2="147" stroke="#1F634D" stroke-width="2"/>
+  <polygon points="374,143 382,147 374,151" fill="#1F634D"/>
+  <text x="367" y="139" font-size="8" font-weight="700" fill="#1F634D" text-anchor="middle">HTTPS</text>
 
   <!-- Node C: Backend Proxy API -->
   <g transform="translate(382, 80)">
@@ -69,27 +65,33 @@
   </g>
 
   <!-- Connectors C -> D, E, F -->
-  <path d="M 532 110 L 565 95" stroke="#3B7EA1" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
-  <path d="M 532 147 L 565 147" stroke="#1F634D" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
-  <path d="M 532 185 L 565 200" stroke="#7A5C96" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <line x1="532" y1="105" x2="561" y2="95" stroke="#3B7EA1" stroke-width="1.8"/>
+  <polygon points="557,91 567,93 559,99" fill="#3B7EA1"/>
+
+  <line x1="532" y1="147" x2="561" y2="147" stroke="#1F634D" stroke-width="1.8"/>
+  <polygon points="559,143 567,147 559,151" fill="#1F634D"/>
+
+  <line x1="532" y1="188" x2="561" y2="200" stroke="#7A5C96" stroke-width="1.8"/>
+  <polygon points="559,196 567,202 557,204" fill="#7A5C96"/>
 
   <!-- Node D: Cloud Gemini -->
   <g transform="translate(567, 72)">
     <rect width="200" height="48" rx="4" fill="#FFFFFF" stroke="#3B7EA1" stroke-width="1.2" filter="url(#shadow-sys)"/>
     <text x="10" y="18" font-size="9.5" font-weight="700" fill="#3B7EA1">Gemini 2.5 Flash Lite (Tier 1)</text>
     <text x="10" y="32" font-size="8.5" fill="#5A655F">Semantic rationale &amp; candidate ranking</text>
-    <text x="10" y="43" font-size="7.5" fill="#71717A">@google/genai &bull; 8s timeout guard</text>
+    <text x="10" y="43" font-size="7.5" fill="#71717A">@google/genai &#8226; 8s timeout guard</text>
   </g>
 
   <!-- Fallback D -> E -->
-  <path d="M 667 120 L 667 128" stroke="#C85A32" stroke-width="1.2" stroke-dasharray="2 2" fill="none" marker-end="url(#arr-red)"/>
+  <line x1="667" y1="120" x2="667" y2="124" stroke="#C85A32" stroke-width="1.5" stroke-dasharray="2 2"/>
+  <polygon points="663,122 667,126 671,122" fill="#C85A32"/>
 
   <!-- Node E: ECCD Catalog -->
   <g transform="translate(567, 126)">
     <rect width="200" height="48" rx="4" fill="#FFFFFF" stroke="#1F634D" stroke-width="1.2" filter="url(#shadow-sys)"/>
     <text x="10" y="18" font-size="9.5" font-weight="700" fill="#1F634D">ECCD Activity Catalog (Tier 3)</text>
     <text x="10" y="32" font-size="8.5" fill="#5A655F">Deterministic early learning benchmarks</text>
-    <text x="10" y="43" font-size="7.5" fill="#71717A">Offline guaranteed &bull; Philippine ECCD</text>
+    <text x="10" y="43" font-size="7.5" fill="#71717A">Offline guaranteed &#8226; Philippine ECCD</text>
   </g>
 
   <!-- Node F: Firestore Persistence -->
@@ -97,16 +99,18 @@
     <rect width="200" height="48" rx="4" fill="#FFFFFF" stroke="#7A5C96" stroke-width="1.2" filter="url(#shadow-sys)"/>
     <text x="10" y="18" font-size="9.5" font-weight="700" fill="#7A5C96">Google Cloud Firestore</text>
     <text x="10" y="32" font-size="8.5" fill="#5A655F">Private encrypted caregiver persistence</text>
-    <text x="10" y="43" font-size="7.5" fill="#71717A">Isolated subcollections &bull; RA 10173</text>
+    <text x="10" y="43" font-size="7.5" fill="#71717A">Isolated subcollections &#8226; RA 10173</text>
   </g>
 
   <!-- Target Outcome: Physical Screen-Free Play -->
   <g transform="translate(32, 245)">
     <rect width="735" height="65" rx="6" fill="#F4F2E8" stroke="#1F634D" stroke-width="1.5" filter="url(#shadow-sys)"/>
     <circle cx="40" cy="32" r="16" fill="#1F634D"/>
-    <text x="40" y="38" font-size="16" fill="#FFFFFF" text-anchor="middle">🌿</text>
+    <path d="M 40 22 C 34 22 31 27 34 33 C 37 38 40 41 40 41 C 40 41 43 38 46 33 C 49 27 46 22 40 22 Z" fill="#FFFFFF"/>
+    <path d="M 40 26 L 40 37" stroke="#1F634D" stroke-width="1.2" stroke-linecap="round"/>
     <text x="70" y="27" font-size="12" font-weight="700" fill="#1F634D">Primary Sociotechnical Outcome: Screen-Free Physical Interaction</text>
-    <text x="70" y="45" font-size="10" fill="#2D312E">Caregiver puts phone away after viewing steps &bull; Engages toddler in physical hands-on motor/sensory play &bull; Zero infant screen time</text>
+    <text x="70" y="45" font-size="10" fill="#2D312E">Caregiver puts phone away after viewing steps &#8226; Engages toddler in physical hands-on motor/sensory play &#8226; Zero infant screen time</text>
   </g>
-  <path d="M 274 215 L 274 243" stroke="#1F634D" stroke-width="1.8" fill="none" marker-end="url(#arr-green)"/>
+  <line x1="274" y1="215" x2="274" y2="241" stroke="#1F634D" stroke-width="2"/>
+  <polygon points="270,237 274,245 278,237" fill="#1F634D"/>
 </svg>
