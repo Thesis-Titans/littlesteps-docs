@@ -190,7 +190,7 @@ LANE_NAME = {l: f"{l}.0 {LEVELS[l + '.0']}" for l in LANES}
 def fig_wbs():
     W, H = A4W, A4H
     s = Svg(W, H)
-    ty = title(s, "Figure 7.1", "Work breakdown structure to work-package level: project, 8 deliverable branches, "
+    ty = title(s, "Work Breakdown Structure (WBS)", "Work breakdown structure to work-package level: project, 8 deliverable branches, "
                "sub-deliverables and the 49 work packages.", None, W)
     M, GAP, CW = 28, 20, (W - 56 - 20) / 2
     FS, LH = 11, 15.5
@@ -257,7 +257,7 @@ def fig_org():
             if r["Parent"]: (solid if r["Link"] == "solid" else dotted).append((r["Parent"], r["ID"]))
     W = A4W
     s = Svg(W, 100)
-    ty = title(s, "Figure 11.1", "Project organization chart. Solid lines show reporting; dotted lines show "
+    ty = title(s, "Project Organization Chart", "Project organization chart. Solid lines show reporting; dotted lines show "
                "coordination with people outside the project team.", None, W)
     M, FS = 28, 10
     ncol = 6
@@ -337,7 +337,7 @@ def fig_org():
 def fig_gantt():
     W = A4W
     s = Svg(W, A4H)
-    ty = title(s, "Figure 8.2", "Schedule and cost baseline on one time axis: Gantt chart by WBS branch (top) and "
+    ty = title(s, "Schedule and Cost Baseline", "Schedule and cost baseline on one time axis: Gantt chart by WBS branch (top) and "
                "cumulative planned cost against the budget (bottom).", None, W)
     LBL, RM = 28, 28
     X0, X1 = 292, W - RM
@@ -436,7 +436,7 @@ def fig_gantt():
 def fig_network():
     W, H = A4H, A4W  # landscape
     s = Svg(W, H)
-    ty = title(s, "Figure 8.1", "Network diagram (activity on node): swimlane per WBS branch, columns by dependency "
+    ty = title(s, "Precedence Network Diagram (AON)", "Network diagram (activity on node): swimlane per WBS branch, columns by dependency "
                "depth. Red heavy path = critical path.", None, W)
     # --- depth and lanes
     net = [r for r in ROWS if r["float"] is not None]
@@ -637,6 +637,15 @@ def find_chrome():
 
 
 def to_png(svg, png, w, h):
+    for tool in ("magick", "convert"):
+        cmd_path = shutil.which(tool)
+        if cmd_path:
+            cmd = [cmd_path, "-density", "300", svg, "-resize", f"{w}x{h}!", png]
+            try:
+                subprocess.run(cmd, check=True, capture_output=True)
+                return True
+            except Exception as e:
+                pass
     chrome = find_chrome()
     if chrome:
         with tempfile.TemporaryDirectory() as td:
@@ -644,14 +653,13 @@ def to_png(svg, png, w, h):
             with open(html, "w") as f:
                 f.write(f'<html><body style="margin:0"><img src="file://{svg}" '
                         f'style="display:block;width:{w}px;height:{h}px"></body></html>')
-            subprocess.run([chrome, "--no-sandbox", "--hide-scrollbars", "--force-device-scale-factor=1",
-                            f"--window-size={w},{h}", f"--screenshot={png}", "file://" + html],
-                           check=True, capture_output=True)
-        return True
-    cv = shutil.which("convert")
-    if cv:
-        subprocess.run([cv, "-density", "300", svg, "-resize", f"{w}x{h}!", png], check=True)
-        return True
+            try:
+                subprocess.run([chrome, "--no-sandbox", "--hide-scrollbars", "--force-device-scale-factor=1",
+                                f"--window-size={w},{h}", f"--screenshot={png}", "file://" + html],
+                               check=True, capture_output=True)
+                return True
+            except Exception:
+                pass
     print("no browser or ImageMagick: PNG skipped for", svg)
     return False
 
@@ -668,7 +676,16 @@ def main():
         else:
             s.save(svg, (210, 297) if px[0] < px[1] else (297, 210))
         # crop-free: svg viewBox equals the page, so the png matches the page exactly
-        to_png(svg, os.path.join(OUT, name + ".png"), *px)
+        png_path = os.path.join(OUT, name + ".png")
+        to_png(svg, png_path, *px)
+        if name == "fig-8-1-network":
+            try:
+                from PIL import Image
+                im = Image.open(png_path)
+                im.rotate(270, expand=True).save(os.path.join(OUT, "fig-8-1-network-portrait.png"))
+                print("wrote fig-8-1-network-portrait")
+            except Exception as e:
+                print("could not write portrait variant:", e)
         print("wrote", name)
 
 
