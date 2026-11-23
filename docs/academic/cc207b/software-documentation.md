@@ -268,29 +268,26 @@ In fulfillment of CC 207B § 2.a.ii.5, this section provides the formal engineer
 
 ```mermaid
 stateDiagram-v2
-    [*] --> RequestInitiated: User taps "Generate Play Ideas"
+    [*] --> RequestInitiated: Caregiver taps "Generate Play Ideas"
     RequestInitiated --> CloudInference: Dispatch to Gemini 2.5 Flash Lite
     
     state CloudInference {
         [*] --> PromptExecution
         PromptExecution --> ZodValidation: Response Received
-        ZodValidation --> Tier1Success: Schema Valid (200 OK)
-        ZodValidation --> FallbackTriggered: Schema Mismatch / Toxic Content
-        PromptExecution --> FallbackTriggered: Timeout (>8s) / 429 Rate Limit / Network Drop
+        ZodValidation --> Tier1Success: Valid Schema & Passes Denylist (200 OK)
+        ZodValidation --> FallbackTriggered: Schema Mismatch / Denylist Hit
+        PromptExecution --> FallbackTriggered: Timeout (>8s) / 5xx Error / Network Failure
     }
     
     Tier1Success --> UI_Render: Render with "Suggested by AI" Badge
     
-    FallbackTriggered --> CacheLookup: Check In-Memory Pre-Computed Ideas
-    CacheLookup --> Tier2Success: Cache Hit
-    CacheLookup --> CatalogLookup: Cache Miss
-    
+    FallbackTriggered --> CatalogLookup: Query Approved ECCD Catalog Pool
     CatalogLookup --> Tier3Success: Deterministic ECCD Catalog Pick
     
-    Tier2Success --> UI_Render: Render with "Offline Suggestion" Badge
-    Tier3Success --> UI_Render: Render with "Curriculum Activity" Badge
+    Tier3Success --> UI_Render: Render with "Our picks" Attribution
     UI_Render --> [*]
 ```
+*(Note: Tier 2 deterministic rule-based fallback is reserved for the separate Activity Adaptation endpoint `/api/v1/ai/adapt-activity`).*
 
 #### 1. AI Service, Model & Package Architecture
 - **Foundation Model:** Google Gemini 2.5 Flash Lite (`gemini-2.5-flash-lite`).
@@ -301,28 +298,48 @@ stateDiagram-v2
 The AI model receives four sanitized, non-identifying parameters:
 - `ageBand`: Coarse developmental bracket (e.g., `"12-23m"`). Never an exact birth date.
 - `setting`: Environmental context (`"indoor"` or `"outdoor"`).
-- `durationMinutes`: Activity window (integer: `10`, `15`, `30`).
+- `timeMinutes`: Activity window (integer: `10`, `15`, `30`).
 - `materials`: Array of user-selected household objects (e.g., `["cardboard box", "plastic cups"]`).
 *Privacy Invariant:* Child names, gender, physical locations, and journal observations are strictly stripped before prompt synthesis.
 
 #### 3. Strict JSON Schema Validation
-Responses are parsed and verified using a strict Zod schema before transmission to the mobile client:
+Responses undergo two-stage validation before transmission to the mobile client:
+
 ```typescript
-const RecommendationResponseSchema = z.object({
-  title: z.string().min(3).max(80),
-  domain: z.enum(["cognitive", "motor", "language", "socio-emotional"]),
-  durationMinutes: z.number().int().positive(),
-  materialsNeeded: z.array(z.string()),
-  setupSteps: z.array(z.string()).min(2).max(6),
-  playGuidance: z.string().min(10).max(300),
-  safetyNotice: z.string().min(5).max(150),
-  suggestedByAi: z.literal(true)
+// 1. LLM Pick Validation & Non-Diagnostic Denylist Filter (validate-output.ts)
+const ReplySchema = z.object({
+  picks: z.array(z.object({
+    id: z.string(),
+    why: z.string().trim().min(1).max(140)
+      .refine((w) => !/[<>]|https?:\/\/|www\./i.test(w))
+  })).min(1)
 });
+
+// 2. Gateway API Contract (types.ts) consumed by Flutter RecommendationResponse
+export interface RecommendationResponse {
+  suggestions: Array<{
+    activityId: string;
+    title: string;
+    whyPicked: string;
+    activity: CatalogActivity;
+  }>;
+  source: "ai" | "catalog_fallback";
+  tier: 1 | 3;
+  provenance: {
+    badge: "Suggested by AI" | null;
+    label: "Our picks" | null;
+    disclaimer: string;
+    guidance?: string;
+    model: string | null;
+    reviewed: true;
+  };
+}
 ```
 
 #### 4. Automated Fallback Mechanism
-1. **Tier 1 (Cloud Primary):** Live Gemini inference (model set in `GEMINI_MODEL`) with an 8-second timeout guard.
+1. **Tier 1 (Cloud Primary):** Live Gemini inference (model configured in `GEMINI_MODEL`) with an 8-second timeout guard.
 2. **Tier 3 (Deterministic Curriculum Catalog):** Rule-based selector drawing directly from verified Philippine Early Childhood Care and Development (ECCD) activities. **Guarantees zero client crashes or empty screens.**
+*(Rate limiting: Over-limit requests return HTTP 429 with an actionable waiting notice, preserving server integrity).*
 
 #### 5. Pediatric Safety & Prompt Injection Guardrails
 The system prompt injects immutable pediatric boundaries:

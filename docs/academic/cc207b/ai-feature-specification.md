@@ -73,46 +73,129 @@ The prompt requires Gemini to return output formatted strictly as a single JSON 
 
 ## 3. Sample Outputs and Response Schemas
 
-### 3.1 Zod Response Schemas
-Responses are parsed and strictly validated before transmission to clients:
+### 3.1 Zod Response Schemas & Validation Pipeline
+LittleSteps enforces a 2-stage validation pipeline:
+1. **Foundation Model Output Validation (`validate-output.ts`):** Gemini's response is parsed against `ReplySchema` ensuring bounded string lengths and non-diagnostic vocabulary before joining back with reviewed catalog metadata.
+2. **REST Gateway Response Schema (`types.ts`):** The outbound payload sent to Flutter and Web clients conforms strictly to `RecommendationResponse`:
 
 ```typescript
-export const RecommendationResponseSchema = z.object({
-  id: z.string().regex(/^rec-[a-z0-9-]+$/),
-  title: z.string().min(1).max(100),
-  domain: z.enum(["cognitive", "motor", "language", "socioEmotional"]),
-  durationMinutes: z.number().int().min(5).max(60),
-  materials: z.array(z.string()).min(1),
-  instructions: z.array(z.string()).min(1),
-  safetyNotice: z.string().min(1),
-  provenance: z.object({
-    tier: z.number().int(),
-    source: z.string(),
-    badge: z.literal("Suggested by AI").nullable(),
-    disclaimer: z.string()
-  })
+// 1. Foundation Model Output Validation
+const ReplySchema = z.object({
+  picks: z.array(z.object({
+    id: z.string(),
+    why: z.string().trim().min(1).max(140)
+      .refine((w) => !/[<>]|https?:\/\/|www\./i.test(w))
+  })).min(1)
 });
+
+// 2. Gateway API Contract returned to Flutter / Web clients
+export interface Suggestion {
+  activityId: string;
+  title: string;
+  whyPicked: string;
+  activity: CatalogActivity;
+}
+
+export interface Provenance {
+  badge: "Suggested by AI" | null;
+  label: "Our picks" | null;
+  disclaimer: string;
+  guidance?: string;
+  model: string | null;
+  reviewed: true;
+}
+
+export interface RecommendationResponse {
+  suggestions: Suggestion[];
+  source: "ai" | "catalog_fallback";
+  tier: 1 | 2 | 3;
+  provenance: Provenance;
+  reason?: "NO_REVIEWED_CONTENT";
+}
 ```
 
-### 3.2 Concrete Sample Output
+### 3.2 Concrete Sample Outputs
+
+#### Primary Tier 1: Cloud Gemini Recommendation (`source: "ai"`)
 ```json
 {
-  "id": "rec-cardboard-tunnel-01",
-  "title": "Cardboard Box Peek-and-Crawl",
-  "domain": "motor",
-  "durationMinutes": 15,
-  "materials": ["Empty delivery cardboard box", "Small soft rolled sock"],
-  "instructions": [
-    "Open both ends of the cardboard box to create a mini crawl tunnel on the living room rug.",
-    "Sit at the opposite end and roll a soft sock through the tunnel, calling your toddler's name.",
-    "Encourage your toddler to crawl through to retrieve the sock and celebrate with clapping."
+  "suggestions": [
+    {
+      "activityId": "act-box-tunnel-01",
+      "title": "Cardboard Box Peek-and-Crawl",
+      "whyPicked": "Matches your cardboard box and rolled sock for sensory motor exploration.",
+      "activity": {
+        "id": "act-box-tunnel-01",
+        "title": "Cardboard Box Peek-and-Crawl",
+        "type": "activity",
+        "language": "en",
+        "domain": "motor",
+        "ageBand": "12-23m",
+        "durationMinutes": 15,
+        "durationEstimate": "15 mins",
+        "setting": "indoor",
+        "materials": ["Empty delivery cardboard box", "Small soft rolled sock"],
+        "instructions": [
+          "Open both ends of the cardboard box to create a mini crawl tunnel on the living room rug.",
+          "Sit at the opposite end and roll a soft sock through the tunnel, calling your toddler's name.",
+          "Encourage your toddler to crawl through to retrieve the sock and celebrate with clapping."
+        ],
+        "limitations": "Ensure the cardboard box is free of staples or sharp tape edges. Always maintain line of sight.",
+        "status": "reviewed_approved",
+        "provenanceSource": "ECCD Council Philippines Early Learning Benchmark"
+      }
+    }
   ],
-  "safetyNotice": "Ensure the cardboard box is free of staples or sharp tape edges. Always maintain line of sight.",
+  "source": "ai",
+  "tier": 1,
   "provenance": {
-    "tier": 1,
-    "source": "gemini-2.5-flash-lite",
     "badge": "Suggested by AI",
-    "disclaimer": "Observational play suggestion only. Not developmental assessment."
+    "label": null,
+    "disclaimer": "Observational play suggestion only. Not developmental assessment.",
+    "guidance": "You know your child best. Change it as you like, and stay close while you play.",
+    "model": "gemini-2.5-flash-lite",
+    "reviewed": true
+  }
+}
+```
+
+#### Tier 3: Deterministic ECCD Catalog Fallback (`source: "catalog_fallback"`)
+```json
+{
+  "suggestions": [
+    {
+      "activityId": "act-cup-stacking-01",
+      "title": "Cup Stacking and Nesting",
+      "whyPicked": "Curated early childhood learning activity for your child's age band.",
+      "activity": {
+        "id": "act-cup-stacking-01",
+        "title": "Cup Stacking and Nesting",
+        "type": "activity",
+        "language": "en",
+        "domain": "cognitive",
+        "ageBand": "12-23m",
+        "durationMinutes": 15,
+        "durationEstimate": "15 mins",
+        "setting": "indoor",
+        "materials": ["Plastic cups or small food containers"],
+        "instructions": [
+          "Demonstrate how two cups nest inside one another.",
+          "Encourage toddler to stack one on top of the other to create a two-level tower."
+        ],
+        "limitations": "Ensure cups are non-breakable and washed clean.",
+        "status": "reviewed_approved",
+        "provenanceSource": "ECCD Council Philippines Early Learning Benchmark"
+      }
+    }
+  ],
+  "source": "catalog_fallback",
+  "tier": 3,
+  "provenance": {
+    "badge": null,
+    "label": "Our picks",
+    "disclaimer": "Observational play suggestion only. Not developmental assessment.",
+    "model": null,
+    "reviewed": true
   }
 }
 ```
