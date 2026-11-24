@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="390" viewBox="0 0 800 390" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'>
+  <defs>
+    <filter id="shadow-pkg" x="-2%" y="-3%" width="104%" height="108%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="2.5" flood-color="#000000" flood-opacity="0.06"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="390" fill="#FFFFFF" rx="6" stroke="#D1DCD1" stroke-width="1"/>
+
+  <!-- Header -->
+  <text x="25" y="30" font-size="14.5" font-weight="700" fill="#1F634D">Flutter Client Package Dependencies</text>
+  <text x="25" y="46" font-size="11" fill="#5A655F">Core SDK and pub.dev packages declared in BSIT-3A/LittleSteps/pubspec.yaml</text>
+  <line x1="25" y1="56" x2="775" y2="56" stroke="#E2E8E2" stroke-width="1"/>
+
+  <!-- Root Package -->
+  <g transform="translate(230, 70)">
+    <rect width="340" height="44" rx="5" fill="#1F634D" filter="url(#shadow-pkg)"/>
+    <text x="170" y="21" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">littlesteps (Flutter 3.47.9 · Dart ^3.13.5)</text>
+    <text x="170" y="36" font-size="8.8" fill="#E2E8E2" text-anchor="middle">Core SDK: flutter/material.dart + flutter_test</text>
+  </g>
+
+  <!-- Connector Spine to Row 1 (3 columns: centers 145, 400, 655) -->
+  <line x1="400" y1="114" x2="400" y2="134" stroke="#1F634D" stroke-width="1.8"/>
+  <line x1="145" y1="134" x2="655" y2="134" stroke="#1F634D" stroke-width="1.8"/>
+  <line x1="145" y1="134" x2="145" y2="148" stroke="#1F634D" stroke-width="1.8"/>
+  <polygon points="141,144 145,152 149,144" fill="#1F634D"/>
+  <line x1="400" y1="134" x2="400" y2="148" stroke="#1F634D" stroke-width="1.8"/>
+  <polygon points="396,144 400,152 404,144" fill="#1F634D"/>
+  <line x1="655" y1="134" x2="655" y2="148" stroke="#1F634D" stroke-width="1.8"/>
+  <polygon points="651,144 655,152 659,144" fill="#1F634D"/>
+
+  <!-- Row 1: Core Runtime Packages -->
+  <!-- Package 1: package:http -->
+  <g transform="translate(25, 152)">
+    <rect width="240" height="96" rx="4" fill="#FFFFFF" stroke="#1F634D" stroke-width="1.2" filter="url(#shadow-pkg)"/>
+    <rect width="240" height="24" rx="4" fill="#1F634D"/>
+    <text x="120" y="16" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">http (^1.6.0)</text>
+    <text x="12" y="42" font-size="8.8" font-weight="600" fill="#1F634D">Authenticated REST Networking</text>
+    <text x="12" y="57" font-size="8.2" fill="#5A655F">• Centralized ApiClient &amp; AuthService</text>
+    <text x="12" y="71" font-size="8.2" fill="#5A655F">• Firebase bearer tokens &amp; 8s timeouts</text>
+    <text x="12" y="85" font-size="7.8" fill="#71717A">lib/services/api_client.dart</text>
+  </g>
+
+  <!-- Package 2: package:intl -->
+  <g transform="translate(280, 152)">
+    <rect width="240" height="96" rx="4" fill="#FFFFFF" stroke="#D1DCD1" stroke-width="1.2" filter="url(#shadow-pkg)"/>
+    <rect width="240" height="24" rx="4" fill="#F4F2E8"/>
+    <text x="120" y="16" font-size="9.5" font-weight="700" fill="#2D312E" text-anchor="middle">intl (^0.20.3)</text>
+    <text x="12" y="42" font-size="8.8" font-weight="600" fill="#1F634D">Date &amp; Week Formatting</text>
+    <text x="12" y="57" font-size="8.2" fill="#5A655F">• Observation timestamps (ObservationFormSheet)</text>
+    <text x="12" y="71" font-size="8.2" fill="#5A655F">• Monday–Sunday week labels (WeeklySummary)</text>
+    <text x="12" y="85" font-size="7.8" fill="#71717A">lib/models/summary.dart</text>
+  </g>
+
+  <!-- Package 3: package:flutter_svg -->
+  <g transform="translate(535, 152)">
+    <rect width="240" height="96" rx="4" fill="#FFFFFF" stroke="#D1DCD1" stroke-width="1.2" filter="url(#shadow-pkg)"/>
+    <rect width="240" height="24" rx="4" fill="#F4F2E8"/>
+    <text x="120" y="16" font-size="9.5" font-weight="700" fill="#2D312E" text-anchor="middle">flutter_svg (^2.5.0)</text>
+    <text x="12" y="42" font-size="8.8" font-weight="600" fill="#1F634D">Scalable Vector Brand Assets</text>
+    <text x="12" y="57" font-size="8.2" fill="#5A655F">• Brandmark &amp; horizontal/stacked logos</text>
+    <text x="12" y="71" font-size="8.2" fill="#5A655F">• Parent-child onboarding illustration</text>
+    <text x="12" y="85" font-size="7.8" fill="#71717A">lib/widgets/brand_logo.dart</text>
+  </g>
+
+  <!-- Row 2: Sharing, Icons, and Static Analysis -->
+  <!-- Package 4: package:share_plus -->
+  <g transform="translate(25, 268)">
+    <rect width="240" height="96" rx="4" fill="#FFFFFF" stroke="#D1DCD1" stroke-width="1.2" filter="url(#shadow-pkg)"/>
+    <rect width="240" height="24" rx="4" fill="#F4F2E8"/>
+    <text x="120" y="16" font-size="9.5" font-weight="700" fill="#2D312E" text-anchor="middle">share_plus (^13.3.1)</text>
+    <text x="12" y="42" font-size="8.8" font-weight="600" fill="#1F634D">Native Share &amp; Data Export</text>
+    <text x="12" y="57" font-size="8.2" fill="#5A655F">• Caregiver account data export sheet</text>
+    <text x="12" y="71" font-size="8.2" fill="#5A655F">• Cross-platform share sheet integration</text>
+    <text x="12" y="85" font-size="7.8" fill="#71717A">lib/screens/account/settings_screen.dart</text>
+  </g>
+
+  <!-- Package 5: package:cupertino_icons -->
+  <g transform="translate(280, 268)">
+    <rect width="240" height="96" rx="4" fill="#FFFFFF" stroke="#D1DCD1" stroke-width="1.2" filter="url(#shadow-pkg)"/>
+    <rect width="240" height="24" rx="4" fill="#F4F2E8"/>
+    <text x="120" y="16" font-size="9.5" font-weight="700" fill="#2D312E" text-anchor="middle">cupertino_icons (^1.0.8)</text>
+    <text x="12" y="42" font-size="8.8" font-weight="600" fill="#1F634D">Platform Iconography</text>
+    <text x="12" y="57" font-size="8.2" fill="#5A655F">• Standard iOS / Cupertino icon font</text>
+    <text x="12" y="71" font-size="8.2" fill="#5A655F">• Complements Material 3 Icons</text>
+    <text x="12" y="85" font-size="7.8" fill="#71717A">Runtime dependency</text>
+  </g>
+
+  <!-- Package 6: package:flutter_lints -->
+  <g transform="translate(535, 268)">
+    <rect width="240" height="96" rx="4" fill="#FFFFFF" stroke="#D1DCD1" stroke-width="1.2" filter="url(#shadow-pkg)"/>
+    <rect width="240" height="24" rx="4" fill="#E2E8E2"/>
+    <text x="120" y="16" font-size="9.5" font-weight="700" fill="#1F634D" text-anchor="middle">flutter_lints (^6.0.0 · dev)</text>
+    <text x="12" y="42" font-size="8.8" font-weight="600" fill="#1F634D">Static Code Analysis</text>
+    <text x="12" y="57" font-size="8.2" fill="#5A655F">• Effective Dart lint rules in CI</text>
+    <text x="12" y="71" font-size="8.2" fill="#5A655F">• Enforces 0 issues on dart analyze</text>
+    <text x="12" y="85" font-size="7.8" fill="#71717A">analysis_options.yaml</text>
+  </g>
+</svg>

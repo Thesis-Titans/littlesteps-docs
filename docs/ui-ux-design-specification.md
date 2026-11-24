@@ -3,7 +3,7 @@
 **Status:** Canonical Design Specification for Prototype Validation  
 **Governing Standard:** ISO 9241 (Ergonomics of Human-System Interaction) & WCAG 2.2 AA  
 **Owner:** Nherie (Frontend Lead) & Faith (Usability Lead)  
-**Last Reviewed:** 2026-10-31  
+**Last Reviewed:** 2026-11-23  
 **Associated Gate:** [Docs Issue #15 — [M0] Plan and validate the LittleSteps UI prototype before implementation](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)  
 **Related Documents:** [Product Scope](product-scope.md), [Traceability Matrix](traceability-matrix.md), [Prototype Traceability & Storyboards](prototype-traceability-storyboards.md), [Philippine Content Provenance](philippine-content-provenance.md)  
 **Prototype Medium:** Figma, shared by the React and Flutter clients (§1, §9). This gate changes no code in `littlesteps-api`, `littlesteps-react`, or the Flutter app.
@@ -77,7 +77,7 @@ graph TD
 ---
 
 ### 2.4 Accessibility (WCAG 2.2 AA) & Calm Technology
-- **Contrast Ratios:** Primary text (`#1A2B29`) against white cards (`#FFFFFF`) achieves **14.8:1**, exceeding the WCAG 4.5:1 requirement. Secondary text (`#63756E`) achieves **4.9:1** on white and **4.5:1** on the canvas; do not place it on Soft Green (4.2:1). White button text on Forest (`#1F634D`) achieves **7.1:1**.
+- **Contrast Ratios:** Primary text (`#1A2B29`) against white cards (`#FFFFFF`) achieves **14.8:1**, exceeding the WCAG 4.5:1 requirement. Secondary text (`#5A6A64`, darkened 9% from `#63756E` in React PR #65) achieves **5.7:1** on white, **5.3:1** on canvas, **4.9:1** on Soft Green, **4.7:1** on Caution, **4.6:1** on Info, and **5.2:1** on Offline, clearing WCAG 2.2 AA (4.5:1) everywhere. Primary text `#1A2B29` remains recommended on status banners for clarity. White button text on Forest (`#1F634D`) achieves **7.1:1**.
 - **Readable Typography:** Body text is constrained to a **minimum of 16px** with 1.5 line-height (`line-height: 24px`) to ensure rapid readability in low-light evening environments.
 - **Calm Technology Principles (Weiser & Brown):**
   - No ambient push alerts that demand urgent attention.
@@ -237,7 +237,7 @@ The canonical values are the variables in the Figma file's **LittleSteps · Desi
 - **Neutral Background:** Canvas (`color/surface/canvas`, `#F7F7ED`). That it is easier on the eyes in dim evening light is a hypothesis; the walkthrough asks about evening use before any dark theme is planned.
 - **Surface / Card Background:** White (`color/surface/card`, `#FFFFFF`) with subtle border (`color/border/subtle`, `#E0E5DB`).
 - **Primary Text:** `color/text/primary` (`#1A2B29`) — high contrast (**14.8:1** against white, **13.7:1** on canvas).
-- **Secondary Text:** `color/text/secondary` (`#63756E`) — for timestamps and helper labels (**4.9:1** on white, **4.5:1** on canvas). Do not use it on Soft Green.
+- **Secondary Text:** `color/text/secondary` (`#5A6A64`, darkened from `#63756E` in React PR #65) — for timestamps and helper labels (**5.7:1** on white, **5.3:1** on canvas, **4.9:1** on Soft Green, **4.7:1** on Caution, **4.6:1** on Info, **5.2:1** on Offline). Primary text `#1A2B29` remains recommended on status banners for clarity.
 - **Status Accents:**
   - *Non-Diagnostic Advisory:* `color/status/caution` (`#FAE8A8` bg) with primary text (12.1:1).
   - *Completed / Observed and Privacy Lock:* `color/surface/soft-green` (`#E0F2E5` bg) with Forest text (6.1:1).
@@ -245,7 +245,7 @@ The canonical values are the variables in the Figma file's **LittleSteps · Desi
   - *Offline State:* `color/status/offline` (`#F1F5F9` bg) with `color/text/offline` (`#475569`, 6.9:1).
   - *Error:* `color/status/error` (`#FFF6F5` bg) with `color/text/error` (`#853029`, 8.1:1) and `color/border/error` (`#B83D33`, 5.3:1). Muted brick red: clearly an error, still calm.
 - **Interaction:** `color/border/input` (`#7E8C86`, 3.5:1 on white, 3.3:1 on canvas) for fields, selects and unselected chips; `color/focus` (`#1F634D`) for focus rings.
-- **Pairs to avoid:** secondary text on caution (3.99:1), on offline (4.46:1) or on Soft Green (4.2:1) fails WCAG AA.
+- **Note on legacy `#63756E`:** The previous secondary text value (`#63756E`) fell below 4.5:1 on Caution (3.99:1), Offline (4.46:1), and Soft Green (4.19:1) and was retired in favor of `#5A6A64`. Primary text (`#1A2B29`) is still preferred for full alert/banner copy.
 
 ### 6.1a Shape, Spacing and Shell Sizes
 
@@ -256,7 +256,7 @@ These values are Figma variables or effect styles; `tokens.css` and `app_tokens.
 - **Touch targets:** 48px for frequent and primary controls, 44px floor (§2.3).
 - **Shell:** top bar 60px, desktop sidebar 240px, mobile tab bar 72px (canonical in Figma and spec; 72px minimum; labels are one line from 360px, and at 320px two labels wrap and the bar grows to about 85px, so `scroll-padding-bottom` is 72px plus 16px).
 - **Elevation:** cards `0 1px 2px` and `0 4px 14px` at 4% and 6% of the primary text color; overlays `0 12px 32px` at 14%.
-- **Icons:** the 16 icons on Figma page `02 · Components` (today, explore, milestones, journal, thisWeek, lock, check, clock, info, sparkle, chevronDown, chevronRight, close, plus, wifiOff, user).
+- **Icons:** 23 UI icons (`15` original Figma masters on `02 · Components`: today, explore, milestones, journal, thisWeek, lock, check, clock, info, sparkle, chevronDown, chevronRight, close, plus, wifiOff; plus `8` implementation icons: user, eye, eyeOff, sun, cloudRain, book, bookmark, bookmarkCheck, to mirror in Figma).
 
 ### 6.2 Typography Hierarchy
 Use **Inter**, loading only the four weights in use (Regular, Medium, Semi Bold, Bold), subset to Latin, to limit data cost on prepaid plans:
@@ -341,7 +341,7 @@ The Flutter app (CC 207B) uses the reviewed 375px mobile-web frames as its desig
 | Design tokens (§6.1, §6.3) | `ThemeData` with a custom `ColorScheme`, plus a `ThemeExtension` for status colors | One source of truth; no hard-coded colors in widgets. |
 | Type styles (§6.2) | `TextTheme` using Inter bundled as an app asset | Bundle the font rather than downloading it at runtime, to avoid data cost. |
 | Bottom tab bar (5 tabs) | `NavigationBar` with five destinations | Labels always shown. |
-| Top bar with child chip | `AppBar` with the "For [child]" chip and the account avatar as actions | The system back gesture and the `AppBar` back button replace the "‹ Back" text links. |
+| Top bar with child chip | `AppBar` with `BrandLogo`, conditional `ChildChip`, and account avatar | Child chip displays only when `activeChild != null` to eliminate dead clicks. Brand logo taps navigate to Today. No standalone unlabelled AI icon in `AppBar`. |
 | Account menu | `showModalBottomSheet` | Same items, including Help and support. |
 | Cards | `Card.outlined` | Borders use `color/border/subtle`. |
 | Primary and secondary buttons | `FilledButton` and `OutlinedButton` | |
@@ -392,7 +392,7 @@ Rules for any option: illustrations are decorative (`alt=""` or `aria-hidden`), 
 ### 10.3 Imagery and icons
 
 - **Photos:** none of children. No stock photography of people or children is allowed anywhere in the product. Photographs of physical materials or safe household places may appear in the future only with a source credit, written alt text, and project lead approval.
-- **Icons:** the 15 icons in Figma (see §6.1a). Icons take the text color, are decorative unless they are the only content of a control, and always sit beside words for status (§6.3). New icons use the same 24px grid and stroke weight.
+- **Icons:** 23 UI icons (15 original Figma masters on `02 · Components` plus 8 implementation icons: `user`, `eye`, `eye-off`, `sun`, `cloud-rain`, `book`, `bookmark`, `bookmark-check`, to mirror in Figma; see §6.1a). Icons take the text color, are decorative unless they are the only content of a control, and always sit beside words for status (§6.3). New icons use the same 24px grid and stroke weight.
 
 ### 10.4 Motion
 
@@ -418,12 +418,15 @@ Empty states (§7) use the title-and-action pattern first. Under option A, a lea
 4. **Sentence case:** decided 2026-10-31, strict sentence case for all headings, labels and actions (§2.6).
 5. **Mobile tab bar:** decided 2026-10-31, 72px canonical height (§6.1a).
 6. **Non-diagnostic banner:** decided 2026-10-31, canonical title and body standardized (§2.6).
+7. **Child Chip Conditional Visibility:** decided 2026-11-23, omit the `ChildChip` from the shell `AppBar` when no child profiles exist (`activeChild == null`) to avoid misleading dead clicks. All child-dependent tabs render the canonical `NoChildrenView` onboarding view.
+8. **Idea Helper Ergonomic Placement:** decided 2026-11-23, remove detached brain icon from the mobile `AppBar` actions and co-locate `IdeaHelperCard` within the Explore tab directly above the activity catalog.
+9. **Secondary Text Contrast Update:** decided 2026-11-23, darkened `color/text/secondary` from `#63756E` to `#5A6A64` (React PR #65) so secondary text meets WCAG 2.2 AA (≥4.5:1) on all surfaces and status tints; mirror in Figma variables and Flutter `app_tokens.dart`.
 
 ---
 
 ## 11. Component Inventory and Figma Mapping
 
-Source: Figma file `yqUHW4lOuuly4jDPNMkMVI`, page `02 · Components`, read on 2026-10-31. "Built" means the component exists in `littlesteps-react/src` today. The Flutter column is the Material 3 widget from §9; Flutter code is written by team members.
+Source: Figma file `yqUHW4lOuuly4jDPNMkMVI`, page `02 · Components`, synced on 2026-11-23. "Built" means the component exists in `littlesteps-react/src` today. The Flutter column is the Material 3 widget from §9; Flutter code is written by team members.
 
 ### 11.1 Core primitives
 
@@ -437,7 +440,7 @@ Source: Figma file `yqUHW4lOuuly4jDPNMkMVI`, page `02 · Components`, read on 20
 | Checkbox, Radio, Switch | `Checkbox`, `Radio`, `Switch` | Two values, each with Focus | Not built | `Checkbox`, `Radio`, `Switch` |
 | Icon button | `Icon button` | Default, Focus | Not built | `IconButton` |
 | Toast | `Toast / Type=Undo` | Undo | `UndoToast`, `SuccessNotice` (built) | `SnackBar` |
-| Icons | `icon/*` (15 masters) | n/a | `Icon` (built; the folder also holds a coloured `check-forest-20` variant) | `Icon` with bundled SVGs |
+| Icons | `icon/*` (15 masters in Figma; 8 additional icons to mirror) | n/a | `Icon` (built, 23 UI icons plus colored `check-forest-20` variant) | `Icon` with bundled SVGs |
 
 ### 11.2 Navigation and shell
 
@@ -445,7 +448,7 @@ Source: Figma file `yqUHW4lOuuly4jDPNMkMVI`, page `02 · Components`, read on 20
 |---|---|---|---|---|
 | Sidebar item | `Nav / Sidebar item` | Default, Active, each with Focus | `SideNav` (built) | n/a (mobile frames only) |
 | Bottom tab | `Nav / Bottom tab` | Default, Active, each with Focus | `BottomTabBar` (built) | `NavigationBar` |
-| Child switcher | `Child switcher`, `Child context / Switcher` | Default, Focus | `ChildSwitcher` (built) | `AppBar` chip |
+| Child switcher | `Child switcher`, `Child context / Switcher` | Default, Focus, Hidden when no children | `ChildSwitcher` (built) | `ChildChip` (conditional) |
 | Shells | `Shell / Desktop sidebar`, `Shell / Mobile top bar`, `Shell / Mobile tab bar` | n/a | `AppShell`, `TopBar`, `ScreenHeader` (built) | `AppBar`, `NavigationBar` |
 | Account menu | `Sheet / Account menu`, `Row / Settings item` | Default, Focus | `AccountLink`, account screens (built) | `showModalBottomSheet` |
 
@@ -453,12 +456,12 @@ Source: Figma file `yqUHW4lOuuly4jDPNMkMVI`, page `02 · Components`, read on 20
 
 | Component | Figma frame | States | React | Flutter |
 |---|---|---|---|---|
-| Activity card | `Card / Activity`, `Card / Catalog item`, `Pill / Material`, `Cover / Activity`, `Card / Book` | Planned, Completed, Default, Focus | Not built | `Card.outlined` |
-| Milestone row | `Row / Milestone prompt`, `Card / Milestones preview` | Seen on [date], Not seen yet (statuses: `observed`, `not_yet_observed`) | Not built | `Card.outlined` |
-| Journal note | `Card / Journal note`, `Form / New journal note` | Default | Not built | `Card.outlined`, `TextFormField` |
-| Weekly reflection | `Card / Weekly summary`, `Week totals`, `Domain counts`, `Moments noticed`, `Reflection prompt` | Default | Not built | `Card.outlined` |
-| Idea helper | `Card / Idea helper entry`, `Panel / Idea helper` | Form, Suggestion, Fallback, Loading, Rate limited | Not built | `Card`, `AlertDialog` or sheet |
-| Observation form | `Form / Record observation` | Default | Not built | `TextFormField` |
+| Activity card | `Card / Activity`, `Card / Catalog item`, `Pill / Material`, `Cover / Activity`, `Card / Book` | Planned, Completed, Default, Focus | `ActivityCard`, `PlanCard`, `ActivityDetailModal`, `StorybooksSection` (built) | `Card.outlined` |
+| Milestone row | `Row / Milestone prompt`, `Card / Milestones preview` | Seen on [date], Not seen yet (statuses: `observed`, `not_yet_observed`) | `PromptRow`, `MilestonesList` (built) | `Card.outlined` |
+| Journal note | `Card / Journal note`, `Form / New journal note` | Default | `JournalScreen` (built) | `Card.outlined`, `TextFormField` |
+| Weekly reflection | `Card / Weekly summary`, `Week totals`, `Domain counts`, `Moments noticed`, `Reflection prompt` | Default | `ThisWeekScreen` (built) | `Card.outlined` |
+| Idea helper | `Card / Idea helper entry`, `Panel / Idea helper` | Form, Suggestion, Fallback, Loading, Rate limited | `IdeaHelper` (built, co-located in Explore, with fallback rotation on "Another idea") | `IdeaHelperCard` (in Explore tab), `AiSuggestionsScreen` |
+| Observation form | `Form / Record observation` | Default | `ObservationForm` (built) | `TextFormField` |
 
 ### 11.4 Forms and account
 
@@ -475,14 +478,15 @@ Source: Figma file `yqUHW4lOuuly4jDPNMkMVI`, page `02 · Components`, read on 20
 | Badge | `Badge / Provisional`, `Completed`, `AI`, `Private`, `Offline` | One each | `Badge` (built) | `Chip` or `Container` styled |
 | Advisory banner | `Banner / Advisory` | Default | `NonDiagnosticNotice` (built) | Styled `Card` |
 | Inline alert | `Alert / Inline` | Error, Offline | `InlineAlert` (built) | Styled `Card` in the scroll view |
+| Weather hint banner | `Banner / Weather hint` (to add in Figma) | Rainy, Fair, Hidden when unavailable | Built in `TodayScreen` (`today-weather-banner`) | Built in `TodayScreen` |
 | Skeleton | `Skeleton` | Card, Row, Profile | `Skeleton` (built) | Placeholder shapes |
-| Empty and denied | `State / Empty`, `State / Empty week`, `State / Access denied` | One each | `EmptyState` (built); session problems are handled by `ProtectedRoute` | Styled `Card` |
-| Dialogs | `Dialog / Confirm delete note`, `Confirm delete child records`, `Discard draft` | One each | `ConfirmDialog` (built; not yet used for the note and records deletes) | `AlertDialog` |
+| Empty and denied | `State / Empty`, `State / Empty week`, `State / Access denied` | One each | `EmptyState` (built); session problems are handled by `ProtectedRoute` | `NoChildrenView` (onboarding across tabs), `EmptyStateView` |
+| Dialogs | `Dialog / Confirm delete note`, `Confirm delete child records`, `Discard draft` | One each | `ConfirmDialog` (built and active for permanent deletes) | `AlertDialog` |
 
 ### 11.6 Gaps and Wireframe Requirements (Issue #44)
 
-- **In Figma, not built in React:** Checkbox, Radio, Switch, Icon button, and all product patterns in §11.3.
-- **Built in React, no Figma master:** `SuccessNotice`, `CreateAccountForm`, `ChildLimitNote`, `ChildStatus`, `Logo`. Add masters, or confirm they reuse existing ones.
+- **In Figma, not built in React:** Checkbox, Radio, Switch, Icon button (all product patterns in §11.3 are now built in React).
+- **Built in React/Flutter, no Figma master / needs wireframe update:** `SuccessNotice`, `CreateAccountForm` (`RegisterScreen`), `ChildLimitNote`, `ChildStatus`, `Logo`, `WeatherHintBanner`, `NoChildrenView`, `Storybooks` 3-shelf bar (`Books from Open Library` | `Our Bookshelf` | `Read & Sing Together`), ADR-014 `Today` header update, and the 8 newly added UI icons. Add masters, or confirm they reuse existing ones.
 - **Frame names:** the convention going forward is `Platform / Area / Screen – State`.
 - **Low-fidelity wireframes (Issue #44):** 9 essential 375px mobile wireframe frames are required in Figma before additional high-fidelity or code iterations:
   1. `Mobile / Auth / Sign In – Default`: email, password, submit button, link to create account, clear focus ring.

@@ -9,7 +9,7 @@ colors:
   card: "#FFFFFF"
   soft-green: "#E0F2E5"
   text: "#1A2B29"
-  text-secondary: "#63756E"
+  text-secondary: "#5A6A64"
   text-error: "#853029"
   text-offline: "#475569"
   border-subtle: "#E0E5DB"
@@ -74,7 +74,7 @@ components:
 
 **Status:** Active Design System Reference (Reviewed)  
 **Owner:** Nherie (Frontend Lead) & Faith (Usability Lead); drafted by Mark Alvin Cadangin (Technical Lead)  
-**Last Reviewed:** 2026-10-31  
+**Last Reviewed:** 2026-11-23  
 **Governing Standard:** WCAG 2.2 AA and ISO 9241  
 **Related Documents:** [UI/UX Design Specification](ui-ux-design-specification.md), [Documentation Standards](documentation-standards.md), [Development Workflow](development-workflow.md)
 
@@ -102,13 +102,13 @@ Forest green is the single action color on a warm canvas. Every color has one me
 
 - **Primary, Forest (`#1F634D`):** actions and selection. White text on it is 7.1:1. It is also the focus ring color.
 - **Canvas (`#F7F7ED`) and Card (`#FFFFFF`):** page and surface. Cards use a subtle border (`#E0E5DB`).
-- **Text (`#1A2B29`):** 14.8:1 on white, 13.7:1 on canvas. **Secondary text (`#63756E`)** is 4.9:1 on white and 4.5:1 on canvas, for timestamps and helper labels only.
+- **Text (`#1A2B29`):** 14.8:1 on white, 13.7:1 on canvas. **Secondary text (`#5A6A64`)** is 5.7:1 on white and 5.3:1 on canvas (darkened 9% from `#63756E` in React PR #65 to achieve ≥4.5:1 across all surfaces and status tints), for timestamps and helper labels only.
 - **Soft Green (`#E0F2E5`):** a positive record (completed, observed) and privacy, with Forest text and a check or lock icon.
 - **Caution (`#FAE8A8`), Info (`#D9E8F7`), Offline (`#F1F5F9` with `#475569` text), Error (`#FFF6F5` with `#853029` text and `#B83D33` border):** warnings, source and AI labels, connection, and failures. Error is a muted brick red: clearly an error, still calm.
 - **Field borders (`#7E8C86`):** text fields, selects and unselected chips, 3.5:1 on white (WCAG 1.4.11).
 - **Decorative brand colors (`artwork-forest`, `warm-cream`, `soft-sage`, `orange`, `mist`, `slate`, `dusty-blue`):** artwork and illustrations only, never UI text or controls.
 
-Pairs that fail AA, never use: secondary text on Caution (3.99:1), on Offline (4.46:1) or on Soft Green (4.2:1).
+Prefer primary text (`#1A2B29`) on Caution, Offline, Info, and Soft Green surfaces for maximum readability; secondary text (`#5A6A64`, darkened from `#63756E`) now clears WCAG AA (≥4.5:1) on all surfaces but stays reserved for timestamps and helper labels.
 
 The full meaning table is specification [§6.3](ui-ux-design-specification.md).
 
@@ -128,7 +128,7 @@ Two frame sizes: **1280** (desktop) and **375** (mobile). Mobile is designed fir
 
 - **Spacing scale:** 4, 8, 12, 16, 24, 32 px. Adjacent touch targets stay at least 8 px apart.
 - **Touch targets:** frequent and primary controls are at least **48 × 48 px**; secondary links may go to **44 × 44**, never lower. WCAG 2.5.8 requires only 24 × 24; ours is for one-handed comfort.
-- **App shell:** top bar 60 px, side navigation 240 px on desktop, bottom tab bar 72 px (five tabs). The 72 px height is decided (spec §10.6) and is in `tokens.css` (react PR #36); at 320 px two-line labels make the bar taller, so scroll padding adds 16 px.
+- **App shell:** top bar 60 px, side navigation 240 px on desktop, bottom tab bar 72 px (five tabs). The 72 px height is decided (spec §10.6) and is in `tokens.css` (react PR #36); at 320 px two-line labels make the bar taller, so scroll padding adds 16 px. Across mobile clients: React `TopBar` hosts `Logo` and caregiver avatar while `ScreenHeader` renders the `ChildSwitcher` chip below the title; Flutter `AppBar` hosts `BrandLogo` (vector emblem + wordmark), conditional `ChildChip` (omitted when `activeChild == null`), and caregiver avatar. Both clients hide the child chip and render `NoChildrenView` / `FirstRun` when no children are registered.
 - **Five states on every screen:** populated, empty, loading, error or permission denied, offline or AI fallback. Journeys J1 to J7 are in specification [§7](ui-ux-design-specification.md).
 
 ## Elevation & Depth
@@ -137,7 +137,7 @@ Depth is quiet. Cards sit on the canvas with a subtle border and, when they stan
 
 ## Shapes
 
-Two radii only: **10 px** for controls (buttons, fields, chips) and **16 px** for cards. Radii, spacing and sizes are recorded in [spec §6.1a](ui-ux-design-specification.md). Icons come from the 15 Figma icons, take the text color, and are decorative (`aria-hidden`) unless they are the only content of a control.
+Two radii only: **10 px** for controls (buttons, fields, chips) and **16 px** for cards. Radii, spacing and sizes are recorded in [spec §6.1a](ui-ux-design-specification.md). Icons come from the 23 UI icons (15 original Figma masters in `02 · Components` plus 8 added during implementation: `user`, `eye`, `eye-off`, `sun`, `cloud-rain`, `book`, `bookmark`, `bookmark-check`, to mirror in Figma), take the text color, and are decorative (`aria-hidden`) unless they are the only content of a control.
 
 ## Components
 
@@ -151,11 +151,11 @@ The shared set is built once in Figma (page `02 · Components`) and mirrored in 
 | Card | Grouping | `elevated` only on the page background. |
 | Badge | Short status | The AI badge is required on every AI-written result. |
 | InlineAlert | Errors, offline, notices | Stays until solved. Errors `role="alert"`, the rest `role="status"`. Never a toast for an error. |
-| Icon | The 15 Figma icons | Decorative by default; give a label only when the icon is the whole control. |
+| Icon | The 23 UI icons | Decorative by default; give a label only when the icon is the whole control. |
 | Skeleton, EmptyState | Loading, nothing yet | Static under reduced motion. Empty states say what will appear and how to add the first item, with no blame. |
 | ConfirmDialog | Permanent actions only | The button names the action ("Delete Maya's records"), never "OK". Cancel has focus first. |
 | UndoToast, SuccessNotice | Reversible actions, confirmations | At least 10 seconds, pause on hover or focus, announced politely. |
-| App shell | Top bar, bottom tabs, side nav | Tab labels may wrap. Focus is never covered by a bar. |
+| App shell | Top bar, bottom tabs, side nav | Tab labels may wrap. Focus is never covered by a bar. Top bar omits child chip when activeChild is null. |
 
 Full props and states are in the [React components README](https://github.com/Thesis-Titans/littlesteps-react/blob/main/src/components/README.md).
 
@@ -173,7 +173,7 @@ Full props and states are in the [React components README](https://github.com/Th
 **Don't**
 
 - Don't hard-code a color, spacing or radius, and don't add Tailwind (the React client uses plain CSS with these tokens).
-- Don't put secondary text on Caution, Offline or Soft Green.
+- Don't use secondary text where primary text belongs on Caution, Offline, or Soft Green banners; reserve secondary text (`#5A6A64`) for timestamps and helper labels.
 - Don't use decorative brand colors for text or controls.
 - Don't use streaks, scores, delay labels, urgency or blame, anywhere.
 - Don't use Title Case (proper nouns, standard acronyms and the single tab names keep their capitals) or marketing words ("unlock", "seamless", "smart"); spec §2.6 requires strict sentence case and plain wording.
@@ -204,6 +204,6 @@ Read this file first, then the specification sections it links, before designing
 
    Not in the front matter: the font fallback stack, the 2 px focus ring width and offset, and the 16 px minimum body size. Read them in `tokens.css`. Desktop type sizes are React-only.
 3. **Reviewing:** check against the specification §8 checklist, WCAG 2.2 AA, the do's and don'ts above and the voice rules. Report findings with a location and a proposed fix; do not rewrite the design.
-4. **Flutter:** members write and can defend all Flutter code (Individual Code Defense, CC 207B). AI may advise, review and give teaching snippets of 15 lines or fewer, never whole screens or features. Log every use in `BSIT-3A/LittleSteps/docs/ai-usage-log.md` before opening the pull request, and tick the box in the PR template. Members add the tokens Dart still lacks (Soft Green, the status colors, offline and error text, error border, focus, on-primary, the decorative brand colors) and the 44 px target, shell sizes and 2 px focus ring offset.
+4. **Flutter:** members write and can defend all Flutter code (Individual Code Defense, CC 207B). AI may advise, review and give teaching snippets of 15 lines or fewer, never whole screens or features. Log every use in `BSIT-3A/LittleSteps/docs/ai-usage-log.md` before opening the pull request, and tick the box in the PR template. `AppColors.textSecondary` in `BSIT-3A/LittleSteps/lib/theme/app_tokens.dart` is synced to `0xFF5A6A64` on branch `fix/secondary-text-contrast-token` (ref Flutter #10).
 5. **Skills and plugins:** none are installed as of 2026-10-31. Design-review rules are applied as written rubrics, not as downloaded skills.
-6. **Decisions of 2026-10-31** (spec §10.6): illustration option A with the activity cover exception; motion tokens 120 ms (fast), 200 ms (base) and one standard easing, to be added to Figma and `tokens.css`; no photography of children or stock people; strict sentence case; one canonical non-diagnostic banner (wording in spec §2.6); 72 px tab bar. Low-fidelity wireframes (docs #44) are in progress.
+6. **Decisions of 2026-10-31 & 2026-11-23** (spec §10.6): illustration option A with the activity cover exception; motion tokens 120 ms (fast), 200 ms (base) and one standard easing; no photography of children or stock people; strict sentence case; one canonical non-diagnostic banner (wording in spec §2.6); 72 px tab bar; conditional `ChildChip` visibility (omitted when `activeChild == null`); co-located `IdeaHelperCard` in Explore; `#5A6A64` WCAG secondary-text update (React PR #65); and ADR-013/014/015 alignment. Low-fidelity wireframes (docs #44) are in progress.

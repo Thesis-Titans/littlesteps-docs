@@ -1,471 +1,211 @@
-# CC 207B — Software Documentation Package
+# CC 207B — Software Documentation: LittleSteps
 
 **Course:** CC 207B — Applications Development and Emerging Technologies  
 **Institution:** West Visayas State University — College of Information and Communications Technology  
-**Component:** Software Documentation Package (§ 2.a)  
-**Governing Documents:** [CC 207B Requirements](CC207B_Final_Project_Requirements.md), [AI Feature Specification](ai-feature-specification.md), [Traceability Matrix](../../traceability-matrix.md), [UI/UX Design Specification](../../ui-ux-design-specification.md)  
-**Base Framework:** Flutter (Dart SDK ^3.13.5)  
-**Target Community / Client:** Caregivers, parents, and Early Childhood Care and Development (ECCD) workers in Western Visayas  
-**Project Repository:** `Thesis-Titans/CC-207B_26-27_Final-Project` (folder `BSIT-3A/LittleSteps`) (Coordinated system: `littlesteps-api`, `littlesteps-react`, `littlesteps-docs`)  
-
----
-
-## Document Metadata & Engineering Roster
-
-| Member Name | Role & Engineering Scope | Syllabus Focus Area |
-|---|---|---|
-| **Cadangin, Mark Alvin C.** | Team Leader & Systems Architect | AI-Powered Feature, System Architecture & Routing |
-| **Benjamin, Mae Daniella Faith C.** | Frontend Engineer (Catalog & Activities) | Layout Widgets & Responsive Interaction |
-| **Acebuche, Nherie C.** | Frontend Engineer (Profiles & Forms) | Forms & Bounded Input Validation |
-| **Ardeña, Justin Ace A.** | Client Engineer (Today Routine & Execution) | Asynchronous Operations, API Services & Weather Integration |
-| **Tamaño, Vincent John A.** | Client Engineer (Journal & Milestones) | Data Persistence & Caregiver Privacy Safeguards |
+**Submitted By:** Acebuche, Nherie C.; Ardeña, Justin Ace D.; Benjamin, Mae Daniella Faith C.; Cadangin, Mark Alvin C.; Tamaño, Vincent John A. (BSIT-3A — Thesis Titans)  
+**Submitted To:** John Cristopher Mateo  
+**Base Framework:** Flutter 3.47.9 (Dart SDK `^3.13.5`)  
+**Primary Repository:** `Thesis-Titans/CC-207B_26-27_Final-Project` (`BSIT-3A/LittleSteps`)  
+**Related Specifications:** [CC 207B Final Project Requirements](CC207B_Final_Project_Requirements.md), [AI Feature Specification](ai-feature-specification.md)
 
 ---
 
 ## i. Overview and Introduction
 
-### 1. Application Name
-**LittleSteps** — *Early Childhood Development Companion for Toddlers and Caregivers*
+### 1. App Name
 
-### 2. Purpose and Target Users or Client
+**LittleSteps** — Play Planning and Observation Companion for Caregivers of Young Children.
 
-#### Sociotechnical Problem Formulation
-In modern domestic environments across the Philippines, early childhood care faces a compounding developmental challenge: **excessive passive screen time** among toddlers aged 0 to 5 years, paired with **caregiver cognitive overload**. Field research and community observations within Western Visayas (specifically consulting community early childhood contexts aligned with local Child Development Centers) revealed that while parents understand the harm of prolonged screen exposure, they struggle to invent or organize developmentally appropriate, physically engaging activities using readily accessible materials. 
+### 2. Purpose and Target Users
 
-Commercial applications predominantly encourage direct toddler-to-device interaction (digitizing play), which contradicts pediatric recommendations from the World Health Organization (WHO) and the Philippine Pediatric Society advising zero passive screen time for infants and strict limits for toddlers.
+Parents and caregivers of children aged 0 to 5 years frequently turn to smartphones or tablets to keep toddlers occupied during household routines. Although guidance from the World Health Organization (WHO), the American Academy of Pediatrics (AAP), and the Philippine Early Childhood Care and Development (ECCD) Council advises against passive screen exposure in early childhood, busy caregivers rarely have time to look up age-appropriate, screen-free play ideas that work with ordinary household items.
 
-#### Solution Architecture & Core Purpose
-LittleSteps is designed as a **caregiver-facing digital companion** rather than a child-distracting utility. Its foundational mission is to facilitate *offline, screen-free, physical child-caregiver interactions* by:
-1. Translating national Early Childhood Care and Development (ECCD) developmental benchmarks into digestible daily routines.
-2. Generating real-time, low-friction play routines that utilize ordinary household recyclables (e.g., cardboard boxes, plastic cups, spoons, socks).
-3. Preserving cultural heritage through curated Philippine folk rhymes and action songs in regional languages (Tagalog, Hiligaynon, Cebuano).
-4. Providing private, observational developmental tracking without clinical jargon or anxiety-inducing diagnostic claims.
+LittleSteps addresses this gap as a caregiver-facing mobile application rather than a child-facing screen game. The primary target users are parents, guardians, and household caregivers of infants, toddlers, and preschoolers (ages 0–5) across Western Visayas and broader Philippine households; community ECCD facilitators and daycare workers serve as secondary users who can recommend home-based play routines to families. Design decisions are grounded in published WHO, AAP, and Philippine ECCD early-learning frameworks and informal parent walkthrough feedback.
 
-```mermaid
-flowchart LR
-    A["Caregiver Inputs<br/>(Child Age Band, Available Time, Materials)"] --> B["LittleSteps Client<br/>(Flutter Mobile App)"]
-    B --> C["Backend Proxy API<br/>(Node.js / Express on Firebase)"]
-    C --> D["Gemini 2.5 Flash Lite<br/>(Structured Play Recommender)"]
-    C --> E["ECCD Activity Catalog<br/>(Curated Fallback Engine)"]
-    D -. Fallback .-> E
-    C --> F["Google Cloud Firestore<br/>(Private Encrypted Persistence)"]
-    B --> G["Screen-Free Physical Play<br/>(Caregiver + Toddler Interaction)"]
-```
+The application lets an adult select a short, safe, screen-free activity in under a minute and then set the device aside. It organizes daily play across four developmental domains (Cognitive, Motor, Language, and Socio-Emotional), matches available household items to reviewed activities through an AI-assisted Idea Helper, provides regional action rhymes and storybooks in English, Filipino, and Hiligaynon, and records private, non-diagnostic observations and weekly summaries.
 
-### 3. Technology Stack & Architectural Decision Matrix
+![LittleSteps System and Solution Architecture](figures/fig-system-solution-architecture.svg)  
+*Fig. 1. LittleSteps system architecture linking the Flutter client, Node.js/Express proxy, Gemini REST API, ECCD catalog, and Cloud Firestore.*
 
-The engineering stack was selected to satisfy cross-platform performance, strict null safety, real-time synchronization, and zero-leakage privacy boundaries:
+### 3. Technology Stack
 
-| Layer / Subsystem | Technology | Version | Architectural Role | Software Engineering Rationale & Trade-offs |
-|---|---|:---:|---|---|
-| **Client UI Framework** | Flutter SDK | `>=3.13.5` | Cross-platform mobile presentation layer | Enables identical 60fps compiled native performance on Android and iOS from a single sound null-safe codebase; eliminates bridge serialization overhead found in JavaScript-based mobile frameworks. |
-| **Programming Language** | Dart SDK | `^3.13.5` | Core client business logic and model serialization | Sound null-safety guarantees zero runtime `null` dereference crashes; ahead-of-time (AOT) compilation optimizes mobile startup latency. |
-| **Client State Architecture** | Vanilla `StatefulWidget` & `ValueNotifier` | Built-in | Reactive component state management | Chosen over complex external state libraries (BLoC/Redux) to minimize dependency bloat, preserve full team visibility, and eliminate unnecessary abstraction layers for 7 core flows. |
-| **HTTP & Networking** | `package:http` | `^1.6.0` | Asynchronous REST client | Lightweight, composable asynchronous HTTP pipeline supporting bearer-token injection, request timeouts, and structured error boundary mapping. |
-| **Date & Locale Services** | `package:intl` | `^0.20.3` | Chronological calculations and formatting | Provides standardized ISO date manipulation for coarse birth-month parsing and chronological journal indexing without localized calendar drifts. |
-| **Backend REST Gateway** | Node.js / Express / TypeScript | `0.1.0` | Backend-for-Frontend (BFF) Proxy | Enforces Broken Object Level Authorization (BOLA), handles sliding-window rate limiting, and protects Gemini API keys from client binary extraction. |
-| **Cloud Database** | Google Cloud Firestore | API v1 | Document persistence & real-time sync | High-availability NoSQL document store with subcollection partitioning (`caregivers/{uid}/children/{childId}/...`) ensuring rigorous multi-tenant data isolation. |
-| **AI Foundation Engine** | Google Gemini 2.5 Flash Lite | `@google/genai 0.1.1` | Structured activity adaptation | Fast, low-latency reasoning engine capable of dynamic constraint satisfaction (mapping household objects to ECCD milestones) governed by strict JSON schemas. |
+*Table 1. System Technology Stack and Versions*
+
+| Layer | Technology | Version | Architectural Role |
+|---|---|---|---|
+| Client Framework | Flutter SDK | `3.47.9` (stable) | Cross-platform Material 3 client targeting Android, iOS, and Web |
+| Client Language | Dart SDK | `^3.13.5` (tested `3.13.7`) | Null-safe application logic, data models, UI components, and 90 automated tests |
+| Client State | Built-in Flutter state (`StatefulWidget`, `ChangeNotifier`, `InheritedWidget`) | Flutter SDK built-in | Lightweight reactive session and active-child state management without external state libraries |
+| Backend Proxy API | Node.js / Express / TypeScript / Zod | Node `22`, Express `^5.1.0`, TS `^5.9.2`, Zod `^4.1.0` | Shared Firebase Cloud Functions gateway (`firebase-functions ^6.4.0`) enforcing authentication, CORS, hourly rate limits, and schema validation |
+| Database & Auth | Firebase Auth & Cloud Firestore | `firebase-admin ^13.5.0` | Caregiver authentication and user-isolated cloud storage for profiles, plans, milestones, and journals |
+| AI Service | Google Gemini REST API (`v1beta`) | Configured via `GEMINI_MODEL` (e.g., `gemini-flash-lite-latest`) | Server-side JSON play selection, book companions, and activity adaptations called via Node 22 `fetch` |
+| Weather Service | Open-Meteo Forecast API | REST v1 | Optional indoor/outdoor play guidance using coordinates rounded to 2 decimal places (~1.1 km) |
 
 ---
 
 ## ii. Functional Requirements
 
-### 1. Libraries and Packages Utilized
+### 1. Libraries and Packages Used
 
-The client application strictly adheres to the principle of **dependency minimization** to maintain rapid build times, small compiled APK binaries, and absolute code audibility:
+The Flutter application keeps third-party dependencies to five runtime packages to preserve compact build sizes and clear maintainability.
 
-```mermaid
-graph TD
-    App["littlesteps_flutter (Root Package)"]
-    App --> Material["flutter/material.dart<br/>(Material 3 Components & Theming)"]
-    App --> HTTP["package:http (^1.6.0)<br/>(Async Network Client)"]
-    App --> Intl["package:intl (^0.20.3)<br/>(Date Manipulation)"]
-    App --> Cupertino["package:cupertino_icons (^1.0.8)<br/>(Vector Iconography)"]
-    App --> Lints["package:flutter_lints (^6.0.0)<br/>(Dev Dependency: Effective Dart Rules)"]
-    
-    HTTP --> ApiClient["lib/services/api_client.dart<br/>(Singleton Gateway with Token Header & Timeout Guards)"]
-```
+![Flutter Client Package Dependencies](figures/fig-client-package-dependencies.svg)  
+*Fig. 2. Flutter client package dependencies declared in `pubspec.yaml`.*
 
-1. **`flutter/material.dart` (Core Framework):**  
-   - *Purpose:* Provides Material 3 adaptive UI components (`Scaffold`, `NavigationBar`, `Card`, `FilledButton`, `TextField`, `DropdownButtonFormField`).
-   - *Design Pattern:* Composite pattern for hierarchical widget trees.
-2. **`package:http` (Networking):**  
-   - *Purpose:* Powers the centralized [`ApiClient`](https://github.com/Thesis-Titans/CC-207B_26-27_Final-Project/blob/main/BSIT-3A/LittleSteps/lib/services/api_client.dart). Manages connection pools, dispatches HTTP verbs (`GET`, `POST`, `PATCH`, `DELETE`), serializes JSON requests, and maps non-2xx responses into strongly typed client exceptions (`ApiException`).
-   - *Design Pattern:* Gateway / Facade Pattern.
-3. **`package:intl` (Chronology & Localization):**  
-   - *Purpose:* Handles ISO-8601 string parsing, relative timestamp formatting (*"Today"*, *"Yesterday"*), and birth-month calculation to determine a child's active developmental bracket.
-4. **`package:cupertino_icons` (Iconography):**  
-   - *Purpose:* Embeds high-contrast vector symbols for navigation tabs, domain categorization, and status views.
-5. **`package:flutter_lints` (Code Quality & Static Analysis):**  
-   - *Purpose:* Enforces static analysis rules conforming to the official *Effective Dart* standard, preventing dead code, unawaited futures, and mutable state violations.
+*Table 2. Flutter Packages and Purpose*
 
----
+| Package | Version | Scope | Purpose |
+|---|---|---|---|
+| `flutter` (`material.dart`) | SDK `3.47.9` | Core SDK | Material 3 layout, navigation bar, forms, cards, chips, and accessibility semantics |
+| `http` | `^1.6.0` | Runtime | Authenticated JSON REST requests, Firebase bearer-token headers, and 8-second timeouts |
+| `intl` | `^0.20.3` | Runtime | Formatting observation dates and Monday–Sunday weekly summary date ranges |
+| `flutter_svg` | `^2.5.0` | Runtime | Rendering scalable SVG brand marks, wordmarks, and parent-child onboarding artwork |
+| `share_plus` | `^13.3.1` | Runtime | Opening the native share sheet for caregiver account data export |
+| `cupertino_icons` | `^1.0.8` | Runtime | Standard iOS/Cupertino icon glyphs complementing Material icons |
+| `flutter_lints` | `^6.0.0` | Dev | Effective Dart static analysis rules verified via `dart analyze` (0 issues) |
+| `flutter_test` | SDK | Dev | Automated unit and widget test runner executing 90 tests across models, services, offline states, and screens |
 
 ### 2. Low- and High-Fidelity Prototypes
 
-The user experience was iteratively designed in Figma, moving from low-fidelity structural wireframes prioritizing tap-target ergonomics to high-fidelity components built on an accessible 8pt spacing grid.
+The interface progressed from low-fidelity Figma wireframes prioritizing one-handed ergonomics to high-fidelity Material 3 screens. Colors, spacing, corner radii, and touch-target dimensions are managed through a shared design token system (Table 3).
 
-#### Design Tokens & Thematic Specifications
-The application implements a dedicated design token architecture declared in [`lib/theme/app_tokens.dart`](https://github.com/Thesis-Titans/CC-207B_26-27_Final-Project/blob/main/BSIT-3A/LittleSteps/lib/theme/app_tokens.dart) and consumed by [`lib/theme/app_theme.dart`](https://github.com/Thesis-Titans/CC-207B_26-27_Final-Project/blob/main/BSIT-3A/LittleSteps/lib/theme/app_theme.dart):
-
-```mermaid
-classDiagram
-    class AppColors {
-        +Color forestGreen = #1F634D (Primary)
-        +Color warmCream = #F4F2E8 (Background)
-        +Color deepCharcoal = #2D312E (Text Primary)
-        +Color terracotta = #C85A32 (Accent / Warning)
-        +Color mutedSage = #E2E8E2 (Surface Variant)
-        +Color cognitiveBlue = #3B7EA1 (Domain: Cognitive)
-        +Color motorYellow = #D99B26 (Domain: Motor)
-        +Color languagePurple = #7A5C96 (Domain: Language)
-        +Color socioGreen = #4A8C6F (Domain: Socio-Emotional)
-    }
-    class AppSpacing {
-        +double space4 = 4.0
-        +double space8 = 8.0
-        +double space12 = 12.0
-        +double space16 = 16.0
-        +double space24 = 24.0
-        +double space32 = 32.0
-    }
-    class AppTypography {
-        +TextStyle displayLarge (24pt Bold)
-        +TextStyle titleMedium (16pt SemiBold)
-        +TextStyle bodyMedium (14pt Regular)
-        +TextStyle labelSmall (11pt Medium)
-    }
-    AppTheme --> AppColors
-    AppTheme --> AppSpacing
-    AppTheme --> AppTypography
-```
-
-#### Prototype Layout & Component Hierarchy
-
-The progression from structural low-fidelity wireframes to compiled Material 3 high-fidelity screens is illustrated below:
-
-| Low-Fidelity Structural Wireframe | High-Fidelity Design System Prototype |
+| Low-Fidelity Wireframe | High-Fidelity Prototype |
 |:---:|:---:|
-| ![Low-Fidelity Add Child Wireframe](figures/low-fi-add-child.png)<br/>*Fig 1.1: Low-Fidelity Add Child Wireframe (`Node 306:52`)* | ![High-Fidelity Children Management](figures/hi-fi-children.png)<br/>*Fig 1.2: High-Fidelity Child Profile & Age Brackets (`Node 119:6106`)* |
-| ![Low-Fidelity Today Dashboard](figures/low-fi-today.png)<br/>*Fig 1.3: Low-Fidelity Today Dashboard Wireframe (`Node 306:68`)* | ![High-Fidelity Today Screen](figures/hi-fi-today.png)<br/>*Fig 1.4: High-Fidelity Today Screen Prototype (`Node 73:214`)* |
+| ![Low-Fidelity Add Child Wireframe](figures/low-fi-add-child.png) | ![High-Fidelity Child Profile](figures/hi-fi-children.png) |
+| ![Low-Fidelity Today Dashboard](figures/low-fi-today.png) | ![High-Fidelity Today Screen](figures/hi-fi-today.png) |
 
-```
-+-------------------------------------------------------------+
-| Low-Fidelity Wireframe             High-Fidelity Component  |
-|                                                             |
-| +-------------------------+       +-----------------------+ |
-| | [Avatar] Maya (18m)     |  -->  | 🌿 Maya · 12-23m      | |
-| | [Today Routine]         |       | ☀️ Morning Play Plan   | |
-| | - Activity 1 [ ]        |       |   [✓] Cup Stacking    | |
-| | - Activity 2 [ ]        |       |       Domain: Motor   | |
-| |                         |       |   [ ] Peek-a-boo      | |
-| | [Generate Ideas Button] |       |       Domain: Language| |
-| |                         |       | ✨ AI Play Idea Helper| |
-| +-------------------------+       +-----------------------+ |
-| | [T] [E] [A] [J] [M]     |       | 🏠 Today | 🔍 Explore | |
-| +-------------------------+       +-----------------------+ |
-+-------------------------------------------------------------+
-```
-*Key Ergonomic Enhancements:*
-- **48px Minimum Touch Targets:** All interactive chips, buttons, and checkboxes guarantee a 48×48 logical pixel bounding box to accommodate busy parents holding a child with one hand.
-- **High-Contrast Palette:** Forest Green on Warm Cream provides a 7.2:1 contrast ratio, well above the WCAG 2.2 AA threshold of 4.5:1.
+*Fig. 3. Low-fidelity wireframes to high-fidelity prototypes for child onboarding (`Node 306:52` → `Node 119:6106`) and the Today dashboard (`Node 306:68` → `Node 73:214`).*
 
----
+*Table 3. Visual Design System Tokens*
 
-### 3. Implemented Core Features with Screen Architectures
+| Design Category | Primary Values | Purpose |
+|---|---|---|
+| Brand & Surfaces | Forest green `#1F634D`, warm cream `#F4F2E8`, canvas `#F7F7ED`, white card `#FFFFFF`, soft green `#E0F2E5` | Primary actions, low-glare caregiver reading canvas, cards, and completion highlights |
+| Status & Accents | Sage `#8DAF98`, warning orange `#EC6A2C`, error `#853029`, advisory yellow `#FAE8A8`, offline slate `#F1F5F9` | Secondary highlights, accessible error feedback, advisory notices, and offline banners |
+| Typography Ink | Primary ink `#1A2B29`, secondary `#63756E`, tertiary `#7E8C86` | High-contrast readable body text and muted metadata labels |
+| Spacing & Targets | 4–32 dp spacing scale; 10/16/20 dp radii; 48 dp minimum touch target | Consistent 8pt layout rhythm and comfortable one-handed touch targets |
 
-LittleSteps implements **seven (7) fully functional core user flows**, exceeding the six-feature requirement for a 5-member project team:
+### 3. Implemented Core Features
 
-```mermaid
-graph LR
-    Shell["ShellScreen (5-Tab NavigationBar)"]
-    Shell --> F1["Feature 1: Child Profile & Age Brackets"]
-    Shell --> F2["Feature 2: Today Routine & Weather Hints"]
-    Shell --> F3["Feature 3: ECCD Activity Catalog"]
-    Shell --> F4["Feature 4: Storybooks & Folk Rhymes"]
-    Shell --> F5["Feature 5: Milestone Observations"]
-    Shell --> F6["Feature 6: Private Caregiver Journal"]
-    Shell --> F7["Feature 7: AI Play Helper (Emerging Tech)"]
-```
+A five-member team requires at least six core user-facing features (excluding login, registration, splash, About, and Settings). LittleSteps implements seven core features organized across its five bottom navigation tabs, top-bar child profile switcher, and AI Idea Helper flow.
 
-#### Feature 1: Child Profile & Age-Band Bracket Management
-* **Files:** `lib/screens/children/child_profile_screen.dart`, `add_child_screen.dart`, `lib/services/children_service.dart`
-* **User Goal:** Register a toddler with a non-identifying nickname and birth month to establish their developmental baseline.
-* **Component Architecture:** Form managed via `TextEditingController` and `DropdownButtonFormField`. Implements validation rejecting empty names or names $>40$ characters. Automatically categorizes child into standard ECCD brackets (`0-5m`, `6-11m`, `12-23m`, `24-35m`, `36-47m`, `48-59m`, `60-71m`).
-* **Visual Interface Artifact:**  
-  ![Feature 1: Child Profile Management](figures/hi-fi-children.png)  
-  *Fig 2.1: Child Profile Management & Age-Band Bracket Selection (`Node 119:6106`)*
+![Shell Navigation and Core Features Architecture](figures/fig-shell-features-hierarchy.svg)  
+*Fig. 4. Application navigation hierarchy mapping the five bottom tabs, child profile management, and the AI Idea Helper.*
 
-#### Feature 2: Today's Daily Routine Planning & Execution
-* **Files:** `lib/screens/today/today_screen.dart`, `lib/services/plan_service.dart`
-* **User Goal:** View, track, and complete the scheduled activities for the current day.
-* **Component Architecture:** `ListView.builder` rendering `ActivityCard` instances. Features interactive completion toggling that communicates asynchronously with `POST /api/v1/children/:id/plans`. Integrates an environmental weather alert widget providing real-time suggestions (e.g., indoor sensory play when rain is forecasted) via Open-Meteo.
-* **Visual Interface Artifact:**  
-  ![Feature 2: Today Routine and Weather Guidance](figures/hi-fi-today.png)  
-  *Fig 2.2: Daily Routine Execution & Environmental Weather Guidance (`Node 73:214`)*
+**1. Child Profile and Age-Band Management.** Caregivers register one or more children using only a nickname and an age band (0–11, 12–23, 24–35, 36–47, or 48–59 months), without providing exact birthdates, legal names, or photos. Inline form validation prevents empty or overly long nicknames and prevents duplicate submissions while saving to the cloud. Selecting a child from the top profile switcher updates all child-dependent tabs; when no child is registered yet, those tabs display a guided onboarding prompt.
 
-#### Feature 3: ECCD Early Learning Activity Catalog
-* **Files:** `lib/screens/explore/explore_screen.dart`, `activity_detail_screen.dart`
-* **User Goal:** Discover structured play ideas filtered by developmental need.
-* **Component Architecture:** Multi-factor filter header using `FilterChip` widgets allowing cross-filtering across 4 primary domains (Cognitive, Motor, Language, Socio-Emotional), indoor/outdoor settings, and time duration (`<10 mins`, `15-30 mins`). Shows complete preparation steps, materials required, and developmental purpose.
-* **Visual Interface Artifact:**  
-  ![Feature 3: ECCD Early Learning Activity Catalog](figures/hi-fi-activities.png)  
-  *Fig 2.3: ECCD Early Learning Activity Catalog with Domain Filtering (`Node 76:537`)*
+**2. Today's Play Plan, Completion Tracking, and Offline Reading.** Displays the active child's scheduled activities for the current day alongside an optional indoor or outdoor weather hint. Caregivers can mark activities complete or undo completion with immediate feedback. Previously loaded child profiles, catalog activities, and daily plans are cached in memory for offline reading with an offline status banner, while write actions are safely disabled until connectivity returns.
 
-#### Feature 4: Storybooks & Regional Action Rhymes
-* **Files:** `lib/screens/explore/explore_screen.dart`, `lib/models/book.dart`
-* **User Goal:** Access culturally grounded action rhymes and literature without screens.
-* **Component Architecture:** Displays children's literature metadata fetched via Open Library, allows parents to curate books they own at home into a permanent Family Bookshelf (`POST /api/v1/children/:childId/books`), and provides curated Philippine action rhymes (*Awit sa Pagpapatulog*, *Tong Tong Tong Pakitong-kitong*, *Lubi-Lubi*) complete with regional provenance tags (Tagalog, Hiligaynon, Cebuano) and guided physical hand-motion instructions for parents.
-* **Visual Interface Artifact:**  
-  ![Feature 4: Storybooks and Regional Action Rhymes](figures/hi-fi-storybooks.png)  
-  *Fig 2.4: Culturally Grounded Children's Storybooks & Traditional Action Rhymes (`Node 195:3931`)*
+**3. Early Learning Activity Catalog and Cultural Rhymes/Storybooks.** Provides a searchable, filterable library of reviewed screen-free activities, children's storybooks, and traditional Philippine action rhymes in English, Filipino, and Hiligaynon. Caregivers can filter by developmental domain (Cognitive, Motor, Language, Socio-Emotional), indoor or outdoor setting, and time available, view preparation steps and safety notes, and add any activity directly to Today's play plan.
 
-#### Feature 5: Developmental Milestone Observations
-* **Files:** `lib/screens/milestones/milestones_screen.dart`, `lib/services/milestones_service.dart`
-* **User Goal:** Observe and record emergent toddler milestones during play.
-* **Component Architecture:** Domain-grouped checklist featuring non-clinical observational prompts (e.g., *"Can stack 2 blocks"*, *"Points to named objects"*). Records timestamped parental observations in Cloud Firestore without assigning diagnostic scoring.
-* **Visual Interface Artifact:**  
-  ![Feature 5: Developmental Milestone Observations](figures/hi-fi-milestones.png)  
-  *Fig 2.5: Non-Diagnostic Milestone Observation Checklist (`Node 85:1183`)*
+**4. Developmental Milestone Observations.** Presents age-appropriate observational prompts grouped by developmental domain and lets caregivers log dated notes through a quick entry sheet. Every view carries an observational advisory notice and avoids clinical scores, pass/fail grades, or developmental delay labels.
 
-#### Feature 6: Private Caregiver Journal
-* **Files:** `lib/screens/journal/journal_screen.dart`, `lib/services/journal_service.dart`
-* **User Goal:** Log personal parenting notes, child preferences, and behavioral observations.
-* **Component Architecture:** Chronological notebook view with character-bounded input fields (enforcing a 2,000-character ceiling). Fully isolated from AI prompts to safeguard personal domestic reflections.
-* **Visual Interface Artifact:**  
-  ![Feature 6: Private Caregiver Journal](figures/hi-fi-journal.png)  
-  *Fig 2.6: Private Caregiver Journal with RA 10173 Isolation (`Node 85:1393`)*
+![Feature 1: Child Profile](figures/hi-fi-children.png) ![Feature 2: Today Plan](figures/hi-fi-today.png) ![Feature 3: Activity Catalog](figures/hi-fi-activities.png) ![Feature 4: Milestones](figures/hi-fi-milestones.png)  
+*Fig. 5. Core features 1–4: Child profile management, Today play plan, activity catalog, and milestone observations.*
 
-#### Feature 7: AI-Powered Play Helper & Companion Generator (Core AI Feature)
-* **Files:** `lib/screens/ai/ai_suggestions_screen.dart`, `lib/services/ai_service.dart`
-* **User Goal:** Transform ordinary household items into developmentally sound play ideas.
-* **Component Architecture:** Interactive multi-select chip interface capturing available materials (e.g., *Spoons, Plastic Cups, Cardboard Box*) and available duration. Asynchronously contacts the backend Gemini proxy, renders intermediate loading shimmer states, and parses structured output containing step-by-step guidance, pediatric safety warnings, and the mandatory `"Suggested by AI"` badge.
-* **Visual Interface Artifact:**  
-  ![Feature 7: AI Play Helper Suggestion](figures/hi-fi-ai-idea-helper.png)  
-  *Fig 2.7: AI Play Helper Personalized Recommendation & Pediatric Safety Notice (`Node 76:790`)*
+**5. Private Caregiver Journal.** Lets caregivers record chronological reflections and play preferences in a private notebook stored in user-isolated cloud storage. Journal entries are excluded from local offline caching for privacy and are never sent to any AI service.
 
----
+**6. Weekly Reflection Summary.** Aggregates completed play activities, milestone observations, and journal entry counts across selectable Monday–Sunday weeks, presenting factual domain breakdowns and supportive empty states for quiet weeks.
+
+**7. AI-Powered Idea Helper.** Accessible directly from a prompt card inside the Explore tab, the Idea Helper collects available household materials, time window (10, 15, 30, or 45 minutes), indoor or outdoor setting, language, and age band. It displays a loading state while querying the backend AI service, presents matched reviewed activities labeled `"Suggested by AI"` alongside a non-diagnostic disclaimer, lets caregivers add suggestions directly to Today's plan, and falls back to reviewed catalog picks whenever the device is offline or the AI service is unavailable.
+
+![Feature 5: Private Journal](figures/hi-fi-journal.png) ![Feature 6: Weekly Reflection](figures/hi-fi-this-week.png) ![Feature 7: AI Idea Helper](figures/hi-fi-ai-idea-helper.png)  
+*Fig. 6. Core features 5–7: Private caregiver journal, weekly reflection summary, and AI Idea Helper.*
 
 ### 4. Topic Coverage Matrix
 
-*Official mapping of CC 207B course syllabus topics to concrete code implementations in `Thesis-Titans/CC-207B_26-27_Final-Project` (`BSIT-3A/LittleSteps`):*
+*Table 4. CC 207B Topic Coverage Matrix (`BSIT-3A/LittleSteps`)*
 
-| Course Syllabus Topic | Concrete Implementation (File & Class/Widget) | Software Engineering Pattern & Architectural Description |
+| Course topic | Where applied (file and widget/class) | Brief description |
 |---|---|---|
-| **1. Layout Widgets** | `lib/screens/shell_screen.dart` (`ShellScreen`)<br/>`lib/screens/today/today_screen.dart` (`TodayScreen`)<br/>`lib/widgets/activity_card.dart` (`ActivityCard`) | **Composite Pattern:** Implements responsive UI layouts using `Scaffold`, `AppBar`, `Column`, `ListView.builder`, `Wrap`, `Padding`, and `Card`. Employs dynamic flex sizing to prevent `RenderFlex` overflow errors on small viewports. |
-| **2. Navigation & Routing** | `lib/routing/app_router.dart` (`AppRouter`)<br/>`lib/screens/shell_screen.dart` (`_ShellScreenState`) | **Front Controller Pattern:** Declarative named routing via `onGenerateRoute`. Manages route argument passing (`ActivityDetailScreen`), deep linking, and bottom `NavigationBar` index preservation via `IndexedStack`. |
-| **3. Forms & Validation** | `lib/screens/children/add_child_screen.dart` (`_AddChildScreenState`)<br/>`lib/screens/journal/journal_screen.dart` (`JournalScreen`) | **Validator Pattern:** Controlled input handling utilizing `TextEditingController`, `TextField`, `DropdownButtonFormField`, character length boundaries, and visible inline validation error states (`InputDecoration.errorText`). |
-| **4. Async Operations & API Calls** | `lib/services/api_client.dart` (`ApiClient`)<br/>`lib/services/ai_service.dart` (`AiService`)<br/>`lib/widgets/state_views.dart` (`LoadingView`, `EmptyView`, `ErrorView`) | **Gateway Pattern & State Machine:** Non-blocking `async`/`await` calls, `Future` completion handling, HTTP status decoding, 8-second network timeout guards, and strict 5-state UI view rendering (Empty, Loading, Error, Offline, Content). |
-| **5. Data Persistence** | `lib/services/children_service.dart` (`ChildrenService`)<br/>`lib/services/journal_service.dart` (`JournalService`)<br/>`lib/services/plan_service.dart` (`PlanService`) | **Repository Pattern:** REST abstraction persisting structured state into Google Cloud Firestore. Ensures relational integrity across caregiver-scoped child profiles, daily routines, and date-stamped milestone records. |
-| **6. AI-Powered Emerging Tech** | `lib/screens/ai/ai_suggestions_screen.dart` (`AiSuggestionsScreen`)<br/>`lib/services/ai_service.dart` (`AiService`) | **Strategy Pattern & Fallback Chain:** End-user interactive play assistant communicating via secure backend proxy to Google Gemini 2.5 Flash Lite. Features automated 3-tier fallback, pediatric boundary guardrails, and statutory RA 10173 data minimization. |
+| Layout widgets | `lib/screens/shell_screen.dart` — `ShellScreen`<br/>`lib/screens/today/today_screen.dart` — `TodayScreen`<br/>`lib/widgets/activity_card.dart` — `ActivityCard`<br/>`lib/widgets/idea_helper_card.dart` — `IdeaHelperCard`<br/>`lib/widgets/no_children_view.dart` — `NoChildrenView`<br/>`lib/widgets/brand_logo.dart` — `BrandLogo`, `GrowthSymbol`<br/>`lib/widgets/screen_header.dart` — `ScreenHeader` | Composes responsive Material 3 layouts using `Scaffold`, `AppBar`, `Column`, `Row`, `Wrap`, `ListView.builder`, `Card`, `Padding`, and `SafeArea` with shared spacing tokens and 48 dp touch targets. |
+| Navigation and routing | `lib/routing/app_router.dart` — `AppRouter`<br/>`lib/screens/shell_screen.dart` — `_ShellScreenState`<br/>`lib/widgets/account_menu_sheet.dart` — `AccountMenuSheet` | Named routing (`onGenerateRoute`) across splash, auth, `/home`, `/ai-suggest`, `/children`, `/children/add`, `/activity-detail`, and account views, paired with a 5-tab `NavigationBar` and `IndexedStack`. |
+| Forms and validation | `lib/screens/children/add_child_screen.dart` — `AddChildScreen`<br/>`lib/screens/auth/sign_in_screen.dart` — `SignInScreen`<br/>`lib/screens/auth/register_screen.dart` — `RegisterScreen`<br/>`lib/screens/milestones/observation_form_sheet.dart` — `ObservationFormSheet`<br/>`lib/screens/journal/journal_screen.dart` — `JournalScreen` | Uses `Form`, `GlobalKey<FormState>`, `TextEditingController`, `TextFormField`, and `DropdownButtonFormField` with inline validation errors, submit locking, and clear error feedback. |
+| Asynchronous operations / API calls | `lib/services/api_client.dart` — `ApiClient`<br/>`lib/services/ai_service.dart` — `AiService`<br/>`lib/services/plan_service.dart` — `PlanService`<br/>`lib/widgets/state_views.dart` — `LoadingView`, `EmptyView`, `ErrorView`, `OfflineBanner` | Non-blocking `async`/`await` calls via `package:http` with 8-second timeouts, typed exceptions (`NoConnectionApiException`, `UnauthorizedApiException`, `RateLimitApiException`), `mounted` guards, and explicit state views. |
+| Data persistence | `lib/services/children_service.dart` — `ChildrenService`<br/>`lib/services/plan_service.dart` — `PlanService`<br/>`lib/services/milestones_service.dart` — `MilestonesService`<br/>`lib/services/journal_service.dart` — `JournalService`<br/>`lib/services/local_cache.dart` — `LocalDataCache` | Persists caregiver-scoped child profiles, plans, milestone observations, and journals to Cloud Firestore via REST API, with in-memory whitelisted read caching cleared on sign-out. |
+| AI-powered feature | `lib/screens/ai/ai_suggestions_screen.dart` — `AiSuggestionsScreen`<br/>`lib/widgets/idea_helper_card.dart` — `IdeaHelperCard`<br/>`lib/services/ai_service.dart` — `AiService`<br/>`littlesteps-api/src/ai/` (`ai-service.ts`, `gemini.ts`, `prompt.ts`, `validate-output.ts`) | Catalog-grounded Idea Helper proxying requests to Google Gemini with zero client API keys, Zod + 33-term non-diagnostic wording filter, `"Suggested by AI"` labeling, and deterministic catalog fallback. |
 
----
+### 5. AI Feature Specification
 
-### 5. AI Feature Specification (Self-Contained Academic Specification)
+*Full schemas, sample JSON payloads, and evaluation tables appear in [ai-feature-specification.md](ai-feature-specification.md).*
 
-In fulfillment of CC 207B § 2.a.ii.5, this section provides the formal engineering specification for the user-facing Artificial Intelligence integration:
+![AI Selection Pipeline and Fallback Architecture](figures/fig-ai-pipeline-fallback.svg)  
+*Fig. 7. AI selection pipeline, output validation, and deterministic fallback architecture.*
 
-```mermaid
-stateDiagram-v2
-    [*] --> RequestInitiated: User taps "Generate Play Ideas"
-    RequestInitiated --> CloudInference: Dispatch to Gemini 2.5 Flash Lite
-    
-    state CloudInference {
-        [*] --> PromptExecution
-        PromptExecution --> ZodValidation: Response Received
-        ZodValidation --> Tier1Success: Schema Valid (200 OK)
-        ZodValidation --> FallbackTriggered: Schema Mismatch / Toxic Content
-        PromptExecution --> FallbackTriggered: Timeout (>8s) / 429 Rate Limit / Network Drop
-    }
-    
-    Tier1Success --> UI_Render: Render with "Suggested by AI" Badge
-    
-    FallbackTriggered --> CacheLookup: Check In-Memory Pre-Computed Ideas
-    CacheLookup --> Tier2Success: Cache Hit
-    CacheLookup --> CatalogLookup: Cache Miss
-    
-    CatalogLookup --> Tier3Success: Deterministic ECCD Catalog Pick
-    
-    Tier2Success --> UI_Render: Render with "Offline Suggestion" Badge
-    Tier3Success --> UI_Render: Render with "Curriculum Activity" Badge
-    UI_Render --> [*]
-```
+LittleSteps implements a catalog-grounded AI recommendation pipeline rather than an open-ended chatbot. All AI requests travel from the Flutter client through the shared Node.js/Express backend proxy on Firebase Cloud Functions to the Google Gemini REST API (`v1beta`) using Node 22's built-in `fetch`—no third-party Gemini SDK package is used, and the API key never enters the mobile binary or repository. The active model is selected via server environment configuration (`GEMINI_MODEL`, e.g., `gemini-flash-lite-latest`), payloads are validated with `zod` (`^4.1.0`), and the Flutter client communicates via `package:http` (`^1.6.0`) using Firebase Auth bearer tokens across three backend endpoints (`/api/v1/ai/recommendations`, `/api/v1/ai/story-activity`, and `/api/v1/ai/adapt`).
 
-#### 1. AI Service, Model & Package Architecture
-- **Foundation Model:** Google Gemini 2.5 Flash Lite (`gemini-2.5-flash-lite`).
-- **Orchestration Layer:** Official `@google/genai` (v0.1.1) SDK deployed inside the Node.js/TypeScript backend proxy (`littlesteps-api`).
-- **Security Boundary:** Mobile clients **never** hold Gemini API credentials. All calls route through `POST /api/v1/ai/recommendations` over TLS with Firebase Auth bearer tokens.
+Strict input validation accepts only non-identifying fields—age band, indoor or outdoor setting, duration (5–120 minutes), up to 10 household materials (max 40 characters each), language (`en`, `fil`, `hil`), optional domain, and suggestion count (1–3)—rejecting extra or personal fields with HTTP `400`. The backend pre-filters reviewed catalog activities and prompts Gemini to pick only from supplied candidate IDs, return JSON only, keep each explanation under 140 characters, and avoid mentioning delays, diagnoses, assessments, treatment, or scores.
 
-#### 2. Input Parameters & Context Sanitization
-The AI model receives four sanitized, non-identifying parameters:
-- `ageBand`: Coarse developmental bracket (e.g., `"12-23m"`). Never an exact birth date.
-- `setting`: Environmental context (`"indoor"` or `"outdoor"`).
-- `durationMinutes`: Activity window (integer: `10`, `15`, `30`).
-- `materials`: Array of user-selected household objects (e.g., `["cardboard box", "plastic cups"]`).
-*Privacy Invariant:* Child names, gender, physical locations, and journal observations are strictly stripped before prompt synthesis.
+Every model reply passes schema validation, candidate-ID verification, HTML/URL stripping, and a 33-term English and Filipino non-diagnostic wording filter before reaching the client. Tier 1 responses carry `source: "ai"`, a `"Suggested by AI"` badge, and the standard observational disclaimer; Tier 3 fallback responses carry `source: "catalog_fallback"` and `"Our picks"`. Runtime safeguards enforce an 8,000 ms timeout, a 64 KB response byte cap, a circuit breaker (opening for 60 s after 3 consecutive failures), and hourly rate limits (10 requests per user in Firestore and 30 per IP, returning HTTP `429` with a wait notice). Any timeout, service error, open circuit, or validation rejection automatically falls back to deterministic reviewed catalog ranking (or rule-based adaptation on `/api/v1/ai/adapt`).
 
-#### 3. Strict JSON Schema Validation
-Responses are parsed and verified using a strict Zod schema before transmission to the mobile client:
-```typescript
-const RecommendationResponseSchema = z.object({
-  title: z.string().min(3).max(80),
-  domain: z.enum(["cognitive", "motor", "language", "socio-emotional"]),
-  durationMinutes: z.number().int().positive(),
-  materialsNeeded: z.array(z.string()),
-  setupSteps: z.array(z.string()).min(2).max(6),
-  playGuidance: z.string().min(10).max(300),
-  safetyNotice: z.string().min(5).max(150),
-  suggestedByAi: z.literal(true)
-});
-```
-
-#### 4. Automated Fallback Mechanism
-1. **Tier 1 (Cloud Primary):** Live Gemini inference (model set in `GEMINI_MODEL`) with an 8-second timeout guard.
-2. **Tier 3 (Deterministic Curriculum Catalog):** Rule-based selector drawing directly from verified Philippine Early Childhood Care and Development (ECCD) activities. **Guarantees zero client crashes or empty screens.**
-
-#### 5. Pediatric Safety & Prompt Injection Guardrails
-The system prompt injects immutable pediatric boundaries:
-- Explicit rejection of choking hazards, toxic materials, sharp objects, or water immersion for children under 36 months.
-- Mandatory insertion of non-diagnostic disclaimers: activities are for enrichment, not pediatric clinical evaluation.
-- Strict adversarial prompt defense: user inputs are treated solely as material names; instructions attempting to alter system behavior are ignored.
-
-#### 6. Architectural Justification: Why AI Over SQL Lookups?
-Ordinary database queries cannot perform semantic combinatorial reasoning across arbitrary household items (e.g., recognizing that a *"plastic container"* and a *"clean sock"* can form an improvised sensory shaking rattle). Gemini 2.5 Flash Lite bridges natural language material combinations with structured developmental milestones.
-
-#### 7. Statutory Privacy Compliance (RA 10173)
-Complies with the **Philippine Data Privacy Act of 2012 (RA 10173)** under the principles of Transparency, Legitimate Purpose, and Proportionality:
-- No biometric or facial recognition features.
-- Zero minor tracking; birth dates are stored only as month/year.
-- Caregiver private journals are stored in segregated subcollections and are never fed into LLM context windows.
+Static database filters match structured fields well but struggle with informal household item descriptions (*"empty delivery box, clean sock"*). Constraining Gemini to catalog-grounded selection provides semantic matching without the clinical hallucination risks of an open chatbot. Under the Philippine Data Privacy Act of 2012 (RA 10173), child profiles store only a nickname and age band, prompts exclude child names and caregiver IDs, private journals are never read by AI endpoints, weather coordinates are rounded to ~1.1 km, and caregivers can edit or override every suggestion. Automated backend CI tests across a 46-case benchmark verify 0.0% false-block rate on ordinary play (0/21) and 0.0% unsafe or clinical answer rate across medical, hazardous, prompt-injection, and off-topic probes (0/25).
 
 ---
 
 ## iii. Future Enhancements and Roadmap
 
-### 1. Known Technical Limitations
-1. **Network Prerequisite for Dynamic Generation:** While fallback activities are fully offline, generating *new, novel* AI material adaptations requires an active network connection to contact the Gemini proxy.
-2. **Synthetic Action Rhymes:** Philippine nursery rhymes currently render text lyrics and guided physical actions; native audio singing accompaniment is not yet integrated.
-3. **Storage Boundedness:** Observation journals are text-only; photographic uploads of milestone moments are deferred to prevent excessive cloud storage bandwidth consumption for rural users.
+### 1. Known Limitations
 
-### 2. Phased Evolutionary Roadmap
+Four technical constraints remain in the current release. First, offline read caching is retained in memory only for the active session rather than persisting to device storage across full app restarts, and offline writes remain disabled (`"Reconnect to save changes"`). Second, live Gemini material matching requires network connectivity to the backend API, although cached catalog browsing and fallback picks work offline. Third, regional Philippine action rhymes display text lyrics and parent hand-motion guides without audio recordings, and caregiver journals omit photo attachments to keep storage and rural mobile data consumption low. Fourth, the non-diagnostic wording filter covers 27 English and 6 Filipino clinical terms; Hiligaynon terms still require native-speaker review.
 
-```mermaid
-gantt
-    title LittleSteps Evolutionary Roadmap (Phases 1–3)
-    dateFormat  YYYY-MM
-    section Phase 1 (Completed)
-    Flutter Material 3 Client MVP          :done, 2026-10, 2026-11
-    Express Gateway & Firestore Sync        :done, 2026-10, 2026-11
-    Gemini 2.5 Flash Lite 3-Tier Fallback   :done, 2026-11, 2026-11
-    section Phase 2 (Q1 2027)
-    Local SQLite / Hive Offline Sync Queue  :active, 2026-12, 2027-02
-    Hiligaynon & Tagalog Native Audio Tracks: 2027-01, 2027-03
-    Barangay CDC Summary PDF Exporter      : 2027-02, 2027-04
-    section Phase 3 (Q2 2027)
-    On-Device MediaPipe / TFLite Edge Model : 2027-04, 2027-06
-    Multi-Caregiver Family Sync Access     : 2027-05, 2027-07
-```
+### 2. Planned Features and Improvements
+
+*Table 5. Planned Post-Course Enhancements*
+
+| Phase | Planned Improvement | Benefit to Caregivers |
+|---|---|---|
+| Phase 2 (Q1 2027) | Persistent on-device storage (SQLite / Drift) with queued offline plan sync | Retains cached plans across restarts and syncs completed activities automatically upon reconnection |
+| Phase 2 (Q1 2027) | Native Hiligaynon and Tagalog audio tracks for action rhymes | Allows caregivers to hear traditional melodies while playing hands-free |
+| Phase 2 (Q1 2027) | Printable PDF summary export from weekly reflections | Extends native sharing so caregivers can optionally share non-diagnostic play summaries |
+| Phase 3 (Q2 2027) | Hiligaynon wording filter review and expanded Western Visayas activity pool | Broadens regional language safety containment and local activity coverage |
+| Phase 3 (Q2 2027) | Multi-caregiver household access | Shares daily play routines across parents and guardians while keeping personal journals isolated |
 
 ---
 
 ## iv. AI Usage Log (Appendix)
 
-*Comprehensive disclosure of Generative AI assistance in compliance with the CC 207B Academic AI Policy:*
+*Records Generative AI use under the CC 207B AI Use Policy. Verified rows come from `BSIT-3A/LittleSteps/docs/ai-usage-log.md`; pending rows require member confirmation before final LMS submission.*
 
-| Member Name | Date | AI Tool Used | Specific Task / Prompt Summary | Code / Output Generated | Member Verification & Custom Modification |
+*Table 6. AI Usage Log*
+
+| Member | Date | AI tool | What it was used for / prompt summary | What was generated | What the member changed |
 |---|---|---|---|---|---|
-| **Cadangin, Mark Alvin C.** | 2026-11-07 | Gemini CLI / IDE Assistant | Scaffolding initial Flutter screen skeletons from high-fi Figma specs | Widget layouts for 5 core navigation tabs | Extracted inline widgets into modular files under `lib/screens/`; bound theme tokens from `AppTheme`. |
-| **Benjamin, Mae Daniella Faith C.** | 2026-11-10 | Gemini Web | Assistance debugging Dart asynchronous deserialization for catalog items | Dart `fromJson` factory methods for `Activity` models | Added fallback null-coalescing operators for missing image URLs and invalid duration types. |
-| **Acebuche, Nherie C.** | 2026-11-12 | IDE Assistant | Styling custom dropdown and segment buttons for form validation | Flutter `DropdownButtonFormField` styling snippet | Refactored padding, border radius, and focus rings to guarantee 48px touch targets. |
-| **Ardeña, Justin Ace A.** | 2026-11-14 | Gemini Web | Generating test fixture activities adhering to ECCD developmental domains | JSON fixtures representing sensory and fine-motor play ideas | Inspected steps against ECCD developmental guidelines; removed activities requiring unsafe household items. |
-| **Tamaño, Vincent John A.** | 2026-11-15 | IDE Assistant | Regular expressions for sanitizing storybook IDs and activity query strings | Dart string replacement regex `replace(/[^a-z0-9-]/g, '')` | Tested boundary conditions with uppercase inputs, emoji characters, and accented Latin glyphs. |
+| Tamaño, Vincent John A. | 2026-11-20 | Gemini | Sample data: Generate synthetic milestone observation prompts matching 4 ECCD domains for 12–23 months | 4 `MilestonePrompt` objects with bullet points and non-diagnostic provenance label | Reviewed wording against non-diagnostic requirements and added to `lib/models/milestone.dart` |
+| Benjamin, Mae Daniella Faith C. | 2026-11-21 | Antigravity (Gemini 3.8 Flash) | Structure hooks, callbacks, and fallback states to connect with pending sign-in (#1) and shared app state (#13) | Constructor parameters and callback interfaces on `ShellScreen`, `AccountMenuSheet`, and `SettingsScreen`, plus unauthenticated fallback messages | Designed decoupling so account screens function independently before #1 and #13 landed; verified snackbars and empty states in browser |
+| Tamaño, Vincent John A. | 2026-11-21 | Gemini | Debugging: Resolve syntax error with enum declaration inside class body in `milestone.dart` | Placement fix for `MilestoneDomain` enum and Material icons import | Moved enum to top-level scope and imported `package:flutter/material.dart` |
+| Tamaño, Vincent John A. | 2026-11-21 | Gemini | Snippet: Automated test assertion snippet to audit milestone titles for banned clinical words | `testWidgets` loop checking banned words list against `sampleMilestonePrompts` | Integrated into `test/milestones_screen_test.dart` and verified test execution |
+| Tamaño, Vincent John A. | 2026-11-23 | Gemini | Sample data: Generate synthetic `WeeklySummary` fixtures and test assertions for populated/empty weeks (#8) | Synthetic `sampleWeeklySummaries` fixture map and widget test scaffold | Built `WeeklySummaryScreen` UI, Monday–Sunday week picker, domain breakdown, and non-diagnostic reflection cards |
+| Cadangin, Mark Alvin C. | 2026-11-23 | Antigravity (Gemini 3.8 Flash) | Testing: Widget test assertions for shell child onboarding state and about screen sources | Widget test cases for `NoChildrenView` rendering on shell tabs and about page source citations | Added test cases to `test/widget_test.dart` and `test/account_screens_test.dart`; verified navigation flow in browser |
+| Ardeña, Justin Ace D. | *[Confirm date]* | *[Confirm tool or None]* | *[Record any AI snippets/tests used for PRs #19, #24, or #26]* | *[Summary of generated output]* | *[What was reviewed and modified]* |
+| Acebuche, Nherie C. | *[Confirm date]* | *[Confirm tool or None]* | *[Record any AI snippets/tests used for PR #22 (`SessionController`, `ActiveChildController`)]* | *[Summary of generated output]* | *[What was reviewed and modified]* |
 
 ---
 
-## v. Individual Engineering Reflections (Appendix)
+## v. Individual Reflections (Appendix)
 
-### Reflection: Cadangin, Mark Alvin C. (Team Leader & Systems Architect)
+*Academic Integrity Policy: Per the CC 207B AI Use Policy, AI tools may not be used to write Individual Reflections. Each member must replace their section below with roughly half a page in their own words covering what they built, one bug they fixed and how, and what they would do differently.*
 
-#### 1. Architectural Scope & Subsystem Ownership
-As the team leader and systems architect, my primary responsibility was establishing the multi-repository engineering foundation and bridging our Flutter client (`Thesis-Titans/littlesteps-flutter`) with our Express/TypeScript API proxy and Google Cloud Firestore. I authored the root application shell ([`ShellScreen`](https://github.com/Thesis-Titans/CC-207B_26-27_Final-Project/blob/main/BSIT-3A/LittleSteps/lib/screens/shell_screen.dart)), the declarative front-controller router ([`AppRouter`](https://github.com/Thesis-Titans/CC-207B_26-27_Final-Project/blob/main/BSIT-3A/LittleSteps/lib/routing/app_router.dart)), and the client-side AI integration layer ([`AiService`](https://github.com/Thesis-Titans/CC-207B_26-27_Final-Project/blob/main/BSIT-3A/LittleSteps/lib/services/ai_service.dart)). I also established the shared design token system in [`AppTheme`](https://github.com/Thesis-Titans/CC-207B_26-27_Final-Project/blob/main/BSIT-3A/LittleSteps/lib/theme/app_theme.dart), ensuring that visual styling adheres strictly to our WCAG 2.2 AA accessibility commitments.
+### 1. Cadangin, Mark Alvin C.
+- What I built: *[To be written by Mark Alvin C. Cadangin]*
+- One bug I fixed and how: *[To be written by Mark Alvin C. Cadangin]*
+- What I would do differently: *[To be written by Mark Alvin C. Cadangin]*
 
-#### 2. Deep-Dive Bug Case Study: UI State Deadlock on Concurrent AI Requests
-During our initial integration testing of the AI Play Helper, rapid user taps on the *"Generate Ideas"* button caused severe client-side instability. The mobile client fired multiple overlapping HTTP requests to `POST /api/v1/ai/recommendations`. Because network responses returned out-of-order, the UI would flicker rapidly between loading shimmer cards and conflicting recommendation models, occasionally locking the interface in an unrecoverable `_isLoading = true` state if the user navigated away mid-flight.
+### 2. Ardeña, Justin Ace D.
+- What I built: *[To be written by Justin Ace D. Ardeña]*
+- One bug I fixed and how: *[To be written by Justin Ace D. Ardeña]*
+- What I would do differently: *[To be written by Justin Ace D. Ardeña]*
 
-To resolve this, I implemented a two-fold architectural fix:
-1. On the client, I introduced a strict mutual-exclusion lock using a boolean flag combined with an asynchronous `CancelableOperation` pattern, disabling interactive buttons immediately upon initial tap.
-2. In the widget lifecycle, I bound the asynchronous response handling to `mounted` guards (`if (!mounted) return;`) within `StatefulWidget`, preventing state mutation on disposed contexts.
-3. On the backend proxy, I implemented request deduplication based on client request IDs and configured standard 8-second timeout abort controllers. Subsequent automated stress tests verified that repeated taps cleanly queue or reject without UI freezes.
+### 3. Tamaño, Vincent John A.
+- What I built: *[To be written by Vincent John A. Tamaño]*
+- One bug I fixed and how: *[To be written by Vincent John A. Tamaño]*
+- What I would do differently: *[To be written by Vincent John A. Tamaño]*
 
-#### 3. Engineering Retrospection & Lessons Learned
-If I were to rebuild the system from scratch, I would integrate an offline-first caching layer (such as Hive or Isar) at the very start of development rather than relying primarily on cloud persistence with fallback catalogs. While our 3-tier fallback guarantees that the user always receives play activities, having a fully synchronized local database from day one would have simplified state management across child profile switching and offline routine completions.
+### 4. Benjamin, Mae Daniella Faith C.
+- What I built: *[To be written by Mae Daniella Faith C. Benjamin]*
+- One bug I fixed and how: *[To be written by Mae Daniella Faith C. Benjamin]*
+- What I would do differently: *[To be written by Mae Daniella Faith C. Benjamin]*
 
----
-
-### Reflection: Benjamin, Mae Daniella Faith C. (Frontend Engineer — Catalog & Activities)
-
-#### 1. Architectural Scope & Subsystem Ownership
-I was responsible for developing the Early Childhood Activity Catalog and Activity Details subsystems ([`ExploreScreen`](https://github.com/Thesis-Titans/CC-207B_26-27_Final-Project/blob/main/BSIT-3A/LittleSteps/lib/screens/explore/explore_screen.dart) and [`ActivityDetailScreen`](https://github.com/Thesis-Titans/CC-207B_26-27_Final-Project/blob/main/BSIT-3A/LittleSteps/lib/screens/explore/activity_detail_screen.dart)). My focus was translating the 7 ECCD developmental domains into an intuitive, responsive browsing interface that allows caregivers to filter play routines based on their physical setting, available time, and targeted developmental domain.
-
-#### 2. Deep-Dive Bug Case Study: Empty View Collapse & Unbounded Height Exception
-During device testing on smaller Android screens (such as 360×640 viewport devices), applying multiple restrictive filters (e.g., Outdoor + Motor Domain + Under 10 minutes) frequently resulted in zero matching activities. When the catalog evaluated to an empty list, the screen rendered a blank canvas, leaving the user with no indication of whether the app had crashed, was still loading, or simply found no matches. Furthermore, wrapping the empty state in an unconstrained `Column` within a `CustomScrollView` triggered Flutter's notorious `Vertical viewport was given unbounded height` assertion error.
-
-I diagnosed the issue using the Flutter Inspector and resolved it by engineering a dedicated, reusable [`EmptyView`](https://github.com/Thesis-Titans/CC-207B_26-27_Final-Project/blob/main/BSIT-3A/LittleSteps/lib/widgets/state_views.dart) widget. I wrapped the state view in a `SliverFillRemaining` with `hasScrollBody: false`, ensuring it occupies the exact remaining viewport without unbounded flex errors. Within the view, I included contextual messaging explaining that no activities matched the chosen filters, paired with an explicit, accessible *"Clear all filters"* action button that resets the filter state and repopulates the list.
-
-#### 3. Engineering Retrospection & Lessons Learned
-I learned the vital importance of defensive layout constraints in Flutter. In early iterations, I frequently relied on fixed `Container` heights, which inevitably broke when tested on different screen densities or when users increased their OS font scaling. In future projects, I will adopt a strictly constraint-based layout philosophy from day one, leveraging `LayoutBuilder` and `Flexible` widgets to ensure flawless adaptability across diverse mobile hardware.
-
----
-
-### Reflection: Acebuche, Nherie C. (Frontend Engineer — Profiles & Forms)
-
-#### 1. Architectural Scope & Subsystem Ownership
-My primary engineering deliverable was the Child Profile Management and Form Validation subsystem ([`ChildProfileScreen`](https://github.com/Thesis-Titans/CC-207B_26-27_Final-Project/blob/main/BSIT-3A/LittleSteps/lib/screens/children/child_profile_screen.dart) and [`AddChildScreen`](https://github.com/Thesis-Titans/CC-207B_26-27_Final-Project/blob/main/BSIT-3A/LittleSteps/lib/screens/children/add_child_screen.dart)). My objective was to build an effortless, privacy-preserving onboarding experience where caregivers register their child, select their developmental age bracket, and manage profile settings without exposing sensitive personal identifiable information (PII).
-
-#### 2. Deep-Dive Bug Case Study: Form Resubmission Race Condition & Data Corruption
-During manual quality assurance, I identified a critical edge case in the profile creation flow. If a user rapidly tapped the *"Save Profile"* button while on a high-latency cellular connection, the `_submitForm()` method was invoked multiple times before the first asynchronous network call resolved. This caused duplicate child profiles with identical nicknames to be written to Firestore, desynchronizing the local profile dropdown and creating orphaned developmental records.
-
-To fix this bug, I restructured the form lifecycle:
-1. I introduced a dedicated `_isSubmitting` state variable that immediately disables the submit button and swaps its label for an inline `CircularProgressIndicator`.
-2. I implemented input sanitization using regex boundary checkers to strip leading/trailing whitespace and reject non-alphanumeric characters.
-3. I wrapped the submission logic in a comprehensive `try/catch` block that catches `SocketException` and `TimeoutException`, surfacing a clear, floating `SnackBar` with an actionable retry button rather than failing silently.
-
-#### 3. Engineering Retrospection & Lessons Learned
-This experience demonstrated that form design is fundamentally an exercise in defensive engineering. Users will inevitably enter unexpected characters, double-tap buttons, or lose network connectivity mid-submission. In future applications, I plan to incorporate reactive form validation libraries and implement optimistic local UI updates to provide immediate feedback while synchronizing data in the background.
-
----
-
-### Reflection: Ardeña, Justin Ace A. (Client Engineer — Routine & Weather Integration)
-
-#### 1. Architectural Scope & Subsystem Ownership
-I developed the Today's Routine planning and execution dashboard ([`TodayScreen`](https://github.com/Thesis-Titans/CC-207B_26-27_Final-Project/blob/main/BSIT-3A/LittleSteps/lib/screens/today/today_screen.dart)) and the daily plan service ([`PlanService`](https://github.com/Thesis-Titans/CC-207B_26-27_Final-Project/blob/main/BSIT-3A/LittleSteps/lib/services/plan_service.dart)). This subsystem serves as the primary daily touchpoint for caregivers, rendering the day's scheduled activities, tracking completed tasks, and dynamically surfacing weather guidance fetched from Open-Meteo.
-
-#### 2. Deep-Dive Bug Case Study: Cascading Failure from External Weather API
-In early testing, when the external Open-Meteo weather endpoint timed out or experienced connection drops, the entire `TodayScreen` failed to load. Because the weather retrieval call was chained synchronously with the child's daily activity plan fetch using `Future.wait([fetchPlan(), fetchWeather()])`, a network failure on the third-party weather API completely prevented parents from viewing or checking off their indoor play activities.
-
-I decoupled the network dependencies by applying the **Graceful Degradation Pattern**:
-1. I isolated the weather service call into an independent, non-blocking `FutureBuilder` with an aggressive 3-second timeout.
-2. If the weather service fails, returns an error status, or times out, the system catches the failure silently and defaults to a neutral environmental banner (*"Play at your own pace today"*).
-3. The core daily activity plan loads independently without waiting for the weather response, ensuring that external API outages never compromise essential application functionality.
-
-#### 3. Engineering Retrospection & Lessons Learned
-This bug reinforced a critical principle of distributed systems: third-party services must always be treated as untrusted and potentially unavailable. In future projects, I will implement local caching with a Time-To-Live (TTL) strategy for all external environmental data, ensuring the app serves cached conditions rather than risking network delays on the main user dashboard.
-
----
-
-### Reflection: Tamaño, Vincent John A. (Client Engineer — Journal & Milestones)
-
-#### 1. Architectural Scope & Subsystem Ownership
-I was responsible for developing the Private Caregiver Journal ([`JournalScreen`](https://github.com/Thesis-Titans/CC-207B_26-27_Final-Project/blob/main/BSIT-3A/LittleSteps/lib/screens/journal/journal_screen.dart)), the Developmental Milestones checklist ([`MilestonesScreen`](https://github.com/Thesis-Titans/CC-207B_26-27_Final-Project/blob/main/BSIT-3A/LittleSteps/lib/screens/milestones/milestones_screen.dart)), and their backing persistence services. My architectural focus was guaranteeing absolute data privacy for family observations in strict compliance with the Philippine Data Privacy Act (RA 10173).
-
-#### 2. Deep-Dive Bug Case Study: Milestone Checklist State Desynchronization
-During user testing, marking a milestone as observed frequently resulted in UI state desynchronization. Caregivers checking off multiple milestones in rapid succession noticed that previous checks would randomly revert when the screen was scrolled. The root cause was that milestone states were being managed via ephemeral local boolean lists inside dynamic `ListView` items, causing Flutter's widget recycling mechanism to discard checked states when items scrolled out of the active viewport.
-
-I resolved this state corruption by refactoring the data flow:
-1. I migrated the checklist state into a centralized `MilestonesNotifier` implementing the **Observer Pattern**.
-2. Each milestone item was bound to a stable, unique observation ID rather than an ephemeral list index.
-3. Checkbox toggles trigger immediate optimistic state updates in the notifier, which dispatches background debounced updates to Cloud Firestore. This architectural change eliminated state flickering and ensured complete persistence across scrolling and screen transitions.
-
-#### 3. Engineering Retrospection & Lessons Learned
-Working on the milestone and journal features taught me that managing asynchronous state across scrollable views requires disciplined separation of concerns. Relying on local widget state for persistent records is fragile. In future projects, I will establish centralized view-model notifiers from the project inception to guarantee data consistency across complex interactive lists.
+### 5. Acebuche, Nherie C.
+- What I built: *[To be written by Nherie C. Acebuche]*
+- One bug I fixed and how: *[To be written by Nherie C. Acebuche]*
+- What I would do differently: *[To be written by Nherie C. Acebuche]*
