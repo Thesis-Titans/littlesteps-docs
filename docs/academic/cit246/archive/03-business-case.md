@@ -67,7 +67,7 @@ The project is justified on cost-effectiveness, not revenue. The measures in §3
 
 ## 3.5 Cost and Benefit Summary
 
-**Rough order-of-magnitude estimate (−25% to +75%)**, made before the WBS existed. Section 9 replaces it with a bottom-up estimate of **₱1,083,185**, 7.2% lower and inside this range.
+**Rough order-of-magnitude estimate (−25% to +75%)**, made before the WBS existed. Section 9 replaces it with a bottom-up estimate of **₱1,059,907**, 9.2% lower and inside this range.
 
 | Cost item | Amount |
 |---|---|
@@ -85,7 +85,7 @@ The project is justified on cost-effectiveness, not revenue. The measures in §3
 | Contingency reserve (10%) | ₱106,150 |
 | **Total** | **₱1,167,650** |
 
-**Benefits (upper bounds, if the app fully replaces handouts):** per center, about 80 CDW hours and ₱4,500 in printing a year, and 8 fewer lost records. The charter targets a 50% cut in CDW handout time, about 40 hours per center. If the app replaced printed handouts completely across 200 or more centers, printing savings alone would repay the project cost in about 14 months (₱1,083,185 ÷ ₱900,000 a year); if only the 70% of families with Android phones stopped printing, in about 21 months. Running costs are not deducted. Other benefits are non-financial.
+**Benefits (upper bounds, if the app fully replaces handouts):** per center, about 80 CDW hours and ₱4,500 in printing a year, and 8 fewer lost records. The charter targets a 50% cut in CDW handout time, about 40 hours per center. If the app replaced printed handouts completely across 200 or more centers, printing savings alone would repay the project cost in about 14 months (₱1,059,907 ÷ ₱900,000 a year); if only the 70% of families with Android phones stopped printing, in about 21 months. Running costs are not deducted. Other benefits are non-financial.
 
 **Running cost after handover:** about ₱5,000 a month for cloud and AI services at pilot scale, plus a maintainer's time (named in Section 15).
 

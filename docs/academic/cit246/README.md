@@ -32,7 +32,7 @@ The checkpoints are not optional and are not graded separately. A group that ski
 | **Checkpoint 2** | Charter, stakeholder register and scope statement (template sections 3–6) | To be announced | Drafted for team review (see the [plan sections](#deliverables-index)); per-center figures are planning figures from the October 2026 client interviews |
 | **Checkpoint 3** | WBS, schedule and cost baseline (template sections 7–9) | To be announced | Drafted for team review (see the [plan sections](#deliverables-index)) |
 | **Final submission** | Complete Project Management Plan (PDF, Google Drive, printed copy) | December 2, 2026 | All 17 sections drafted (version 1.0 draft); team review, PDF export and printing still to do |
-| **Presentation** | 15 minutes per group plus 5 minutes of questions | December 2, 2026 | [Outline](plan/presentation-outline.md) drafted; slides still to make |
+| **Presentation** | 15 minutes per group plus 5 minutes of questions | December 2, 2026 | [Outline](presentation-outline.md) drafted; slides still to make |
 
 ## 3. Key Deliverables
 
@@ -115,24 +115,10 @@ Lower bands (15, 10, 0–5) apply when, for example, justification is not quanti
 | Reusable inputs | [Product scope](../../product-scope.md) (in and out of scope), [architecture decisions](../../architecture-decisions.md) (including the paid AI tier in ADR-008 as a cost line), [security, privacy and AI safeguards](../../security-privacy-ai.md) and the execution plan's work packages. Rewrite them in the course and Schwalbe formats. |
 
 ## Deliverables Index
-- [Checkpoint 1: One-Page Project Concept](checkpoint-1-concept.md)
-- Project Management Plan (version 1.0 draft):
-  - [1. Title Page](plan/01-title-page.md)
-  - [2. Executive Summary](plan/02-executive-summary.md)
-  - [3. Project Background and Business Case](plan/03-business-case.md) ◆
-  - [4. Project Charter](plan/04-project-charter.md) ◆
-  - [5. Stakeholder Register and Analysis](plan/05-stakeholder-register.md)
-  - [6. Scope Statement](plan/06-scope-statement.md) ◆
-  - [7. Work Breakdown Structure](plan/07-work-breakdown-structure.md) ◆
-  - [8. Schedule](plan/08-schedule.md) ◆
-  - [9. Cost Estimate and Budget](plan/09-cost-estimate-and-budget.md) ◆
-  - [10. Quality Management Plan](plan/10-quality-management-plan.md)
-  - [11. Resource and Responsibility Plan](plan/11-resource-and-responsibility-plan.md)
-  - [12. Communications Plan](plan/12-communications-plan.md)
-  - [13. Risk Register](plan/13-risk-register.md) ◆
-  - [14. Procurement Plan](plan/14-procurement-plan.md)
-  - [15. Change Control and Closing Plan](plan/15-change-control-and-closing-plan.md)
-  - [16. Conclusion](plan/16-conclusion.md)
-  - [17. Appendices](plan/17-appendices.md)
-  - Data: [schedule and cost (CSV)](plan/data/schedule-and-cost.csv), [monthly cost baseline (CSV)](plan/data/cost-baseline-by-month.csv)
-- [Presentation outline](plan/presentation-outline.md)
+
+- [CIT246_FinalProject_ThesisTitans.md](CIT246_FinalProject_ThesisTitans.md): the plan's source, Sections 1–17. Edit this file only.
+- [CIT246_FinalProject_ThesisTitans.docx](CIT246_FinalProject_ThesisTitans.docx) and [CIT246_FinalProject_ThesisTitans.pdf](CIT246_FinalProject_ThesisTitans.pdf): built from the source with `python3 build_plan.py`, which makes the DOCX with pandoc and then has Microsoft Word update the table of contents and export the PDF, so the PDF is exactly the DOCX.
+- [data/](data/): schedule and cost data. `data/make_figures.py` checks the plan against the data and draws Figures 7.1, 8.1, 8.2 and 11.1 as SVG in `figures/`; the PNGs are rendered from those SVGs with Chrome.
+- [letters/](letters/): the client request letter (`client-request-letter.docx`) and the WVSU CICT letterhead images used on the cover.
+- [Presentation outline](presentation-outline.md) and [Checkpoint 1 concept](checkpoint-1-concept.md).
+- [archive/](archive/): version 1.1 section files, and the 21 November 2026 rewrite with its old build scripts, kept for reference.

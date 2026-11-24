@@ -2,7 +2,7 @@
 
 ## 11.1 Project Organizational Chart
 
-![Figure 11.1. Project organization chart](figures/fig-11-1-org-chart.png)
+![Figure 11.1. Project organization chart](../figures/fig-11-1-org-chart.png)
 
 *Figure 11.1. Solid lines: reporting. Dotted lines: coordination with people outside the project team.*
 
