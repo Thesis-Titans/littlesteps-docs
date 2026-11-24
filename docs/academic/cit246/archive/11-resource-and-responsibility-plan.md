@@ -2,9 +2,9 @@
 
 ## 11.1 Project Organizational Chart
 
-![Project Organization Chart](figures/fig-11-1-org-chart.png)
+![Figure 11.1. Project organization chart](../figures/fig-11-1-org-chart.png)
 
-*Figure 11.1: Project Organization Chart — Solid lines indicate direct reporting; dotted lines indicate external coordination.*
+*Figure 11.1. Solid lines: reporting. Dotted lines: coordination with people outside the project team.*
 
 ## 11.2 Responsibility Assignment Matrix (RACI)
 

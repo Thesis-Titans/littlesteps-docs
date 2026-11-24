@@ -66,9 +66,9 @@ Each activity is a WBS work package; all dates are in 2027. Basis of the duratio
 
 Activity-on-node diagram: each box shows the WBS number and duration, and arrows are finish-to-start dependencies.
 
-![Precedence Network Diagram](figures/fig-8-1-network.png)
+![Figure 8.1. Network diagram with the critical path](../figures/fig-8-1-network.png)
 
-*Figure 8.1: Precedence Network Diagram (Activity on Node) — Swimlane network diagram by WBS branch and dependency depth; red indicates critical path.*
+*Figure 8.1. Network diagram by WBS branch (rows) and dependency depth (columns). Red boxes and heavy arrows are the critical path; levels of effort 1.3.1 and 1.3.2 are shown as a bar outside the network.*
 
 **Critical path:** 1.1.1 → 2.1.1 → 4.1.1 → 4.1.2 → 4.2.1 → 4.2.2 → 4.3.2 → 4.3.3 → 5.4.1 → 5.4.2 → 5.5.1 → 6.1.2 → (6.2.1, 6.3.1 and 6.4.1 in parallel) → 7.1.1 → 7.2.1 → 7.3.1 → 8.2.1 → 8.2.2 → 8.3.2 → 1.4.1 → 1.4.2 = 166 working days.
 
@@ -76,9 +76,9 @@ Activity-on-node diagram: each box shows the WBS number and duration, and arrows
 
 ## 8.4 Gantt Chart
 
-![Schedule and Cost Baseline](figures/fig-8-2-gantt-cost.png)
+![Figure 8.2. Gantt chart and cumulative cost baseline](../figures/fig-8-2-gantt-cost.png)
 
-*Figure 8.2: Schedule and Cost Baseline — Gantt chart with critical path and milestones aligned on a unified monthly time axis with cumulative planned cost S-curve and contingency budget.*
+*Figure 8.2. Gantt chart (red bars are on the critical path; diamonds are milestones) with the cumulative cost baseline (S-curve) and the budget with contingency on the same time axis.*
 
 ## 8.5 Milestones
 

@@ -3,8 +3,8 @@
 **Course:** CIT 210 Web Systems and Technologies & CC 207B Application Development and Emerging Technologies  
 **Project:** LittleSteps Early-Childhood Caregiver Companion  
 **Tracking Issue:** [Docs Issue #98](https://github.com/Thesis-Titans/littlesteps-docs/issues/98) (Coordinated with [API #60](https://github.com/Thesis-Titans/littlesteps-api/issues/60))  
-**Target Release:** Milestone 5 (M5 — Release-Readiness Review, due Nov 28, 2026)  
-**Evaluation Date:** December 2, 2026  
+**Target Release:** Milestone 5 (M5 — Release-Readiness Review; Flutter Presentation Nov 26, 2026, 7:00 AM)  
+**Evaluation Dates:** CC 207B Presentation on Nov 26, 2026 (7:00 AM); CIT 210 & CIT 246 Finals on Dec 2, 2026  
 
 ---
 

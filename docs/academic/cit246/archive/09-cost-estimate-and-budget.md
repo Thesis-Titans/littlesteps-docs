@@ -38,11 +38,11 @@ Each level-1 branch is shown with the work packages that carry non-labour costs.
 | **8.0** | **Release, Training and Handover** | Parametric; analogous; expert judgment | ₱54,912 | ₱21,500 | ₱76,412 |
 | 8.1.1 | Training materials, D9 (printing) | Parametric | ₱16,845 | ₱20,000 | ₱36,845 |
 | 8.2.2 | Google Play release, D10 (registration, US$25) | Analogous | ₱3,140 | ₱1,500 | ₱4,640 |
-| | **Subtotal** | | **₱725,214** | **₱259,500** | **₱984,714** |
-| | **Contingency reserve (10% of subtotal)** | | | | **₱98,471** |
-| | **Total budget** | | | | **₱1,083,185** |
+| | **Subtotal** | | **₱725,214** | **₱259,500** | **₱963,552** |
+| | **Contingency reserve (10% of subtotal)** | | | | **₱96,355** |
+| | **Total budget** | | | | **₱1,059,907** |
 
-The bottom-up total of **₱1,083,185** is 7.2% below the business case's rough order-of-magnitude estimate of ₱1,167,650, inside its −25% to +75% range, and replaces that estimate in the charter.
+The bottom-up total of **₱1,059,907** is 9.2% below the business case's rough order-of-magnitude estimate of ₱1,167,650, inside its −25% to +75% range, and replaces that estimate in the charter.
 
 ## 9.3 Cost Baseline
 
@@ -57,10 +57,10 @@ Each work package's cost is spread evenly over its working days, and monthly fig
 | May 2027 | ₱170,444 | ₱785,264 |
 | June 2027 | ₱74,250 | ₱859,514 |
 | July 2027 | ₱62,881 | ₱922,395 |
-| August 2027 | ₱62,319 | ₱984,714 |
-| **Baseline (excluding contingency)** | | **₱984,714** |
+| August 2027 | ₱62,319 | ₱963,552 |
+| **Baseline (excluding contingency)** | | **₱963,552** |
 
-The S-curve of this baseline and the ₱1,083,185 budget are drawn under the Gantt chart in Figure 8.2 (Section 8.4).
+The S-curve of this baseline and the ₱1,059,907 budget are drawn under the Gantt chart in Figure 8.2 (Section 8.4).
 
 ## 9.4 Assumptions
 

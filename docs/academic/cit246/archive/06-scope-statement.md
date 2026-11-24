@@ -58,7 +58,7 @@ Explicitly **outside** the project:
 
 ## 6.5 Constraints
 
-- **Budget:** ₱1,083,185, a ₱984,714 cost baseline plus a 10% contingency reserve of ₱98,471; changes above ₱50,000 need the sponsor's approval (Section 15).
+- **Budget:** ₱1,059,907, a ₱963,552 cost baseline plus a 10% contingency reserve of ₱96,355; changes above ₱50,000 need the sponsor's approval (Section 15).
 - **Duration:** 4 January to 27 August 2027 (166 working days).
 - **Law and policy:** the Data Privacy Act of 2012 (RA 10173); the ECCD System Act of 2025 (RA 12199) and its rules signed on 5 August 2026.
 - **Platform:** pilot released on Android, on entry-level phones with intermittent data.

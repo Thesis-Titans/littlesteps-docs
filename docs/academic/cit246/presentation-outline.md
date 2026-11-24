@@ -2,11 +2,11 @@
 
 **For:** the final presentation on 2 December 2026: 15 minutes plus 5 minutes of questions; every member speaks; slides are submitted with the document  
 **Version:** 1.1 draft, 4 November 2026  
-**Related Documents:** [Executive Summary](02-executive-summary.md), [CIT 246 Deliverables](../README.md)
+**Related Documents:** [Executive Summary](archive/02-executive-summary.md), [CIT 246 Deliverables](../README.md)
 
 ---
 
-Thirteen slides in 15 minutes, about 70 seconds each, with 5 minutes left for questions. Each member speaks for exactly 5:00, because the rubric marks a group down when one or two members dominate. Speakers take the slides closest to the sections they led (see the [title page](01-title-page.md)); because Mark leads eight sections, Faith presents the WBS and the closing slides. All three rehearse the whole deck and answer questions on any section.
+Thirteen slides in 15 minutes, about 70 seconds each, with 5 minutes left for questions. Each member speaks for exactly 5:00, because the rubric marks a group down when one or two members dominate. Speakers take the slides closest to the sections they led (see the [title page](archive/01-title-page.md)); because Mark leads eight sections, Faith presents the WBS and the closing slides. All three rehearse the whole deck and answer questions on any section.
 
 | # | Slide | Speaker | Time | Key content |
 |---|---|---|---|---|
@@ -16,7 +16,7 @@ Thirteen slides in 15 minutes, about 70 seconds each, with 5 minutes left for qu
 | 4 | Stakeholders | Nherie | 1:15 | Power/interest grid; the senior CDW who prefers paper, and how we manage them |
 | 5 | Scope and WBS | Faith | 1:45 | Six features, eleven deliverables, what is not included; eight branches, 49 work packages, the 1.0 Project Management branch |
 | 6 | Schedule and critical path | Mark | 1:15 | Gantt chart; critical path of 166 working days, 4 Jan to 27 Aug 2027; the eight-week pilot |
-| 7 | Budget | Mark | 1:00 | ₱1,083,185 including 10% contingency; by WBS branch; the S-curve; bottom-up method |
+| 7 | Budget | Mark | 1:00 | ₱1,059,907 including 10% contingency; by WBS branch; the S-curve; bottom-up method |
 | 8 | Quality | Faith | 1:15 | Measurable acceptance criteria and who accepts each deliverable |
 | 9 | Resources and communications | Nherie | 1:30 | Org chart and RACI mapped to the WBS; communications matrix and escalation |
 | 10 | Risks | Nherie | 1:30 | Top risk (sponsor change, score 15); ranked register of eleven risks, five about people or the organization |
