@@ -19,12 +19,13 @@ Canonical product requirements remain in [Product Scope](product-scope.md), arch
 
 ### 1.1 Hard Academic Deadlines
 - **October 14, 2026:** **CIT 246 Checkpoint 1** (One-page project concept covering Organization, Problem, Proposed System, and Possible Sponsor; A4, Arial 11). Documented in [CIT 246 Checkpoint 1 Concept](academic/cit246/checkpoint-1-concept.md).
-- **December 2, 2026:** **Final Submission & Demonstrations for All Three Courses:**
-  - **CC 207B:** LMS submission, 5–10 min presentation, live demo + backup video, and **Individual Code Defense** (2–3 min/member with live code modification). Self and peer assessment follows the day after. See the [CC 207B requirements](academic/cc207b/README.md).
+- **November 26, 2026, 7:00 AM:** **CC 207B Application Presentation & All Deliverables:**
+  - **CC 207B:** Live demonstration of the Flutter mobile app, 5–10 min presentation, backup video, and **Individual Code Defense** (2–3 min/member with live code modification). Software documentation package, AI usage log, and Topic Coverage Matrix submitted on schedule. Self and peer assessment follows the day after. See [CC 207B requirements](academic/cc207b/README.md).
+- **December 2, 2026:** **Final Submission Window & Demonstrations for Remaining Courses:**
   - **CIT 210:** Presentation, local live demo of React app reading/writing shared data, and shared documentation.
   - **CIT 246:** Final 25–40 page Project Management Plan for a 6–12 month project (one PDF on Google Drive plus a printed copy), 15 min presentation + 5 min Q&A by the three-member CIT 246 team. Checkpoint 2 and 3 dates are still to be announced. See §1.4.
 
-**Build window:** the API, React and Flutter work for CIT 210 and CC 207B is built from **October 26 to November 28, 2026**: Flutter features freeze on November 26, and November 27–28 is for polish, the documentation, slides and demo video. The CC 207B presentation may fall in the last week of November or the first week of December, so everything is ready by November 28 (schedule changed on 18 November 2026).
+**Build window & accelerated presentation deadline:** the API, React and Flutter work for CIT 210 and CC 207B is built from **October 26 to November 25, 2026**. The **CC 207B Flutter application and all deliverables are presented on November 26, 2026 at 7:00 AM** (deadline updated on 23 November 2026). To meet this hard morning defense date, Flutter features freeze on **November 24, 2026 (23:59)**, and November 25 is dedicated to end-to-end device testing, documentation package finalization, slide preparation, demo rehearsal, and offline video recording.
 
 ### 1.2 Delivery Approach
 Use **lightweight Scrum with a visible GitHub issue backlog** and one-week sprints.
@@ -38,12 +39,12 @@ Use **lightweight Scrum with a visible GitHub issue backlog** and one-week sprin
 | 1 | Oct 26 – Nov 1 | API + React | M1, start M2 | Sign-in, child profile and account pages work end to end; catalog API started. Caregiver walkthrough of the Figma prototype and low-fidelity wireframes done this week. Flutter project set up in the background. |
 | 2 | Nov 2 – Nov 8 | API + React | M2, M3, M4 | Catalog, activity planning, milestone observations, private journal, "This week" and the AI helper with its fallback work in React. |
 | 3 | Nov 9 – Nov 15 | Flutter | M1, M2 | Flutter sign-in, child profile, account pages, catalog, activity planning and milestones on the shared API. |
-| 4 | Nov 16 – Nov 28 | Flutter | M1–M5 | Flutter M1 by Nov 21, AI helper (M4) by Nov 24, core loop (M2) by Nov 25, journal and "This week" (M3) by Nov 26 (feature freeze); Nov 27–28 polish, audits, documentation, slides, demo video and release build (M5). |
-| Wrap-up | Nov 29 – Dec 1 | All | — | Buffer before the presentations: rehearsal, code-defense practice, CIT 210 documentation, CIT 246 final PDF. |
+| 4 | Nov 16 – Nov 25 | Flutter | M1–M5 | Flutter M1 (auth/state) completed Nov 21, AI helper (M4) & This Week (M3) by Nov 23; catalog, planning & journal (M2/M3) by Nov 24 (feature freeze at 23:59); Nov 25 dedicated to release APK build, documentation package, slides, rehearsal & backup video. **Presentation: November 26, 2026 at 7:00 AM.** |
+| Wrap-up | Nov 26 – Dec 1 | Web & Academic | M5 | Buffer and rehearsal for CIT 210 demo, code defense practice, and CIT 246 final PDF export. |
 
 ```mermaid
 gantt
-    title LittleSteps One-Month Agile Delivery Timeline (2026)
+    title LittleSteps Agile Delivery Timeline (Accelerated Presentation: Nov 26, 2026)
     dateFormat  YYYY-MM-DD
     axisFormat  %b %d
 
@@ -62,16 +63,18 @@ gantt
     M2 Activities & Milestones (Flutter)             :s3_2, 2026-11-09, 2026-11-15
 
     section Sprint 4 (Flutter Track)
-    M1 Sign-in, App State & Profiles (Flutter)       :s4_0, 2026-11-18, 2026-11-21
-    M2 Catalog, Planning & Milestones (Flutter)      :s4_1, 2026-11-20, 2026-11-25
-    M4 AI Helper & Fallback (Flutter)                :s4_2, 2026-11-19, 2026-11-24
-    M3 Journal, This Week & Offline (Flutter)        :s4_3, 2026-11-21, 2026-11-26
-    Feature Freeze                                   :milestone, m_freeze, 2026-11-26, 0d
-    M5 Polish, Audits, Docs, Slides & Demo           :s4_4, 2026-11-22, 2026-11-28
+    M1 Sign-in, App State & Profiles (Flutter)       :done, s4_0, 2026-11-18, 2026-11-21
+    M4 AI Helper & Fallback (Flutter)                :done, s4_2, 2026-11-19, 2026-11-23
+    M3 Journal, This Week & State (Flutter)          :active, s4_3, 2026-11-21, 2026-11-24
+    M2 Catalog, Planning & Milestones (Flutter)      :active, s4_1, 2026-11-20, 2026-11-24
+    Flutter Feature Freeze (23:59)                   :milestone, m_freeze, 2026-11-24, 0d
+    M5 Release APK, Docs, Slides & Demo Rehearsal    :s4_4, 2026-11-25, 2026-11-25
+    Flutter Presentation & Deliverables (7:00 AM)    :milestone, m_pres, 2026-11-26, 0d
 
-    section Wrap-Up & Finals
-    Rehearsal & Code-Defense Practice                :w1, 2026-11-29, 2026-12-01
-    Final Defense & Submissions (All 3 Courses)      :milestone, m_final, 2026-12-02, 0d
+    section Wrap-Up & CIT 210/246 Finals
+    CIT 210 Rehearsal & Backup Video                 :w1, 2026-11-26, 2026-12-01
+    CIT 246 Final PDF & Presentation Prep            :w2, 2026-11-26, 2026-12-01
+    Final Defense & Submissions (CIT 210 & 246)      :milestone, m_final, 2026-12-02, 0d
 ```
 
 - **AI use:** AI tools may assist engineering workflows on the API and React client for scaffolding, test generation, and debugging. Flutter code is authored by team members, and any AI-generated code snippets, text content or assets used in the Flutter app are recorded in the AI Usage Log per CC 207B requirements (§1.3). Every member must understand and be prepared to defend all logic during the individual code defense.
