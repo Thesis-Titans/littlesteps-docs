@@ -559,6 +559,299 @@ limitations: "Provisional Academic Reference — Pending Review. Educational pro
 
 ---
 
+## 5.2 Milestone Prompts Catalog — Flutter App Developmental Observation Prompts
+
+The following are the 17 developmental observation prompts bundled as static content in the Flutter app (`lib/models/milestone.dart`), displayed on the **Milestones** screen filtered by the active child's age band. Authored by **Vincent John A. Tamaño** (WP-B4, Issue #6). Every record is **author-checked only** (`source_checked`) and awaits subject-matter adviser review; none is `reviewed_approved` for production catalog use. Source attribution follows UI/UX Spec §2.6 wording rules.
+
+> **Non-Diagnostic Commitment:** No prompt title, `look_for` cue, or provenance line uses language that scores, ranks, or labels a child's development. The screen shows "Observed on [date]" / "Not seen yet" only — per UI/UX Spec §7 J3 and the banned-words policy enforced in `milestones_screen_test.dart`.
+
+---
+
+### 5.2.1 Age Band: 0–11 months (Babies)
+
+```yaml
+- milestone_id: "lan-00-01"
+  domain: language
+  title: "Reacts to familiar voices and sounds"
+  look_for:
+    - "Turns head toward caregiver when spoken to"
+    - "Makes cooing or babbling sounds in response"
+  age_band: "0-11 months"
+  provenance: "Source: ECCD Council Early Learning Guidelines (0–11m)"
+  review_status: source_checked
+  limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
+
+- milestone_id: "mot-00-01"
+  domain: motor
+  title: "Pushes up on arms during tummy time"
+  look_for:
+    - "Lifts head and chest while lying on tummy"
+    - "Rolls from tummy to back during play"
+  age_band: "0-11 months"
+  provenance: "Source: CDC Milestone Guidelines (0–11m)"
+  review_status: source_checked
+  limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
+
+- milestone_id: "cog-00-01"
+  domain: cognitive
+  title: "Explores objects by reaching and grasping"
+  look_for:
+    - "Reaches for a toy held within reach"
+    - "Passes an item from one hand to the other"
+  age_band: "0-11 months"
+  provenance: "Source: Early Learning & Development Standards"
+  review_status: source_checked
+  limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
+
+- milestone_id: "soc-00-01"
+  domain: socioEmotional
+  title: "Smiles and laughs during playful interactions"
+  look_for:
+    - "Smiles spontaneously when looking at family members"
+    - "Enjoys games like peek-a-boo"
+  age_band: "0-11 months"
+  provenance: "Source: CDC Early Social-Emotional Milestones"
+  review_status: source_checked
+  limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
+```
+
+---
+
+### 5.2.2 Age Band: 12–23 months (Young Toddlers)
+
+Aligns with NELF (2010) Annex 4 printed pp. 78–86 (13–24 months indicators). Source-checked; pending adviser review.
+
+```yaml
+- milestone_id: "lan-12-01"
+  domain: language
+  title: "Points to familiar objects when named"
+  look_for:
+    - "Points at the ball when you say \"ball\""
+    - "Looks toward a named person"
+  age_band: "12-23 months"
+  provenance: "Source: AAP & CDC Early Communication Guidelines"
+  review_status: source_checked
+  limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
+
+- milestone_id: "lan-12-02"
+  domain: language
+  title: "Says one or two simple words"
+  look_for:
+    - "Says \"mama\" or \"dada\" on purpose"
+    - "Names a favorite toy"
+  age_band: "12-23 months"
+  provenance: "Source: AAP & CDC Early Communication Guidelines"
+  review_status: source_checked
+  limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
+
+- milestone_id: "soc-12-01"
+  domain: socioEmotional
+  title: "Enjoys a back-and-forth moment during play"
+  look_for:
+    - "Passes a toy back and forth with you"
+    - "Smiles or responds when taking turns"
+  age_band: "12-23 months"
+  provenance: "Source: Early Childhood Development Framework"
+  review_status: source_checked
+  limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
+
+- milestone_id: "cog-12-01"
+  domain: cognitive
+  title: "Finds a hidden toy"
+  look_for:
+    - "Watches where you hide an item under a cloth or cup"
+    - "Uncovers or reaches directly for the hidden toy"
+  age_band: "12-23 months"
+  provenance: "Source: CDC Developmental Milestones (12–23m)"
+  review_status: source_checked
+  limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
+
+- milestone_id: "mot-12-01"
+  domain: motor
+  title: "Takes a few steps independently"
+  look_for:
+    - "Walks a few paces without holding onto furniture or hands"
+  age_band: "12-23 months"
+  provenance: "Source: CDC Developmental Milestones (12–23m)"
+  review_status: source_checked
+  limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
+```
+
+---
+
+### 5.2.3 Age Band: 24–35 months (Older Toddlers)
+
+Aligns with NELF (2010) Annex 4 printed pp. 87–94 (25–36 months). Note: no NELC LRP package is titled specifically for 24–35 months (LRP 3 stops at 2 years; LRP 4–6 are Pre-K). Source-checked; pending adviser review.
+
+```yaml
+- milestone_id: "lan-24-01"
+  domain: language
+  title: "Uses two-word phrases to express needs"
+  look_for:
+    - "Says phrases like \"more milk\" or \"big dog\""
+    - "Repeats simple words heard during play"
+  age_band: "24-35 months"
+  provenance: "Source: ECCD Early Language Framework"
+  review_status: source_checked
+  limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
+
+- milestone_id: "mot-24-01"
+  domain: motor
+  title: "Jumps with both feet leaving the ground"
+  look_for:
+    - "Jumps off a low step with both feet together"
+    - "Kicks a large ball while maintaining balance"
+  age_band: "24-35 months"
+  provenance: "Source: CDC Toddler Motor Benchmarks"
+  review_status: source_checked
+  limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
+
+- milestone_id: "cog-24-01"
+  domain: cognitive
+  title: "Sorts everyday items by color or size"
+  look_for:
+    - "Groups red blocks together or pairs shoes"
+    - "Completes simple 3-piece wooden puzzles"
+  age_band: "24-35 months"
+  provenance: "Source: Early Learning & Development Standards"
+  review_status: source_checked
+  limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
+
+- milestone_id: "soc-24-01"
+  domain: socioEmotional
+  title: "Notices and mirrors other children at play"
+  look_for:
+    - "Plays alongside another child with similar toys"
+    - "Shows awareness when a playmate is smiling or crying"
+  age_band: "24-35 months"
+  provenance: "Source: Early Childhood Social-Emotional Guidelines"
+  review_status: source_checked
+  limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
+```
+
+---
+
+### 5.2.4 Age Band: 36–47 months (Young Preschoolers)
+
+Aligns with NELF (2010) Annex 4 printed pp. 95–105 (37–71 months; 3–4 year indicators) and NELC LRP 5 (Pre-K1, 3–3.11 years — title confirmed, content not inspected). Source-checked; pending adviser review.
+
+```yaml
+- milestone_id: "lan-36-01"
+  domain: language
+  title: "Asks \"who\", \"what\", and \"where\" questions"
+  look_for:
+    - "Asks curious questions about everyday objects"
+    - "Speaks in sentences of 3 to 4 words"
+  age_band: "36-47 months"
+  provenance: "Source: DepEd Kindergarten & ECCD Framework"
+  review_status: source_checked
+  limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
+
+- milestone_id: "mot-36-01"
+  domain: motor
+  title: "Balances on one foot for a moment"
+  look_for:
+    - "Stands on one foot for 2 to 3 seconds"
+    - "Catches a large bounced ball with two hands"
+  age_band: "36-47 months"
+  provenance: "Source: CDC Preschool Developmental Milestones"
+  review_status: source_checked
+  limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
+
+- milestone_id: "cog-36-01"
+  domain: cognitive
+  title: "Identifies familiar colors and counts small sets"
+  look_for:
+    - "Names common colors like red, blue, and yellow"
+    - "Counts up to 3 objects by touching each one"
+  age_band: "36-47 months"
+  provenance: "Source: Early Learning Cognitive Guidelines"
+  review_status: source_checked
+  limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
+
+- milestone_id: "soc-36-01"
+  domain: socioEmotional
+  title: "Takes turns during simple games with guidance"
+  look_for:
+    - "Shares toys when gently reminded"
+    - "Expresses a wide range of emotions through words"
+  age_band: "36-47 months"
+  provenance: "Source: ECCD Social Competence Standards"
+  review_status: source_checked
+  limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
+```
+
+---
+
+### 5.2.5 Age Band: 48–59 months (Older Preschoolers)
+
+Aligns with NELF (2010) Annex 4 printed pp. 95–105 (37–71 months; 4–5 year indicators), NELC LRP 6 (Pre-K2, 4–4.11 years — title confirmed, content not inspected), and DepEd MATATAG Curriculum – Kindergarten (content inspected for the Kindergarten band). This is also the age band for fixture child **Jeorge (48–59 months)**. Source-checked; pending adviser review.
+
+```yaml
+- milestone_id: "lan-48-01"
+  domain: language
+  title: "Tells a simple story about their day"
+  look_for:
+    - "Describes what happened at playtime in sequence"
+    - "Uses full sentences with words like \"because\""
+  age_band: "48-59 months"
+  provenance: "Source: DepEd MATATAG Curriculum Kindergarten Framework"
+  review_status: source_checked
+  limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
+
+- milestone_id: "mot-48-01"
+  domain: motor
+  title: "Hops and skips during energetic games"
+  look_for:
+    - "Hops forward on one foot several times"
+    - "Pours water or sand into a cup without spilling"
+  age_band: "48-59 months"
+  provenance: "Source: CDC Early Childhood Motor Guidelines"
+  review_status: source_checked
+  limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
+
+- milestone_id: "cog-48-01"
+  domain: cognitive
+  title: "Recognizes some printed letters and numbers"
+  look_for:
+    - "Points out familiar letters like the first letter of their name"
+    - "Draws a person with 3 or more recognizable parts"
+  age_band: "48-59 months"
+  provenance: "Source: DepEd MATATAG Kindergarten Standards"
+  review_status: source_checked
+  limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
+
+- milestone_id: "soc-48-01"
+  domain: socioEmotional
+  title: "Engages in cooperative pretend play with peers"
+  look_for:
+    - "Agrees on roles during make-believe games"
+    - "Comforts a friend or sibling who seems upset"
+  age_band: "48-59 months"
+  provenance: "Source: ECCD Early Social Development Standards"
+  review_status: source_checked
+  limitations: "Provisional Academic Reference — Pending Review. Educational prompt only; not a clinical milestone."
+```
+
+---
+
+### 5.2.6 Banned-Words Audit
+
+All 17 prompts above were checked against the non-diagnostic banned-word list from `milestones_screen_test.dart`. Flutter CI enforces this continuously.
+
+| Banned word | Present in any title? |
+|---|---|
+| `delayed` | ✗ Not found |
+| `behind` | ✗ Not found |
+| `on track` | ✗ Not found |
+| `normal` | ✗ Not found |
+| `abnormal` | ✗ Not found |
+| `score` | ✗ Not found |
+| `pass` | ✗ Not found |
+| `fail` | ✗ Not found |
+
+---
+
 ## 6. Definition of Done & Gating for Catalog Authoring
 
 This evidence gate ([Docs Issue #3, still open](https://github.com/Thesis-Titans/littlesteps-docs/issues/3)) establishes that:
