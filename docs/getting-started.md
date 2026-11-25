@@ -103,7 +103,7 @@ npm run test:emulator
 ```
 
 > [!TIP]
-> `npm run test:emulator` starts isolated, offline Auth and Firestore emulators under project ID `demo-littlesteps`, runs the synthetic token, child profile, plan and milestone tests (12 emulator tests on `main`), and automatically shuts down. `npm test` skips these and runs the 446 unit and integration tests. No Google Cloud credentials or billing accounts are touched.
+> `npm run test:emulator` starts isolated, offline Auth and Firestore emulators under project ID `demo-littlesteps`, runs the synthetic token, child profile, plan and milestone tests (12 emulator tests on `main`), and automatically shuts down. `npm test` skips these and runs the 449 unit and integration tests. No Google Cloud credentials or billing accounts are touched.
 
 ### D. Running Interactive Emulators
 To start the emulators for active frontend development:

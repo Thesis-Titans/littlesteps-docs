@@ -294,7 +294,7 @@ LittleSteps integrates generative intelligence to enhance learning without relyi
 #### `POST /api/v1/ai/recommendations`
 Suggests up to three reviewed catalog activities for an age band, using only non-identifying parameters. Requires a Bearer token.
 
-> **Status:** implemented and merged in littlesteps-api PR #28 (30 October 2026); Gemini provider added in API PR #34; guardrailed hybrid custom material adaptation (`allowCustom: true`, `source: "ai_custom"`) merged in API PR #70. The Gemini provider is off by default: it is used only when `GEMINI_API_KEY` and a pinned stable `GEMINI_MODEL` (e.g., `gemini-3.5-flash-lite`) are both set; otherwise, and on any provider failure, the response is the Tier 3 catalog fallback. Verified in CI (446 tests) and local demo mode (`SERVE_SYNTHETIC_CATALOG=true`, `DEMO_ALLOW_SYNTHETIC_AI=true`).
+> **Status:** implemented and merged in littlesteps-api PR #28 (30 October 2026); Gemini provider added in API PR #34; guardrailed hybrid custom material adaptation (`allowCustom: true`, `source: "ai_custom"`) merged in API PR #70 and upgraded to 3-layer defense-in-depth guardrails in API PR #73. The Gemini provider is off by default: it is used only when `GEMINI_API_KEY` and a pinned stable `GEMINI_MODEL` (e.g., `gemini-3.5-flash-lite`) are both set; otherwise, and on any provider failure, the response is the Tier 3 catalog fallback. Verified in CI (449 tests) and local demo mode (`SERVE_SYNTHETIC_CATALOG=true`, `DEMO_ALLOW_SYNTHETIC_AI=true`).
 
 * **Request body (strict):** unknown fields are rejected with `400`, never ignored, so `childId`, nicknames, notes and similar fields cannot be sent.
 
