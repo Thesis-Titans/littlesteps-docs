@@ -294,7 +294,7 @@ LittleSteps integrates generative intelligence to enhance learning without relyi
 #### `POST /api/v1/ai/recommendations`
 Suggests up to three reviewed catalog activities for an age band, using only non-identifying parameters. Requires a Bearer token.
 
-> **Status:** implemented and merged in littlesteps-api PR #28 (30 October 2026). The Gemini provider was added in api PR #34 and is off by default: it is used only when `GEMINI_API_KEY` and a pinned stable `GEMINI_MODEL` (e.g., `gemini-3.5-flash-lite`) are both set; otherwise, and on any provider failure, the response is the Tier 3 catalog fallback. Verified in CI (442 tests) and local demo mode (`SERVE_SYNTHETIC_CATALOG=true`, `DEMO_ALLOW_SYNTHETIC_AI=true`).
+> **Status:** implemented and merged in littlesteps-api PR #28 (30 October 2026); Gemini provider added in API PR #34; guardrailed hybrid custom material adaptation (`allowCustom: true`, `source: "ai_custom"`) merged in API PR #70. The Gemini provider is off by default: it is used only when `GEMINI_API_KEY` and a pinned stable `GEMINI_MODEL` (e.g., `gemini-3.5-flash-lite`) are both set; otherwise, and on any provider failure, the response is the Tier 3 catalog fallback. Verified in CI (446 tests) and local demo mode (`SERVE_SYNTHETIC_CATALOG=true`, `DEMO_ALLOW_SYNTHETIC_AI=true`).
 
 * **Request body (strict):** unknown fields are rejected with `400`, never ignored, so `childId`, nicknames, notes and similar fields cannot be sent.
 
@@ -307,6 +307,7 @@ Suggests up to three reviewed catalog activities for an age band, using only non
   | `materials` | string array, optional | Up to 10 items, each at most 40 characters, counted as Unicode code points (default `[]`) |
   | `language` | string, required | `en`, `fil` or `hil` |
   | `count` | integer, optional | 1 to 3 (default 3) |
+  | `allowCustom` | boolean, optional | Default `false`. When `true` and safe household materials have zero overlap with reviewed catalog activities, allows one guardrailed custom material adaptation (`source: "ai_custom"`). |
 
   ```json
   { "ageBand": "12-23m", "domain": "motor", "setting": "indoor", "timeMinutes": 15, "materials": ["cups", "spoon"], "language": "en", "count": 3 }
@@ -315,10 +316,11 @@ Suggests up to three reviewed catalog activities for an age band, using only non
 
   | Field | Meaning |
   | :--- | :--- |
-  | `suggestions[]` | Each item has `activityId`, `title`, `whyPicked` (short plain reason) and `activity` (the full `CatalogActivity`). Only `reviewed_approved` catalog items are returned, and titles and instructions always come from the catalog, never from the provider. |
-  | `source` | `"ai"` when the provider's picks passed validation, otherwise `"catalog_fallback"`. (This endpoint no longer uses the value `"catalog"`; that value remains for `/ai/story-activity`.) |
-  | `tier` | `1` (provider) or `3` (deterministic catalog). `2` is used only by `/ai/adapt` for its rule-based adaptation. |
-  | `provenance` | `badge` (`"Suggested by AI"` for tier 1, otherwise `null`), `label` (`"Our picks"` for fallback, otherwise `null`), `disclaimer` (`"Observational play suggestion only. Not developmental assessment."`), `guidance` (tier 1 only: `"You know your child best. Change it as you like, and stay close while you play."`), `model` (provider model name, or `null` for fallback) and `reviewed` (always `true`). |
+  | `suggestions[]` | Each item has `activityId`, `title`, `whyPicked` (short plain reason), optional `isCustom` (`true` on `ai_custom` items), and `activity` (a `CatalogActivity` object). For `"ai"` and `"catalog_fallback"`, only `reviewed_approved` catalog items are returned; for `"ai_custom"`, one bounded custom activity is generated from safe household materials with zero fabricated citations. |
+  | `source` | `"ai"` when the provider's catalog picks passed validation, `"ai_custom"` when an opt-in guardrailed custom material adaptation passed validation, otherwise `"catalog_fallback"`. (This endpoint no longer uses the value `"catalog"`; that value remains for `/ai/story-activity`.) |
+  | `tier` | `1` (provider: `"ai"` or `"ai_custom"`) or `3` (deterministic catalog). `2` is used only by `/ai/adapt` for its rule-based adaptation. |
+  | `materialNote` | Optional caregiver-facing note (up to 240 characters) explaining hazardous household items (e.g., soaps, chemicals, sharp or small choking objects) skipped during safety screening. |
+  | `provenance` | `badge` (`"Suggested by AI"` for tier 1, otherwise `null`), `label` (`"Our picks"` for fallback, `"Material adaptation"` for `ai_custom`, otherwise `null`), `disclaimer` (`"Observational play suggestion only. Not developmental assessment."`), `guidance` (tier 1 only: `"You know your child best. Change it as you like, and stay close while you play."`), `model` (provider model name, or `null` for fallback) and `reviewed` (`true` for catalog picks and fallback; `false` for `ai_custom`). |
   | `reason` | Present only as `"NO_REVIEWED_CONTENT"` when the catalog holds no reviewed items. |
 
   ```json
@@ -384,7 +386,7 @@ Generates companion play and discussion activities based on a real book selected
 Both play-idea endpoints fall straight from Tier 1 to Tier 3 (`src/ai/ai-service.ts`). A local Ollama tier was planned in ADR-010 but is not built. A circuit breaker skips Gemini for 60 seconds after 3 failures in a row.
 
 1. **Tier 1 (Google Gemini - Cloud Primary):**
-   - Called using server-side `@google/genai` or REST endpoint.
+   - Called via Node 22 built-in `fetch` against the Google Gemini REST API (`v1beta`) with a server-pinned `GEMINI_MODEL` (no third-party Gemini SDK package is bundled).
    - Timeout bounded at **8 seconds** via `AbortSignal.timeout(8000)`.
    - Rate limit (implemented on `POST /api/v1/ai/recommendations`, api PR #33): 10 requests per signed-in user per UTC clock hour, counted in Firestore (`rate_limits`). If the store is unavailable the check fails open and the request proceeds. A per-address cap also applies (default 30 per hour, set with `AI_IP_LIMIT_PER_HOUR`, `0` disables it; the count is in memory per instance; `TRUST_PROXY_HOPS`, default 1, sets how many proxy hops are trusted when reading the address, to be verified on a deployed function before relying on it). Over either limit the API returns `429 RATE_LIMITED` with `Retry-After` set to the real number of seconds until the window resets (1 to 3600), not a fixed value. The window is a fixed clock hour, so a burst across an hour boundary can use up to twice the limit.
 2. **Tier 2 (Rule-based adaptation, `/ai/adapt` only):**

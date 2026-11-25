@@ -3,8 +3,8 @@
 **Course:** CIT 210 Web Systems and Technologies & CC 207B Application Development and Emerging Technologies  
 **Project:** LittleSteps Early-Childhood Caregiver Companion  
 **Tracking Issue:** [Docs Issue #98](https://github.com/Thesis-Titans/littlesteps-docs/issues/98) (Coordinated with [API #60](https://github.com/Thesis-Titans/littlesteps-api/issues/60))  
-**Target Release:** Milestone 5 (M5 — Release-Readiness Review; Flutter Presentation Nov 26, 2026, 7:00 AM)  
-**Evaluation Dates:** CC 207B Presentation on Nov 26, 2026 (7:00 AM); CIT 210 & CIT 246 Finals on Dec 2, 2026  
+**Target Release:** Milestone 5 (M5 — Release-Readiness Review; Flutter Presentation Dec 1, 2026, 7:00 AM)  
+**Evaluation Dates:** CC 207B Presentation on Dec 1, 2026 (7:00 AM); CIT 210 & CIT 246 Finals on Dec 2, 2026  
 
 ---
 
@@ -101,7 +101,7 @@ The presentation must remain seamless even if the classroom network drops comple
 ### Phase 1: T-24 Hours (Preparation & Sync)
 - [ ] Run `git checkout main && git pull origin main` in `littlesteps-api`, `littlesteps-react`, and `littlesteps-docs`.
 - [ ] Confirm both `npm test` suites pass locally:
-  - `littlesteps-api`: 442/442 unit & integration tests passing.
+  - `littlesteps-api`: 446/446 unit & integration tests passing.
   - `littlesteps-react`: 322/322 component & hook tests passing.
 - [ ] Verify `.env` in `littlesteps-api`:
   - `SERVE_SYNTHETIC_CATALOG=true`

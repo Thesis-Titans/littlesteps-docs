@@ -72,7 +72,7 @@ OPEN_LIBRARY_CONTACT=
 ```
 *(Allowlists local Vite frontend requests during development. Set `OPEN_LIBRARY_CONTACT` to a real contact address before calling the catalog books route.)*
 
-The file also lists optional settings: `GEMINI_API_KEY` and `GEMINI_MODEL` (both needed to turn the Gemini provider on; leave empty locally), `AI_IP_LIMIT_PER_HOUR` and `TRUST_PROXY_HOPS`. See `.env.example` for what each does. Never commit real values.
+The file also lists optional settings: `GEMINI_API_KEY` and an explicit pinned stable `GEMINI_MODEL` (e.g., `gemini-3.5-flash-lite`; both needed to turn the Gemini provider on; leave empty locally), `SERVE_SYNTHETIC_CATALOG` and `DEMO_ALLOW_SYNTHETIC_AI` (local/demo fixtures only), `AI_IP_LIMIT_PER_HOUR`, and `TRUST_PROXY_HOPS`. See `.env.example` for what each does. Never commit real values.
 
 > [!SECURITY]
 > `.env` is ignored by Git. Never commit service account keys, private secrets, or production credentials to `.env`.
@@ -103,7 +103,7 @@ npm run test:emulator
 ```
 
 > [!TIP]
-> `npm run test:emulator` starts isolated, offline Auth and Firestore emulators under project ID `demo-littlesteps`, runs the synthetic token, child profile, plan and milestone tests (12 emulator tests on `main`), and automatically shuts down. `npm test` skips these and runs the 254 unit tests. No Google Cloud credentials or billing accounts are touched.
+> `npm run test:emulator` starts isolated, offline Auth and Firestore emulators under project ID `demo-littlesteps`, runs the synthetic token, child profile, plan and milestone tests (12 emulator tests on `main`), and automatically shuts down. `npm test` skips these and runs the 446 unit and integration tests. No Google Cloud credentials or billing accounts are touched.
 
 ### D. Running Interactive Emulators
 To start the emulators for active frontend development:
