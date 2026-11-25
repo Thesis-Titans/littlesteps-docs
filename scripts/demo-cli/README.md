@@ -22,6 +22,9 @@ Run the built-in setup doctor first to see what is installed or missing on your 
 ```bash
 # Windows PowerShell / CMD, macOS, or Linux:
 node scripts/demo-cli/run-demo.mjs --doctor
+
+# Machine-readable JSON output (for scripts / CI):
+node scripts/demo-cli/run-demo.mjs --doctor --json
 ```
 
 ---
@@ -62,6 +65,9 @@ node scripts/demo-cli/run-demo.mjs --all --empty --reset-db --no-input
 
 # Check active ports and connected Android devices
 node scripts/demo-cli/run-demo.mjs --status
+
+# Restart ADB daemon if phone connection is frozen or unattached
+node scripts/demo-cli/run-demo.mjs --restart-adb
 
 # Stop all running demo services cleanly
 node scripts/demo-cli/run-demo.mjs --stop
