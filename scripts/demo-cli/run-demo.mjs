@@ -19,19 +19,29 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const CLI_VERSION = '1.1.0';
+const EXIT_OK = 0;
+const EXIT_ERROR = 1;
+const EXIT_USAGE = 2;
+
 const IS_WIN = process.platform === 'win32';
 const IS_MAC = process.platform === 'darwin';
 const IS_WSL = !IS_WIN && fs.existsSync('/proc/version') &&
   fs.readFileSync('/proc/version', 'utf8').toLowerCase().includes('microsoft');
 
+// Respect NO_COLOR (https://no-color.org/), TERM=dumb, --no-color, and non-TTY streams (clig.dev)
+const hasNoColorFlag = process.argv.includes('--no-color');
+const envNoColor = Boolean(process.env.NO_COLOR && process.env.NO_COLOR !== '');
+const useColor = !hasNoColorFlag && !envNoColor && process.env.TERM !== 'dumb' && Boolean(process.stdout.isTTY);
+
 const C = {
-  bold: '\x1b[1m',
-  green: '\x1b[32m',
-  blue: '\x1b[34m',
-  cyan: '\x1b[36m',
-  yellow: '\x1b[33m',
-  red: '\x1b[31m',
-  reset: '\x1b[0m',
+  bold: useColor ? '\x1b[1m' : '',
+  green: useColor ? '\x1b[32m' : '',
+  blue: useColor ? '\x1b[34m' : '',
+  cyan: useColor ? '\x1b[36m' : '',
+  yellow: useColor ? '\x1b[33m' : '',
+  red: useColor ? '\x1b[31m' : '',
+  reset: useColor ? '\x1b[0m' : '',
 };
 
 const DEMO_PORTS = [
@@ -54,11 +64,29 @@ let shuttingDown = false;
 
 // ---------------------------------------------------------------------------
 // Cross-Platform Process Helpers (Node 22+ CVE-2024-27980 compliant)
+// Only .cmd/.bat shims (npm, npx, flutter) require shell:true on Windows;
+// direct executables (adb, scrcpy, git, java, netstat, taskkill) avoid shell.
 // ---------------------------------------------------------------------------
+const WIN_SHELL_CMDS = new Set(['npm', 'npx', 'flutter', 'firebase', 'where']);
+
+function needsShell(cmd) {
+  if (!IS_WIN) return false;
+  const base = path.basename(cmd, path.extname(cmd)).toLowerCase();
+  return WIN_SHELL_CMDS.has(base) || /\.(cmd|bat)$/i.test(cmd);
+}
+
+function isValidHostPort(value) {
+  return /^[a-zA-Z0-9._-]+:\d{1,5}$/.test(value);
+}
+
+function isValidDeviceSerial(value) {
+  return /^[a-zA-Z0-9._:-]+$/.test(value);
+}
+
 function runSync(cmd, args = [], opts = {}) {
   return spawnSync(cmd, args, {
     encoding: 'utf8',
-    shell: IS_WIN,
+    shell: needsShell(cmd),
     windowsHide: true,
     ...opts,
   });
@@ -67,7 +95,7 @@ function runSync(cmd, args = [], opts = {}) {
 function runProbe(cmd, args = [], timeoutMs = 4000) {
   return spawnSync(cmd, args, {
     encoding: 'utf8',
-    shell: IS_WIN,
+    shell: needsShell(cmd),
     windowsHide: true,
     timeout: timeoutMs,
   });
@@ -75,7 +103,7 @@ function runProbe(cmd, args = [], timeoutMs = 4000) {
 
 function spawnManaged(cmd, args = [], opts = {}) {
   const child = spawn(cmd, args, {
-    shell: IS_WIN,
+    shell: needsShell(cmd),
     windowsHide: false,
     ...opts,
   });
@@ -306,12 +334,9 @@ function installHint(tool) {
   return hints[tool] || '';
 }
 
-function runDoctor(ws) {
-  console.log(`${C.bold}${C.cyan}LittleSteps Setup Doctor${C.reset}\n`);
-  console.log(`${C.bold}Platform:${C.reset} ${process.platform} (${os.arch()})${IS_WSL ? ' [WSL]' : ''}`);
-  console.log(`${C.bold}Workspace Root:${C.reset} ${ws.rootDir}\n`);
-
+function buildDoctorReport(ws) {
   const nodeMajor = Number(process.versions.node.split('.')[0]);
+  const adbPath = findAdbBin();
   const checks = [
     {
       name: 'Node.js (>= 20)',
@@ -323,7 +348,7 @@ function runDoctor(ws) {
     {
       name: 'npm',
       ok: commandExists('npm'),
-      detail: commandExists('npm') ? (runSync('npm', ['-v']).stdout || '').trim() : 'not found',
+      detail: commandExists('npm') ? (runProbe('npm', ['-v']).stdout || '').trim() : 'not found',
       hint: installHint('node'),
       required: true,
     },
@@ -331,7 +356,7 @@ function runDoctor(ws) {
       name: 'Java JDK (11+ for Firestore Emulator)',
       ok: commandExists('java'),
       detail: commandExists('java')
-        ? ((runSync('java', ['-version']).stderr || runSync('java', ['-version']).stdout || '').split(/\r?\n/)[0] || 'installed')
+        ? ((runProbe('java', ['-version']).stderr || runProbe('java', ['-version']).stdout || '').split(/\r?\n/)[0] || 'installed')
         : 'not found',
       hint: installHint('java'),
       required: true,
@@ -339,7 +364,7 @@ function runDoctor(ws) {
     {
       name: 'Git',
       ok: commandExists('git'),
-      detail: commandExists('git') ? (runSync('git', ['--version']).stdout || '').trim() : 'not found',
+      detail: commandExists('git') ? (runProbe('git', ['--version']).stdout || '').trim() : 'not found',
       hint: installHint('git'),
       required: true,
     },
@@ -352,8 +377,8 @@ function runDoctor(ws) {
     },
     {
       name: 'ADB (Android Debug Bridge)',
-      ok: Boolean(findAdbBin()),
-      detail: findAdbBin() || 'not found',
+      ok: Boolean(adbPath),
+      detail: adbPath || 'not found',
       hint: installHint('adb'),
       required: false,
     },
@@ -366,22 +391,55 @@ function runDoctor(ws) {
     },
   ];
 
+  const envPath = ws.apiDir ? path.join(ws.apiDir, '.env') : null;
+  const geminiConfigured = Boolean(
+    envPath && fs.existsSync(envPath) && /^GEMINI_API_KEY=\S+/m.test(fs.readFileSync(envPath, 'utf8'))
+  );
+  const devices = detectAdbDevices();
+  const ok = checks.every((c) => !c.required || c.ok);
+
+  return {
+    ok,
+    platform: process.platform,
+    arch: os.arch(),
+    wsl: IS_WSL,
+    workspaceRoot: ws.rootDir,
+    checks,
+    repositories: {
+      api: ws.apiDir,
+      react: ws.reactDir,
+      flutter: ws.flutterDir,
+    },
+    geminiConfigured,
+    devices,
+  };
+}
+
+function runDoctor(ws, asJson = false) {
+  const report = buildDoctorReport(ws);
+  if (asJson) {
+    console.log(JSON.stringify(report, null, 2));
+    return report.ok;
+  }
+
+  console.log(`${C.bold}${C.cyan}LittleSteps Setup Doctor${C.reset}\n`);
+  console.log(`${C.bold}Platform:${C.reset} ${report.platform} (${report.arch})${report.wsl ? ' [WSL]' : ''}`);
+  console.log(`${C.bold}Workspace Root:${C.reset} ${report.workspaceRoot}\n`);
+
   console.log(`${C.bold}Tool Prerequisites:${C.reset}`);
-  let missingRequired = 0;
-  for (const c of checks) {
+  for (const c of report.checks) {
     const tag = c.ok ? `${C.green}OK${C.reset}` : c.required ? `${C.red}MISSING${C.reset}` : `${C.yellow}OPTIONAL${C.reset}`;
     console.log(`  [${tag}] ${c.name} — ${c.detail}`);
     if (!c.ok) {
-      if (c.required) missingRequired++;
       console.log(`         Install: ${C.cyan}${c.hint}${C.reset}`);
     }
   }
 
   console.log(`\n${C.bold}Repositories:${C.reset}`);
   for (const [label, dir, url] of [
-    ['littlesteps-api', ws.apiDir, REPO_URLS.api],
-    ['littlesteps-react', ws.reactDir, REPO_URLS.react],
-    ['littlesteps-flutter', ws.flutterDir, REPO_URLS.flutter],
+    ['littlesteps-api', report.repositories.api, REPO_URLS.api],
+    ['littlesteps-react', report.repositories.react, REPO_URLS.react],
+    ['littlesteps-flutter', report.repositories.flutter, REPO_URLS.flutter],
   ]) {
     if (dir) {
       console.log(`  [${C.green}FOUND${C.reset}] ${label} -> ${dir}`);
@@ -390,29 +448,26 @@ function runDoctor(ws) {
     }
   }
 
-  if (ws.apiDir) {
-    const envPath = path.join(ws.apiDir, '.env');
-    const hasGemini = fs.existsSync(envPath) && /^GEMINI_API_KEY=\S+/m.test(fs.readFileSync(envPath, 'utf8'));
+  if (report.repositories.api) {
     console.log(
       `\n${C.bold}AI Mode:${C.reset} ${
-        hasGemini
+        report.geminiConfigured
           ? `${C.green}GEMINI_API_KEY configured (Tier 1 live AI enabled)${C.reset}`
           : `${C.yellow}No GEMINI_API_KEY in littlesteps-api/.env (Tier 3 deterministic catalog fallback will be used)${C.reset}`
       }`
     );
   }
 
-  const devices = detectAdbDevices();
   console.log(`\n${C.bold}Connected Android Devices:${C.reset}`);
-  if (devices.length === 0) {
+  if (report.devices.length === 0) {
     console.log(`  [${C.yellow}NONE${C.reset}] No USB or Wireless ADB device detected`);
   } else {
-    for (const d of devices) {
+    for (const d of report.devices) {
       console.log(`  [${C.green}DEVICE${C.reset}] ${d.model} (${C.cyan}${d.serial}${C.reset})`);
     }
   }
 
-  return missingRequired === 0;
+  return report.ok;
 }
 
 // ---------------------------------------------------------------------------
@@ -431,6 +486,9 @@ function printUsage() {
   console.log('  --doctor             Check prerequisites, workspace repos, and ADB devices');
   console.log('  -i, --interactive    Launch interactive setup wizard');
   console.log('  --no-input           Disable interactive prompts (for scripts/CI)');
+  console.log('  --json               Output --doctor or --status as JSON on stdout');
+  console.log('  --no-color           Disable ANSI terminal colors (also respects NO_COLOR)');
+  console.log('  -d, --device <id>    Specify Flutter or ADB target device');
   console.log('  --adb-reverse        Forward local emulator ports (5001, 9099) to Android phone');
   console.log('  --wireless <ip:port> Connect to Android Wireless Debugging target');
   console.log('  --install-apk        Build & install local-emulator release APK (config/local.device.json)');
@@ -441,6 +499,7 @@ function printUsage() {
   console.log('  --seeded / --empty   Seed Maya/Leo/Tala family (default) or 0-child onboarding');
   console.log('  --fresh / --reset-db In-memory DB (no export) or wipe saved emulator-data first');
   console.log('  --status / --stop    Inspect active ports/devices or stop all demo ports');
+  console.log('  -V, --version        Print CLI version');
   console.log('  -h, --help           Show this help message');
 }
 
@@ -452,6 +511,8 @@ function parseArgs(argv) {
     status: false,
     stop: false,
     help: false,
+    version: false,
+    json: false,
     interactive: false,
     noInput: false,
     persistMode: true,
@@ -459,6 +520,7 @@ function parseArgs(argv) {
     resetDb: false,
     adbReverse: false,
     wirelessAddr: '',
+    flutterDevice: '',
     installApkMode: 'none', // none | local | prod
     startScrcpy: false,
     scrcpyOnTop: false,
@@ -479,9 +541,23 @@ function parseArgs(argv) {
     else if (a === '--status') cfg.status = true;
     else if (a === '--stop') cfg.stop = true;
     else if (a === '-h' || a === '--help') cfg.help = true;
-    else if (a === '-i' || a === '--interactive') cfg.interactive = true;
+    else if (a === '-V' || a === '--version') cfg.version = true;
+    else if (a === '--json') cfg.json = true;
+    else if (a === '--no-color') {
+      // Handled at startup for color table initialization
+    } else if (a === '-i' || a === '--interactive') cfg.interactive = true;
     else if (a === '--no-input' || a === '--non-interactive') cfg.noInput = true;
-    else if (a === '--adb-reverse') cfg.adbReverse = true;
+    else if (a === '-d' || a === '--device') {
+      const next = argv[++i];
+      if (!next || next.startsWith('-') || !isValidDeviceSerial(next)) {
+        console.error(`${C.red}Error: --device requires a valid device ID (e.g. web-server, chrome, linux, or ADB serial).${C.reset}`);
+        process.exit(EXIT_USAGE);
+      }
+      cfg.flutterDevice = next;
+      if (!['web-server', 'chrome', 'linux'].includes(next)) {
+        cfg.selectedSerial = next;
+      }
+    } else if (a === '--adb-reverse') cfg.adbReverse = true;
     else if (a === '--install-apk') {
       cfg.installApkMode = 'local';
       cfg.adbReverse = true;
@@ -494,15 +570,15 @@ function parseArgs(argv) {
       const next = argv[++i];
       if (!next || !/^\d+$/.test(next)) {
         console.error(`${C.red}Error: --scrcpy-fps requires a numeric value (e.g. 60, 90, 120).${C.reset}`);
-        process.exit(1);
+        process.exit(EXIT_USAGE);
       }
       cfg.scrcpyFps = next;
       cfg.startScrcpy = true;
     } else if (a === '--wireless') {
       const next = argv[++i];
-      if (!next || next.startsWith('-')) {
-        console.error(`${C.red}Error: --wireless requires <ip:port>.${C.reset}`);
-        process.exit(1);
+      if (!next || next.startsWith('-') || !isValidHostPort(next)) {
+        console.error(`${C.red}Error: --wireless requires <ip:port> (e.g. 192.168.10.1:44775).${C.reset}`);
+        process.exit(EXIT_USAGE);
       }
       cfg.wirelessAddr = next;
       cfg.adbReverse = true;
@@ -512,7 +588,7 @@ function parseArgs(argv) {
     else if (a === '--reset-db') cfg.resetDb = true;
     else {
       console.error(`${C.red}Error: Unrecognized option: ${a}. Use --help for usage.${C.reset}`);
-      process.exit(1);
+      process.exit(EXIT_USAGE);
     }
   }
   return cfg;
@@ -957,6 +1033,11 @@ async function main() {
   const cfg = parseArgs(process.argv.slice(2));
   const ws = resolveWorkspace();
 
+  if (cfg.version) {
+    console.log(CLI_VERSION);
+    return;
+  }
+
   if (cfg.help) {
     printUsage();
     return;
@@ -970,16 +1051,23 @@ async function main() {
   }
 
   if (cfg.status) {
-    console.log(`${C.bold}LittleSteps Service Ports:${C.reset}`);
-    for (const { port, label } of DEMO_PORTS) {
+    const ports = DEMO_PORTS.map(({ port, label }) => {
       const pids = getPortPids(port);
-      if (pids.length > 0) {
-        console.log(`  [${C.green}ACTIVE${C.reset}]   Port ${port} — ${label} (PID: ${pids.join(', ')})`);
+      return { port, label, active: pids.length > 0, pids };
+    });
+    const devices = detectAdbDevices();
+    if (cfg.json) {
+      console.log(JSON.stringify({ ports, devices }, null, 2));
+      return;
+    }
+    console.log(`${C.bold}LittleSteps Service Ports:${C.reset}`);
+    for (const p of ports) {
+      if (p.active) {
+        console.log(`  [${C.green}ACTIVE${C.reset}]   Port ${p.port} — ${p.label} (PID: ${p.pids.join(', ')})`);
       } else {
-        console.log(`  [${C.red}INACTIVE${C.reset}] Port ${port} — ${label}`);
+        console.log(`  [${C.red}INACTIVE${C.reset}] Port ${p.port} — ${p.label}`);
       }
     }
-    const devices = detectAdbDevices();
     console.log(`\n${C.bold}Connected Android Devices (deduplicated):${C.reset}`);
     if (devices.length === 0) {
       console.log(`  [${C.yellow}NONE${C.reset}] No USB or Wireless ADB device detected`);
@@ -997,8 +1085,8 @@ async function main() {
   }
 
   if (cfg.doctor) {
-    const ok = runDoctor(ws);
-    if (!cfg.noInput && process.stdin.isTTY && detectAdbDevices().length === 0 && findAdbBin()) {
+    const ok = runDoctor(ws, cfg.json);
+    if (!cfg.json && !cfg.noInput && process.stdin.isTTY && detectAdbDevices().length === 0 && findAdbBin()) {
       const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
       try {
         const ans = (await rl.question(`\n${C.bold}No Android device detected. Connect/pair a phone via USB or Wireless ADB now? [y/N]: ${C.reset}`)).trim() || 'N';
@@ -1009,7 +1097,7 @@ async function main() {
         rl.close();
       }
     }
-    process.exit(ok ? 0 : 1);
+    process.exit(ok ? EXIT_OK : EXIT_ERROR);
   }
 
   if (!cfg.target) cfg.target = 'react';
@@ -1150,8 +1238,15 @@ async function main() {
           );
           if (built.status === 0) {
             const apkPath = path.join(ws.flutterDir, 'build', 'app', 'outputs', 'flutter-apk', 'app-release.apk');
-            runSync(adb, ['-s', serial, 'install', '-r', apkPath], { stdio: 'inherit' });
+            const installed = runSync(adb, ['-s', serial, 'install', '-r', apkPath], { stdio: 'inherit' });
+            if (installed.status !== 0) {
+              console.error(`${C.red}[Android] Failed to install APK on ${serial}.${C.reset}`);
+              process.exit(EXIT_ERROR);
+            }
             if (cfg.installApkMode === 'prod') runSync(adb, ['-s', serial, 'reverse', '--remove-all']);
+          } else {
+            console.error(`${C.red}[Android] Release APK build failed.${C.reset}`);
+            process.exit(EXIT_ERROR);
           }
         }
         if (cfg.adbReverse) {
@@ -1197,9 +1292,18 @@ async function main() {
         cwd: ws.reactDir,
         stdio: ['ignore', viteLog, viteLog],
       });
+      let viteReady = false;
       for (let i = 0; i < 20; i++) {
-        if (await httpOk('http://127.0.0.1:5173')) break;
+        if (await httpOk('http://127.0.0.1:5173')) {
+          viteReady = true;
+          break;
+        }
         await new Promise((r) => setTimeout(r, 1000));
+      }
+      if (!viteReady) {
+        console.error(`${C.red}[React] Vite dev server failed to respond on :5173. See ${path.join(os.tmpdir(), 'littlesteps-react-dev.log')}${C.reset}`);
+        shutdown();
+        return;
       }
       console.log(`${C.green}[React] Ready on http://localhost:5173${C.reset}`);
     }
