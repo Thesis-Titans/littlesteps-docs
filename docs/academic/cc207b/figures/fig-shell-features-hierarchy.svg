@@ -14,11 +14,11 @@
   <line x1="25" y1="56" x2="775" y2="56" stroke="#E2E8E2" stroke-width="1"/>
 
   <!-- Root Shell Box -->
-  <g transform="translate(180, 70)">
-    <rect width="440" height="56" rx="5" fill="#1F634D" filter="url(#shadow-feat)"/>
-    <text x="220" y="21" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">ShellScreen (Root Navigation Shell)</text>
-    <text x="220" y="36" font-size="8.8" fill="#E2E8E2" text-anchor="middle">Top Bar: BrandLogo · Feature 1: Child Profile Switcher (ChildChip → lib/screens/children) · AccountMenuSheet</text>
-    <text x="220" y="49" font-size="8.2" fill="#C7DDD3" text-anchor="middle">Bottom NavigationBar (IndexedStack · 5 Tabs) + Canonical NoChildrenView when 0 children registered</text>
+  <g transform="translate(130, 70)">
+    <rect width="540" height="56" rx="5" fill="#1F634D" filter="url(#shadow-feat)"/>
+    <text x="270" y="21" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">ShellScreen (Root Navigation Shell)</text>
+    <text x="270" y="36" font-size="8.6" fill="#E2E8E2" text-anchor="middle">Top Bar: BrandLogo · Feature 1: Child Profile Switcher (ChildChip → lib/screens/children) · AccountMenuSheet</text>
+    <text x="270" y="49" font-size="8.2" fill="#C7DDD3" text-anchor="middle">Bottom NavigationBar (IndexedStack · 5 Tabs) + Canonical NoChildrenView when 0 children registered</text>
   </g>
 
   <!-- Connector Spine -->

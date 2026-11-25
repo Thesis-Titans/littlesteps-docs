@@ -34,7 +34,7 @@ The application lets an adult select a short, safe, screen-free activity in unde
 | Layer | Technology | Version | Architectural Role |
 |---|---|---|---|
 | Client Framework | Flutter SDK | `3.47.9` (stable) | Cross-platform Material 3 client targeting Android, iOS, and Web |
-| Client Language | Dart SDK | `^3.13.5` (tested `3.13.7`) | Null-safe application logic, data models, UI components, and 158 automated tests across 24 test files |
+| Client Language | Dart SDK | `^3.13.5` (tested `3.13.7`) | Null-safe application logic, data models, UI components, and automated unit/widget test suites (`flutter test`) |
 | Client State | Built-in Flutter state (`StatefulWidget`, `ChangeNotifier`, `InheritedWidget`) | Flutter SDK built-in | Lightweight reactive session and active-child state management without external state libraries |
 | Backend Proxy API | Node.js / Express / TypeScript / Zod | Node `22`, Express `^5.1.0`, TS `^5.9.2`, Zod `^4.1.0` | Shared Firebase Cloud Functions gateway (`firebase-functions ^6.4.0`) enforcing authentication, CORS, hourly rate limits, and schema validation |
 | Database & Auth | Firebase Auth & Cloud Firestore | `firebase-admin ^13.5.0` | Caregiver authentication and user-isolated cloud storage for profiles, plans, milestones, and journals |
@@ -64,7 +64,7 @@ The Flutter application keeps third-party dependencies to six runtime packages t
 | `url_launcher` | `^6.3.3` | Runtime | Opening verified external citation portals (ECCD Council, WHO, CDC, AAP, Open-Meteo) in the system browser |
 | `cupertino_icons` | `^1.0.8` | Runtime | Standard iOS/Cupertino icon glyphs complementing Material icons |
 | `flutter_lints` | `^6.0.0` | Dev | Effective Dart static analysis rules verified via `flutter analyze` (0 issues) |
-| `flutter_test` | SDK | Dev | Automated unit and widget test runner executing 158 tests across 24 test files covering models, services, offline states, and screens |
+| `flutter_test` | SDK | Dev | Automated unit and widget test runner covering models, services, offline states, and screens (verified in CI via `flutter test`) |
 
 ### 2. Low- and High-Fidelity Prototypes
 
