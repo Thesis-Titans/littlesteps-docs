@@ -112,7 +112,7 @@
     <rect y="22" width="244" height="6" fill="#3B7EA1"/>
     <text x="122" y="19" font-size="10.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">Tier 1: Cloud Gemini Foundation Model</text>
 
-    <text x="12" y="44" font-size="8.8" font-weight="700" fill="#2D312E">Model: Pinned GEMINI_MODEL (e.g., 3.5-flash-lite)</text>
+    <text x="12" y="44" font-size="8.4" font-weight="700" fill="#2D312E">Model: Server-pinned GEMINI_MODEL</text>
     <text x="12" y="58" font-size="8.2" fill="#5A655F">• Transport: Gemini REST API (Node 22 fetch)</text>
     <text x="12" y="72" font-size="8.2" fill="#5A655F">• Timeout Guard: 8,000ms AbortController</text>
     <text x="12" y="86" font-size="8.2" fill="#5A655F">• Circuit Breaker: 60s cooldown after 3 fails</text>
@@ -143,7 +143,7 @@
     <rect width="244" height="154" rx="5" fill="#FFFFFF" stroke="#1F634D" stroke-width="1.2" filter="url(#shadow)"/>
     <rect width="244" height="28" rx="5" fill="#1F634D"/>
     <rect y="22" width="244" height="6" fill="#1F634D"/>
-    <text x="122" y="19" font-size="10.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">Tier 3: Deterministic ECCD Catalog Fallback</text>
+    <text x="122" y="19" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">Tier 3: Deterministic ECCD Catalog Fallback</text>
 
     <text x="12" y="44" font-size="8.8" font-weight="700" fill="#2D312E">Catalog Pool: Philippine ECCD Benchmarks</text>
     <text x="12" y="58" font-size="8.2" fill="#5A655F">• Pre-reviewed early learning curriculum</text>

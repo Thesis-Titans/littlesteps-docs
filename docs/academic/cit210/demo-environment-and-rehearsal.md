@@ -101,8 +101,8 @@ The presentation must remain seamless even if the classroom network drops comple
 ### Phase 1: T-24 Hours (Preparation & Sync)
 - [ ] Run `git checkout main && git pull origin main` in `littlesteps-api`, `littlesteps-react`, and `littlesteps-docs`.
 - [ ] Confirm both `npm test` suites pass locally:
-  - `littlesteps-api`: 449/449 unit & integration tests passing.
-  - `littlesteps-react`: 322/322 component & hook tests passing.
+  - `littlesteps-api`: all unit, integration, and security regression tests passing (`npm test`).
+  - `littlesteps-react`: all component and hook tests passing (`npm test`).
 - [ ] Verify `.env` in `littlesteps-api`:
   - `SERVE_SYNTHETIC_CATALOG=true`
   - `DEMO_ALLOW_SYNTHETIC_AI=true`
