@@ -49,7 +49,7 @@ The primary live demonstration runs **locally** using the repository root orches
          v                                              v
 +-------------------------------+             +---------------------------------+
 | Internet Archive Open Library |             | Google Gemini AI Studio         |
-| REST API (Book Search)        |             | (gemini-flash-lite-latest)      |
+| REST API (Book Search)        |             | (gemini-3.5-flash-lite)         |
 +-------------------------------+             +---------------------------------+
 ```
 
@@ -106,7 +106,7 @@ The presentation must remain seamless even if the classroom network drops comple
 - [ ] Verify `.env` in `littlesteps-api`:
   - `SERVE_SYNTHETIC_CATALOG=true`
   - `DEMO_ALLOW_SYNTHETIC_AI=true`
-  - `GEMINI_MODEL=gemini-flash-lite-latest`
+  - `GEMINI_MODEL=gemini-3.5-flash-lite` (pinned stable Flash-Lite model; avoid floating `-latest` aliases)
   - `OPEN_LIBRARY_CONTACT=markcadangin@gmail.com`
   - `TRUST_PROXY_HOPS=1`
 - [ ] Confirm backup walkthrough MP4 video (`littlesteps-demo-backup.mp4`) is saved on the desktop and copied to a FAT32 USB drive.

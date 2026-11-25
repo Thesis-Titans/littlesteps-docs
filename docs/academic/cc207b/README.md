@@ -116,8 +116,8 @@ Five points are deducted from the project score raw for each calendar day late, 
 |---|---|
 | Six core features, technical requirements, AI criteria | Specified: product scope FR-01 to FR-06, UI/UX spec, Flutter issues #2–#13 |
 | Real or realistic client | **Decided:** CSWDO La Paz–Lapuz District office as a realistic client; no direct contact by team decision, informal parent walkthrough conducted instead (trade-off accepted per execution-plan §8.1) |
-| UI follows the prototypes presented earlier | **Open:** confirm with the instructor which prototypes count. The Figma file has high-fidelity frames but no low-fidelity wireframes yet. |
-| Course repository to fork | **Open:** not yet created by the instructor |
-| Collaboration history | **At risk:** every commit so far is from one account. Members should commit and review their own work from now on. |
+| UI follows the prototypes presented earlier | **Done:** Low-fidelity wireframes (`figures/low-fi-*.png`) and high-fidelity Material 3 prototypes (`figures/hi-fi-*.png`) are documented in `software-documentation.md` §ii.2 and aligned with the Flutter implementation. |
+| Course repository to fork | **Done:** Active fork at `Thesis-Titans/CC-207B_26-27_Final-Project` (`BSIT-3A/LittleSteps`); Milestones M1–M4 are complete and merged on `main` (156/156 Flutter tests passing). |
+| Collaboration history | **Active across all 5 members:** Feature branches, pull requests, and reviews from `@markalvincadangin`, `@Justin-Ardena`, `@vincenttamano`, `@Lovelly143`, and `@faithbn` are merged on `main`. |
 | AI Usage Log | **Done:** AI Usage Log template at `BSIT-3A/LittleSteps/docs/ai-usage-log.md`; logging required for all AI-generated code, text, and assets in Flutter. |
 | Documentation package, presentation, reflections | Planned for M5 (course fork #11) |
