@@ -151,12 +151,13 @@ Behaviour on `main`:
 | Method | Path | Auth | Purpose | Success (Status / Body) | Error Codes |
 | :--- | :--- | :---: | :--- | :--- | :--- |
 | `GET` | `/api/v1/children/:childId/plans` | Bearer | List activity plans for the child (optional `date` and `status` filters) | `200 OK`<br/>`[ { "id": "...", "childId": "...", "activityId": "act-01", "scheduledDate": "2026-11-01", "status": "planned", "createdAt": "...", "updatedAt": "..." } ]` | `400 INVALID_INPUT`<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` |
-| `POST` | `/api/v1/children/:childId/plans` | Bearer | Plan an activity (`activityId`, `scheduledDate`; optional `status`, `durationMinutes`, `feedbackNote`) | `201 Created`<br/>plan object | `400 INVALID_INPUT`<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND`<br/>`413 PAYLOAD_TOO_LARGE`<br/>`503 SERVICE_UNAVAILABLE` |
+| `POST` | `/api/v1/children/:childId/plans` | Bearer | Plan a catalog or custom activity (`activityId`, `scheduledDate`; optional `status`, `durationMinutes`, `feedbackNote`, `customActivity`) | `201 Created`<br/>plan object | `400 INVALID_INPUT`<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND`<br/>`413 PAYLOAD_TOO_LARGE`<br/>`503 SERVICE_UNAVAILABLE` |
 | `PATCH` | `/api/v1/children/:childId/plans/:planId` | Bearer | Update a plan or mark it complete (`activityId`, `scheduledDate`, `status`, `durationMinutes`, `feedbackNote`) | `200 OK`<br/>updated plan object | `400 INVALID_INPUT`<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND`<br/>`413 PAYLOAD_TOO_LARGE`<br/>`503 SERVICE_UNAVAILABLE` |
 | `DELETE` | `/api/v1/children/:childId/plans/:planId` | Bearer | Delete an activity plan | `204 No Content` | `401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND`<br/>`503 SERVICE_UNAVAILABLE` |
 
 Behaviour on `main`:
 * **Status values:** `planned`, `completed`, `skipped`. Setting `completed` records `completedAt`.
+* **Inline custom snapshots (`customActivity`):** Optional structured object (`title`, `domain`, `durationMinutes`, `setting`, `materials`, `instructions`, optional `safetyNotice` and `sourceLabel`) for scheduling non-catalog play activities such as custom Idea Helper cards, Storybook AI companions, and Philippine Rhymes. When present, `Today` renders the inline snapshot directly and `GET /api/v1/children/:childId/summary/weekly` counts `customActivity.domain` in `domainDistribution` upon completion.
 * **List cap and order:** the list returns at most 100 plans, ordered by `scheduledDate` then document id, so a child with more than 100 plans gets the oldest 100 and newer plans are not returned. Index and ordering follow-up: [API #42](https://github.com/Thesis-Titans/littlesteps-api/issues/42).
 * **Writes:** as for milestones, undefined fields are dropped before the write and edits use `set`. Before [API PR #44](https://github.com/Thesis-Titans/littlesteps-api/pull/44), creating a plan returned `500` on Firestore.
 
@@ -238,7 +239,7 @@ To satisfy the CIT 210 requirement for a live external REST Data API, `littleste
 * **Query Parameters:**
   - `q` (string, required, 1 to 100 characters): Search terms (e.g. book title, author, or keyword). Missing or empty query returns `400 INVALID_INPUT`.
   - `limit` (integer, optional, default: `10`, max: `20`): Page size.
-* **Upstream Service:** `https://openlibrary.org/search.json?q={q}&limit={limit}`
+* **Upstream Service:** `https://openlibrary.org/search.json?q={q}&language=eng&limit={limit}&fields=key,title,author_name,cover_i,subject` (and `?default=false` appended to cover URLs so missing covers return HTTP `404` and trigger client fallback art).
 * **Server-Side In-Memory Cache:** Responses are cached in memory for **60 minutes** (`Cache-Control: public, max-age=3600`).
 * **Client Response Format:** Same book collection format as `/catalog/books` (fields: `id`, `title`, `authors`, `coverUrl`, `subjects`, `provenance`).
 * **Closed-Loop Planning:** Books returned by this search can be passed to `POST /api/v1/ai/story-activity` to generate an AI play companion that can be scheduled directly to the child's daily routine (`POST /api/v1/children/:id/plans`).
