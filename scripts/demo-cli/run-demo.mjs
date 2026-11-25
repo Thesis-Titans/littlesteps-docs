@@ -276,12 +276,51 @@ function resolveWorkspace() {
 }
 
 // ---------------------------------------------------------------------------
-// Smart Deduplicated ADB Detection (prefers USB > IP:port > mDNS)
+// Smart Deduplicated ADB Detection & Daemon Management (USB > IP:port > mDNS)
 // ---------------------------------------------------------------------------
-function detectAdbDevices() {
+function isAdbServerHealthy() {
+  const adb = findAdbBin();
+  if (!adb) return false;
+  const probe = runProbe(adb, ['get-state'], 1500);
+  return (
+    probe.status === 0 ||
+    (probe.stderr || '').includes('no devices') ||
+    (probe.stderr || '').includes('device offline')
+  );
+}
+
+function ensureAdbServer(forceRestart = false) {
+  const adb = findAdbBin();
+  if (!adb) return false;
+  if (!forceRestart && isAdbServerHealthy()) {
+    return true;
+  }
+  runProbe(adb, ['kill-server'], 2000);
+  if (!IS_WIN) {
+    const child = spawn(adb, ['server', 'nodaemon'], {
+      detached: true,
+      stdio: 'ignore',
+      windowsHide: true,
+    });
+    child.unref();
+  } else {
+    runProbe(adb, ['start-server'], 3000);
+  }
+  const deadline = Date.now() + 1500;
+  while (Date.now() < deadline) {
+    if (isAdbServerHealthy()) return true;
+  }
+  return isAdbServerHealthy();
+}
+
+function detectAdbDevices(autoStart = true) {
   const adb = findAdbBin();
   if (!adb) return [];
-  const res = runProbe(adb, ['devices', '-l'], 3000);
+  let res = runProbe(adb, ['devices', '-l'], 2500);
+  if ((res.status !== 0 || res.error) && autoStart) {
+    ensureAdbServer(true);
+    res = runProbe(adb, ['devices', '-l'], 2500);
+  }
   if (res.status !== 0) return [];
 
   const byModel = new Map();
@@ -383,6 +422,13 @@ function buildDoctorReport(ws) {
       required: false,
     },
     {
+      name: 'ADB Daemon Server',
+      ok: Boolean(adbPath) && isAdbServerHealthy(),
+      detail: isAdbServerHealthy() ? 'active on port 5037' : 'inactive (starts on demand)',
+      hint: 'adb start-server',
+      required: false,
+    },
+    {
       name: 'scrcpy (optional phone screen mirror)',
       ok: commandExists('scrcpy'),
       detail: commandExists('scrcpy') ? 'installed' : 'not installed',
@@ -461,6 +507,9 @@ function runDoctor(ws, asJson = false) {
   console.log(`\n${C.bold}Connected Android Devices:${C.reset}`);
   if (report.devices.length === 0) {
     console.log(`  [${C.yellow}NONE${C.reset}] No USB or Wireless ADB device detected`);
+    if (report.wsl) {
+      console.log(`         ${C.cyan}Tip: In WSL, physical USB requires 'usbipd wsl attach' in Windows, or connect wirelessly via 'adb connect <ip:port>'.${C.reset}`);
+    }
   } else {
     for (const d of report.devices) {
       console.log(`  [${C.green}DEVICE${C.reset}] ${d.model} (${C.cyan}${d.serial}${C.reset})`);
@@ -499,6 +548,7 @@ function printUsage() {
   console.log('  --seeded / --empty   Seed Maya/Leo/Tala family (default) or 0-child onboarding');
   console.log('  --fresh / --reset-db In-memory DB (no export) or wipe saved emulator-data first');
   console.log('  --status / --stop    Inspect active ports/devices or stop all demo ports');
+  console.log('  --restart-adb        Restart ADB daemon to unfreeze USB/Wireless sockets');
   console.log('  -V, --version        Print CLI version');
   console.log('  -h, --help           Show this help message');
 }
@@ -510,6 +560,7 @@ function parseArgs(argv) {
     doctor: false,
     status: false,
     stop: false,
+    restartAdb: false,
     help: false,
     version: false,
     json: false,
@@ -540,6 +591,7 @@ function parseArgs(argv) {
     else if (a === '--doctor') cfg.doctor = true;
     else if (a === '--status') cfg.status = true;
     else if (a === '--stop') cfg.stop = true;
+    else if (a === '--restart-adb') cfg.restartAdb = true;
     else if (a === '-h' || a === '--help') cfg.help = true;
     else if (a === '-V' || a === '--version') cfg.version = true;
     else if (a === '--json') cfg.json = true;
@@ -609,10 +661,11 @@ async function connectAndroidInteractive(rl) {
     console.log('     1) USB Cable (plug in & re-scan)');
     console.log('     2) Wireless Debugging — connect (already paired, IP:port)');
     console.log('     3) Wireless Debugging — first-time pair + connect (Android 11+ pairing code)');
-    console.log(`     4) Skip for now ${C.cyan}[default]${C.reset}`);
-    const mode = (await rl.question('   Select connection method [4]: ')).trim() || '4';
+    console.log('     4) Restart ADB Server (kill & restart daemon to unfreeze USB/Wi-Fi)');
+    console.log(`     5) Skip for now ${C.cyan}[default]${C.reset}`);
+    const mode = (await rl.question('   Select connection method [5]: ')).trim() || '5';
 
-    if (mode === '4') {
+    if (mode === '5') {
       return { serial: '', wirelessAddr: '' };
     }
 
@@ -621,13 +674,30 @@ async function connectAndroidInteractive(rl) {
       console.log('     • Connect phone via USB data cable');
       console.log('     • Enable Settings → Developer options → USB debugging');
       console.log('     • Tap "Allow USB debugging" if prompted on the phone screen');
+      if (IS_WSL) {
+        console.log(`     ${C.yellow}• WSL Notice:${C.reset} Physical USB requires 'usbipd wsl attach' in Windows.`);
+        console.log(`       If not attached via usbipd, use Wireless Debugging (Options 2/3) instead.`);
+      }
       await rl.question('   Press Enter once connected to scan...');
       const found = detectAdbDevices();
       if (found.length > 0) {
         console.log(`   ${C.green}Connected:${C.reset} ${found[0].model} (${C.cyan}${found[0].serial}${C.reset})`);
         return { serial: found[0].serial, wirelessAddr: '' };
       }
-      console.log(`   ${C.yellow}Still no device detected.${C.reset} Check cable/prompt and try again.`);
+      console.log(`   ${C.yellow}Still no device detected.${C.reset} Check cable/prompt or try Option 4 (Restart ADB Server).`);
+      continue;
+    }
+
+    if (mode === '4') {
+      console.log(`\n   ${C.cyan}Restarting ADB daemon to unfreeze stale sockets...${C.reset}`);
+      ensureAdbServer(true);
+      await new Promise((r) => setTimeout(r, 1500));
+      const found = detectAdbDevices(false);
+      if (found.length > 0) {
+        console.log(`   ${C.green}Discovered:${C.reset} ${found[0].model} (${C.cyan}${found[0].serial}${C.reset})`);
+        return { serial: found[0].serial, wirelessAddr: '' };
+      }
+      console.log(`   ${C.green}ADB daemon restarted.${C.reset} Ready for connection via USB or Wireless.`);
       continue;
     }
 
@@ -1047,6 +1117,23 @@ async function main() {
     console.log(`${C.yellow}Stopping processes on LittleSteps demo ports...${C.reset}`);
     for (const { port } of DEMO_PORTS) killPort(port);
     console.log(`${C.green}Done. Ports ${DEMO_PORTS.map((d) => d.port).join(', ')} are free.${C.reset}`);
+    return;
+  }
+
+  if (cfg.restartAdb) {
+    console.log(`${C.cyan}Restarting ADB daemon...${C.reset}`);
+    ensureAdbServer(true);
+    await new Promise((r) => setTimeout(r, 1500));
+    console.log(`${C.green}ADB server restarted successfully.${C.reset}`);
+    const found = detectAdbDevices(false);
+    if (found.length > 0) {
+      console.log(`Discovered ${found.length} device(s):`);
+      for (const d of found) {
+        console.log(`  • ${d.model} (${d.serial})`);
+      }
+    } else {
+      console.log('No devices currently detected.');
+    }
     return;
   }
 
