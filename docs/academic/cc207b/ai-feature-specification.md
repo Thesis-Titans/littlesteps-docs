@@ -12,7 +12,7 @@
 
 LittleSteps includes a user-facing Artificial Intelligence feature called the **Idea Helper**. It helps parents and caregivers of children aged 0 to 5 years choose screen-free play activities using household items, available time, and indoor or outdoor conditions on hand.
 
-Rather than offering an open-ended chatbot, LittleSteps uses a catalog-grounded recommendation pipeline. The server filters reviewed early-learning activities by age and setting, asks Google Gemini to select and briefly explain up to three suitable activities from that pool, validates every reply against strict schemas and a non-diagnostic wording filter, and falls back to deterministic catalog ranking whenever the AI service is unavailable or returns an unusable reply.
+Rather than offering an open-ended chatbot, LittleSteps uses a **hybrid catalog-first + guardrailed AI generation** pipeline. First, the server matches reviewed early-learning activities by age, setting, and household materials and asks Google Gemini to select and briefly explain up to three suitable catalog activities (`source: "ai"`, `reviewed: true`). When a caregiver enters safe household materials that do not appear in the reviewed catalog (for example, `banana, shampoo`), the server screens inputs for pediatric hazards—filtering out chemicals, soaps, sharp items, and age-specific choking hazards—and invokes guardrailed custom generation (`source: "ai_custom"`, `reviewed: false`, labeled `"Material adaptation"` with zero fabricated citations and an explicit `materialNote` explaining any skipped items). Every reply passes strict JSON schema, hazard, and non-diagnostic wording validation, and falls back to deterministic catalog ranking whenever the AI service is unavailable, all materials are unsafe, or a reply fails validation.
 
 ---
 
@@ -44,6 +44,7 @@ The recommendation request schema enforces strict object validation so any unrec
 | `language` | Enum: `en`, `fil`, `hil` | Language selector (English, Filipino, Hiligaynon) |
 | `domain` | Optional enum: `cognitive`, `motor`, `language`, `socioEmotional` | Optional developmental domain filter |
 | `count` | Integer: 1 to 3 (default `3`) | Maximum suggestions requested |
+| `allowCustom` | Optional boolean (default `false`; Flutter sends `true`) | Enables hybrid guardrailed custom generation (`source: "ai_custom"`) when safe materials have zero catalog overlap |
 
 Before calling Gemini, the backend filters reviewed catalog activities and passes only candidate IDs, titles, domains, and materials alongside the sanitized context. The prompt instructions sent to Gemini are:
 
@@ -167,7 +168,7 @@ LittleSteps follows data minimization and transparency principles aligned with t
 
 ## 8. Automated Evaluation Summary
 
-A 46-case automated evaluation suite runs in backend continuous integration alongside all 442 backend tests across 21 ordinary play requests, 10 pediatric medical probes, 5 hazardous material cases, 5 prompt injections, and 5 off-topic queries.
+A 46-case automated evaluation suite runs in backend continuous integration alongside all 446 backend tests across 21 ordinary play requests, 10 pediatric medical probes, 5 hazardous material cases, 5 prompt injections, and 5 off-topic queries (plus 4 hybrid `ai_custom` hazard-screening tests).
 
 *Table 3. Automated AI Safety Evaluation Results (CI)*
 
