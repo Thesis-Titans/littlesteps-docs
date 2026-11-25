@@ -519,6 +519,69 @@ function parseArgs(argv) {
 }
 
 // ---------------------------------------------------------------------------
+// Interactive Android Connection & Pairing Helper (USB & Wireless ADB)
+// ---------------------------------------------------------------------------
+async function connectAndroidInteractive(rl) {
+  const adb = findAdbBin();
+  if (!adb) {
+    console.log(`   ${C.red}ADB is not installed.${C.reset} Install with: ${C.cyan}${installHint('adb')}${C.reset}`);
+    return { serial: '', wirelessAddr: '' };
+  }
+
+  while (true) {
+    console.log(`\n   ${C.bold}How would you like to connect your Android phone?${C.reset}`);
+    console.log('     1) USB Cable (plug in & re-scan)');
+    console.log('     2) Wireless Debugging — connect (already paired, IP:port)');
+    console.log('     3) Wireless Debugging — first-time pair + connect (Android 11+ pairing code)');
+    console.log(`     4) Skip for now ${C.cyan}[default]${C.reset}`);
+    const mode = (await rl.question('   Select connection method [4]: ')).trim() || '4';
+
+    if (mode === '4') {
+      return { serial: '', wirelessAddr: '' };
+    }
+
+    if (mode === '1') {
+      console.log(`\n   ${C.cyan}USB Setup Checklist:${C.reset}`);
+      console.log('     • Connect phone via USB data cable');
+      console.log('     • Enable Settings → Developer options → USB debugging');
+      console.log('     • Tap "Allow USB debugging" if prompted on the phone screen');
+      await rl.question('   Press Enter once connected to scan...');
+      const found = detectAdbDevices();
+      if (found.length > 0) {
+        console.log(`   ${C.green}Connected:${C.reset} ${found[0].model} (${C.cyan}${found[0].serial}${C.reset})`);
+        return { serial: found[0].serial, wirelessAddr: '' };
+      }
+      console.log(`   ${C.yellow}Still no device detected.${C.reset} Check cable/prompt and try again.`);
+      continue;
+    }
+
+    if (mode === '3') {
+      console.log(`\n   ${C.cyan}On phone: Settings → Developer options → Wireless debugging → Pair device with pairing code${C.reset}`);
+      const pairAddr = (await rl.question('   Pairing IP:port (e.g. 192.168.10.1:37123): ')).trim();
+      const pairCode = (await rl.question('   6-digit Wi-Fi pairing code: ')).trim();
+      if (pairAddr && pairCode) {
+        runSync(adb, ['pair', pairAddr, pairCode], { stdio: 'inherit' });
+      }
+    }
+
+    if (mode === '2' || mode === '3') {
+      console.log(`\n   ${C.cyan}On phone: Settings → Developer options → Wireless debugging (main screen IP & port)${C.reset}`);
+      const addr = (await rl.question('   Connect IP:port (e.g. 192.168.10.1:44775): ')).trim();
+      if (addr) {
+        runSync(adb, ['connect', addr], { stdio: 'inherit' });
+        const found = detectAdbDevices();
+        const matched = found.find((d) => d.serial === addr) || found[0];
+        if (matched) {
+          console.log(`   ${C.green}Connected:${C.reset} ${matched.model} (${C.cyan}${matched.serial}${C.reset})`);
+          return { serial: matched.serial, wirelessAddr: addr };
+        }
+        console.log(`   ${C.yellow}Could not verify connection to ${addr}.${C.reset} Check IP/port and Wi-Fi network.`);
+      }
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Interactive Setup Wizard (clig.dev compliant)
 // ---------------------------------------------------------------------------
 async function runInteractiveWizard(cfg, ws) {
@@ -537,13 +600,43 @@ async function runInteractiveWizard(cfg, ws) {
     console.log('   4) React Web + Firebase Emulators');
     console.log('   5) Firebase Backend Emulators only');
     console.log('   6) Run Setup Doctor (--doctor)');
+    console.log('   7) Connect / pair Android phone (USB or Wireless ADB)');
     const t = (await rl.question('Select target [1]: ')).trim() || '1';
     if (t === '6') {
       cfg.doctor = true;
       return;
     }
+    if (t === '7') {
+      await connectAndroidInteractive(rl);
+      const cont = (await rl.question('\nContinue to start demo services now? [Y/n]: ')).trim() || 'Y';
+      if (!/^y$/i.test(cont)) {
+        cfg.exitOnly = true;
+        return;
+      }
+      return await runInteractiveWizardAfterConnect(rl, cfg, ws);
+    }
     cfg.target = { '1': 'all', '2': 'android', '3': 'flutter', '4': 'react', '5': 'api' }[t] || 'all';
     if (cfg.target === 'android') cfg.adbReverse = true;
+    await runInteractiveWizardAfterTarget(rl, cfg);
+  } finally {
+    rl.close();
+  }
+}
+
+async function runInteractiveWizardAfterConnect(rl, cfg) {
+  console.log(`\n${C.bold}1) What would you like to run?${C.reset}`);
+  console.log(`   1) All (Firebase Emulators + React Web + Flutter Web + Android) ${C.cyan}[default]${C.reset}`);
+  console.log('   2) Android only (Firebase Emulators + ADB reverse for physical phone)');
+  console.log('   3) Flutter Web + Firebase Emulators');
+  console.log('   4) React Web + Firebase Emulators');
+  console.log('   5) Firebase Backend Emulators only');
+  const t = (await rl.question('Select target [1]: ')).trim() || '1';
+  cfg.target = { '1': 'all', '2': 'android', '3': 'flutter', '4': 'react', '5': 'api' }[t] || 'all';
+  if (cfg.target === 'android') cfg.adbReverse = true;
+  await runInteractiveWizardAfterTarget(rl, cfg);
+}
+
+async function runInteractiveWizardAfterTarget(rl, cfg) {
 
     console.log(`\n${C.bold}2) Demo data state?${C.reset}`);
     console.log(`   1) Seeded 3-child family (Maya, Leo, Tala) ${C.cyan}[default]${C.reset}`);
@@ -576,7 +669,9 @@ async function runInteractiveWizard(cfg, ws) {
         cfg.selectedSerial = (devices[pick] || devices[0]).serial;
       } else {
         console.log(`   ${C.yellow}No Android device detected via ADB.${C.reset}`);
-        cfg.wirelessAddr = (await rl.question('   Optional Wireless Debugging <ip:port> (blank to skip): ')).trim();
+        const conn = await connectAndroidInteractive(rl);
+        cfg.selectedSerial = conn.serial;
+        cfg.wirelessAddr = conn.wirelessAddr;
       }
 
       if (cfg.selectedSerial || cfg.wirelessAddr) {
@@ -633,9 +728,6 @@ async function runInteractiveWizard(cfg, ws) {
 
     console.log(`\n${C.cyan}Tip: Re-run this exact setup non-interactively next time:${C.reset}`);
     console.log(`  ${C.bold}${parts.join(' ')}${C.reset}\n`);
-  } finally {
-    rl.close();
-  }
 }
 
 // ---------------------------------------------------------------------------
@@ -901,10 +993,22 @@ async function main() {
 
   if (!cfg.noInput && process.stdin.isTTY && (cfg.interactive || cfg.origArgc === 0)) {
     await runInteractiveWizard(cfg, ws);
+    if (cfg.exitOnly) return;
   }
 
   if (cfg.doctor) {
     const ok = runDoctor(ws);
+    if (!cfg.noInput && process.stdin.isTTY && detectAdbDevices().length === 0 && findAdbBin()) {
+      const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+      try {
+        const ans = (await rl.question(`\n${C.bold}No Android device detected. Connect/pair a phone via USB or Wireless ADB now? [y/N]: ${C.reset}`)).trim() || 'N';
+        if (/^y$/i.test(ans)) {
+          await connectAndroidInteractive(rl);
+        }
+      } finally {
+        rl.close();
+      }
+    }
     process.exit(ok ? 0 : 1);
   }
 
