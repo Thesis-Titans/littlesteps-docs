@@ -19,13 +19,13 @@ Canonical product requirements remain in [Product Scope](product-scope.md), arch
 
 ### 1.1 Hard Academic Deadlines
 - **October 14, 2026:** **CIT 246 Checkpoint 1** (One-page project concept covering Organization, Problem, Proposed System, and Possible Sponsor; A4, Arial 11). Documented in [CIT 246 Checkpoint 1 Concept](academic/cit246/checkpoint-1-concept.md).
-- **November 26, 2026, 7:00 AM:** **CC 207B Application Presentation & All Deliverables:**
+- **December 1, 2026, 7:00 AM:** **CC 207B Application Presentation & All Deliverables** *(extended from November 26)*:
   - **CC 207B:** Live demonstration of the Flutter mobile app, 5–10 min presentation, backup video, and **Individual Code Defense** (2–3 min/member with live code modification). Software documentation package, AI usage log, and Topic Coverage Matrix submitted on schedule. Self and peer assessment follows the day after. See [CC 207B requirements](academic/cc207b/README.md).
 - **December 2, 2026:** **Final Submission Window & Demonstrations for Remaining Courses:**
   - **CIT 210:** Presentation, local live demo of React app reading/writing shared data, and shared documentation.
   - **CIT 246:** Final 25–40 page Project Management Plan for a 6–12 month project (one PDF on Google Drive plus a printed copy), 15 min presentation + 5 min Q&A by the three-member CIT 246 team. Checkpoint 2 and 3 dates are still to be announced. See §1.4.
 
-**Build window & accelerated presentation deadline:** the API, React and Flutter work for CIT 210 and CC 207B is built from **October 26 to November 25, 2026**. The **CC 207B Flutter application and all deliverables are presented on November 26, 2026 at 7:00 AM** (deadline updated on 23 November 2026). To meet this hard morning defense date, Flutter features freeze on **November 24, 2026 (23:59)**, and November 25 is dedicated to end-to-end device testing, documentation package finalization, slide preparation, demo rehearsal, and offline video recording.
+**Build window & presentation deadline:** the API, React and Flutter work for CIT 210 and CC 207B is built from **October 26 to November 25, 2026**. The **CC 207B Flutter application and all deliverables are presented on December 1, 2026 at 7:00 AM** (extended from November 26). Flutter features froze on **November 24, 2026 (23:59)**, and November 25–30 is dedicated to end-to-end device testing, documentation package finalization, slide preparation, demo rehearsal, and offline video recording.
 
 ### 1.2 Delivery Approach
 Use **lightweight Scrum with a visible GitHub issue backlog** and one-week sprints.
@@ -39,12 +39,12 @@ Use **lightweight Scrum with a visible GitHub issue backlog** and one-week sprin
 | 1 | Oct 26 – Nov 1 | API + React | M1, start M2 | Sign-in, child profile and account pages work end to end; catalog API started. Caregiver walkthrough of the Figma prototype and low-fidelity wireframes done this week. Flutter project set up in the background. |
 | 2 | Nov 2 – Nov 8 | API + React | M2, M3, M4 | Catalog, activity planning, milestone observations, private journal, "This week" and the AI helper with its fallback work in React. |
 | 3 | Nov 9 – Nov 15 | Flutter | M1, M2 | Flutter sign-in, child profile, account pages, catalog, activity planning and milestones on the shared API. |
-| 4 | Nov 16 – Nov 25 | Flutter | M1–M5 | Flutter M1 (auth/state) completed Nov 21, AI helper (M4) & This Week (M3) by Nov 23; catalog, planning & journal (M2/M3) by Nov 24 (feature freeze at 23:59); Nov 25 dedicated to release APK build, documentation package, slides, rehearsal & backup video. **Presentation: November 26, 2026 at 7:00 AM.** |
-| Wrap-up | Nov 26 – Dec 1 | Web & Academic | M5 | Buffer and rehearsal for CIT 210 demo, code defense practice, and CIT 246 final PDF export. |
+| 4 | Nov 16 – Nov 25 | Flutter | M1–M5 | Flutter M1 (auth/state) completed Nov 21, AI helper (M4) & This Week (M3) by Nov 23; catalog, planning & journal (M2/M3) by Nov 24 (feature freeze at 23:59); Nov 25 dedicated to release APK build, hybrid AI polish, and QA. |
+| Wrap-up | Nov 26 – Dec 1 | Mobile, Web & Academic | M5 | Final QA sign-off, backup video, documentation finalization, code defense practice, **CC 207B Presentation (December 1, 2026 at 7:00 AM)**, CIT 210 demo rehearsal, and CIT 246 final PDF export. |
 
 ```mermaid
 gantt
-    title LittleSteps Agile Delivery Timeline (Accelerated Presentation: Nov 26, 2026)
+    title LittleSteps Agile Delivery Timeline (CC 207B Presentation: Dec 1, 2026)
     dateFormat  YYYY-MM-DD
     axisFormat  %b %d
 

@@ -6,7 +6,7 @@
 **Base Framework:** Flutter. The brief allows a web or mobile application; LittleSteps builds an Android mobile app.  
 **Team Composition:** 5 members, so at least 6 core features (the AI-powered feature counts as one)  
 **Repository:** [`Thesis-Titans/CC-207B_26-27_Final-Project`](https://github.com/Thesis-Titans/CC-207B_26-27_Final-Project/tree/main/BSIT-3A/LittleSteps), the team's fork of the instructor's course repository; the app is in `BSIT-3A/LittleSteps`. See the [execution plan](../../execution-plan.md) §1.3.  
-**Submission & Defense:** **November 26, 2026 at 7:00 AM** — Application presentation, live demonstration, individual code defense (2–3 min/member with live modification), and submission of all deliverable packages (Topic Coverage Matrix, AI Usage Log, software documentation, and presentation deck). Final LMS upload window completes by December 2, 2026.
+**Submission & Defense:** **December 1, 2026 at 7:00 AM** *(extended from November 26)* — Application presentation, live demonstration, individual code defense (2–3 min/member with live modification), and submission of all deliverable packages (Topic Coverage Matrix, AI Usage Log, software documentation, and presentation deck). Final LMS upload window completes by December 2, 2026.
 
 ---
 
