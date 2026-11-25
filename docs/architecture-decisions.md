@@ -290,7 +290,7 @@ graph TD
   - Closed loop: a caregiver searches or selects a book, gets a play idea from the story companion, and chooses "Add to today's plan", which writes to Firestore (`POST /api/v1/children/:id/plans`).
   - `GET /api/v1/catalog/books/search` proxies the Open Library search API with an in-memory cache.
   - In-app Philippine rhymes under Explore, shown as "Provisional Academic Reference — Pending Review" until the content review in Docs #3 is done. Rights to the lyrics are not yet confirmed.
-  - AI stays limited to the idea helper (`POST /api/v1/ai/recommendations`) and the story companion (`POST /api/v1/ai/story-activity`). Both pick from or are validated against reviewed content, use a fixed response schema and fall back to the catalog.
+  - AI stays limited to the idea helper (`POST /api/v1/ai/recommendations`), the story companion (`POST /api/v1/ai/story-activity`), and catalog-grounded adaptation (`POST /api/v1/ai/adapt`). `/ai/recommendations` is catalog-first and supports opt-in guardrailed custom material adaptation (`allowCustom: true`, `source: "ai_custom"`, `reviewed: false`) with pediatric hazard screening when safe household materials have no catalog overlap; all routes use fixed response schemas, pass non-diagnostic validation, and fail closed to deterministic fallback.
   - `POST /api/v1/ai/chat` and its keyword blocklist are removed.
 - **Consequences:**
   - *Positive:* a real data flow from external APIs (Open Library, Open-Meteo, Gemini) to the caregiver's plan in Firestore, with a small and defensible AI surface.
