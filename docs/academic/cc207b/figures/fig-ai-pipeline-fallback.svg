@@ -9,8 +9,8 @@
   <rect width="800" height="480" fill="#FFFFFF" rx="6" stroke="#D1DCD1" stroke-width="1"/>
 
   <!-- Header -->
-  <text x="25" y="30" font-size="14.5" font-weight="700" fill="#1F634D">AI Selection Pipeline and Fallback Architecture</text>
-  <text x="25" y="46" font-size="11" fill="#5A655F">Catalog-grounded recommendation workflow with deterministic 3-tier fallback and pediatric safety filters</text>
+  <text x="25" y="30" font-size="14.5" font-weight="700" fill="#1F634D">Hybrid AI Pipeline, 3-Layer Guardrails &amp; Fallback Architecture</text>
+  <text x="25" y="46" font-size="11" fill="#5A655F">Catalog-first ranking + 3-layer defense-in-depth material adaptations with deterministic Tier 3 fallback</text>
   <line x1="25" y1="56" x2="775" y2="56" stroke="#E2E8E2" stroke-width="1"/>
 
   <!-- Layer 1: Client Layer (Flutter Mobile App) -->
@@ -33,17 +33,21 @@
 
     <!-- UI Response Rendering -->
     <rect x="10" y="190" width="180" height="148" rx="4" fill="#F4F2E8" stroke="#D1DCD1" stroke-width="1"/>
-    <text x="16" y="208" font-size="9.5" font-weight="700" fill="#2D312E">Provenance Display:</text>
+    <text x="16" y="206" font-size="9.5" font-weight="700" fill="#2D312E">Provenance Display:</text>
     
-    <rect x="16" y="218" width="105" height="18" rx="3" fill="#3B7EA1"/>
-    <text x="68" y="231" font-size="8.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">Suggested by AI</text>
-    <text x="18" y="249" font-size="8" fill="#5A655F">Tier 1: Cloud Gemini pick</text>
+    <rect x="16" y="213" width="94" height="17" rx="3" fill="#3B7EA1"/>
+    <text x="63" y="225" font-size="8" font-weight="700" fill="#FFFFFF" text-anchor="middle">Suggested by AI</text>
+    <text x="18" y="241" font-size="7.6" fill="#5A655F">Tier 1: Reviewed catalog pick</text>
 
-    <rect x="16" y="264" width="70" height="18" rx="3" fill="#1F634D"/>
-    <text x="51" y="277" font-size="8.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">Our picks</text>
-    <text x="18" y="295" font-size="8" fill="#5A655F">Tier 3: Reviewed curriculum</text>
+    <rect x="16" y="248" width="108" height="17" rx="3" fill="#FAE8A8" stroke="#D4B85A" stroke-width="0.8"/>
+    <text x="70" y="260" font-size="8" font-weight="700" fill="#2D312E" text-anchor="middle">Material adaptation</text>
+    <text x="18" y="276" font-size="7.6" fill="#5A655F">Tier 1: Guarded custom + safety note</text>
 
-    <text x="16" y="322" font-size="7.8" font-style="italic" fill="#5A655F">&quot;Observational play only...&quot;</text>
+    <rect x="16" y="283" width="70" height="17" rx="3" fill="#1F634D"/>
+    <text x="51" y="295" font-size="8" font-weight="700" fill="#FFFFFF" text-anchor="middle">Our picks</text>
+    <text x="18" y="311" font-size="7.6" fill="#5A655F">Tier 3: Reviewed curriculum</text>
+
+    <text x="16" y="329" font-size="7.5" font-style="italic" fill="#5A655F">&quot;Observational play only...&quot;</text>
   </g>
 
   <!-- Connectors: Client <-> Gateway (Gap: 225 to 281 = 56px, Center = 253) -->
@@ -79,14 +83,15 @@
 
     <!-- Dispatch Decision Box -->
     <rect x="10" y="190" width="174" height="148" rx="4" fill="#F4F2E8" stroke="#D1DCD1" stroke-width="1"/>
-    <text x="16" y="208" font-size="9.5" font-weight="700" fill="#2D312E">Grounding &amp; Filter Engine:</text>
-    <text x="16" y="225" font-size="8.2" fill="#5A655F">1. Query approved ECCD pool</text>
-    <text x="16" y="240" font-size="8.2" fill="#5A655F">2. Filter by Age &amp; Setting</text>
-    <text x="16" y="255" font-size="8.2" fill="#5A655F">3. Ground prompt with candidates</text>
-    <text x="16" y="270" font-size="8.2" fill="#5A655F">4. Verify non-diagnostic terms</text>
-    <text x="22" y="284" font-size="7.8" fill="#C85A32">denylist string inspection</text>
-    <text x="16" y="301" font-size="8.2" font-weight="600" fill="#1F634D">5. Assemble Provenance</text>
-    <text x="22" y="315" font-size="7.5" fill="#71717A">Attach source tier metadata</text>
+    <text x="16" y="208" font-size="9.5" font-weight="700" fill="#2D312E">3-Layer Defense-in-Depth:</text>
+    <text x="16" y="224" font-size="8" fill="#5A655F">L1. Thin extreme-danger gate</text>
+    <text x="24" y="236" font-size="7.3" fill="#71717A">(typos &amp; FIL/HIL pass to L2)</text>
+    <text x="16" y="251" font-size="8" fill="#5A655F">L2. Catalog match or structured</text>
+    <text x="24" y="263" font-size="7.3" fill="#71717A">materialAssessments reasoning</text>
+    <text x="16" y="278" font-size="8" fill="#5A655F">L3. Normalized output hazard</text>
+    <text x="24" y="290" font-size="7.3" fill="#C85A32">&amp; 33-term non-diagnostic check</text>
+    <text x="16" y="307" font-size="8" font-weight="600" fill="#1F634D">Fail-closed to Tier 3 +</text>
+    <text x="24" y="319" font-size="7.3" fill="#71717A">explicit provenance &amp; safety note</text>
   </g>
 
   <!-- Connectors: Gateway <-> Tiers (Gap: 475 to 531 = 56px, Center = 503) -->
@@ -107,13 +112,13 @@
     <rect y="22" width="244" height="6" fill="#3B7EA1"/>
     <text x="122" y="19" font-size="10.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">Tier 1: Cloud Gemini Foundation Model</text>
 
-    <text x="12" y="44" font-size="8.8" font-weight="700" fill="#2D312E">Model: Configured via GEMINI_MODEL</text>
+    <text x="12" y="44" font-size="8.8" font-weight="700" fill="#2D312E">Model: Pinned GEMINI_MODEL (e.g., 3.5-flash-lite)</text>
     <text x="12" y="58" font-size="8.2" fill="#5A655F">• Transport: Gemini REST API (Node 22 fetch)</text>
     <text x="12" y="72" font-size="8.2" fill="#5A655F">• Timeout Guard: 8,000ms AbortController</text>
     <text x="12" y="86" font-size="8.2" fill="#5A655F">• Circuit Breaker: 60s cooldown after 3 fails</text>
-    <text x="12" y="103" font-size="8.8" font-weight="700" fill="#2D312E">Post-Processing Output Validation:</text>
-    <text x="12" y="117" font-size="8.2" fill="#5A655F">• Zod schema verification ({ picks })</text>
-    <text x="12" y="131" font-size="8.2" fill="#5A655F">• 33-term non-diagnostic denylist (EN + FIL)</text>
+    <text x="12" y="103" font-size="8.8" font-weight="700" fill="#2D312E">Layer 3 Post-Generation Safety Net:</text>
+    <text x="12" y="117" font-size="8.2" fill="#5A655F">• Zod schema ({ picks } / { materialAssessments })</text>
+    <text x="12" y="131" font-size="8.2" fill="#5A655F">• Normalized hazard + 33-term denylist (EN + FIL)</text>
   </g>
 
   <!-- Connector: Tier 1 failure drops to Tier 3 (Centered at X=653) -->
