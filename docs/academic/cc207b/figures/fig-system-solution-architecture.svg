@@ -79,8 +79,8 @@
   <g transform="translate(562, 68)">
     <rect width="210" height="42" rx="4" fill="#FFFFFF" stroke="#3B7EA1" stroke-width="1.2" filter="url(#shadow-sys)"/>
     <text x="10" y="16" font-size="9" font-weight="700" fill="#3B7EA1">Google Gemini REST API (Tier 1)</text>
-    <text x="10" y="28" font-size="8" fill="#5A655F">Catalog candidate ranking &amp; rationale</text>
-    <text x="10" y="38" font-size="7.5" fill="#71717A">Node 22 fetch &#8226; 8-second timeout guard</text>
+    <text x="10" y="28" font-size="8" fill="#5A655F">Hybrid catalog ranking &amp; guarded adaptations</text>
+    <text x="10" y="38" font-size="7.5" fill="#71717A">Node 22 fetch &#8226; 3-layer guardrails &#8226; 8s cap</text>
   </g>
 
   <!-- Fallback D -> E -->
