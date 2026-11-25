@@ -12,7 +12,7 @@
 
 LittleSteps includes a user-facing Artificial Intelligence feature called the **Idea Helper**. It helps parents and caregivers of children aged 0 to 5 years choose screen-free play activities using household items, available time, and indoor or outdoor conditions on hand.
 
-Rather than offering an open-ended chatbot, LittleSteps uses a **hybrid catalog-first + guardrailed AI generation** pipeline. First, the server matches reviewed early-learning activities by age, setting, and household materials and asks Google Gemini to select and briefly explain up to three suitable catalog activities (`source: "ai"`, `reviewed: true`). When a caregiver enters safe household materials that do not appear in the reviewed catalog (for example, `banana, shampoo`), the server screens inputs for pediatric hazards—filtering out chemicals, soaps, sharp items, and age-specific choking hazards—and invokes guardrailed custom generation (`source: "ai_custom"`, `reviewed: false`, labeled `"Material adaptation"` with zero fabricated citations and an explicit `materialNote` explaining any skipped items). Every reply passes strict JSON schema, hazard, and non-diagnostic wording validation, and falls back to deterministic catalog ranking whenever the AI service is unavailable, all materials are unsafe, or a reply fails validation.
+Rather than offering an open-ended chatbot, LittleSteps uses a **hybrid catalog-first + 3-layer defense-in-depth AI generation** pipeline. First, the server matches reviewed early-learning activities by age, setting, and household materials and asks Google Gemini to select and briefly explain up to three suitable catalog activities (`source: "ai"`, `reviewed: true`). When a caregiver enters household materials that do not appear in the reviewed catalog (including typos like `shampo` or Filipino/Hiligaynon terms like `sabon`), three guardrail layers protect the child: (1) a thin input gate in `sanitize.ts` blocks extreme dangers (`bleach`, `knife`, `fire`, `medicine`) and prompt probes while letting everyday items, typos, and regional words pass through; (2) Gemini evaluates every item in a structured `materialAssessments` array *before* generating suggestions using pediatric safety principles (`source: "ai_custom"`, `reviewed: false`, labeled `"Material adaptation"` with zero fabricated citations and a pluralized `materialNote` derived from the cards' actual `usedMaterials`); and (3) a deterministic post-generation validator (`validate-output.ts`) checks Gemini's normalized output against hazard and non-diagnostic denylists, failing closed to Tier 3 catalog fallback if any slip occurs or all materials are unsafe.
 
 ---
 
@@ -146,7 +146,7 @@ Server logs record only operational telemetry (event name, tier, latency, and er
 ## 5. Known Failure Cases
 
 1. **Prompt injection and clinical queries:** Inputs attempting to override instructions or request medical evaluations are bounded to 40 characters per material item, separated from instructions, and constrained to reviewed candidate IDs; any blocked clinical term causes the reply to be rejected in favor of Tier 3 fallback.
-2. **Hazardous household items:** Because recommendations return only human-reviewed catalog activities with authored safety notices, submitting unsafe items (such as knives, bleach, or choking hazards) cannot cause the model to invent hazardous steps.
+2. **Hazardous household items:** Extreme dangers (`bleach`, `knife`, `fire`, `medicine`) are blocked at Layer 1 before calling Gemini; everyday items, typos, and regional terms are normalized and evaluated by Gemini in structured `materialAssessments` (Layer 2) under pediatric safety principles (liquids/soaps, `0-35m` toilet-paper-tube choking hazards, fragile/sharp/electrical/screen items); and Layer 3 (`validate-output.ts`) deterministically rejects any normalized hazard that slips into `materialAssessments`, `usedMaterials`, or `instructions`, failing closed to reviewed Tier 3 catalog activities.
 3. **Offline or unstable mobile connectivity:** When the device has no network connection or a request times out, the app displays cached reviewed catalog picks with a clear non-AI notice.
 4. **Rate-limit exhaustion and fixed-window edges:** More than 10 requests per hour returns HTTP `429`. Fixed clock-hour windows allow short bursts across an hour boundary, and per-instance memory for IP caps and the circuit breaker resets on Cloud Functions cold starts, while per-user caps remain enforced in Firestore.
 
@@ -168,7 +168,7 @@ LittleSteps follows data minimization and transparency principles aligned with t
 
 ## 8. Automated Evaluation Summary
 
-A 46-case automated evaluation suite runs in backend continuous integration alongside all 446 backend tests across 21 ordinary play requests, 10 pediatric medical probes, 5 hazardous material cases, 5 prompt injections, and 5 off-topic queries (plus 4 hybrid `ai_custom` hazard-screening tests).
+A 46-case automated evaluation suite runs in backend continuous integration alongside all 449 backend tests across 21 ordinary play requests, 10 pediatric medical probes, 5 hazardous material cases, 5 prompt injections, and 5 off-topic queries (plus 7 layered-guardrail `ai_custom` tests covering typos, regional terms, and Layer 3 fail-closed checks).
 
 *Table 3. Automated AI Safety Evaluation Results (CI)*
 
