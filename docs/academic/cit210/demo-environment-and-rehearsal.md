@@ -18,9 +18,9 @@ It satisfies the requirements of **Docs Issue #98**, directly supporting the **C
 
 ## 2. Environment Architecture Decision
 
-### 2.1 Primary Setup: Orchestrated Local Emulators (`./run-demo.sh`)
+### 2.1 Primary Setup: Orchestrated Local Emulators (`run-demo.mjs` / `run-demo.sh`)
 
-The primary live demonstration runs **locally** using the repository root orchestrator [`run-demo.sh`](https://github.com/Thesis-Titans/littlesteps-api/blob/main/../run-demo.sh).
+The primary live demonstration runs **locally** using the cross-platform Node.js demo CLI ([`scripts/demo-cli/run-demo.mjs`](../../../scripts/demo-cli/run-demo.mjs), see [setup guide](../../../scripts/demo-cli/README.md)) on Windows, macOS, Linux, or WSL (or `./run-demo.sh` on Bash/WSL).
 
 ```
 +-------------------------------------------------------------------------------+
@@ -56,7 +56,7 @@ The primary live demonstration runs **locally** using the repository root orches
 #### Why Local Emulators for Live Defense:
 1. **Campus Network Independence:** Local loopback (:5001, :8080, :9099, :5173) guarantees instant, sub-50ms responses regardless of campus Wi-Fi congestion, firewalls, or captive portals.
 2. **Zero Privacy Risk:** Demonstrations run against throwaway synthetic test identities (`demo.caregiver@littlesteps.local`, child "Maya"), eliminating any risk of ingesting, displaying, or exposing real personal caregiver/child data.
-3. **Reproducible State:** The automated seed script [`run-demo.sh`](https://github.com/Thesis-Titans/littlesteps-api/blob/main/../run-demo.sh) idempotently populates standard demonstration records (child profile, planned activities, sample observations) on every startup.
+3. **Reproducible State:** The automated demo CLI ([`scripts/demo-cli/run-demo.mjs`](../../../scripts/demo-cli/run-demo.mjs)) idempotently populates standard demonstration records (child profiles, planned activities, sample observations, journal notes, and bookshelf books) on every startup.
 4. **Live External Integration:** Outbound requests to Open Library (books) and Google Gemini (AI activity helper) still utilize live external APIs via outbound HTTPS when an internet connection is available.
 
 ---

@@ -53,6 +53,18 @@ littlesteps/
 └── littlesteps-flutter/    # Flutter app, course fork; code in BSIT-3A/LittleSteps
 ```
 
+> [!TIP]
+> **One-Command Cross-Platform Setup & Demo CLI (Windows / macOS / Linux / WSL):**
+> Instead of starting each service manually, run the zero-dependency Node.js CLI bundled in [scripts/demo-cli/README.md](../scripts/demo-cli/README.md):
+> ```bash
+> # Check prerequisites (Node, Java JDK, Git, Flutter, ADB, scrcpy) and workspace repos:
+> node littlesteps-docs/scripts/demo-cli/run-demo.mjs --doctor
+>
+> # Launch interactive setup wizard (or double-click run-demo.cmd on Windows):
+> node littlesteps-docs/scripts/demo-cli/run-demo.mjs
+> ```
+> The CLI auto-discovers both `littlesteps-flutter` and `CC-207B_26-27_Final-Project` folder names, offers to clone missing repos, scaffolds safe local emulator `.env` defaults, seeds demo data, and supports Android ADB reverse + `scrcpy` mirroring.
+
 ---
 
 ## 3. Backend Setup: `littlesteps-api`
