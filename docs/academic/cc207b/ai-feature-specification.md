@@ -23,7 +23,7 @@ All AI requests pass through the shared backend proxy running on Node.js 22 and 
 ![AI Selection Pipeline and Fallback Architecture](figures/fig-ai-pipeline-fallback.svg)  
 *Fig. 1. AI selection pipeline, output validation, and deterministic fallback architecture.*
 
-The backend invokes the Google Gemini REST API (`v1beta` `generateContent` endpoint) directly using Node.js 22's built-in `fetch` API—no third-party Gemini SDK package is required. The active model is configured via the server environment variable `GEMINI_MODEL` (for example, `gemini-flash-lite-latest`), and `GEMINI_API_KEY` is passed strictly in the `x-goog-api-key` request header. If either variable is unset, the server skips cloud inference and serves the deterministic catalog fallback. Requests enforce structured JSON output (`application/json` with an explicit response schema) while retaining Google's default safety settings.
+The backend invokes the Google Gemini REST API (`v1beta` `generateContent` endpoint) directly using Node.js 22's built-in `fetch` API—no third-party Gemini SDK package is required. The active model is configured dynamically on the server via the environment variable `GEMINI_MODEL` and pinned to an explicit stable model identifier (for example, `gemini-3.5-flash-lite`) rather than a floating `-latest` alias or client-chosen parameter, preventing silent schema or output drift in production. `GEMINI_API_KEY` is passed strictly in the `x-goog-api-key` request header. If either variable is unset, the server skips cloud inference and serves the deterministic catalog fallback. Requests enforce structured JSON output (`application/json` with an explicit response schema) while retaining Google's default safety settings.
 
 Request and response contracts are validated with `zod` (`^4.1.0`). On the mobile client, the Idea Helper card inside the Explore tab opens the suggestion workflow, which sends authenticated HTTPS requests via `package:http` (`^1.6.0`) carrying the caregiver's Firebase Auth bearer token. The backend exposes three AI endpoints: `POST /api/v1/ai/recommendations` (catalog-grounded play suggestions), `POST /api/v1/ai/story-activity` (picture-book companion play), and `POST /api/v1/ai/adapt` (adapting an existing activity to be shorter, easier, harder, or adjusted for a missing material).
 
@@ -95,7 +95,7 @@ Every model reply passes two server-side validation gates before reaching the cl
     "label": null,
     "disclaimer": "Observational play suggestion only. Not developmental assessment.",
     "guidance": "You know your child best. Change it as you like, and stay close while you play.",
-    "model": "gemini-flash-lite-latest",
+    "model": "gemini-3.5-flash-lite",
     "reviewed": true
   }
 }
@@ -136,7 +136,7 @@ Every model reply passes two server-side validation gates before reaching the cl
 | Tier 2 | Rule-based activity adaptation | Local execution (< 5 ms) | Used only by `POST /api/v1/ai/adapt` when Tier 1 fails or is rejected |
 | Tier 3 | Deterministic reviewed catalog ranking | Local execution (< 5 ms); no external network calls | Used by `/recommendations` and `/story-activity` on timeout, API error, open circuit, unconfigured provider, or validation failure |
 
-All AI routes enforce fixed-window hourly rate limits of 10 requests per authenticated user (persisted via Firestore transactions) and 30 requests per IP address. Exceeding either cap returns HTTP `429 RATE_LIMITED` with a `Retry-After` header; the mobile app displays a wait notice rather than silently falling back. Any other network or upstream error falls back cleanly to reviewed catalog picks labeled `"Our picks"` or `"Catalog picks · not AI"`.
+All AI routes enforce fixed-window hourly rate limits of 10 requests per authenticated user (persisted via Firestore transactions) and 30 requests per IP address. Exceeding either cap returns HTTP `429 RATE_LIMITED` with a `Retry-After` header; the mobile app displays a `"Taking a short break"` wait notice alongside safe non-AI catalog picks (`Catalog picks · not AI`) so caregivers never hit a dead end. Any other network, timeout, or upstream error falls back cleanly to constrained reviewed catalog picks under a `"Using our activity list"` banner with zero AI labels and a `"Try again"` action—and if no catalog items can be loaded offline, displays an explicit `"No matching play ideas yet"` recovery card.
 
 Server logs record only operational telemetry (event name, tier, latency, and error class). Prompts, household materials, raw model replies, and user identifiers are never logged, and provider errors return fixed generic messages so upstream payloads cannot expose credentials.
 
