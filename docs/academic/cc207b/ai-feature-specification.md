@@ -39,7 +39,7 @@ The recommendation request schema enforces strict object validation so any unrec
 |---|---|---|
 | `ageBand` | Enum: `0-5m`, `6-11m`, `12-23m`, `24-35m`, `36-47m`, `48-59m`, `60-71m` | Pre-filled from the active child profile or chosen manually |
 | `setting` | Enum: `indoor`, `outdoor`, `either` (default `either`) | Setting selector (optionally informed by the local weather hint) |
-| `timeMinutes` | Integer: 5 to 120 | Duration chips (`10`, `15`, `30`, `45` minutes) |
+| `timeMinutes` | Integer: 5 to 120 | Duration chips (`10`, `15`, `30`, `45` minutes; 30–45 minute requests group into toddler-paced Play Blocks) |
 | `materials` | Up to 10 strings, max 40 characters each (default `[]`) | Comma-separated household items trimmed and normalized server-side |
 | `language` | Enum: `en`, `fil`, `hil` | Language selector (English, Filipino, Hiligaynon) |
 | `domain` | Optional enum: `cognitive`, `motor`, `language`, `socioEmotional` | Optional developmental domain filter |
