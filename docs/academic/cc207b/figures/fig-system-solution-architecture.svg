@@ -90,16 +90,16 @@
   <!-- Node E: ECCD Activity Catalog (Tier 3) -->
   <g transform="translate(562, 119)">
     <rect width="210" height="42" rx="4" fill="#FFFFFF" stroke="#1F634D" stroke-width="1.2" filter="url(#shadow-sys)"/>
-    <text x="10" y="16" font-size="9" font-weight="700" fill="#1F634D">ECCD Activity Catalog (Tier 3)</text>
-    <text x="10" y="28" font-size="8" fill="#5A655F">Reviewed early learning curriculum pool</text>
-    <text x="10" y="38" font-size="7.5" fill="#71717A">Deterministic fallback &#8226; Zero empty states</text>
+    <text x="10" y="16" font-size="9" font-weight="700" fill="#1F634D">ECCD Catalog Pool (Tier 3)</text>
+    <text x="10" y="28" font-size="8" fill="#5A655F">Activities, milestones &amp; regional rhymes</text>
+    <text x="10" y="38" font-size="7.5" fill="#71717A">Firestore 5-min cache &#8226; Zero empty states</text>
   </g>
 
   <!-- Node F: Cloud Firestore Persistence -->
   <g transform="translate(562, 170)">
     <rect width="210" height="42" rx="4" fill="#FFFFFF" stroke="#7A5C96" stroke-width="1.2" filter="url(#shadow-sys)"/>
     <text x="10" y="16" font-size="9" font-weight="700" fill="#7A5C96">Cloud Firestore Database</text>
-    <text x="10" y="28" font-size="8" fill="#5A655F">Encrypted caregiver &amp; child records</text>
+    <text x="10" y="28" font-size="8" fill="#5A655F">Caregiver records &amp; 3 global catalogs</text>
     <text x="10" y="38" font-size="7.5" fill="#71717A">Isolated subcollections &#8226; RA 10173</text>
   </g>
 
