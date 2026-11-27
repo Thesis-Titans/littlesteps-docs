@@ -1,10 +1,13 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
+import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 import { CLI_VERSION, EXIT_OK, EXIT_USAGE } from '../lib/constants.mjs';
 import { isValidDeviceSerial, isValidFps, isValidHostPort } from '../lib/process.mjs';
+import { DEFAULT_SEED_FILE, loadDemoSeedConfig, resolveSeedDate } from '../lib/seeder.mjs';
 import { resolveWorkspace } from '../lib/workspace.mjs';
 import { normalizeLegacyArgv } from '../run-demo.mjs';
 
@@ -104,4 +107,49 @@ test('resolveWorkspace discovers sibling LittleSteps repositories', () => {
   assert.ok(ws.apiDir && ws.apiDir.endsWith('littlesteps-api'));
   assert.ok(ws.reactDir && ws.reactDir.endsWith('littlesteps-react'));
   assert.ok(ws.flutterDir && ws.flutterDir.endsWith('LittleSteps'));
+});
+
+test('loadDemoSeedConfig loads and validates external JSON seed file', () => {
+  const cfg = loadDemoSeedConfig(DEFAULT_SEED_FILE);
+  assert.equal(cfg.seedFilePath, DEFAULT_SEED_FILE);
+  assert.ok(cfg.caregiver.email.includes('@'));
+  assert.ok(cfg.caregiver.password.length >= 6);
+  assert.ok(cfg.children.length >= 1);
+  assert.ok(Array.isArray(cfg.children[0].plans));
+
+  const tmpFile = path.join(os.tmpdir(), `littlesteps-seed-test-${Date.now()}.json`);
+  try {
+    fs.writeFileSync(
+      tmpFile,
+      JSON.stringify({
+        caregiver: { email: 'custom@example.com', password: 'Secret123!' },
+        children: [{ nickname: 'Kai', ageBand: '36-47m' }],
+      }),
+      'utf8'
+    );
+    const custom = loadDemoSeedConfig(tmpFile);
+    assert.equal(custom.caregiver.email, 'custom@example.com');
+    assert.equal(custom.children.length, 1);
+    assert.equal(custom.children[0].nickname, 'Kai');
+    assert.deepEqual(custom.children[0].plans, []);
+
+    fs.writeFileSync(
+      tmpFile,
+      JSON.stringify({
+        caregiver: { email: 'bad@example.com', password: 'Secret123!' },
+        children: [{ nickname: 'Bad', ageBand: '99-100m' }],
+      }),
+      'utf8'
+    );
+    assert.throws(() => loadDemoSeedConfig(tmpFile), /ageBand/);
+  } finally {
+    if (fs.existsSync(tmpFile)) fs.unlinkSync(tmpFile);
+  }
+});
+
+test('resolveSeedDate supports explicit ISO dates and relative dayOffset', () => {
+  const base = new Date('2026-12-01T12:00:00.000Z');
+  assert.equal(resolveSeedDate({ dayOffset: 0, baseDate: base }), '2026-12-01');
+  assert.equal(resolveSeedDate({ dayOffset: -2, baseDate: base }), '2026-11-29');
+  assert.equal(resolveSeedDate({ explicitDate: '2026-11-15', dayOffset: 0, baseDate: base }), '2026-11-15');
 });

@@ -30,10 +30,7 @@ export const EMULATOR_API_BASE = `http://127.0.0.1:5001/${EMULATOR_PROJECT_ID}/a
 export const EMULATOR_HEALTH_URL = `${EMULATOR_API_BASE}/health`;
 export const EMULATOR_AUTH_BASE = 'http://127.0.0.1:9099/identitytoolkit.googleapis.com/v1';
 
-export const DEMO_CREDENTIALS = {
-  email: 'littlesteps@demo.com',
-  password: 'Password123!',
-};
+export const VALID_AGE_BANDS = ['0-5m', '6-11m', '12-23m', '24-35m', '36-47m', '48-59m', '60-71m'];
 
 export const ANDROID_APP_ID = 'edu.wvsu.cict.titans.littlesteps';
 

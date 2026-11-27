@@ -2,7 +2,6 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import {
-  DEMO_CREDENTIALS,
   EMULATOR_API_BASE,
   EMULATOR_HEALTH_URL,
   EMULATOR_PORTS,
@@ -186,7 +185,7 @@ export async function runStartCommand(ws, opts) {
     spin.stop('Firebase Emulators ready.');
   }
 
-  await seedDemoData(ws, { mode: demoDataMode });
+  const seedConfig = await seedDemoData(ws, { mode: demoDataMode, seedFile: opts.seedFile || '' });
 
   // Android device setup
   if (adbReverse || installApkMode !== 'none' || startScrcpy) {
@@ -273,8 +272,13 @@ export async function runStartCommand(ws, opts) {
     ...(target === 'react' || target === 'all' ? [`React Web Client:     ${c.cyan('http://localhost:5173')}`] : []),
     `Firebase Emulator UI: ${c.cyan('http://localhost:4000')}`,
     `Functions REST API:   ${c.cyan(EMULATOR_API_BASE)}`,
-    '',
-    `Demo Login: ${c.bold(DEMO_CREDENTIALS.email)} / ${c.bold(DEMO_CREDENTIALS.password)}`,
+    ...(seedConfig?.caregiver
+      ? [
+          '',
+          `Demo Login: ${c.bold(seedConfig.caregiver.email)} / ${c.bold(seedConfig.caregiver.password)}`,
+          `Seed File:  ${c.dim(seedConfig.seedFilePath)}`,
+        ]
+      : []),
   ];
   ui.note(summaryLines.join('\n'), 'LittleSteps Services Running');
 

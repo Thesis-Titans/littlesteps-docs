@@ -107,8 +107,8 @@ export async function runWizardCommand(ws, scriptPath) {
     clack.select({
       message: 'Demo data state?',
       options: [
-        { value: 'seeded', label: 'Seeded 3-child family', hint: '23 catalog activities + Maya, Leo, Tala' },
-        { value: 'empty', label: 'Empty onboarding state', hint: '23 catalog activities + 0 children' },
+        { value: 'seeded', label: 'Seeded demo family', hint: 'Firestore catalogs + seed/demo-family.json profiles' },
+        { value: 'empty', label: 'Empty onboarding state', hint: 'Firestore catalogs + 0 children' },
       ],
       initialValue: 'seeded',
     })

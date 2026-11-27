@@ -4,7 +4,10 @@ import { seedDemoData } from '../lib/seeder.mjs';
 import { ensureRequiredRepos } from '../lib/workspace.mjs';
 import { c, ui } from '../lib/ui.mjs';
 
-export async function runSeedCommand(ws, { mode = 'seeded', catalogOnly = false, noInput = false } = {}) {
+export async function runSeedCommand(
+  ws,
+  { mode = 'seeded', catalogOnly = false, seedFile = '', noInput = false } = {}
+) {
   ui.intro('LittleSteps Emulator Seeder');
   await ensureRequiredRepos(ws, { needApi: true, noInput });
 
@@ -17,7 +20,7 @@ export async function runSeedCommand(ws, { mode = 'seeded', catalogOnly = false,
     }
   }
 
-  await seedDemoData(ws, { mode, catalogOnly });
+  await seedDemoData(ws, { mode, catalogOnly, seedFile });
   ui.outro(c.green('Seeding complete.'));
   return EXIT_OK;
 }

@@ -1,16 +1,103 @@
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { DEMO_CREDENTIALS, EMULATOR_API_BASE, EMULATOR_AUTH_BASE } from './constants.mjs';
+import { fileURLToPath } from 'node:url';
+import { EMULATOR_API_BASE, EMULATOR_AUTH_BASE, VALID_AGE_BANDS } from './constants.mjs';
 import { sleep } from './process.mjs';
 import { ui } from './ui.mjs';
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+export const SEED_DIR = path.resolve(__dirname, '..', 'seed');
+export const DEFAULT_SEED_FILE = path.join(SEED_DIR, 'demo-family.json');
+export const LOCAL_SEED_FILE = path.join(SEED_DIR, 'demo-family.local.json');
+
 /**
- * Seeds the Firestore emulator `catalog_activities` collection via littlesteps-api's canonical script.
+ * Resolves the demo family JSON seed file in priority order:
+ * 1. Explicit `--seed-file <path>` flag
+ * 2. `LITTLESTEPS_DEMO_SEED_FILE` environment variable
+ * 3. Local gitignored override `scripts/demo-cli/seed/demo-family.local.json`
+ * 4. Default tracked fixture `scripts/demo-cli/seed/demo-family.json`
+ */
+export function resolveSeedFilePath(explicitPath = '') {
+  const requested = (explicitPath || process.env.LITTLESTEPS_DEMO_SEED_FILE || '').trim();
+  if (requested) return path.resolve(process.cwd(), requested);
+  if (fs.existsSync(LOCAL_SEED_FILE)) return LOCAL_SEED_FILE;
+  return DEFAULT_SEED_FILE;
+}
+
+/**
+ * Resolves an ISO `YYYY-MM-DD` date from either an explicit string or a relative `dayOffset`.
+ */
+export function resolveSeedDate({ explicitDate, dayOffset = 0, baseDate = new Date() } = {}) {
+  if (typeof explicitDate === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(explicitDate.trim())) {
+    return explicitDate.trim();
+  }
+  const offset = Number.isInteger(dayOffset) ? dayOffset : 0;
+  const d = new Date(baseDate.getTime());
+  d.setDate(d.getDate() + offset);
+  return d.toISOString().slice(0, 10);
+}
+
+/**
+ * Loads and validates the external JSON demo family seed file.
+ */
+export function loadDemoSeedConfig(explicitPath = '') {
+  const seedFilePath = resolveSeedFilePath(explicitPath);
+  if (!fs.existsSync(seedFilePath)) {
+    throw new Error(`Demo seed file not found: ${seedFilePath}`);
+  }
+
+  let parsed;
+  try {
+    parsed = JSON.parse(fs.readFileSync(seedFilePath, 'utf8'));
+  } catch (err) {
+    throw new Error(`Invalid JSON in demo seed file (${seedFilePath}): ${err.message}`);
+  }
+
+  const email = parsed?.caregiver?.email;
+  const password = parsed?.caregiver?.password;
+  if (typeof email !== 'string' || !email.trim() || typeof password !== 'string' || !password.trim()) {
+    throw new Error(`Demo seed file (${seedFilePath}) must define non-empty caregiver.email and caregiver.password.`);
+  }
+
+  if (!Array.isArray(parsed.children)) {
+    throw new Error(`Demo seed file (${seedFilePath}) must define a "children" array.`);
+  }
+
+  const validBands = new Set(VALID_AGE_BANDS);
+  const children = parsed.children.map((child, idx) => {
+    if (!child || typeof child.nickname !== 'string' || !child.nickname.trim()) {
+      throw new Error(`Demo seed file (${seedFilePath}): children[${idx}].nickname must be a non-empty string.`);
+    }
+    if (!validBands.has(child.ageBand)) {
+      throw new Error(
+        `Demo seed file (${seedFilePath}): children[${idx}].ageBand "${child.ageBand}" must be one of ${VALID_AGE_BANDS.join(', ')}.`
+      );
+    }
+    return {
+      nickname: child.nickname.trim(),
+      ageBand: child.ageBand,
+      plans: Array.isArray(child.plans) ? child.plans : [],
+      milestones: Array.isArray(child.milestones) ? child.milestones : [],
+      journal: Array.isArray(child.journal) ? child.journal : [],
+      books: Array.isArray(child.books) ? child.books : [],
+    };
+  });
+
+  return {
+    seedFilePath,
+    caregiver: { email: email.trim(), password },
+    children,
+  };
+}
+
+/**
+ * Seeds the Firestore emulator catalog collections (`catalog_activities`, `catalog_milestones`,
+ * `catalog_rhymes`) via littlesteps-api's canonical script.
  */
 export function seedCatalogEmulator(ws) {
   if (!ws?.apiDir) {
-    ui.warn('[Catalog] littlesteps-api directory not found; skipping catalog_activities seed.');
+    ui.warn('[Catalog] littlesteps-api directory not found; skipping Firestore catalog seed.');
     return false;
   }
   const seedScript = path.join(ws.apiDir, 'scripts', 'seed-catalog.mjs');
@@ -32,15 +119,16 @@ export function seedCatalogEmulator(ws) {
 }
 
 /**
- * Idempotently seeds Firestore `catalog_activities` and the local demo family (Maya, Leo, Tala)
- * or clears children to 0 when `mode === 'empty'`.
+ * Idempotently seeds Firestore catalog collections and the local demo family defined in the
+ * external JSON seed file, or clears children to 0 when `mode === 'empty'`.
  */
-export async function seedDemoData(ws, { mode = 'seeded', catalogOnly = false } = {}) {
+export async function seedDemoData(ws, { mode = 'seeded', catalogOnly = false, seedFile = '' } = {}) {
   seedCatalogEmulator(ws);
-  if (catalogOnly) return;
+  if (catalogOnly) return null;
 
+  const config = loadDemoSeedConfig(seedFile);
   const apiBase = `${EMULATOR_API_BASE}/api/v1`;
-  const creds = { ...DEMO_CREDENTIALS, returnSecureToken: true };
+  const creds = { ...config.caregiver, returnSecureToken: true };
 
   let token = '';
   for (let attempt = 0; attempt < 5 && !token; attempt++) {
@@ -65,30 +153,26 @@ export async function seedDemoData(ws, { mode = 'seeded', catalogOnly = false } 
 
   if (!token) {
     ui.warn('[Demo Data] Could not authenticate demo account; register via the app.');
-    return;
+    return config;
   }
 
   const authHeaders = { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' };
   const listRes = await fetch(`${apiBase}/children`, { headers: authHeaders });
-  const children = listRes.ok ? await listRes.json() : [];
+  const existingChildren = listRes.ok ? await listRes.json() : [];
 
   if (mode === 'empty') {
-    for (const child of Array.isArray(children) ? children : []) {
+    for (const child of Array.isArray(existingChildren) ? existingChildren : []) {
       await fetch(`${apiBase}/children/${child.id}`, { method: 'DELETE', headers: authHeaders });
     }
     ui.success('[Demo Data] Empty onboarding state ready (0 children).');
-    return;
+    return config;
   }
 
-  const fmtDate = (offsetDays) => {
-    const d = new Date();
-    d.setDate(d.getDate() + offsetDays);
-    return d.toISOString().slice(0, 10);
-  };
-  const [today, d1, d2, d5, d7, d8] = [0, -1, -2, -5, -7, -8].map(fmtDate);
+  const now = new Date();
+  const seededNames = [];
 
   async function ensureChild(nickname, ageBand) {
-    const existing = Array.isArray(children) ? children.find((c) => c.nickname === nickname) : null;
+    const existing = Array.isArray(existingChildren) ? existingChildren.find((c) => c.nickname === nickname) : null;
     if (existing?.id) return existing.id;
     const res = await fetch(`${apiBase}/children`, {
       method: 'POST',
@@ -99,127 +183,77 @@ export async function seedDemoData(ws, { mode = 'seeded', catalogOnly = false } 
     return created.id || null;
   }
 
-  const mayaId = await ensureChild('Maya', '12-23m');
-  const leoId = await ensureChild('Leo', '6-11m');
-  const talaId = await ensureChild('Tala', '24-35m');
+  for (const child of config.children) {
+    const childId = await ensureChild(child.nickname, child.ageBand);
+    if (!childId) continue;
+    seededNames.push(child.nickname);
 
-  if (mayaId) {
-    const plans = await (await fetch(`${apiBase}/children/${mayaId}/plans`, { headers: authHeaders })).json();
-    if (Array.isArray(plans) && plans.length === 0) {
-      for (const p of [
-        { activityId: 'act-008', scheduledDate: today, status: 'planned' },
-        { activityId: 'act-003', scheduledDate: today, status: 'completed' },
-        { activityId: 'act-009', scheduledDate: d1, status: 'completed' },
-        { activityId: 'act-010', scheduledDate: d2, status: 'completed' },
-        { activityId: 'act-008', scheduledDate: d7, status: 'completed' },
-        { activityId: 'act-003', scheduledDate: d8, status: 'completed' },
-      ]) {
-        await fetch(`${apiBase}/children/${mayaId}/plans`, {
-          method: 'POST',
-          headers: authHeaders,
-          body: JSON.stringify(p),
-        });
+    if (child.plans.length > 0) {
+      const existingPlans = await (await fetch(`${apiBase}/children/${childId}/plans`, { headers: authHeaders })).json();
+      if (Array.isArray(existingPlans) && existingPlans.length === 0) {
+        for (const p of child.plans) {
+          await fetch(`${apiBase}/children/${childId}/plans`, {
+            method: 'POST',
+            headers: authHeaders,
+            body: JSON.stringify({
+              activityId: p.activityId,
+              scheduledDate: resolveSeedDate({ explicitDate: p.scheduledDate, dayOffset: p.dayOffset, baseDate: now }),
+              status: p.status || 'planned',
+            }),
+          });
+        }
       }
     }
 
-    const ms = await (await fetch(`${apiBase}/children/${mayaId}/milestones`, { headers: authHeaders })).json();
-    if (Array.isArray(ms) && ms.length === 0) {
-      for (const m of [
-        {
-          milestoneId: 'lan-12-01',
-          status: 'observed',
-          observedDate: today,
-          notes: 'Smiled, turned head when called, and pointed to her cup.',
-        },
-        {
-          milestoneId: 'mot-12-01',
-          status: 'observed',
-          observedDate: d2,
-          notes: 'Walked four steady steps across the mat toward a cushion.',
-        },
-        {
-          milestoneId: 'cog-12-01',
-          status: 'observed',
-          observedDate: d5,
-          notes: 'Nested two plastic cups together after watching once.',
-        },
-      ]) {
-        await fetch(`${apiBase}/children/${mayaId}/milestones`, {
-          method: 'POST',
-          headers: authHeaders,
-          body: JSON.stringify(m),
-        });
+    if (child.milestones.length > 0) {
+      const existingMs = await (await fetch(`${apiBase}/children/${childId}/milestones`, { headers: authHeaders })).json();
+      if (Array.isArray(existingMs) && existingMs.length === 0) {
+        for (const m of child.milestones) {
+          await fetch(`${apiBase}/children/${childId}/milestones`, {
+            method: 'POST',
+            headers: authHeaders,
+            body: JSON.stringify({
+              milestoneId: m.milestoneId,
+              status: m.status || 'observed',
+              observedDate: resolveSeedDate({ explicitDate: m.observedDate, dayOffset: m.dayOffset, baseDate: now }),
+              notes: m.notes || '',
+            }),
+          });
+        }
       }
     }
 
-    const journal = await (await fetch(`${apiBase}/children/${mayaId}/journal`, { headers: authHeaders })).json();
-    if (Array.isArray(journal) && journal.length === 0) {
-      for (const entry of [
-        { entryDate: today, content: 'Maya enjoyed stacking empty plastic cups after breakfast.' },
-        { entryDate: d2, content: 'Sang Bahay Kubo before afternoon nap and waved both hands.' },
-        { entryDate: d5, content: 'Rainy afternoon indoors—crawled over soft pillows laughing for ten minutes.' },
-      ]) {
-        await fetch(`${apiBase}/children/${mayaId}/journal`, {
-          method: 'POST',
-          headers: authHeaders,
-          body: JSON.stringify(entry),
-        });
+    if (child.journal.length > 0) {
+      const existingJournal = await (await fetch(`${apiBase}/children/${childId}/journal`, { headers: authHeaders })).json();
+      if (Array.isArray(existingJournal) && existingJournal.length === 0) {
+        for (const entry of child.journal) {
+          await fetch(`${apiBase}/children/${childId}/journal`, {
+            method: 'POST',
+            headers: authHeaders,
+            body: JSON.stringify({
+              entryDate: resolveSeedDate({ explicitDate: entry.entryDate, dayOffset: entry.dayOffset, baseDate: now }),
+              content: entry.content,
+            }),
+          });
+        }
       }
     }
 
-    const booksRes = await (await fetch(`${apiBase}/children/${mayaId}/books`, { headers: authHeaders })).json();
-    if (Array.isArray(booksRes?.books) && booksRes.books.length === 0) {
-      for (const b of [
-        {
-          id: 'OL45804W',
-          title: 'Goodnight Moon',
-          authors: ['Margaret Wise Brown'],
-          coverUrl: 'https://covers.openlibrary.org/b/id/8225266-M.jpg?default=false',
-          subjects: ['Bedtime', 'Stories in rhyme'],
-        },
-        {
-          id: 'OL1968368W',
-          title: 'The Very Hungry Caterpillar',
-          authors: ['Eric Carle'],
-          coverUrl: 'https://covers.openlibrary.org/b/id/8231990-M.jpg?default=false',
-          subjects: ['Picture books', 'Animals', 'Counting'],
-        },
-      ]) {
-        await fetch(`${apiBase}/children/${mayaId}/books`, {
-          method: 'POST',
-          headers: authHeaders,
-          body: JSON.stringify(b),
-        });
+    if (child.books.length > 0) {
+      const existingBooks = await (await fetch(`${apiBase}/children/${childId}/books`, { headers: authHeaders })).json();
+      if (Array.isArray(existingBooks?.books) && existingBooks.books.length === 0) {
+        for (const b of child.books) {
+          await fetch(`${apiBase}/children/${childId}/books`, {
+            method: 'POST',
+            headers: authHeaders,
+            body: JSON.stringify(b),
+          });
+        }
       }
     }
   }
 
-  if (leoId) {
-    const plans = await (await fetch(`${apiBase}/children/${leoId}/plans`, { headers: authHeaders })).json();
-    if (Array.isArray(plans) && plans.length === 0) {
-      await fetch(`${apiBase}/children/${leoId}/plans`, {
-        method: 'POST',
-        headers: authHeaders,
-        body: JSON.stringify({ activityId: 'act-002', scheduledDate: today, status: 'planned' }),
-      });
-      await fetch(`${apiBase}/children/${leoId}/plans`, {
-        method: 'POST',
-        headers: authHeaders,
-        body: JSON.stringify({ activityId: 'act-012', scheduledDate: d1, status: 'completed' }),
-      });
-    }
-  }
-
-  if (talaId) {
-    const plans = await (await fetch(`${apiBase}/children/${talaId}/plans`, { headers: authHeaders })).json();
-    if (Array.isArray(plans) && plans.length === 0) {
-      await fetch(`${apiBase}/children/${talaId}/plans`, {
-        method: 'POST',
-        headers: authHeaders,
-        body: JSON.stringify({ activityId: 'act-004', scheduledDate: d7, status: 'completed' }),
-      });
-    }
-  }
-
-  ui.success('[Demo Data] Seeded 3-child family ready (Maya, Leo, Tala).');
+  const label = seededNames.length > 0 ? `${seededNames.length}-child family ready (${seededNames.join(', ')})` : '0 children seeded';
+  ui.success(`[Demo Data] ${label} from ${path.basename(config.seedFilePath)}.`);
+  return config;
 }

@@ -46,7 +46,7 @@ node littlesteps-docs/scripts/demo-cli/run-demo.mjs
 | `doctor [--json]` | Verify prerequisites, workspace repos, `catalog_activities` seed script, Gemini config, and ADB devices |
 | `status [--json]` | Inspect active demo ports (`4000, 5001, 8080, 9099, 5173, 5174`) and connected ADB devices |
 | `stop` | Cleanly stop all processes listening on LittleSteps demo ports |
-| `seed [--mode seeded\|empty] [--catalog-only]` | Seed Firestore `catalog_activities` (23 items) and demo family against running emulators |
+| `seed [--mode seeded\|empty] [--seed-file <path>] [--catalog-only]` | Seed Firestore catalogs (`activities`, `milestones`, `rhymes`) and demo family JSON against running emulators |
 | `android connect` | Interactive USB / Wireless Debugging pair & connect helper |
 | `android apk --env <local\|prod>` | Validate config, build arm64 release APK, install via ADB, and launch (`prod` skips local emulators) |
 | `android mirror [--always-on-top] [--fps 60\|90\|120]` | Launch `scrcpy` phone mirroring & laptop control |
@@ -93,10 +93,14 @@ Repositories are discovered automatically in this order:
 
 ---
 
-## Demo Caregiver Credentials (Local Emulator Only)
+## Editable Demo Seed Data (Local Emulator Only)
 
-- **Email:** `littlesteps@demo.com`
-- **Password:** `Password123!`
-- **Seeded profiles:** `Maya (12-23m)`, `Leo (6-11m)`, `Tala (24-35m)` + 23 curated `catalog_activities` documents in Firestore.
+All demo caregiver credentials, child profiles, plans, milestones, journal entries, and saved books are stored in a plain JSON fixture — nothing is hardcoded in JavaScript:
 
-> **Secrets safety:** The CLI only writes local emulator defaults (`demo-littlesteps`) into `.env` / `.env.local` if those files do not exist. Never commit `.env`, `.env.local`, `config/production.json`, or Android signing keys.
+- **Default tracked fixture:** `scripts/demo-cli/seed/demo-family.json`
+- **Local gitignored override:** copy to `scripts/demo-cli/seed/demo-family.local.json` to customize your demo family freely without modifying tracked files
+- **Explicit override:** pass `--seed-file <path>` to `start` or `seed`, or set `LITTLESTEPS_DEMO_SEED_FILE=<path>`
+- **Relative dates:** use `"dayOffset": 0` (today), `-1` (yesterday), `-7`, etc., or specify an explicit ISO date (`"scheduledDate"`, `"observedDate"`, `"entryDate"`)
+- **Catalog collections:** seeded automatically from `littlesteps-api/seed/catalog-*.json` (`catalog_activities`, `catalog_milestones`, `catalog_rhymes`)
+
+> **Secrets safety:** The CLI only writes local emulator defaults (`demo-littlesteps`) into `.env` / `.env.local` if those files do not exist. Never commit `.env`, `.env.local`, `seed/*.local.json`, `config/production.json`, or Android signing keys.

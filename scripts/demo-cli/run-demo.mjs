@@ -130,6 +130,7 @@ export function buildProgram(ws) {
     .command('start [target]')
     .description('Start local Firebase Emulators, seed catalog/demo data, and launch clients (all|react|flutter|android|api)')
     .option('--data <mode>', 'Demo family data state: seeded | empty', 'seeded')
+    .option('--seed-file <path>', 'Custom JSON seed file path (overrides seed/demo-family.json)')
     .option('--db <mode>', 'Emulator persistence: persist | fresh | reset', 'persist')
     .option('-d, --device <id>', 'Flutter target device (web-server, chrome, linux) or ADB serial')
     .option('--adb-reverse', 'Forward local emulator ports (5001, 9099) to Android phone')
@@ -184,14 +185,16 @@ export function buildProgram(ws) {
 
   program
     .command('seed')
-    .description('Seed Firestore emulator catalog_activities and demo caregiver family')
+    .description('Seed Firestore emulator catalogs and demo caregiver family from JSON')
     .option('--mode <mode>', 'Family data mode: seeded | empty', 'seeded')
-    .option('--catalog-only', 'Only seed Firestore catalog_activities (skip demo family)')
+    .option('--seed-file <path>', 'Custom JSON seed file path (overrides seed/demo-family.json)')
+    .option('--catalog-only', 'Only seed Firestore catalog collections (skip demo family)')
     .option('--no-input', 'Disable interactive prompts')
     .action(async (cmdOpts) => {
       const globalOpts = program.opts();
       const code = await runSeedCommand(ws, {
         mode: cmdOpts.mode,
+        seedFile: cmdOpts.seedFile || '',
         catalogOnly: Boolean(cmdOpts.catalogOnly),
         noInput: cmdOpts.input === false || globalOpts.input === false,
       });
