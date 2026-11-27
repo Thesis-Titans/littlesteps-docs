@@ -271,8 +271,7 @@ The Flutter app lives in the course fork under `BSIT-3A/LittleSteps` and talks t
 - [Security, Privacy, and AI Safeguards](security-privacy-ai.md) — Philippine Data Privacy Act (RA 10173), BOLA defenses, and AI safety controls.
 - [Traceability Matrix](traceability-matrix.md) — Requirements-to-tests and CIT 210 rubric mapping.
 - [UI/UX Design Specification](ui-ux-design-specification.md) — Human-computer interaction principles and responsive layout frames.
-- [Prototype Traceability & Storyboards](prototype-traceability-storyboards.md) — Provisional caregiver scenarios and walkthrough acceptance checklist.
-- [Parent Walkthrough Guide](parent-walkthrough-guide.md) — Informal caregiver usability protocol and consent script.
+- [Usability & Design Evaluation](usability-and-design-evaluation.md) — Provisional caregiver storyboards, informal walkthrough protocol, heuristic audit, and design review checklist.
 - [Development Workflow](development-workflow.md) — Branch and review policies, testing gates, and verification standards.
 - [Execution Plan](execution-plan.md) — Milestone delivery schedule, sprint allocations, and academic dates.
 - [Documentation Standards](documentation-standards.md) — 3-tier hierarchy and Diátaxis governance framework.

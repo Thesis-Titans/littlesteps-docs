@@ -60,10 +60,7 @@ All system-wide specifications live in `docs/` and follow ISO/IEC/IEEE, PMBOK, O
 ### 3. UI/UX Design & Usability Evaluation
 - [Design System Brief (DESIGN.md)](docs/DESIGN.md) (ISO 9241 / WCAG 2.2 AA): machine-readable token brief, color/type/spacing rules, component inventory, and React/Flutter agent guidance.
 - [UI/UX Design Specification](docs/ui-ux-design-specification.md) (ISO 9241 / WCAG 2.2 AA): HCI principles, ergonomic targets, voice and wording rules, 5-state interaction matrix, and Flutter Material 3 adaptation.
-- [Prototype Traceability & Storyboards](docs/prototype-traceability-storyboards.md) (ISO 9241): provisional caregiver scenarios, minimal prototype scope, and walkthrough acceptance criteria.
-- [Parent Walkthrough Guide](docs/parent-walkthrough-guide.md) (ISO 9241-11:2018): informal caregiver field protocol, ethical consent script, task matrix, and findings template.
-- [Design Review Rubric](docs/design-review-rubric.md) (WCAG 2.2 AA): written code and design review checklist.
-- [Heuristic Evaluation](docs/heuristic-evaluation.md) (Nielsen 10 Heuristics): team usability evaluation guide and baseline enhancements.
+- [Usability & Design Evaluation](docs/usability-and-design-evaluation.md) (ISO 9241-11 / Nielsen Heuristics / WCAG 2.2 AA): M0 prototype storyboards, informal caregiver walkthrough protocol, heuristic audit, and React/Flutter/Figma design review rubric.
 
 ### 4. Content Provenance & Research
 - [Philippine Content Provenance](docs/philippine-content-provenance.md) (RA 12199 / ECCD / DepEd): statutory baseline, item-level provenance schemas, catalog source verification, and non-diagnostic review gates.
