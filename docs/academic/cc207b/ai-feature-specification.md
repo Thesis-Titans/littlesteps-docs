@@ -135,7 +135,7 @@ Every model reply passes two server-side validation gates before reaching the cl
 |---|---|---|---|
 | Tier 1 | Cloud Gemini REST provider with circuit breaker | 8,000 ms timeout; 64 KB response byte cap; circuit breaker opens for 60 s after 3 consecutive failures | Default path when API key and model are configured |
 | Tier 2 | Rule-based activity adaptation | Local execution (< 5 ms) | Used only by `POST /api/v1/ai/adapt` when Tier 1 fails or is rejected |
-| Tier 3 | Deterministic reviewed catalog ranking | Local execution (< 5 ms); no external network calls | Used by `/recommendations` and `/story-activity` on timeout, API error, open circuit, unconfigured provider, or validation failure |
+| Tier 3 | Deterministic reviewed catalog ranking | Cached Firestore catalog (5-min TTL); deterministic ranking | Used by `/recommendations` and `/story-activity` on timeout, API error, open circuit, unconfigured provider, or validation failure |
 
 All AI routes enforce fixed-window hourly rate limits of 10 requests per authenticated user (persisted via Firestore transactions) and 30 requests per IP address. Exceeding either cap returns HTTP `429 RATE_LIMITED` with a `Retry-After` header; the mobile app displays a `"Taking a short break"` wait notice alongside safe non-AI catalog picks (`Catalog picks · not AI`) so caregivers never hit a dead end. Any other network, timeout, or upstream error falls back cleanly to constrained reviewed catalog picks under a `"Using our activity list"` banner with zero AI labels and a `"Try again"` action—and if no catalog items can be loaded offline, displays an explicit `"No matching play ideas yet"` recovery card.
 
