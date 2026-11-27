@@ -8,10 +8,10 @@
 
 This directory contains the academic course evaluation packages and deliverables for **LittleSteps**, fulfilling the separate requirements of three coordinated courses in the West Visayas State University (WVSU) Bachelor of Science in Information Technology (BSIT) program. Each course page summarizes the instructor's own brief; where a page and the brief differ, the brief wins.
 
-| Course | Team | Instructor brief on file | Final due |
+| Course | Team | Instructor brief on file | Presentation / Final Due |
 |---|---|---|---|
-| CIT 246 — IT Project Management | 3 members | Yes | December 2, 2026 |
-| CC 207B — Applications Development and Emerging Technologies | 5 members | Yes | December 2, 2026 |
+| CIT 246 — IT Project Management *(simulated PMP exercise)* | 3 members | Yes | December 2, 2026 |
+| CC 207B — Applications Development and Emerging Technologies | 5 members | Yes | December 1, 2026, 7:00 AM *(LMS upload completes Dec 2)* |
 | CIT 210 — Web Systems and Technologies | 5 members | Yes (Official Rubric on file) | December 2, 2026 |
 
 ---
@@ -36,4 +36,5 @@ Governed by the [Official CC 207B Final Project Requirements](cc207b/CC207B_Fina
 ### 3. [CIT 210 — Web Systems and Technologies](cit210/README.md)
 Governed by the [Official CIT 210 Evaluation Rubric](cit210/CIT210_Final_Project_Requirements.md). Covers the React web client, shared Node.js/TypeScript API, and database integration. Evaluated on a 100-point rubric: Application Development (65%) and Presentation (35%).
 - **Technical Contract:** Canonical OpenAPI contract maintained in the [API repository OpenAPI specification](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml).
+- **Live Demo & Rehearsal:** Operational classroom demo plan in [Demonstration Environment & Rehearsal Plan](cit210/demo-environment-and-rehearsal.md).
 - **Local Onboarding:** Step-by-step full-stack local setup in [Developer Onboarding Guide](../getting-started.md).

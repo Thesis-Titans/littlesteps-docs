@@ -37,7 +37,7 @@ LittleSteps (5 members, 6 required): child profile, milestone observation prompt
 | c | At least one form with input validation and clear error feedback | Child profile form (J1); also the observation and journal forms |
 | d | Data persistence (local storage or a cloud database such as Firebase) | Firestore through the shared API; local storage for drafts and the dismissed advisory |
 | e | Asynchronous operations with visible loading, empty and error states | UI/UX spec §7 state matrix |
-| f | Folders organized by purpose (for example `screens`, `widgets`, `models`, `services`, `assets`), with comments describing each significant part of the code | Done in the scaffold commit (`lib/screens`, `lib/widgets`, `lib/models`, `lib/services`, `lib/theme`, `lib/routing`) |
+| f | Folders organized by purpose (for example `screens`, `widgets`, `models`, `services`, `assets`), with comments describing each significant part of the code | Organized across `lib/config`, `lib/theme`, `lib/models`, `lib/services`, `lib/utils`, `lib/routing`, `lib/widgets` (including adaptive Material 3 wrappers), and feature `lib/screens` with strict Effective Dart `///` docs (`public_member_api_docs`) |
 
 ## 2. AI-Powered Feature Requirement
 
@@ -48,7 +48,7 @@ The end user must **directly interact** with the AI feature; using AI only to he
 | a. Relevance | Solves a real problem in the app, and the group can explain why AI fits better than ordinary program logic | AI helper (FR-06). The argument for AI: caregivers describe materials in free text ("recycled boxes, plastic cups"), which simple keyword filters match poorly. This needs to be stated clearly in the AI Feature Specification. |
 | b. Security | API keys and secrets are never committed | Gemini key in server configuration only ([ADR-008](../../architecture-decisions.md)) |
 | c. Graceful failure | Loading states, timeout and service-error handling, and a usable fallback when the AI is unavailable or returns an unusable result | 8-second timeout, deterministic catalog fallback, rate-limited state (UI/UX spec §7 J6) |
-| d. Responsible use | AI content is labelled, users can correct or override it, and only the personal data the feature needs is collected (RA 10173) | AI badge and disclaimer; Change answers, Not this one and Generate another; prompts carry no personal data |
+| d. Responsible use | AI content is labelled, users can correct or override it, and only the personal data the feature needs is collected (RA 10173) | `"Suggested by AI"` / `"Material adaptation"` badges and observational disclaimer; `"Edit preferences"` and `"Another idea"` controls; prompts carry zero personal data |
 
 ## 3. AI Use Policy (for completing the project)
 
@@ -115,9 +115,9 @@ Five points are deducted from the project score raw for each calendar day late, 
 | Item | Status |
 |---|---|
 | Six core features, technical requirements, AI criteria | Specified: product scope FR-01 to FR-06, UI/UX spec, Flutter issues #2–#13 |
-| Real or realistic client | **Decided:** CSWDO La Paz–Lapuz District office as a realistic client; no direct contact by team decision, informal parent walkthrough conducted instead (trade-off accepted per execution-plan §8.1) |
+| Real or realistic client | **Decided:** Grounded in Iloilo/Western Visayas early-learning families and public Philippine ECCD/DepEd frameworks, validated through informal parent walkthroughs; the separate CIT 246 course simulates an IT Project Management Plan for the CSWDO La Paz–Lapuz District office. |
 | UI follows the prototypes presented earlier | **Done:** Low-fidelity wireframes (`figures/low-fi-*.png`) and high-fidelity Material 3 prototypes (`figures/hi-fi-*.png`) are documented in `software-documentation.md` §ii.2 and aligned with the Flutter implementation. |
-| Course repository to fork | **Done:** Active fork at `Thesis-Titans/CC-207B_26-27_Final-Project` (`BSIT-3A/LittleSteps`); Milestones M1–M4 are complete and merged on `main` (156/156 Flutter tests passing). |
+| Course repository to fork | **Done:** Active fork at `Thesis-Titans/CC-207B_26-27_Final-Project` (`BSIT-3A/LittleSteps`); Milestones M1–M4 are complete on `main` with M5 modularization and adaptive layout polish passing `Flutter CI/Analyze and Test`. |
 | Collaboration history | **Active across all 5 members:** Feature branches, pull requests, and reviews from `@markalvincadangin`, `@Justin-Ardena`, `@vincenttamano`, `@Lovelly143`, and `@faithbn` are merged on `main`. |
-| AI Usage Log | **Done:** AI Usage Log template at `BSIT-3A/LittleSteps/docs/ai-usage-log.md`; logging required for all AI-generated code, text, and assets in Flutter. |
-| Documentation package, presentation, reflections | Planned for M5 (course fork #11) |
+| AI Usage Log | **Done:** Maintained in `BSIT-3A/LittleSteps/docs/ai-usage-log.md` and synchronized in `software-documentation.md` §iv. |
+| Documentation package, presentation, reflections | **In final review (M5):** `software-documentation.md` (including Topic Coverage Matrix, AI Usage Log, and all 5 member reflections) and `ai-feature-specification.md` drafted; live demo rehearsal and backup video preparation underway for December 1, 7:00 AM. |

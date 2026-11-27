@@ -38,7 +38,7 @@ The recommendation request schema enforces strict object validation so any unrec
 | Field | Type and Bounds | Caregiver Input in the App |
 |---|---|---|
 | `ageBand` | Enum: `0-5m`, `6-11m`, `12-23m`, `24-35m`, `36-47m`, `48-59m`, `60-71m` | Pre-filled from the active child profile or chosen manually |
-| `setting` | Enum: `indoor`, `outdoor`, `either` (default `either`) | Setting selector (optionally informed by the local weather hint) |
+| `setting` | Enum: `indoor`, `outdoor`, `either` (default `either`) | `"Where will you play?"` selector (auto-preselected when launched from Today's symmetric Weather Hint banner) |
 | `timeMinutes` | Integer: 5 to 120 | Duration chips (`10`, `15`, `30`, `45` minutes; 30–45 minute requests group into toddler-paced Play Blocks) |
 | `materials` | Up to 10 strings, max 40 characters each (default `[]`) | Comma-separated household items trimmed and normalized server-side |
 | `language` | Enum: `en`, `fil`, `hil` | Language selector (English, Filipino, Hiligaynon) |
@@ -162,7 +162,7 @@ At the same time, an unconstrained chatbot is poorly suited to early childhood c
 
 ## 7. Privacy Considerations (RA 10173)
 
-LittleSteps follows data minimization and transparency principles aligned with the Philippine Data Privacy Act of 2012 (Republic Act No. 10173). Child profiles collect only a nickname and coarse age band—no full legal names, exact birth dates, gender, or photographs. Strict schema validation rejects extra fields so child names and caregiver IDs are never included in AI prompts. Private caregiver journals and milestone observations are stored in user-isolated Firestore subcollections and are never read by AI endpoints. Optional weather lookups round coordinates to two decimal places (~1.1 km). Every AI-backed suggestion displays the `Suggested by AI` badge and the disclaimer *"Observational play suggestion only. Not developmental assessment."*, and caregivers can change inputs, request another idea, or browse the catalog directly.
+LittleSteps follows data minimization and transparency principles aligned with the Philippine Data Privacy Act of 2012 (Republic Act No. 10173). Child profiles collect only a nickname and coarse age band—no full legal names, exact birth dates, gender, or photographs. Strict schema validation rejects extra fields so child names and caregiver IDs are never included in AI prompts. Private caregiver journals and milestone observations are stored in user-isolated Firestore subcollections and are never read by AI endpoints. Optional weather lookups round coordinates to two decimal places (~1.1 km). Every AI-backed suggestion displays the `Suggested by AI` badge (or `Material adaptation` for safe custom household items) and the disclaimer *"Observational play suggestion only. Not developmental assessment."*, and caregivers can select `"Edit preferences"`, request `"Another idea"`, or browse the catalog directly.
 
 ---
 
