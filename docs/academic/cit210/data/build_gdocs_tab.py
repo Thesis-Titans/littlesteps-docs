@@ -146,7 +146,7 @@ def build_ops():
         },
         {
             "op": "append",
-            "text": "A React Web Companion and REST API Platform for Screen-Free Early Learning",
+            "text": "Play Planning and Observation Companion for Caregivers of Young Children",
             "font_size": 12,
             "italic": True,
             "text_color": INK_MUTED,
@@ -253,24 +253,9 @@ def build_ops():
             })
             continue
 
-        # Headings
-        if stripped == "## Abstract":
-            ops.append({
-                "op": "heading",
-                "level": "1",
-                "text": "Abstract",
-                "font_family": FONT,
-                "font_size": 14,
-                "bold": True,
-                "text_color": INK_PRIMARY,
-                "space_above": 4,
-                "space_below": 6,
-            })
-            i += 1
-            continue
-
-        if stripped.startswith("# "):
-            title = stripped[2:].strip()
+        # Headings (Markdown ## -> Docs H1, ### -> Docs H2, #### -> Docs H3, matching CC 207B)
+        if stripped.startswith("## "):
+            title = stripped[3:].strip()
             ops.append({
                 "op": "heading",
                 "level": "1",
@@ -279,17 +264,17 @@ def build_ops():
                 "font_size": 14,
                 "bold": True,
                 "text_color": INK_PRIMARY,
-                "space_above": 16,
+                "space_above": 4 if title == "Abstract" else 16,
                 "space_below": 6,
             })
             i += 1
             continue
 
-        if stripped.startswith("## "):
+        if stripped.startswith("### "):
             ops.append({
                 "op": "heading",
                 "level": "2",
-                "text": stripped[3:].strip(),
+                "text": stripped[4:].strip(),
                 "font_family": FONT,
                 "font_size": 12,
                 "bold": True,
@@ -300,11 +285,11 @@ def build_ops():
             i += 1
             continue
 
-        if stripped.startswith("### "):
+        if stripped.startswith("#### "):
             ops.append({
                 "op": "heading",
                 "level": "3",
-                "text": stripped[4:].strip(),
+                "text": stripped[5:].strip(),
                 "font_family": FONT,
                 "font_size": 11,
                 "bold": True,
@@ -315,10 +300,10 @@ def build_ops():
             i += 1
             continue
 
-        # Image reference -> placeholder anchor (replaced by insert-image-from-file)
+        # Image reference -> placeholder anchor (uses .png twin for Google Docs upload)
         img_m = re.match(r"^!\[([^\]]*)\]\(([^)]+)\)$", stripped)
         if img_m:
-            rel_path = img_m.group(2)
+            rel_path = img_m.group(2).replace(".svg", ".png")
             anchor = f"[[FIG_ANCHOR_{len(fig_anchors) + 1}]]"
             fig_anchors.append((anchor, os.path.join(CIT210, rel_path)))
             ops.append({
@@ -331,8 +316,8 @@ def build_ops():
             i += 1
             continue
 
-        # Figure caption: **Fig. N.** *...*
-        fig_cap_m = re.match(r"^\*\*(Fig\.\s+\d+\.)\*\*\s+\*(.+)\*$", stripped)
+        # Figure caption: *Fig. N. ...* (matching CC 207B Markdown & Docs bold-prefix style)
+        fig_cap_m = re.match(r"^\*(Fig\.\s+\d+\.)\s+(.+)\*$", stripped)
         if fig_cap_m:
             ops.append({
                 "op": "rich-text",
@@ -347,8 +332,8 @@ def build_ops():
             i += 1
             continue
 
-        # Table caption: **Table N.** *...*
-        tbl_cap_m = re.match(r"^\*\*(Table\s+\d+\.)\*\*\s+\*(.+)\*$", stripped)
+        # Table caption: *Table N. ...* (matching CC 207B Markdown & Docs bold-prefix style)
+        tbl_cap_m = re.match(r"^\*(Table\s+\d+\.)\s+(.+)\*$", stripped)
         if tbl_cap_m:
             ops.append({
                 "op": "rich-text",
