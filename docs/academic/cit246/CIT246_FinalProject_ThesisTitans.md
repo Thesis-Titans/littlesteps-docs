@@ -1,5 +1,3 @@
-![](letters/letterhead-header.png)
-
 ![](letters/littlesteps-logo.png)
 
 # Project Management Plan: LittleSteps
@@ -14,18 +12,18 @@ Submitted in Partial Fulfillment of the Requirements for
 **CIT 246 - IT Project Management**
 
 **Submitted By:**  
-**Thesis Titans** (BSIT 3A-SDT)  
-Acebuche, Nherie C. *(Sections 5, 11, 12, 14, 17)*  
-Benjamin, Mae Daniella Faith C. *(Sections 6, 10, 15)*  
-Cadangin, Mark Alvin C. *(Sections 1–4, 7–9, 13, 16)*
+Thesis Titans — BSIT 3A-SDT  
+Acebuche, Nherie C.  
+Benjamin, Mae Daniella Faith C.  
+Cadangin, Mark Alvin C.
 
 **Submitted To:**  
 Ms. Tracy Marie Andrea C. Madresta  
 *Instructor, CIT 246 IT Project Management*  
-The OIC District Head, CSWDO La Paz–Lapuz District Office  
-*Project Sponsor*
+The OIC District Head  
+*CSWDO La Paz–Lapuz District Office (Project Sponsor)*
 
-BSIT 3A-SDT  |  December 2, 2026
+December 2, 2026
 
 ## Table of Contents
 
@@ -362,7 +360,7 @@ The shortage of CDWs and their uneven pay and training (Section 3.1) make resist
 
 # 6. Scope Statement
 
-**Scope statement version 1.2, 21 November 2026**
+**Scope statement version 1.2, 2 December 2026**
 
 ## 6.1 Project Title and Justification
 
@@ -623,7 +621,7 @@ Six work packages: the riskiest and those on the critical path. Each entry gives
 
 ## 8.1 Software and Calendar
 
-- **Software:** Project scheduling, critical path analysis (CPM forward and backward passes), and resource leveling are maintained using ProjectLibre / Microsoft Project and standardized project management workbooks. Schedule baseline tracking, milestone logs, network diagrams, and cost-loaded Gantt charts are synchronized directly from this schedule baseline model.
+- **Software:** ProjectLibre (for activity sequencing, critical path calculation, and resource leveling) and spreadsheet workbooks (for the activity list, cost baseline, and milestone tracking). Figures 8.1 and 8.2 are generated directly from the verified schedule and cost tables.
 - **Calendar:** 4 Jan 2027 to 27 Aug 2027, 166 working days (Monday to Friday). Holidays excluded: Maundy Thursday (25 March), Good Friday (26 March), Araw ng Kagitingan (9 April) and Iloilo City Charter Day (25 August). Holidays set by proclamation are not in the calendar; a weekday proclamation may move later dates by a day without changing the order of work.
 - **Resources:** two developers. Developer A builds the backend (4.1.2–4.3.3), then the journal, weekly summary and AI helper screens (5.4–5.5). Developer B builds the catalog service (4.3.1), then the remaining screens (5.1–5.3). The schedule never needs more than two developers on the same day.
 

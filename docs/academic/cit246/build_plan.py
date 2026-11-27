@@ -25,8 +25,10 @@ POWERSHELL = "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe"
 
 NAVY, BLUE, INK, GREY = (RGBColor(0x1E, 0x3A, 0x8A), RGBColor(0x1E, 0x40, 0xAF),
                          RGBColor(0x1A, 0x1A, 0x1A), RGBColor(0x64, 0x74, 0x8B))
-MARGIN = Inches(0.8)
+MARGIN = Inches(0.72)
 A4_W, A4_H = Inches(8.27), Inches(11.69)
+LETTERHEAD_HDR = os.path.join(HERE, "letters", "letterhead-header.png")
+LETTERHEAD_FTR = os.path.join(HERE, "letters", "letterhead-footer.png")
 
 # ---------------------------------------------------------------- 1. Markdown -> DOCX
 tmp = os.path.join(HERE, "_pandoc.docx")
@@ -59,26 +61,26 @@ for name in ("Normal", "Body Text", "First Paragraph", "Compact"):
     if name in st:
         font(st[name], 9.5, color=INK)
         pf = st[name].paragraph_format
-        pf.space_before, pf.space_after, pf.line_spacing = Pt(0), Pt(5), 1.1
-st["Compact"].paragraph_format.space_after = Pt(2)
-for name, size, color, before, after in (("Heading 1", 16, NAVY, 0, 10), ("Heading 2", 12.5, BLUE, 12, 4),
-                                         ("Heading 3", 11, INK, 9, 3), ("Heading 4", 10, INK, 6, 2)):
+        pf.space_before, pf.space_after, pf.line_spacing = Pt(0), Pt(4), 1.08
+st["Compact"].paragraph_format.space_after = Pt(1.5)
+for name, size, color, before, after in (("Heading 1", 15.5, NAVY, 16, 7), ("Heading 2", 12, BLUE, 10, 3.5),
+                                         ("Heading 3", 10.5, INK, 7, 2.5), ("Heading 4", 9.5, INK, 5, 2)):
     font(st[name], size, bold=True, italic=False, color=color)
     pf = st[name].paragraph_format
     pf.space_before, pf.space_after, pf.keep_with_next = Pt(before), Pt(after), True
 for name in ("Title", "Subtitle"):
-    font(st[name], 21 if name == "Title" else 11.5, bold=(name == "Title"), italic=(name == "Subtitle"),
+    font(st[name], 21 if name == "Title" else 11, bold=(name == "Title"), italic=(name == "Subtitle"),
          color=INK if name == "Title" else GREY)
     st[name].paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
     for b in st[name].element.xpath(".//w:pBdr"):
         b.getparent().remove(b)
 if "Block Text" in st:
-    font(st["Block Text"], 10, italic=False, color=INK)
+    font(st["Block Text"], 9.5, italic=False, color=INK)
     st["Block Text"].paragraph_format.left_indent = Inches(0.35)
     st["Block Text"].paragraph_format.right_indent = Inches(0.35)
 for name in ("Image Caption", "Table Caption", "Caption"):
     if name in st:
-        font(st[name], 9, italic=True, color=GREY)
+        font(st[name], 8.5, italic=True, color=GREY)
         st[name].paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
 for name in ("Hyperlink",):
     if name in st:
@@ -89,32 +91,33 @@ idx = lambda pred: next(i for i, p in enumerate(paras) if pred(p))
 
 # ---------------------------------------------------------------- 3. cover page
 toc_i = idx(lambda p: p.text.strip() == "Table of Contents")
-cover_img_n = 0
 for i, p in enumerate(paras[:toc_i]):
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     t = p.text.strip()
     if p._p.xpath(".//w:drawing"):
-        cover_img_n += 1
-        p.paragraph_format.space_before = Pt(0 if cover_img_n == 1 else 26)
-        p.paragraph_format.space_after = Pt(8 if cover_img_n == 1 else 14)
+        p.paragraph_format.space_before = Pt(32)
+        p.paragraph_format.space_after = Pt(14)
+        p.paragraph_format.line_spacing = 1.0
         p.paragraph_format.keep_with_next = False
     elif p.style.name == "Heading 1":
         p.style = st["Title"]
-        p.paragraph_format.space_before, p.paragraph_format.space_after = Pt(6), Pt(4)
+        p.paragraph_format.space_before, p.paragraph_format.space_after = Pt(4), Pt(4)
+        p.paragraph_format.line_spacing = 1.15
         p.paragraph_format.keep_with_next = False
     elif p.style.name == "Heading 2":
         p.style = st["Subtitle"]
-        p.paragraph_format.space_before, p.paragraph_format.space_after = Pt(0), Pt(22)
+        p.paragraph_format.space_before, p.paragraph_format.space_after = Pt(0), Pt(24)
+        p.paragraph_format.line_spacing = 1.2
         p.paragraph_format.keep_with_next = False
     else:
-        is_footer_line = "|" in t and "2026" in t
-        p.paragraph_format.space_before = Pt(14 if is_footer_line else 0)
-        p.paragraph_format.space_after = Pt(0 if is_footer_line else 16)
-        p.paragraph_format.line_spacing = 1.3
+        is_date = t == "December 2, 2026"
+        p.paragraph_format.space_before = Pt(18 if is_date else 0)
+        p.paragraph_format.space_after = Pt(0 if is_date else 16)
+        p.paragraph_format.line_spacing = 1.35
         for r in p.runs:
             r.font.name = "Arial"
-            if is_footer_line:
-                r.font.size = Pt(10)
+            if is_date:
+                r.font.size = Pt(10.5)
                 r.font.color.rgb = GREY
             elif r.italic:
                 r.font.size = Pt(9.5)
@@ -123,7 +126,7 @@ for i, p in enumerate(paras[:toc_i]):
                 r.font.size = Pt(10.5)
                 r.font.color.rgb = INK
             else:
-                r.font.size = Pt(10)
+                r.font.size = Pt(10.5)
                 r.font.color.rgb = GREY if r.text.strip().startswith(("Prepared for", "Submitted in Partial")) else INK
 
 # ---------------------------------------------------------------- 4. Word table of contents
@@ -145,10 +148,13 @@ for name in ("TOC 1", "TOC 2"):
     s.paragraph_format.left_indent = Inches(0 if name == "TOC 1" else 0.25)
 
 paras = doc.paragraphs
-# ---------------------------------------------------------------- 5. page breaks before main sections
+# ---------------------------------------------------------------- 5. page breaks before major document parts
+# Keep page count within the brief's 25-40 page limit by breaking only before key standalone sections
+MAJOR_BREAKS = ("2. ", "3. ", "7. ", "8. ", "17. ")
 for p in paras:
-    if p.style.name == "Heading 1" and re.match(r"\d+\. ", p.text.strip()):
+    if p.style.name == "Heading 1" and p.text.strip().startswith(MAJOR_BREAKS):
         p.paragraph_format.page_break_before = True
+        p.paragraph_format.space_before = Pt(0)
     if p.style.name == "Heading 2" and p.text.strip().startswith(("Appendix E",)):
         p.paragraph_format.page_break_before = True
 
@@ -162,8 +168,8 @@ for t in doc.tables:
         f'<w:tblBorders {nsdecls("w")}>' + "".join(
             f'<w:{s} w:val="single" w:sz="4" w:space="0" w:color="B8C2CC"/>'
             for s in ("top", "left", "bottom", "right", "insideH", "insideV")) + "</w:tblBorders>"))
-    tblPr.append(parse_xml(f'<w:tblCellMar {nsdecls("w")}><w:top w:w="35" w:type="dxa"/><w:left w:w="70" w:type="dxa"/>'
-                           '<w:bottom w:w="35" w:type="dxa"/><w:right w:w="70" w:type="dxa"/></w:tblCellMar>'))
+    tblPr.append(parse_xml(f'<w:tblCellMar {nsdecls("w")}><w:top w:w="26" w:type="dxa"/><w:left w:w="65" w:type="dxa"/>'
+                           '<w:bottom w:w="26" w:type="dxa"/><w:right w:w="65" w:type="dxa"/></w:tblCellMar>'))
     wide = len(t.columns) >= 8
     for ri, row in enumerate(t.rows):
         trPr = row._tr.get_or_add_trPr()
@@ -194,17 +200,17 @@ def scale_shape(shp, max_w, max_h, allow_upscale=False):
     shp.width, shp.height = int(w * k), int(h * k)
 
 port_w = A4_W - 2 * MARGIN
-land_w, land_h = A4_H - Inches(1.2), A4_W - Inches(2.05)
+land_w, land_h = A4_H - Inches(1.1), A4_W - Inches(2.0)
 for si, shp in enumerate(doc.inline_shapes):
     w, h = shp.width, shp.height
-    if si == 1 and abs(w - h) < w * 0.05:
+    if si == 0 and abs(w - h) < w * 0.05:
         # Centered LittleSteps rounded app logo on cover page
-        scale_shape(shp, Inches(1.25), Inches(1.25))
-    elif si > 1 and w > h and (w / h) > 1.35 and (w / h) < 1.50:
+        scale_shape(shp, Inches(1.22), Inches(1.22))
+    elif si > 0 and w > h and (w / h) > 1.35 and (w / h) < 1.50:
         # Landscape A4 figure (Figure 8.1 Network Diagram)
         scale_shape(shp, land_w, land_h, allow_upscale=True)
     else:
-        scale_shape(shp, port_w, Inches(9.0))
+        scale_shape(shp, port_w, Inches(9.2))
 
 for p in doc.paragraphs:
     if p._p.xpath(".//w:drawing"):
@@ -268,10 +274,35 @@ for i, sec in enumerate(doc.sections):
     sec.orientation = WD_ORIENT.LANDSCAPE if landscape else WD_ORIENT.PORTRAIT
     sec.page_width, sec.page_height = (A4_H, A4_W) if landscape else (A4_W, A4_H)
     for m in ("top_margin", "bottom_margin", "left_margin", "right_margin"):
-        setattr(sec, m, Inches(0.6) if landscape else MARGIN)
-    sec.header_distance = sec.footer_distance = Inches(0.35)
+        setattr(sec, m, Inches(0.55) if landscape else MARGIN)
+    sec.header_distance = sec.footer_distance = Inches(0.32)
     header_footer(sec, sec.page_width - sec.left_margin - sec.right_margin)
-doc.sections[0].different_first_page_header_footer = True
+
+# Cover page uses the official WVSU CICT letterhead header & footer from client-request-letter.docx
+sec0 = doc.sections[0]
+sec0.different_first_page_header_footer = True
+for part, img_path, w_in in (
+    (sec0.first_page_header, LETTERHEAD_HDR, 7.15),
+    (sec0.first_page_footer, LETTERHEAD_FTR, 7.15),
+):
+    part.is_linked_to_previous = False
+    p = part.paragraphs[0]
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p.paragraph_format.space_before = Pt(0)
+    p.paragraph_format.space_after = Pt(0)
+    p.add_run().add_picture(img_path, width=Inches(w_in))
+
+# Set Word compatibilityMode=15 so Word opens natively without legacy Compatibility Mode line clipping
+compat = doc.settings.element.find(qn("w:compat"))
+if compat is None:
+    compat = OxmlElement("w:compat")
+    doc.settings.element.append(compat)
+for cs in list(compat.findall(qn("w:compatSetting"))):
+    if cs.get(qn("w:name")) == "compatibilityMode":
+        compat.remove(cs)
+compat.append(parse_xml(
+    f'<w:compatSetting {nsdecls("w")} w:name="compatibilityMode" '
+    'w:uri="http://schemas.microsoft.com/office/word" w:val="15"/>'))
 
 doc.save(DOCX)
 print("wrote", DOCX)
