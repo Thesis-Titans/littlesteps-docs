@@ -1,37 +1,35 @@
 # CIT 210 / CC 207B — Demonstration Environment & Rehearsal Plan
 
-**Course:** CIT 210 Web Systems and Technologies & CC 207B Application Development and Emerging Technologies  
+**Course:** CIT 210 Web Systems and Technologies & CC 207B Applications Development and Emerging Technologies  
 **Project:** LittleSteps Early-Childhood Caregiver Companion  
 **Tracking Issue:** [Docs Issue #98](https://github.com/Thesis-Titans/littlesteps-docs/issues/98) (Coordinated with [API #60](https://github.com/Thesis-Titans/littlesteps-api/issues/60))  
-**Target Release:** Milestone 5 (M5 — Release-Readiness Review; Flutter Presentation Dec 1, 2026, 7:00 AM)  
+**Target Release:** Milestone 5 (M5 — Release-Readiness Review)  
 **Evaluation Dates:** CC 207B Presentation on Dec 1, 2026 (7:00 AM); CIT 210 & CIT 246 Finals on Dec 2, 2026  
 
 ---
 
 ## 1. Executive Summary & Purpose
 
-This document outlines the operational environment, physical hardware allocation, network failure contingencies, and execution checklist for the live classroom demonstration and faculty evaluation of the LittleSteps system. 
-
-It satisfies the requirements of **Docs Issue #98**, directly supporting the **CIT 210 Final Project Evaluation Rubric** (35 points for Presentation, Architecture Explanation, and Demo Functionality) and ensuring zero presentation downtime during campus defenses.
+This document defines the operational environment, hardware allocation, network failure contingencies, and rehearsal checklist for the live classroom demonstrations of LittleSteps. It supports the **CIT 210 Final Project Evaluation Rubric** (35 points for Presentation, API Explanation, and Demo Functionality) and the **CC 207B live mobile demo** so classroom evaluations run without technical downtime.
 
 ---
 
 ## 2. Environment Architecture Decision
 
-### 2.1 Primary Setup: Orchestrated Local Emulators (`run-demo.mjs` / `run-demo.sh`)
+### 2.1 Primary Setup: Orchestrated Local Emulators (`run-demo.mjs`)
 
-The primary live demonstration runs **locally** using the cross-platform Node.js demo CLI ([`scripts/demo-cli/run-demo.mjs`](../../../scripts/demo-cli/run-demo.mjs), see [setup guide](../../../scripts/demo-cli/README.md)) on Windows, macOS, Linux, or WSL (or `./run-demo.sh` on Bash/WSL).
+The primary live demonstration runs **locally** using the tracked cross-platform Node.js Demo CLI ([`scripts/demo-cli/run-demo.mjs`](../../../scripts/demo-cli/run-demo.mjs); see [CLI guide](../../../scripts/demo-cli/README.md)) on Windows, macOS, Linux, or WSL.
 
-```
+```text
 +-------------------------------------------------------------------------------+
 |                       PRIMARY HOST LAPTOP (Local Loopback)                    |
 |                                                                               |
 |  +--------------------+         HTTP/JSON         +------------------------+  |
-|  | React 19 Frontend  | ------------------------> | Express Node.js API    |  |
-|  | Vite Server (:5173)| <------------------------ | Cloud Functions (:5001)|  |
+|  | React 19 (:5173)   | ------------------------> | Express 5 Node.js API  |  |
+|  | Flutter Web (:5174)| <------------------------ | Cloud Functions (:5001)|  |
 |  +--------------------+                           +------------------------+  |
 |            |                                                   |              |
-|            | Web SDK                                           | Admin SDK    |
+|            | Web / HTTP                                        | Admin SDK    |
 |            v                                                   v              |
 |  +--------------------+                           +------------------------+  |
 |  | Firebase Auth      |                           | Cloud Firestore        |  |
@@ -48,106 +46,100 @@ The primary live demonstration runs **locally** using the cross-platform Node.js
          | Outbound HTTPS (443)                         | Outbound HTTPS (443)
          v                                              v
 +-------------------------------+             +---------------------------------+
-| Internet Archive Open Library |             | Google Gemini AI Studio         |
-| REST API (Book Search)        |             | (gemini-3.5-flash-lite)         |
+| Open Library & Open-Meteo     |             | Google Gemini REST API          |
+| REST APIs (Books & Weather)   |             | (Server-pinned GEMINI_MODEL)    |
 +-------------------------------+             +---------------------------------+
 ```
 
 #### Why Local Emulators for Live Defense:
-1. **Campus Network Independence:** Local loopback (:5001, :8080, :9099, :5173) guarantees instant, sub-50ms responses regardless of campus Wi-Fi congestion, firewalls, or captive portals.
-2. **Zero Privacy Risk:** Demonstrations run against throwaway synthetic test identities (`demo.caregiver@littlesteps.local`, child "Maya"), eliminating any risk of ingesting, displaying, or exposing real personal caregiver/child data.
-3. **Reproducible State:** The automated demo CLI ([`scripts/demo-cli/run-demo.mjs`](../../../scripts/demo-cli/run-demo.mjs)) idempotently populates standard demonstration records (child profiles, planned activities, sample observations, journal notes, and bookshelf books) on every startup.
-4. **Live External Integration:** Outbound requests to Open Library (books) and Google Gemini (AI activity helper) still utilize live external APIs via outbound HTTPS when an internet connection is available.
+1. **Campus Network Independence:** Local loopback (`:5001`, `:8080`, `:9099`, `:5173`, `:5174`) guarantees sub-50 ms responses regardless of campus Wi-Fi congestion, firewalls, or captive portals.
+2. **Zero Privacy Risk:** Demonstrations run strictly against throwaway synthetic identities defined in [`scripts/demo-cli/seed/demo-family.json`](../../../scripts/demo-cli/seed/demo-family.json) (`littlesteps@demo.com`, children Maya `12–23m`, Leo `6–11m`, Tala `24–35m`), eliminating any exposure of real personal data.
+3. **Reproducible State:** The Demo CLI idempotently seeds all three Firestore catalog collections (`catalog_activities`, `catalog_milestones`, `catalog_rhymes`) and the demo family's plans, milestones, journal entries, and saved books on startup.
+4. **Live External Integration:** Outbound HTTPS requests to Open Library (books), Open-Meteo (weather hints), and Google Gemini (AI suggestions) run live when internet access is available and fail over smoothly to deterministic fallbacks when offline.
 
 ---
 
-### 2.2 Proof of Cloud Deployment: Staging Project (`dog-app-cit210-7492`)
+### 2.2 Proof of Cloud Deployment (`littlesteps-app-cict`)
 
-To prove to the faculty evaluation panel that the system is fully production-capable and deployable to Google Cloud:
-* **Firebase / Google Cloud Project:** `dog-app-cit210-7492` (Region: `asia-southeast1`).
-* **Cloud Firestore:** All 7 composite indexes from [`firestore.indexes.json`](https://github.com/Thesis-Titans/littlesteps-api/blob/main/firestore.indexes.json) have been deployed and verified in the **`READY`** state (verified in [API Issue #60](https://github.com/Thesis-Titans/littlesteps-api/issues/60)).
-* **Live Query Verification:** Filtered plans and milestone queries were executed against live Firestore endpoints, returning HTTP 200 without index errors.
-* The team will present the Firebase Console overview if asked during code defense.
+To demonstrate cloud deployment readiness beyond local emulators:
+* **Live Firebase Project:** `littlesteps-app-cict` (Region: `asia-southeast1`), hosting the deployed Cloud Functions (2nd Gen) Express API, Firebase Authentication, and seeded Cloud Firestore collections (`catalog_activities`, `catalog_milestones`, `catalog_rhymes`) powering the production Android release APK.
+* **Composite Indexes Verified:** All Firestore composite indexes from [`firestore.indexes.json`](https://github.com/Thesis-Titans/littlesteps-api/blob/main/firestore.indexes.json) are deployed and verified in the **`READY`** state (initially validated on staging during [API Issue #60](https://github.com/Thesis-Titans/littlesteps-api/issues/60) and replicated in `littlesteps-app-cict`).
+* The team can open the Firebase Console overview if requested during Q&A.
 
 ---
 
 ## 3. Physical Hardware Allocation
 
 | Role | Member | Hardware Specification | Responsibilities |
-|---|---|---|---|
-| **Primary Host** | **Mark Alvin Cadangin** | Linux x86_64, Node.js 22 LTS, 16GB RAM, HDMI/Type-C output | Hosts `./run-demo.sh`, controls browser presentation, shares screen to classroom projector. |
-| **Secondary / Hot Standby** | **Vincent John Tamaño** | Clean machine, Node.js 22 LTS, 8GB+ RAM, HDMI output | Cloned repositories with pre-cached dependencies, ready to connect if primary laptop encounters hardware issues. |
-| **Speaker: Architecture** | **Justin Ace Ardeña** | Dedicated mobile/clicker | Explains Express routing, Firestore data model, and BOLA security boundary. |
-| **Speaker: UI/UX & A11y** | **Mae Daniella Faith Benjamin** | Co-presenter | Explains design system, WCAG 2.2 AA contrast, skip-links, and mobile responsiveness. |
-| **Speaker: Educational Content** | **Lovelly Grace Piedad** | Co-presenter | Explains Philippine ECCD Council alignment, milestone observation privacy, and non-diagnostic guardrails. |
+| :--- | :--- | :--- | :--- |
+| **Primary Host** | **Mark Alvin C. Cadangin** | Linux x86_64, Node.js 22 LTS, 16 GB RAM, HDMI/USB-C output | Runs `node littlesteps-docs/scripts/demo-cli/run-demo.mjs`, controls live browser/Android screen mirror, shares display to classroom projector. |
+| **Secondary / Hot Standby** | **Vincent John A. Tamaño** | Clean laptop, Node.js 22 LTS, 8 GB+ RAM, HDMI output | Cloned repositories with pre-installed dependencies, ready to take over if the primary laptop encounters hardware issues. |
+| **Speaker: Architecture** | **Justin Ace D. Ardeña** | Co-presenter | Explains Express routing, Firestore data model, and BOLA security boundary. |
+| **Speaker: UI/UX & A11y** | **Mae Daniella Faith C. Benjamin** | Co-presenter | Explains design system, WCAG 2.2 AA contrast, responsive shell, and Storybook/Bookshelf workflows. |
+| **Speaker: Content & Privacy** | **Nherie C. Acebuche** | Co-presenter | Explains Philippine ECCD alignment, child profile data minimization, private journal isolation, and non-diagnostic guardrails. |
 
 ---
 
 ## 4. Network Failure & Contingency Matrix
 
-The presentation must remain seamless even if the classroom network drops completely during the demonstration:
-
 | Failure Mode | Immediate Behavior | Fallback Mechanism | Impact on Demo |
-|---|---|---|---|
-| **Campus Wi-Fi drops completely** | Core app unaffected (Auth and Firestore run locally). | Open Library falls back to local curated books ([`FALLBACK_BOOKS`](https://github.com/Thesis-Titans/littlesteps-react/blob/main/src/features/catalog/fallbackData.ts)); Gemini falls back to deterministic curriculum picks (`Our picks`). | **Zero.** The UI displays a calm status banner; all browsing, planning, and journal saving continue smoothly. |
-| **Gemini AI API times out / rate limits** | Express API bounds calls at 8,000 ms. | Tier 3 deterministic rule-based catalog fallback automatically activates. | **Zero.** Activity cards render with the standard *"Our picks"* badge and disclaimer. No error popups. |
-| **Projector / Display cable failure** | Laptop HDMI port or projector fails to handshake. | Hot-standby machine immediately connects, or presentation switches to secondary laptop display. | 2-minute transition window. |
-| **Total Hardware Outage** | Laptop crashes or battery fails. | Pre-recorded 1080p full demonstration walkthrough video played from USB drive on classroom podium PC. | Presentation proceeds without live typing. |
+| :--- | :--- | :--- | :--- |
+| **Campus Wi-Fi drops completely** | Core app unaffected (Auth, API, and Firestore run locally). | Open Library falls back to local curated books; Open-Meteo hides silently; Gemini falls back to deterministic reviewed catalog picks (`Our picks`). | **Zero.** Calm status notice shown; browsing, planning, milestones, and journal continue cleanly. |
+| **Gemini AI API times out / rate limits** | Express API enforces an 8,000 ms timeout and circuit breaker. | Tier 3 deterministic catalog fallback (or Tier 2 rule-based adaptation on `/ai/adapt`) activates automatically. | **Zero.** Suggestions render with non-AI catalog attribution and zero crash dialogs. |
+| **Projector / display cable failure** | Primary laptop HDMI/USB-C fails to handshake. | Hot-standby laptop connects immediately. | Under 2-minute switchover. |
+| **Total hardware outage** | Host laptop crashes or loses power. | Pre-recorded 1080p full walkthrough backup video plays from FAT32 USB drive on classroom podium PC. | Presentation proceeds smoothly without live typing. |
 
 ---
 
 ## 5. Live Demonstration Rehearsal Checklist
 
 ### Phase 1: T-24 Hours (Preparation & Sync)
-- [ ] Run `git checkout main && git pull origin main` in `littlesteps-api`, `littlesteps-react`, and `littlesteps-docs`.
-- [ ] Confirm both `npm test` suites pass locally:
-  - `littlesteps-api`: all unit, integration, and security regression tests passing (`npm test`).
-  - `littlesteps-react`: all component and hook tests passing (`npm test`).
-- [ ] Verify `.env` in `littlesteps-api` and confirm `catalog_activities` is seeded in Firestore (`npm run seed:catalog:emulator` for local demo, `npm run seed:catalog:prod` for Cloud Firestore):
-  - `GEMINI_MODEL=gemini-3.5-flash-lite` (pinned stable Flash-Lite model; avoid floating `-latest` aliases)
+- [ ] Run `git checkout main && git pull origin main` across `littlesteps-api`, `littlesteps-react`, `littlesteps-docs`, and `CC-207B_26-27_Final-Project`.
+- [ ] Run automated verification suites locally (`npm test` in API, React, and Docs; `flutter analyze --fatal-infos && flutter test` in Flutter).
+- [ ] Verify local `littlesteps-api/.env` contains valid non-committed demo settings:
+  - `GEMINI_MODEL=gemini-3.5-flash-lite` (explicit pinned stable model)
   - `OPEN_LIBRARY_CONTACT=markcadangin@gmail.com`
   - `TRUST_PROXY_HOPS=1`
-- [ ] Confirm backup walkthrough MP4 video (`littlesteps-demo-backup.mp4`) is saved on the desktop and copied to a FAT32 USB drive.
-- [ ] Test HDMI/Type-C dongle connection to an external monitor.
+- [ ] Verify prerequisites and workspace discovery:
+  ```bash
+  node littlesteps-docs/scripts/demo-cli/run-demo.mjs doctor
+  ```
+- [ ] Confirm backup walkthrough MP4 video (`littlesteps-demo-backup.mp4`) is saved locally and copied to a FAT32 USB drive.
+- [ ] Test HDMI/USB-C adapter against an external display.
 
 ### Phase 2: T-30 Minutes (Environment Bring-Up)
-- [ ] Open terminal in workspace root and run:
+- [ ] From the workspace root, start the orchestrated local demo stack (or use `start react` for CIT 210 web-only):
   ```bash
-  ./run-demo.sh
+  node littlesteps-docs/scripts/demo-cli/run-demo.mjs start all --no-input
   ```
-- [ ] Confirm terminal logs show:
-  - `✓ Firebase Emulators and Functions API are ready!`
-  - `✓ Demo caregiver profile verified/created`
-  - `✓ Vite web client is ready!`
-- [ ] Open Chrome and navigate to `http://localhost:5173`.
-- [ ] Verify automatic login to the **Maya (24–35m)** dashboard.
-- [ ] In a second tab, open the Firebase Emulator UI: `http://localhost:4000/firestore`.
+- [ ] Confirm the CLI reports healthy Firebase Emulators (`:4000`, `:5001`, `:8080`, `:9099`), seeded Firestore catalog collections (`catalog_activities`, `catalog_milestones`, `catalog_rhymes`), seeded demo family (`seed/demo-family.json`), and Vite web server (`http://localhost:5173`).
+- [ ] Open Chrome to `http://localhost:5173`, sign in with the seeded synthetic caregiver account (`littlesteps@demo.com`), and verify **Maya (12–23m)** loads on `/today`.
+- [ ] Open a second tab to the Firebase Emulator UI (`http://localhost:4000/firestore`) to inspect live Firestore documents during Q&A.
 
 ### Phase 3: T-5 Minutes (Stage Alignment)
-- [ ] Connect display cable to projector. Mirror displays at 1920x1080 or 1280x720.
-- [ ] Zoom browser to 110% (`Ctrl +`) for readability from classroom back rows.
-- [ ] Silence laptop notifications (enable "Do Not Disturb" mode).
-- [ ] Confirm presenters are arranged in speaker order.
+- [ ] Connect to classroom projector (1920×1080 or 1280×720 mirror).
+- [ ] Zoom browser to 110% for clear legibility from the back row.
+- [ ] Enable Do Not Disturb mode to silence OS notifications.
+- [ ] Confirm speaker order and microphone/clicker handoffs.
 
 ---
 
-## 6. 5-Minute Live Walkthrough Script
+## 6. 5-Minute CIT 210 Live Walkthrough Script
 
-| Time | Presenter | Screen / Action | Talking Points |
-|---|---|---|---|
-| **0:00 – 1:00** | **Mark** | Title Slide & Architecture Overview | Introduce team, client context (CSWDO Lapuz), and the coordinated system: React 19 + Express on Firebase Functions + Firestore emulators. |
-| **1:00 – 2:00** | **Mae / Mark** | `#/today` (Today Dashboard) | Highlight child profile switching, quick-filter chips, and real-time weather context (Open-Meteo) adapting play recommendations without GPS tracking. |
-| **2:00 – 3:15** | **Justin / Mark** | `#/explore` (Storybooks & AI Helper) | Search children's literature via Open Library REST API. Open story companion dialog: show Gemini 3.5 Flash Lite generating screen-free play idea with *"Suggested by AI"* badge. Click *"Plan for Today"* to ingest book into Firestore schedule. |
-| **3:15 – 4:15** | **Lovelly / Mark** | `#/milestones` & `#/this-week` | Check an observed milestone. Demonstrate non-diagnostic, descriptive guidance and private observation journal. Open This Week summary showing domain distribution and affirming reflection. |
-| **4:15 – 5:00** | **All** | Network Resiliency & Conclusion | Demonstrate offline / fallback mode: show that disabling Wi-Fi immediately triggers the calm offline banner and deterministic *"Our picks"* catalog recommendations without crashing. Conclude with limitations and future mobile rollout. |
+| Time | Presenter | Route / Screen | Talking Points |
+| :--- | :--- | :--- | :--- |
+| **0:00 – 1:00** | **Mark** | Title Slide & Architecture Overview | Introduce team, caregiver problem context, and unified architecture: React 19 + Express 5 on Firebase Cloud Functions + Cloud Firestore + external REST integrations. |
+| **1:00 – 2:00** | **Faith / Mark** | `/today` (Today Dashboard) | Highlight child profile switcher (Maya `12–23m`, Leo `6–11m`, Tala `24–35m`), symmetric quick filters (`Under 10 mins`, `No materials needed`, `Indoor`, `Outdoor`), 1-tap completion with 10 s Undo, and Open-Meteo weather hint without GPS tracking. |
+| **2:00 – 3:15** | **Justin / Mark** | `/explore` (Activities, Storybooks, Family Bookshelf & Idea Helper) | Search Open Library picture books, save to Family Bookshelf, open the Gemini story companion (`"Suggested by AI"` badge), and click `"Add to today's plan"` to persist directly into Firestore. |
+| **3:15 – 4:15** | **Nherie / Mark** | `/milestones`, `/journal` & `/this-week` | Record a non-diagnostic milestone observation, demonstrate private journal isolation from AI prompts, and open This Week showing factual domain distribution and reflection prompt. |
+| **4:15 – 5:00** | **All** | Network Resiliency & Conclusion | Demonstrate offline/fallback behavior: calm offline banner and deterministic `"Our picks"` catalog fallback without crashing; conclude with known limitations and roadmap. |
 
 ---
 
-## 7. Verification & Sign-Off
+## 7. Readiness Verification Checklist
 
-* [x] Environment decided: Local Firebase Emulators via `./run-demo.sh` with live external HTTPS APIs.
+* [x] Environment standardized on tracked Demo CLI (`node littlesteps-docs/scripts/demo-cli/run-demo.mjs`) with local Firebase Emulators and live external HTTPS APIs.
 * [x] Hardware allocated: Mark (Primary host), Vincent (Hot standby).
-* [x] Live checks verified on real cloud project `dog-app-cit210-7492` (API #60).
-* [x] Network resilience and offline fallback matrix documented.
-* [x] Step-by-step pre-flight rehearsal checklist established.
-* [x] 5-minute timed presentation script structured.
+* [x] Cloud deployment and Firestore composite indexes verified (`littlesteps-app-cict` / API #60).
+* [x] Network failure and offline fallback matrix documented.
+* [x] Pre-flight checklist and 5-minute live walkthrough script aligned with current routes and `seed/demo-family.json`.
