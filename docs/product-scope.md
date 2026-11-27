@@ -3,14 +3,14 @@
 **Status:** Canonical System Scope Baseline  
 **Governing Standard:** ISO/IEC/IEEE 29148:2018 (Software Requirements Specification)  
 **Owner:** Mark Alvin Cadangin (Technical Lead)  
-**Last Reviewed:** 2026-10-26  
+**Last Reviewed:** 2026-11-27  
 **Related Documents:** [API Reference & Integration Guide](api-reference.md), [Data Model Specification](data-model.md), [Security, Privacy, and AI Safeguards](security-privacy-ai.md), [Traceability Matrix](traceability-matrix.md)
 
 ---
 
 ## 1. System Purpose & Concept
 
-LittleSteps is a proposed early-childhood learning and development platform for parents of children aged 0–5 years (0–71 months), and for other caregivers such as grandparents, relatives or guardians who look after the child at home. The planned system covers age-aware activity discovery, routine planning, milestone observation prompts, a private observation journal, factual summaries of recorded activity, and an AI-assisted activity recommendation helper.
+LittleSteps is an early-childhood learning and caregiver support platform for parents of children aged 0–5 years (0–71 months), and for other caregivers such as grandparents, relatives, or guardians who look after the child at home. The system covers age-aware activity discovery, routine planning, milestone observation prompts, a private observation journal, factual summaries of recorded activity, and a guardrailed AI activity suggestion helper.
 
 > [!IMPORTANT]
 > **Clinical Non-Diagnostic Boundary:** LittleSteps is explicitly an educational, reflective, and routine-support tool. It is **not** a clinical diagnostic, pediatric screening, medical treatment, or emergency-care system. All milestone and developmental information serves as prompts for caregiver observation, not diagnostic criteria.
@@ -25,9 +25,9 @@ The table below defines the planned system scope. Inclusion does not mean a capa
 | :--- | :--- | :--- |
 | **User Roles** | Single authenticated caregiver role (parent/guardian managing one or more child profiles). | Multi-tenant school/daycare administration, teacher-student rosters, public social profiles. |
 | **Developmental Guidance** | Educational milestone observation prompts sourced from DepEd ECCD / CDC milestones with clear attributions. | Automated clinical diagnoses, developmental quotient (DQ) scores, developmental delay categorizations. |
-| **Activity Catalog** | Curated Philippine rhymes, stories, motor, cognitive, and sensory activities spanning 7 age bands; live Open Library book search for caregiver-owned books; in-app readable public-domain Philippine action songs and rhymes; closed-loop daily routine scheduling. | E-commerce purchasing of toys/materials, paid content paywalls, external ad networks, digital piracy or redistribution of copyrighted full-text books. |
+| **Activity Catalog** | Firestore-backed Philippine rhymes, stories, motor, cognitive, and sensory activities spanning 7 age bands (`catalog_activities`, `catalog_milestones`, `catalog_rhymes`); live Open Library book search and child-scoped saved Family Bookshelf (FR-04b); in-app readable Philippine action songs and rhymes (English, Filipino, Hiligaynon); closed-loop daily routine scheduling. | E-commerce purchasing of toys/materials, paid content paywalls, external ad networks, digital piracy or redistribution of copyrighted full-text books. |
 | **Messaging & Social** | Private caregiver observation journal strictly isolated per user account. | In-app direct messaging, public forums, community comment threads, photo sharing with other users. |
-| **AI Integration** | Server-side semantic activity recommender (Idea Helper); storybook play companion drafting short play ideas from public book metadata; both labeled as AI and backed by a deterministic catalog fallback. | Unconstrained generative text models diagnosing symptoms or illnesses, conversational AI roleplaying as a pediatrician or child psychologist, automated psychometric or delay labeling, open unguided clinical chatbots. |
+| **AI Integration** | Server-side catalog-first activity recommender (Idea Helper) with opt-in 3-layer guardrailed custom material adaptation (`ai_custom`); storybook play companion (`POST /api/v1/ai/story-activity`); structured activity adaptation (`POST /api/v1/ai/adapt`); all labeled as AI and backed by deterministic fallback. | Unconstrained generative text models diagnosing symptoms or illnesses, conversational AI roleplaying as a pediatrician or child psychologist, automated psychometric or delay labeling, open unguided clinical chatbots. |
 | **External APIs** | Open Library REST API (bibliographic search & subject metadata), Open-Meteo REST API (coarse city-level weather forecast for indoor/outdoor play hints), Google Gemini API (structured recommendations and story play ideas). | Continuous device GPS tracking, commercial paid weather radars, DRM content streaming services, external social media platforms. |
 | **Hardware & Sensors** | Standard responsive web browsers and mobile application touch interfaces. | Wearable biometric monitors, IoT camera streaming, automated video behavioral tracking. |
 
@@ -67,8 +67,8 @@ The application organizes activities and milestone prompts across seven navigati
 - **Non-Diagnostic Assumption:** Caregivers use the platform for home routine support and observational prompts; the system assumes caregivers understand it does not replace pediatric consultations.
 - **Emulator-First Constraint:** Engineering and test execution utilize the local Firebase Emulator Suite (`demo-littlesteps`); production deployment remains gated on billing, security, and institutional privacy reviews.
 - **Shared Architecture Constraint:** A single unified Node.js Express API and Firestore schema must serve both React web (CIT 210) and Flutter mobile (CC 207B) frontends without divergent security rules.
-- **Prototype Validation Constraint:** Figma frames (1280px desktop, 375px mobile) govern prototype validation and are the design source for both the React web client and the Flutter client, which adapts the 375px frames to Material 3 ([UI/UX Design Specification](ui-ux-design-specification.md) §9) ([Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)); Sprint 1 foundation work proceeds in parallel, with parent walkthrough findings iteratively incorporated into M2–M4 screens.
-- **Content Provenance Constraint:** Production deployment of real Philippine rhymes, traditional games, and milestone prompts remains gated on verified source locators and permissions review (Docs Issue #3). Synthetic fixtures are used for development.
+- **Prototype Validation Constraint:** Figma frames (1280px desktop, 375px mobile) governed M0 prototype validation ([Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)) and serve as the shared design source for both the React web client and the Flutter Material 3 client ([UI/UX Design Specification](ui-ux-design-specification.md) §9).
+- **Content Provenance Constraint:** Author-checked Philippine catalog items (`source_checked`) are stored in Cloud Firestore and documented in [Philippine Content Provenance](philippine-content-provenance.md); formal subject-matter adviser sign-off (`reviewed_approved`) remains gated under Docs Issue #3.
 
 ---
 
@@ -89,7 +89,7 @@ Per CC 207B requirements, a 5-member team must deliver at least 6 core features 
 ### FR-01: Child Profile and Milestone Tracking
 - **Primary Actor:** Caregiver
 - **Preconditions:** Caregiver is securely authenticated.
-- **Inputs:** Child name, nickname, birth month/year (or age band), caregiver observations against milestone checklist items (observed / not yet observed, date observed, notes).
+- **Inputs:** Child nickname, birth month/year (or age band), caregiver observations against milestone prompts (`observed`, `not_yet_observed`, or `not_sure`, date observed, notes).
 - **Processing:** Server validates child ownership and payload; persists profile and milestone observation records in Cloud Firestore scoped to caregiver UID.
 - **Outputs:** Structured child profile view, categorized milestone checklist by developmental domain (Cognitive, Motor, Language, Socio-Emotional), and longitudinal observation timeline.
 - **Verification Method:** Unit tests for schema validation; API integration tests verifying caregiver isolation (BOLA defense); E2E test of profile creation and milestone check-off.
@@ -99,7 +99,7 @@ Per CC 207B requirements, a 5-member team must deliver at least 6 core features 
 - **Preconditions:** Caregiver has at least one active child profile.
 - **Inputs:** Target activity identifier, scheduled date/time slot, completion status toggle, engagement notes, duration spent.
 - **Processing:** Updates child-scoped daily routine schedule state; marks activities complete; records completion timestamps and caregiver feedback.
-- **Outputs:** Interactive daily schedule view, progress checklist, visual completion badges, and active daily routine feed. When the optional weather hint is on, Today suggests indoor ideas if rain or strong heat is likely ([ADR-009](architecture-decisions.md)).
+- **Outputs:** Interactive daily schedule view, progress checklist, visual completion badges, symmetric quick filters (`Under 10 mins`, `No materials needed`, `Indoor`, `Outdoor`), and active daily routine feed. When the optional weather hint is enabled, Today suggests indoor, outdoor, or flexible play ideas and routes directly to matching suggestions ([ADR-009](architecture-decisions.md)).
 - **Verification Method:** API route tests for CRUD on schedule items; Web/Mobile state management tests for schedule toggle and local optimistic updates.
 
 ### FR-03: Private Observation Journal
@@ -114,8 +114,8 @@ Per CC 207B requirements, a 5-member team must deliver at least 6 core features 
 - **Primary Actor:** Caregiver
 - **Preconditions:** None for viewing public reviewed catalog; authenticated to save/schedule.
 - **Inputs:** Age-band filter (0–71 mos), domain filter (Cognitive, Motor, Language, Socio-Emotional), language filter (English, Filipino, Hiligaynon), required materials keyword search, storybook subject tags, book title search query.
-- **Processing:** Query engine executes multi-factor filtering against the reviewed activity catalog, queries Open Library REST endpoints (`GET /api/v1/catalog/books` and `GET /api/v1/catalog/books/search`) with server-side caching ([ADR-010](architecture-decisions.md), [ADR-013](architecture-decisions.md)), and provides verified public-domain Philippine nursery rhymes with full in-app lyrics and action cues.
-- **Outputs:** Rich learning resource cards displaying activity title, source provenance attribution, age band, duration, instructions, materials list, and "Add to daily routine" action; searchable children's book cards with covers; and in-app sing-along lyrics for traditional Filipino rhymes (*Bahay Kubo*, *Tong Tong Tong Pakitong-kitong*).
+- **Processing:** Query engine executes multi-factor filtering against the Firestore-backed activity and rhyme catalogs (`catalog_activities`, `catalog_rhymes`), proxies Open Library REST endpoints (`GET /api/v1/catalog/books` and `GET /api/v1/catalog/books/search`) with server-side caching ([ADR-010](architecture-decisions.md), [ADR-013](architecture-decisions.md)), and persists child-scoped saved books in the Family Bookshelf (`/api/v1/children/:childId/books`, [ADR-015](architecture-decisions.md)).
+- **Outputs:** Rich learning resource cards displaying activity title, source provenance attribution, age band, duration, instructions, materials list, and `"Add to plan"` action; searchable children's book cards with covers and bookmarking; and in-app sing-along lyrics for traditional Philippine rhymes (*Bahay Kubo*, *Tong Tong Tong Pakitong-kitong*, *Ili-Ili Tulog Anay*, and others).
 - **Verification Method:** Integration tests verifying catalog search, Open Library proxy responses, book search query routing, and provenance metadata validation.
 
 ### FR-05: Weekly Progress Summary
@@ -131,10 +131,11 @@ Per CC 207B requirements, a 5-member team must deliver at least 6 core features 
 - **Preconditions:** Caregiver authenticated; selected child profile with age band; network connectivity (or fallback triggered).
 - **Inputs:**
   1. *Structured Idea Helper:* Available materials on hand (e.g., "paper, spoons, cardboard box"), available time (e.g., "15 minutes"), environment (indoor/outdoor, preselected from the optional weather hint when it is on), language preference.
-  2. *Storybook Companion:* Selected book title and subject tags from Open Library or caregiver book search.
-- **Processing:** Server-side Firebase Cloud Function invokes the AI engine (Gemini API, [ADR-008](architecture-decisions.md), [ADR-013](architecture-decisions.md)) with strict data minimization (zero child PII, zero journal text, zero location tracking); model matches constraints to valid reviewed catalog IDs or formats structured play companion activities; every AI result is checked against a fixed schema and the non-diagnostic term list, and a failed check is replaced by a catalog activity; if AI fails, rate limits, or times out (8s), server executes deterministic rule-based catalog fallback.
+  2. *Storybook Companion:* Selected book title and subject tags from Open Library or the child's saved Family Bookshelf.
+  3. *Activity Adaptation:* Target catalog activity ID plus adjustment mode (`shorter`, `easier`, `harder`, `missing_material`) via `POST /api/v1/ai/adapt`.
+- **Processing:** Server-side Firebase Cloud Function invokes the AI engine (Gemini API, [ADR-008](architecture-decisions.md), [ADR-013](architecture-decisions.md), [ADR-016](architecture-decisions.md)) with strict data minimization (zero child PII, zero journal text, zero location tracking). `/ai/recommendations` selects from eligible reviewed catalog items first and, when `allowCustom: true` and safe household materials have zero catalog overlap, runs a 3-layer defense-in-depth hazard guardrail to produce a bounded `"Material adaptation"` card (`reviewed: false`). Every AI result passes fixed-schema and 33-term non-diagnostic validation, failing closed to deterministic Tier 3 catalog fallback (or Tier 2 rule-based adaptation for `/ai/adapt`) on timeout (8s), error, or violation.
 - **Outputs:**
-  1. *Tailored Activity Suggestion Card:* Stamped with AI badge and disclaimer: *"Suggested by AI"* and *"You know your child best. Change it as you like, and stay close while you play."*, with direct "Add to today's plan" and "Another idea" actions.
+  1. *Tailored Activity Suggestion Card:* Stamped with `"Suggested by AI"` (or `"Material adaptation"` for custom items) and caregiver guidance, with direct `"Add to today's plan"`, `"Another idea"`, and `"Edit preferences"` actions.
   2. *Storybook Play Companion:* Screen-free companion play idea with an actionable **"Add to today's plan"** button that writes directly to the child's daily schedule (`POST /api/v1/children/:id/plans`).
 - **Verification Method:** Unit tests for schema validation of AI outputs; timeout tests verifying deterministic fallback triggers reliably on provider error; tests that an AI result containing diagnostic wording is replaced by a catalog activity; closed-loop planning integration tests verifying scheduled story play activities appear in the child's daily plan.
 

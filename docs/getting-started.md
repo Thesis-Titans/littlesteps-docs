@@ -3,8 +3,8 @@
 **Status:** Canonical Developer Tutorial Baseline  
 **Governing Standard:** Diátaxis Framework (Learning-Oriented Tutorial)  
 **Owner:** Mark Alvin Cadangin (Technical Lead)  
-**Last Reviewed:** 2026-11-03  
-**Related Documents:** [API Reference & Integration Guide](api-reference.md), [Development Workflow](development-workflow.md), [Architecture Decisions](architecture-decisions.md)
+**Last Reviewed:** 2026-11-27  
+**Related Documents:** [API Reference & Integration Guide](api-reference.md), [Contribution Guidelines](../CONTRIBUTING.md), [Architecture Decisions](architecture-decisions.md)
 
 ---
 
@@ -55,15 +55,21 @@ littlesteps/
 
 > [!TIP]
 > **One-Command Cross-Platform Setup & Demo CLI (Windows / macOS / Linux / WSL):**
-> Instead of starting each service manually, run the zero-dependency Node.js CLI bundled in [scripts/demo-cli/README.md](../scripts/demo-cli/README.md):
+> Instead of starting each service manually, use the cross-platform Node.js Demo CLI documented in [scripts/demo-cli/README.md](../scripts/demo-cli/README.md):
 > ```bash
-> # Check prerequisites (Node, Java JDK, Git, Flutter, ADB, scrcpy) and workspace repos:
-> node littlesteps-docs/scripts/demo-cli/run-demo.mjs --doctor
+> # One-time CLI dependency install:
+> cd littlesteps-docs/scripts/demo-cli && npm install && cd ../..
 >
-> # Launch interactive setup wizard (or double-click run-demo.cmd on Windows):
+> # Check prerequisites (Node, Java JDK, Git, Flutter, ADB, scrcpy) and workspace repos:
+> node littlesteps-docs/scripts/demo-cli/run-demo.mjs doctor
+>
+> # Start Emulators + Firestore catalog seed + React Web (:5173) + Flutter Web (:5174):
+> node littlesteps-docs/scripts/demo-cli/run-demo.mjs start all --no-input
+>
+> # Or launch the interactive wizard (double-click run-demo.cmd on Windows):
 > node littlesteps-docs/scripts/demo-cli/run-demo.mjs
 > ```
-> The CLI auto-discovers both `littlesteps-flutter` and `CC-207B_26-27_Final-Project` folder names, offers to clone missing repos, scaffolds safe local emulator `.env` defaults, seeds demo data, and supports Android ADB reverse + `scrcpy` mirroring.
+> The CLI auto-discovers both `littlesteps-flutter` and `CC-207B_26-27_Final-Project` folder names, offers to clone missing repos, scaffolds safe local emulator `.env` defaults, seeds Firestore catalogs (`catalog_activities`, `catalog_milestones`, `catalog_rhymes`) and `seed/demo-family.json`, and supports Android ADB reverse + `scrcpy` mirroring.
 
 ---
 
@@ -150,11 +156,11 @@ cp .env.example .env.local
 Configure `VITE_API_BASE_URL` to point to your local Functions emulator endpoint:
 ```ini
 VITE_API_BASE_URL=http://127.0.0.1:5001/demo-littlesteps/asia-southeast1/api
-# The following client keys are reserved for future Firebase Auth integration:
-VITE_FIREBASE_API_KEY=
-VITE_FIREBASE_AUTH_DOMAIN=
+VITE_USE_EMULATORS=true
+VITE_FIREBASE_API_KEY=demo-api-key
+VITE_FIREBASE_AUTH_DOMAIN=demo-littlesteps.firebaseapp.com
 VITE_FIREBASE_PROJECT_ID=demo-littlesteps
-VITE_FIREBASE_APP_ID=
+VITE_FIREBASE_APP_ID=1:000000000000:web:demo
 ```
 
 > [!CAUTION]
@@ -200,47 +206,51 @@ To verify that the frontend and backend communicate properly:
    npm run build
    npm run emulators -- --project demo-littlesteps
    ```
-2. **Terminal 2**: Start web dev server:
+2. **Terminal 2**: Seed the Firestore catalog collections (`catalog_activities`, `catalog_milestones`, `catalog_rhymes`) and optionally the demo family:
+   ```bash
+   cd littlesteps-api
+   npm run seed:catalog:emulator
+   # Or seed both catalog and demo caregiver/children in one command:
+   node ../littlesteps-docs/scripts/demo-cli/run-demo.mjs seed
+   ```
+3. **Terminal 3**: Start the web dev server:
    ```bash
    cd littlesteps-react
    npm run dev
    ```
-3. Open `http://localhost:5173` in your browser.
-4. In the **API connection** card on the landing page, click **"Check local API"**.
-5. The status indicator will transition to **"Connected"** by querying the public liveness endpoint (`GET /health`), returning:
-   > *"The API health endpoint responded successfully."*
+4. Open `http://localhost:5173` in your browser, sign in with the seeded synthetic caregiver account from `scripts/demo-cli/seed/demo-family.json` (or create a synthetic account), and verify that the **Today**, **Explore**, **Milestones**, **Journal**, and **This week** tabs load cleanly against the local API (`http://127.0.0.1:5001/demo-littlesteps/asia-southeast1/api/health` returns `{"status":"ok"}`).
 
 ---
 
 ## 6. Mobile Setup: `littlesteps-flutter`
 
-The Flutter app lives in the course fork under `BSIT-3A/LittleSteps` and talks to the same local API as the web client. Requirements: Flutter 3.47 (stable), and for Android an emulator or device on API 34 or newer with JDK 17 or 21.
+The Flutter app lives in the course fork under `BSIT-3A/LittleSteps` and talks to the same local API as the web client. Requirements: Flutter stable (`3.47.x`), Dart SDK (`^3.13.5`), and for Android an emulator or device on API 34+ with JDK 21.
 
-1. **Terminal 1**: build and start the API emulators, then seed the Firestore `catalog_activities` collection:
+1. **Terminal 1**: Build and start the API emulators, then seed the Firestore catalog collections (`catalog_activities`, `catalog_milestones`, `catalog_rhymes`):
    ```bash
    cd littlesteps-api
    npm run build
    npm run emulators -- --project demo-littlesteps
    ```
-   In another terminal (once the Firestore emulator is running on port `8080`):
+   Once the Firestore emulator is running on port `8080`:
    ```bash
    cd littlesteps-api
    npm run seed:catalog:emulator
    ```
-   Run `npm run build` again after pulling API changes, or the emulators keep running the old compiled code.
-2. **Terminal 2**: run the app.
+   Run `npm run build` again after pulling API changes so the Functions emulator executes updated compiled code.
+2. **Terminal 2**: Run the Flutter app:
    ```bash
    cd littlesteps-flutter/BSIT-3A/LittleSteps
    flutter pub get
    flutter run -d chrome
    ```
-   For an Android emulator, use `flutter run -d <device id>` (see `flutter devices`). The app reaches the API at `http://10.0.2.2:5001/demo-littlesteps/asia-southeast1/api` on Android and at `localhost` on other platforms; no setting is needed.
-3. **Test user**: every route except the catalog needs a signed-in user. Open the Emulator UI at `http://127.0.0.1:4000`, go to **Authentication**, and add a test user with a synthetic email and password. In-app sign-in is built in the Flutter issue "Integrate caregiver sign-in and protected API client".
-4. **AI limit**: the AI helper allows 10 requests per hour per user, and the counter is kept in the Firestore emulator. Use a second test user if you hit the limit.
+   For an Android emulator, use `flutter run -d <device id>` (see `flutter devices`). The app defaults to `http://10.0.2.2:5001/demo-littlesteps/asia-southeast1/api` on Android emulators and `localhost` on Web/Desktop. For physical Android devices over USB, run `adb reverse tcp:5001 tcp:5001` (automated by `run-demo.mjs start android`).
+3. **Test user**: Sign in or register a synthetic account directly in-app (or seed the default demo family via `node littlesteps-docs/scripts/demo-cli/run-demo.mjs seed`). Inspect auth and Firestore documents at `http://127.0.0.1:4000`.
+4. **AI limit**: The AI endpoints allow 10 requests per UTC clock hour per user (stored in the Firestore emulator's `rate_limits` collection). Switch test users or reset emulator data if you hit the cap while testing.
 5. **Before a pull request**:
    ```bash
-   dart format .
-   flutter analyze
+   dart format --output=none --set-exit-if-changed lib test
+   flutter analyze --fatal-infos
    flutter test
    ```
 
@@ -264,16 +274,16 @@ The Flutter app lives in the course fork under `BSIT-3A/LittleSteps` and talks t
 
 ## 8. Canonical Documentation Index
 
-- [API Reference & Integration Guide](api-reference.md) — Canonical OpenAPI endpoints, Open Library REST integration, 3-tier AI fallback, and error envelopes.
 - [Product Scope](product-scope.md) — 6 core features, app navigation age bands (0–71 months), non-diagnostic boundaries.
-- [Architecture Decisions](architecture-decisions.md) — ADRs covering shared backend, Express on Firebase Functions, Firebase Auth, and Firestore.
+- [Verification & Traceability Matrix](traceability-matrix.md) — Requirements-to-verification and CIT 210 rubric mapping.
+- [Architecture Decisions](architecture-decisions.md) — ADRs 001–016 covering shared backend, Firestore catalog migration, hybrid AI, and external integrations.
+- [API Reference & Integration Guide](api-reference.md) — Canonical OpenAPI endpoints, Open Library & Open-Meteo REST integrations, AI fallback hierarchy, and error envelopes.
 - [Data Model Specification](data-model.md) — Firestore collections, caregiver-scoped paths, and entity schemas.
-- [Security, Privacy, and AI Safeguards](security-privacy-ai.md) — Philippine Data Privacy Act (RA 10173), BOLA defenses, and AI safety controls.
-- [Traceability Matrix](traceability-matrix.md) — Requirements-to-tests and CIT 210 rubric mapping.
-- [UI/UX Design Specification](ui-ux-design-specification.md) — Human-computer interaction principles and responsive layout frames.
+- [Security, Privacy, and AI Safeguards](security-privacy-ai.md) — Philippine Data Privacy Act (RA 10173), BOLA defenses, and 3-layer AI safety controls.
+- [Design System Brief (DESIGN.md)](DESIGN.md) — Machine-readable design tokens, voice rules, and client agent guidance.
+- [UI/UX Design Specification](ui-ux-design-specification.md) — Human-computer interaction principles, responsive layouts, and Flutter Material 3 mapping.
 - [Usability & Design Evaluation](usability-and-design-evaluation.md) — Provisional caregiver storyboards, informal walkthrough protocol, heuristic audit, and design review checklist.
-- [Development Workflow](development-workflow.md) — Branch and review policies, testing gates, and verification standards.
-- [Execution Plan](execution-plan.md) — Milestone delivery schedule, sprint allocations, and academic dates.
-- [Documentation Standards](documentation-standards.md) — 3-tier hierarchy and Diátaxis governance framework.
-- [Philippine Content Provenance](philippine-content-provenance.md) — ECCD Council and DepEd source candidates, per-item citation fields, and review protocol.
-- [Research Register](research-register.md) — External technical, legal, and educational references.
+- [Philippine Content Provenance](philippine-content-provenance.md) — ECCD Council and DepEd provenance records, Firestore catalog audit, review gate, and external research register.
+- [Execution Plan](execution-plan.md) — Milestone delivery schedule (M0–M5), work packages, and academic calendar.
+- [Documentation Standards](documentation-standards.md) — Three-tier hierarchy and Diátaxis governance framework.
+- [Contribution Guidelines](../CONTRIBUTING.md) — Branching, peer reviews, client coding standards, and CI verification commands.

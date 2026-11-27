@@ -3,7 +3,7 @@
 **Status:** Canonical Delivery Baseline & Work Breakdown Structure  
 **Governing Standard:** PMBOK 7th Edition / ISO 21500 & Agile Scrum Baseline  
 **Owner:** Mark Alvin Cadangin (Technical Lead)  
-**Last Reviewed:** 2026-11-03  
+**Last Reviewed:** 2026-11-27  
 **Related Documents:** [API Reference & Integration Guide](api-reference.md), [Product Scope](product-scope.md), [Traceability Matrix](traceability-matrix.md), [Academic Deliverables](academic/README.md)
 
 ---
@@ -50,30 +50,30 @@ gantt
 
     section Sprint 1 (API & React)
     M1 Auth, Child Profile & Shell (API & React)     :done, s1_1, 2026-10-26, 2026-11-01
-    M0 Caregiver Walkthrough Protocol Validation      :active, s1_2, 2026-10-26, 2026-11-01
+    M0 Caregiver Walkthrough Protocol Validation      :done, s1_2, 2026-10-26, 2026-11-01
     Flutter Project & AI Log Setup (WP-F)            :done, s1_3, 2026-10-26, 2026-11-01
 
     section Sprint 2 (API & React)
-    M2 Activities & Milestone Prompts (React)        :s2_1, 2026-11-02, 2026-11-08
-    M3 Offline Journal & Storage Sync (React)        :s2_2, 2026-11-02, 2026-11-08
-    M4 AI Companion & 3-Tier Fallback (React)        :s2_3, 2026-11-02, 2026-11-08
+    M2 Activities & Milestone Prompts (React)        :done, s2_1, 2026-11-02, 2026-11-08
+    M3 Offline Journal & Storage Sync (React)        :done, s2_2, 2026-11-02, 2026-11-08
+    M4 AI Companion & 3-Tier Fallback (React)        :done, s2_3, 2026-11-02, 2026-11-08
 
     section Sprint 3 (Flutter Track)
-    M1 Profile & Navigation (Flutter)                :s3_1, 2026-11-09, 2026-11-15
-    M2 Activities & Milestones (Flutter)             :s3_2, 2026-11-09, 2026-11-15
+    M1 Profile & Navigation (Flutter)                :done, s3_1, 2026-11-09, 2026-11-15
+    M2 Activities & Milestones (Flutter)             :done, s3_2, 2026-11-09, 2026-11-15
 
     section Sprint 4 (Flutter Track)
     M1 Sign-in, App State & Profiles (Flutter)       :done, s4_0, 2026-11-18, 2026-11-21
     M4 AI Helper & Fallback (Flutter)                :done, s4_2, 2026-11-19, 2026-11-23
-    M3 Journal, This Week & State (Flutter)          :active, s4_3, 2026-11-21, 2026-11-24
-    M2 Catalog, Planning & Milestones (Flutter)      :active, s4_1, 2026-11-20, 2026-11-24
+    M3 Journal, This Week & State (Flutter)          :done, s4_3, 2026-11-21, 2026-11-24
+    M2 Catalog, Planning & Milestones (Flutter)      :done, s4_1, 2026-11-20, 2026-11-24
     Flutter Feature Freeze (23:59)                   :milestone, m_freeze, 2026-11-24, 0d
-    M5 Release APK, Docs, Slides & Demo Rehearsal    :s4_4, 2026-11-25, 2026-11-25
-    Flutter Presentation & Deliverables (7:00 AM)    :milestone, m_pres, 2026-11-26, 0d
+    M5 QA, Refactor, APK, Docs & Rehearsal           :active, s4_4, 2026-11-25, 2026-11-30
+    CC 207B Flutter Presentation (7:00 AM)           :milestone, m_pres, 2026-12-01, 0d
 
     section Wrap-Up & CIT 210/246 Finals
-    CIT 210 Rehearsal & Backup Video                 :w1, 2026-11-26, 2026-12-01
-    CIT 246 Final PDF & Presentation Prep            :w2, 2026-11-26, 2026-12-01
+    CIT 210 Rehearsal & Backup Video                 :active, w1, 2026-11-26, 2026-12-01
+    CIT 246 Final PDF & Presentation Prep            :active, w2, 2026-11-26, 2026-12-01
     Final Defense & Submissions (CIT 210 & 246)      :milestone, m_final, 2026-12-02, 0d
 ```
 
@@ -147,7 +147,7 @@ CIT 246 is a separate deliverable from this execution plan. This plan schedules 
 - **No code:** the group plans the project and does not build it for this course.
 - **Structure:** the instructor's 17-section template, the 12 key deliverables and the course and Schwalbe formats, as listed in the [CIT 246 requirements](academic/cit246/README.md).
 - **Checkpoints:** Checkpoint 1 (concept) was due 14 October; its approval is not yet recorded. Checkpoint 2 (sections 3–6) and Checkpoint 3 (sections 7–9) dates are to be announced.
-- **Client:** the plan's client is the CSWDO La Paz–Lapuz District office, researched from public sources and not contacted, by team decision. The plan says so openly in Appendix 17 instead of the evidence of contact the brief asks for, and uses sourced facts and labelled estimates.
+- **Client simulation boundary:** CIT 246 is an academic realism exercise simulating a formal IT Project Management Plan for the CSWDO La Paz–Lapuz District office; it is maintained separately from the actual CC 207B / CIT 210 software build (which uses informal parent walkthroughs and public ECCD/DepEd references without formal agency deployment).
 - **Reusable inputs:** product scope (in and out of scope), architecture decisions, the security and privacy safeguards, and the work packages in §4, rewritten in the course formats rather than copied.
 
 ## 2. Product Target & Team Sizing Derivation
@@ -338,73 +338,27 @@ Monitor these at each weekly review:
 
 Keep work in progress small. Do not start dependent feature work while a key contract or security decision is unresolved. Do not treat issue count or lines of code as progress; use working, tested vertical outcomes.
 
-## 7. Current constraints and open decisions
+## 7. Current Constraints & Remaining Gates
 
-- **Content provenance:** Issue #3 remains open until source editions, exact locators, reuse terms, and appropriate review are confirmed. This blocks approval of real catalog content, not unrelated scaffold work.
-- **Data model and privacy lifecycle:** Agree on caregiver-child ownership, required profile fields, deletion behavior, and retention before implementing persistent child/journal records.
-- **Authentication:** Firebase token verification exists in the API scaffold, but Web sign-in and child-level authorization are not complete.
-- **Deployment:** Local emulator work comes first. Deployment is gated on billing, privacy, security, and configuration review.
-- **Mobile:** Flutter mirrors the React client in Sprints 3–4 (§1.2, §1.3). The course repository fork is set up (`CC-207B_26-27_Final-Project`, folder `BSIT-3A/LittleSteps`); reviews there count toward CC 207B.
-- **Schedule and assignments:** set in §1.2 (sprint calendar) and §1.3 (feature owners). The schedule has no slack inside the build window; if a sprint slips, the weather hint is the first item reviewed for cutting at the 6 November check-in, then polish on the M5 audits, never the Flutter slices needed for the code defense.
+- **Content provenance gate ([Docs Issue #3](https://github.com/Thesis-Titans/littlesteps-docs/issues/3)):** Author-checked catalog collections (`catalog_activities`, `catalog_milestones`, `catalog_rhymes`) are seeded in Cloud Firestore with `status: "source_checked"`. Formal subject-matter adviser sign-off (`reviewed_approved`) remains required before any non-academic public launch.
+- **AI provider tier ([ADR-008](architecture-decisions.md)):** Academic evaluation uses the Gemini API free tier strictly with synthetic data and minimized non-identifying prompts; any future real-caregiver pilot requires migrating to a paid tier or Vertex AI.
+- **Offline persistence boundary:** Local in-memory caching supports offline viewing across profiles, plans, saved books, and catalogs, while offline writes remain disabled (`"Reconnect to save changes"`) and private journal entries are excluded from local caches.
+- **Final delivery schedule:** CC 207B live demonstration and individual code defense occur on **December 1, 2026 at 7:00 AM**; CIT 210 and CIT 246 finals follow on **December 2, 2026**.
 
-## 8. Project setup cleanup and execution handoff
+## 8. Delivery Status Summary (Milestone 5 — As of 2026-11-27)
 
-### Completed repository-governance work
+Live issue and pull-request counts are tracked on [Thesis-Titans LittleSteps Project #2](https://github.com/orgs/Thesis-Titans/projects/2).
 
-- [Docs Issue #8](https://github.com/Thesis-Titans/littlesteps-docs/issues/8) is closed after the five governance stages and cross-repository audit were recorded as complete.
-- [Docs PR #12](https://github.com/Thesis-Titans/littlesteps-docs/pull/12) added the scoped documentation CI verifier and is merged.
-- [Docs PR #6](https://github.com/Thesis-Titans/littlesteps-docs/pull/6) established the content-provenance protocol and is merged.
-- [Web Issue #12](https://github.com/Thesis-Titans/littlesteps-react/issues/12) is closed after correcting the emulator region in the Web README.
-- [Docs Issue #3](https://github.com/Thesis-Titans/littlesteps-docs/issues/3) remains open intentionally as the evidence, reuse-rights, and subject-matter review gate for real content. It is not a general repository-setup issue.
+### Completed Milestones (M0–M4)
+- **M0 (Execution Readiness & Prototype Validation):** Governance baseline (`Docs #8`), Docs CI verifier, Figma high- and low-fidelity prototypes, and informal parent walkthrough (`Docs #15`) completed.
+- **M1 (Secure End-to-End Foundation):** Firebase Authentication, Bearer token verification, BOLA cross-caregiver isolation (`404 RESOURCE_NOT_FOUND`), child profile CRUD with UTC age-band derivation, data export, and cascade deletion implemented and verified across API, React, and Flutter.
+- **M2 (Learning Content & Activity Loop):** Firestore-backed catalogs (`catalog_activities`, `catalog_milestones`, `catalog_rhymes`), Open Library picture-book browse/search, child-scoped Family Bookshelf ([ADR-015](architecture-decisions.md)), daily activity planning with inline `customActivity` snapshots, and milestone observations implemented across all clients.
+- **M3 (Private Journal & Weekly Reflection):** Caregiver-isolated private journal (excluded from AI and offline cache) and deterministic non-diagnostic weekly summaries (`This week`) implemented across API, React, and Flutter.
+- **M4 (Constrained AI & Weather Context):** Server-side Gemini recommendations with 3-layer guardrailed `ai_custom` adaptation ([ADR-016](architecture-decisions.md)), story play companion (`/ai/story-activity`), activity adaptation (`/ai/adapt`), hourly rate limiting, deterministic catalog fallback, and symmetric Open-Meteo Weather Hint routing ([ADR-009](architecture-decisions.md)) implemented across all clients.
 
-### M0 status — Sprint 1 started October 26
-
-Last checked against GitHub on **31 October 2026** (Sprint 1, Day 6).
-
-**Done**
-
-- **Execution plan:** reviewed and merged in [Docs PR #13](https://github.com/Thesis-Titans/littlesteps-docs/pull/13), then revised in Docs PRs #29–#32 (repository renames, the Flutter restriction lifted, the Figma prototype gate and the design system review).
-- **Project board:** [Thesis-Titans LittleSteps Project #2](https://github.com/orgs/Thesis-Titans/projects/2) holds the issues from `littlesteps-docs`, `littlesteps-api`, `littlesteps-react` and `CC-207B_26-27_Final-Project` (Status Backlog / Ready / In Progress / Blocked / In Review / Done). Read the board for live counts; counts written here go stale.
-- **Native milestones:** all four repos have M0–M5 milestones; execution issues are assigned to them.
-- **Sign-in + protected API client ([React #5](https://github.com/Thesis-Titans/littlesteps-react/issues/5)):** merged as PR #21 — `useAuth`, `AuthProvider`, `SignInForm`, 14 tests at merge.
-- **Design system ([React #22](https://github.com/Thesis-Titans/littlesteps-react/issues/22)):** merged as PR #26 — `tokens.css`, 12 shared components, `/dev/components` showcase, 26 tests at merge.
-- **App shell ([React #18](https://github.com/Thesis-Titans/littlesteps-react/issues/18)):** merged as PR #27 on 28 October — responsive shell with sidebar (1280px) and mobile bottom tab bar (375px), 5-tab routing (Today / Explore / Milestones / Journal / This week), `ChildContext` stub, protected routes, 32 passing tests. The browser check is still open (React #28, below).
-- **Learning catalog API ([API #9](https://github.com/Thesis-Titans/littlesteps-api/issues/9)):** merged as [API PR #20](https://github.com/Thesis-Titans/littlesteps-api/pull/20), with review fixes in PR #23 and corrected fallback book ids, licence wording and User-Agent contact in PR #25.
-- **Child profile contract ([API #7](https://github.com/Thesis-Titans/littlesteps-api/issues/7)):** merged as [API PR #21](https://github.com/Thesis-Titans/littlesteps-api/pull/21), with review fixes in PR #22 and decisions D1 and D4 recorded on 30 October in PR #24. This is a contract only; the routes are implemented and merged in API PRs #26 and #29. Decisions D5 (deletion execution) and D6 (production retention) are still open.
-- **Flutter scaffold + CI (old `littlesteps-flutter` #2, archived):** merged as PR #18 — Flutter 3.47.6 project, Material 3 stub theme, GitHub Actions CI (analyze + test + format), zero analyze issues.
-- **Flutter AI Usage Log (old `littlesteps-flutter` #14, archived):** merged as PR #15 — `docs/ai-usage-log.md` with CC 207B format.
-- **Docs PRs #63–#67:** storybook spec alignment, Figma as canonical design source, parent-friendly wording, design system / app shell ownership split, and the app shell record for PRQ-02 — all merged.
-- **Docs PRs #68 and #69:** verified NELF, LRP and MATATAG editions recorded in the provenance register, with review fixes. These are source candidates only; [Docs #3](https://github.com/Thesis-Titans/littlesteps-docs/issues/3) stays open.
-- **Docs PR #72:** Sprint 1 status, traceability evidence and decision records updated; merged.
-- **Docs PRs #70 and #71:** API reference synced with the catalog and child profile contracts; API reference, privacy and safety text aligned with the cited standards.
-
-**In progress**
-
-- **Figma prototype ([Docs Issue #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)):** high-fidelity frames wired. The caregiver walkthrough was run with 2 participants and the gate report (PASS) is in the issue comment of 30 October. The instructor walkthrough is still pending; the issue carries into Sprint 2.
-
-**Still open**
-
-- **Child profile API ([API #8](https://github.com/Thesis-Titans/littlesteps-api/issues/8)):** implemented and merged in [API PR #26](https://github.com/Thesis-Titans/littlesteps-api/pull/26) (input validation and age calculation) and [API PR #29](https://github.com/Thesis-Titans/littlesteps-api/pull/29) (child routes), so `main` serves the child routes. Deletion and data export (API #17) are planned, not implemented. A caregiver may have at most 20 children. Decisions D1 and D4 are decided; D5 (deletion execution) and D6 (production retention) are open.
-- **Child profile workflow ([React #6](https://github.com/Thesis-Titans/littlesteps-react/issues/6)):** the screens are merged ([React PRs #29 and #32](https://github.com/Thesis-Titans/littlesteps-react/pulls?q=is%3Apr+is%3Amerged)). Only the delete-records dialog is left, blocked until API #17.
-- **Account menu / settings ([React #16](https://github.com/Thesis-Titans/littlesteps-react/issues/16)):** the account pages are merged ([React PR #31](https://github.com/Thesis-Titans/littlesteps-react/pull/31)). Still open: the Figma comparison, the privacy contact (a marked placeholder) and the export and delete actions, blocked until API #17.
-- **App shell browser check ([React #28](https://github.com/Thesis-Titans/littlesteps-react/issues/28)):** verified in browser and settled as `<NavLink to="/account">Account</NavLink>` text link on 1 November 2026. The 72px mobile tab bar is confirmed with zero horizontal overflow at all widths. Closed.
-- **Milestone 2 & Sprint 2 progress (merged 1 November 2026):**
-  - **API PR #38 & #39:** local CORS configuration, Activity planning API (`/api/v1/children/:childId/plans`), and Milestone observations API (`/api/v1/children/:childId/milestones`) with 50 new automated tests. `littlesteps-api` now has **254 passing tests** (100% CI green).
-  - **React PR #39 & #40:** Learning Catalog browsing (`/explore`), AI suggestion screen (`IdeaHelper` with provenance badge and offline fallback), and updated Figma sign-in and sign-up auth forms (in-field trailing eye icon with 48px target, clean copy). `littlesteps-react` now has **209 passing tests** (100% CI green).
-- **Sprint 2 progress (merged 3 November 2026):**
-  - **React PR #43 ([React #17](https://github.com/Thesis-Titans/littlesteps-react/issues/17)) and PR #44 ([React #8](https://github.com/Thesis-Titans/littlesteps-react/issues/8)):** milestone prompts and notes; Today plan with quick filters, mark complete with undo, History, and "Add to plan" in Explore. `littlesteps-react` `main` now has **275 passing tests in 26 files**. React #8 and React #17 stay open until that is done. What is left is tracked in [React #45](https://github.com/Thesis-Titans/littlesteps-react/issues/45) (Figma layout pass for Today and Milestones) and [React #46](https://github.com/Thesis-Titans/littlesteps-react/issues/46) (a failed token refresh is treated as a generic error, not as signed out). The milestone prompts are sample fixtures for the 12-23 month band only, shown as "Sample wording, not reviewed", until [Docs #3](https://github.com/Thesis-Titans/littlesteps-docs/issues/3) is done.
-  - **API PR #44 ([API #41](https://github.com/Thesis-Titans/littlesteps-api/issues/41), closed):** plan and milestone writes drop undefined fields and edits use `set`. Before it, creating a plan returned `500` on Firestore. `littlesteps-api` `main` has **254 unit tests plus 12 emulator tests** (run with `npm run test:emulator`).
-  - **Rulings ([Docs #92](https://github.com/Thesis-Titans/littlesteps-docs/issues/92)):** error code is settled as `RESOURCE_NOT_FOUND` (aligning the UI/UX specification with the API reference and BOLA zero-leakage contract). Milestone display wording is "Seen on [date]" and "Not seen yet" (UI/UX specification §2.6 and §7; data statuses stay `observed` and `not_yet_observed`). Button text is settled as "Add to plan" in sentence case ("Add to today's plan" as contextual variant). The "Under 10 mins" filter means `durationMinutes <= 10`.
-  - **Scope decisions, 4 November:** Explore gets a Storybooks section from Open Library ([React #48](https://github.com/Thesis-Titans/littlesteps-react/issues/48)); the story play idea endpoint will be built ([API #46](https://github.com/Thesis-Titans/littlesteps-api/issues/46)); the weather hint is in scope ([API #47](https://github.com/Thesis-Titans/littlesteps-api/issues/47)); demo and staging builds serve labelled synthetic fixtures behind a flag ([API #45](https://github.com/Thesis-Titans/littlesteps-api/issues/45)), while production stays empty until reviewed content exists ([Docs #3](https://github.com/Thesis-Titans/littlesteps-docs/issues/3)). Until those issues merge, the books API is built but no React screen shows it.
-  - **Open follow-ups:** [API #42](https://github.com/Thesis-Titans/littlesteps-api/issues/42) (Firestore indexes and history ordering; the plans list returns the oldest 100), [API #43](https://github.com/Thesis-Titans/littlesteps-api/issues/43) (a milestone `observedDate` after today in UTC is rejected, which affects UTC+8 callers), [React #45](https://github.com/Thesis-Titans/littlesteps-react/issues/45) (Today layout) and [React #47](https://github.com/Thesis-Titans/littlesteps-react/issues/47) (Milestones layout), and [React #46](https://github.com/Thesis-Titans/littlesteps-react/issues/46).
-- **Sprint 1 Closeout & Sprint 2 Carry-overs (1 November 2026):**
-  - [Docs #14](https://github.com/Thesis-Titans/littlesteps-docs/issues/14) and [Docs #45](https://github.com/Thesis-Titans/littlesteps-docs/issues/45) closed with the final review scoreboard. Sprint 2 backlog is tracked in [Docs #73](https://github.com/Thesis-Titans/littlesteps-docs/issues/73) (In Progress on the Project Board).
-  - **Carry-over items into Sprint 2:**
-    - [Docs #44](https://github.com/Thesis-Titans/littlesteps-docs/issues/44): 9 mobile wireframes built on the Figma `Low-fidelity` canvas (Section 313:280) and committed as SVGs in [Docs PR #85](https://github.com/Thesis-Titans/littlesteps-docs/pull/85). Still open: links from each wireframe to its high-fidelity frame, and the CC 207B instructor's answer on which prototypes count as presented in class.
-    - [Docs #15](https://github.com/Thesis-Titans/littlesteps-docs/issues/15): prototype gate is PASS (2 participants, comment of 30 October); the instructor walkthrough is still pending.
-    - [Docs #3](https://github.com/Thesis-Titans/littlesteps-docs/issues/3): Philippine ECCD source material verification in progress by @vincenttamano.
-    - [React #6](https://github.com/Thesis-Titans/littlesteps-react/issues/6): child profile screens merged; delete dialog deferred to M3 pending API #17.
-    - [React #16](https://github.com/Thesis-Titans/littlesteps-react/issues/16): account pages merged; data export and account deletion deferred to M3 pending API #17.
+### Active M5 Release-Readiness Activities
+- **Final PR Reviews & CI Verification:** Active M5 standardization, Firestore catalog migration, and documentation synchronization PRs passing required CI checks across all repositories (`API CI/verify`, `Secret Scan/Gitleaks`, `Web CI/verify`, `Flutter CI/Analyze and Test`, `Docs CI/verify`).
+- **Release Packaging & Rehearsal:** Signed/release Android APK built against live Firebase (`littlesteps-app-cict`), Cross-Platform Demo CLI (`scripts/demo-cli/run-demo.mjs`) verified for local classroom demonstration, backup demo video, slide deck, and individual CC 207B code defense rehearsal underway.
 
 ## 9. Change control
 

@@ -63,12 +63,10 @@ All system-wide specifications live in `docs/` and follow ISO/IEC/IEEE, PMBOK, O
 - [Usability & Design Evaluation](docs/usability-and-design-evaluation.md) (ISO 9241-11 / Nielsen Heuristics / WCAG 2.2 AA): M0 prototype storyboards, informal caregiver walkthrough protocol, heuristic audit, and React/Flutter/Figma design review rubric.
 
 ### 4. Content Provenance & Research
-- [Philippine Content Provenance](docs/philippine-content-provenance.md) (RA 12199 / ECCD / DepEd): statutory baseline, item-level provenance schemas, catalog source verification, and non-diagnostic review gates.
-- [Research Register](docs/research-register.md): external statutory, regulatory, technical, and public health sources informing product design.
+- [Philippine Content Provenance](docs/philippine-content-provenance.md) (RA 12199 / ECCD / DepEd): statutory baseline, item-level provenance schemas, Firestore catalog audit, review gates, and external technical/statutory research register.
 
 ### 5. Onboarding, Governance & Delivery
 - [Developer Onboarding Guide](docs/getting-started.md) (Diátaxis Tutorial): reproducible local setup for API, Web, Mobile, and Firebase Emulators.
-- [Development Workflow](docs/development-workflow.md) (ISO/IEC/IEEE 12207): client coding standards, branch governance, and verification expectations.
 - [Execution Plan](docs/execution-plan.md) (PMBOK / ISO 21500): delivery milestones (M0–M5), work breakdown structure, and synchronized academic calendar.
 - [Documentation Standards](docs/documentation-standards.md) (Diátaxis Governance): three-tier documentation hierarchy, standards mapping, and repository consistency baseline.
 
