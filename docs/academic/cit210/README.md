@@ -3,7 +3,7 @@
 **Course:** CIT 210 Web Systems and Technologies  
 **Institution:** West Visayas State University — College of Information and Communications Technology  
 **Core Technologies:** React 19 + TypeScript Web Application (Vite), Express 5 Node.js API, Firebase Auth & Cloud Firestore  
-**Evaluation:** Presentation & Local Demonstration (December 2, 2026; no individual code defense)  
+**Evaluation:** Presentation & Local Demonstration (**December 4, 2026 at 8:00 AM**; no individual code defense) + **System Documentation (IMRAD format)**  
 **Governing Document:** [Official CIT 210 Final Project Evaluation Rubric](CIT210_Final_Project_Requirements.md) (100 Points Total)  
 **Authority:** The course instructor's brief and rubric are the authoritative source for course grading. Supporting documentation and OpenAPI contracts serve as technical evidence for the evaluation.
 
@@ -82,6 +82,16 @@ The course evaluates the final project through two primary categories:
 
 ---
 
+## Required System Documentation (IMRAD Format)
+
+In addition to the live presentation and demonstration on **December 4, 2026 at 8:00 AM**, CIT 210 requires submitting **System Documentation in IMRAD format**:
+- **Introduction:** Early-childhood caregiver problem statement, context, objectives, and scope of the LittleSteps web system and shared backend.
+- **Methods:** System architecture (React 19 + Vite, Express 5 on Firebase Cloud Functions, Cloud Firestore), OpenAPI 3.1 contract design, external REST integrations (Open Library, Open-Meteo, Google Gemini), BOLA/RA 10173 security and privacy methodology, and automated verification strategy.
+- **Results:** Implemented user interfaces and core workflows (FR-01..06), live API integration outputs, 3-layer AI guardrail & fallback behavior, WCAG 2.2 AA accessibility and heuristic audit outcomes, and cloud/emulator verification results.
+- **Discussion:** Key architectural trade-offs, known limitations (session-only offline cache, free-tier AI synthetic-data boundary, pending Docs #3 adviser sign-off), and future roadmap.
+
+---
+
 ## Status and Deliverables
 
 | Workstream | Milestone | Status |
@@ -91,4 +101,4 @@ The course evaluates the final project through two primary categories:
 | **Firestore Catalogs, Storybooks, Bookshelf & Daily Planning** | M2 | **Completed:** Firestore catalog collections (`catalog_activities`, `catalog_milestones`, `catalog_rhymes`), Open Library proxy/search, Family Bookshelf, and Today planning implemented across API and React. |
 | **Private Observation Journal & Weekly Reflection** | M3 | **Completed:** Caregiver-isolated journal CRUD and deterministic non-diagnostic weekly summary (`This week`) implemented across API and React. |
 | **Guardrailed Gemini AI, Weather Hint & Fallback** | M4 | **Completed:** `/ai/recommendations` (with 3-layer `ai_custom` guardrails), `/ai/story-activity`, `/ai/adapt`, hourly rate limiting, Open-Meteo weather hint, and deterministic fallback implemented across API and React. |
-| **Live Demo Rehearsal & Backup Video** | M5 | **In Progress:** Demo CLI (`scripts/demo-cli/run-demo.mjs`) verified; rehearsal and backup video preparation underway for December 2 presentation. |
+| **System Documentation (IMRAD), Demo Rehearsal & Backup Video** | M5 | **In Progress:** Demo CLI (`scripts/demo-cli/run-demo.mjs`) verified; IMRAD System Documentation, slide rehearsal, and backup video preparation underway for **December 4, 2026 (8:00 AM)**. |

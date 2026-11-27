@@ -9,9 +9,9 @@
 ---
 
 This plan defines the proposed delivery sequence for LittleSteps across three coordinated courses. Milestones describe intended outcomes; they do not indicate completion unless linked evidence confirms the exit criteria.
-- **CC 207B — Applications Development and Emerging Technologies:** Flutter mobile application with 6 core features, user-facing AI, live demo, and individual code defense.
-- **CIT 210 — Web Systems and Technologies:** React web client using shared API & database, local demo, and documentation.
-- **CIT 246 — IT Project Management Plan:** 25–40 page Project Management Plan governing the proposed production delivery of the Flutter mobile client and shared backend infrastructure, with Checkpoint 1 due October 14, 2026 and final defense on December 2, 2026.
+- **CC 207B — Applications Development and Emerging Technologies:** Flutter mobile application with 6 core features, user-facing AI, software documentation and slides submitted on or before December 1, 2026 (Google Classroom), and live demo + individual code defense on December 2, 2026 (morning).
+- **CIT 210 — Web Systems and Technologies:** React web client using shared API & database, System Documentation (IMRAD format), and live presentation on December 4, 2026 at 8:00 AM.
+- **CIT 246 — IT Project Management Plan:** Simulated 25–40 page Project Management Plan governing the proposed production delivery of the Flutter mobile client and shared backend infrastructure, with Checkpoint 1 due October 14, 2026 and final PMP submission before December 3, 2026 (no presentation required).
 
 Canonical product requirements remain in [Product Scope](product-scope.md), architecture decisions in [Architecture Decisions](architecture-decisions.md), security requirements in [Security, Privacy, and AI Safeguards](security-privacy-ai.md), and the client/server contract in the API repository's [OpenAPI specification](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml).
 
@@ -19,13 +19,12 @@ Canonical product requirements remain in [Product Scope](product-scope.md), arch
 
 ### 1.1 Hard Academic Deadlines
 - **October 14, 2026:** **CIT 246 Checkpoint 1** (One-page project concept covering Organization, Problem, Proposed System, and Possible Sponsor; A4, Arial 11). Documented in [CIT 246 Checkpoint 1 Concept](academic/cit246/checkpoint-1-concept.md).
-- **December 1, 2026, 7:00 AM:** **CC 207B Application Presentation & All Deliverables** *(extended from November 26)*:
-  - **CC 207B:** Live demonstration of the Flutter mobile app, 5–10 min presentation, backup video, and **Individual Code Defense** (2–3 min/member with live code modification). Software documentation package, AI usage log, and Topic Coverage Matrix submitted on schedule. Self and peer assessment follows the day after. See [CC 207B requirements](academic/cc207b/README.md).
-- **December 2, 2026:** **Final Submission Window & Demonstrations for Remaining Courses:**
-  - **CIT 210:** Presentation, local live demo of React app reading/writing shared data, and shared documentation.
-  - **CIT 246:** Final 25–40 page Project Management Plan for a 6–12 month project (one PDF on Google Drive plus a printed copy), 15 min presentation + 5 min Q&A by the three-member CIT 246 team. Checkpoint 2 and 3 dates are still to be announced. See §1.4.
+- **On or before December 1, 2026 (Google Classroom):** **CC 207B Documentation & Presentation Slides Submission** — Software documentation package (including Topic Coverage Matrix, AI Feature Specification, AI Usage Log, and Individual Reflections) and presentation slides uploaded to Google Classroom.
+- **December 2, 2026 (Morning):** **CC 207B Live Presentation, Demo & Individual Code Defense** — Live demonstration of the Flutter mobile app, 5–10 min presentation, backup video, and **Individual Code Defense** (2–3 min/member with live code modification). Self and peer assessment follows the day after. See [CC 207B requirements](academic/cc207b/README.md).
+- **Before December 3, 2026 (on or before December 2, 2026):** **CIT 246 Project Management Plan Submission** — Final 25–40 page Project Management Plan for a simulated 6–12 month project (one PDF on Google Drive plus a printed copy; **no presentation required**). See §1.4.
+- **December 4, 2026, 8:00 AM:** **CIT 210 Live Presentation & System Documentation (IMRAD Format)** — Live demonstration of the React web app reading/writing shared API and Firestore data, architecture/API explanation, and submission of the required **System Documentation in IMRAD format**.
 
-**Build window & presentation deadline:** the API, React and Flutter work for CIT 210 and CC 207B is built from **October 26 to November 25, 2026**. The **CC 207B Flutter application and all deliverables are presented on December 1, 2026 at 7:00 AM** (extended from November 26). Flutter features froze on **November 24, 2026 (23:59)**, and November 25–30 is dedicated to end-to-end device testing, documentation package finalization, slide preparation, demo rehearsal, and offline video recording.
+**Build window & evaluation schedule:** Core API, React, and Flutter features were built from **October 26 to November 25, 2026** (Flutter feature freeze on **November 24, 2026 at 23:59**). November 25–December 3 covers end-to-end device QA, Google Classroom submission of CC 207B docs/slides (**on or before December 1**), CC 207B morning live defense (**December 2**), CIT 246 final PMP submission (**before December 3**), and CIT 210 IMRAD System Documentation & live presentation (**December 4 at 8:00 AM**).
 
 ### 1.2 Delivery Approach
 Use **lightweight Scrum with a visible GitHub issue backlog** and one-week sprints.
@@ -40,11 +39,11 @@ Use **lightweight Scrum with a visible GitHub issue backlog** and one-week sprin
 | 2 | Nov 2 – Nov 8 | API + React | M2, M3, M4 | Catalog, activity planning, milestone observations, private journal, "This week" and the AI helper with its fallback work in React. |
 | 3 | Nov 9 – Nov 15 | Flutter | M1, M2 | Flutter sign-in, child profile, account pages, catalog, activity planning and milestones on the shared API. |
 | 4 | Nov 16 – Nov 25 | Flutter | M1–M5 | Flutter M1 (auth/state) completed Nov 21, AI helper (M4) & This Week (M3) by Nov 23; catalog, planning & journal (M2/M3) by Nov 24 (feature freeze at 23:59); Nov 25 dedicated to release APK build, hybrid AI polish, and QA. |
-| Wrap-up | Nov 26 – Dec 1 | Mobile, Web & Academic | M5 | Final QA sign-off, backup video, documentation finalization, code defense practice, **CC 207B Presentation (December 1, 2026 at 7:00 AM)**, CIT 210 demo rehearsal, and CIT 246 final PDF export. |
+| Wrap-up | Nov 26 – Dec 4 | Mobile, Web & Academic | M5 | Final QA sign-off, backup video, **CC 207B Docs & Slides on Google Classroom (≤ Dec 1)**, **CC 207B Live Presentation & Code Defense (Dec 2 morning)**, **CIT 246 PMP Submission (< Dec 3, no presentation)**, and **CIT 210 IMRAD System Documentation & Presentation (Dec 4, 8:00 AM)**. |
 
 ```mermaid
 gantt
-    title LittleSteps Agile Delivery Timeline (CC 207B Presentation: Dec 1, 2026)
+    title LittleSteps Agile Delivery Timeline (Finals: Dec 1–4, 2026)
     dateFormat  YYYY-MM-DD
     axisFormat  %b %d
 
@@ -68,13 +67,15 @@ gantt
     M3 Journal, This Week & State (Flutter)          :done, s4_3, 2026-11-21, 2026-11-24
     M2 Catalog, Planning & Milestones (Flutter)      :done, s4_1, 2026-11-20, 2026-11-24
     Flutter Feature Freeze (23:59)                   :milestone, m_freeze, 2026-11-24, 0d
-    M5 QA, Refactor, APK, Docs & Rehearsal           :active, s4_4, 2026-11-25, 2026-11-30
-    CC 207B Flutter Presentation (7:00 AM)           :milestone, m_pres, 2026-12-01, 0d
+    M5 QA, Refactor, APK, Docs & Slides              :active, s4_4, 2026-11-25, 2026-12-01
+    CC 207B Docs & Slides Due (Google Classroom)     :milestone, m_cc_sub, 2026-12-01, 0d
+    CC 207B Live Presentation & Code Defense (AM)    :milestone, m_cc_pres, 2026-12-02, 0d
 
-    section Wrap-Up & CIT 210/246 Finals
-    CIT 210 Rehearsal & Backup Video                 :active, w1, 2026-11-26, 2026-12-01
-    CIT 246 Final PDF & Presentation Prep            :active, w2, 2026-11-26, 2026-12-01
-    Final Defense & Submissions (CIT 210 & 246)      :milestone, m_final, 2026-12-02, 0d
+    section Wrap-Up & CIT 246 / CIT 210 Finals
+    CIT 246 Final PMP Review & Submission (< Dec 3)  :active, w2, 2026-11-26, 2026-12-02
+    CIT 246 PMP Submission Cutoff (No Presentation)  :milestone, m_cit246, 2026-12-02, 0d
+    CIT 210 IMRAD Docs, Rehearsal & Backup Video     :active, w1, 2026-11-26, 2026-12-03
+    CIT 210 Presentation & Live Demo (8:00 AM)       :milestone, m_cit210, 2026-12-04, 0d
 ```
 
 - **AI use:** AI tools may assist engineering workflows on the API and React client for scaffolding, test generation, and debugging. Flutter code is authored by team members, and any AI-generated code snippets, text content or assets used in the Flutter app are recorded in the AI Usage Log per CC 207B requirements (§1.3). Every member must understand and be prepared to defend all logic during the individual code defense.
@@ -343,7 +344,7 @@ Keep work in progress small. Do not start dependent feature work while a key con
 - **Content provenance gate ([Docs Issue #3](https://github.com/Thesis-Titans/littlesteps-docs/issues/3)):** Author-checked catalog collections (`catalog_activities`, `catalog_milestones`, `catalog_rhymes`) are seeded in Cloud Firestore with `status: "source_checked"`. Formal subject-matter adviser sign-off (`reviewed_approved`) remains required before any non-academic public launch.
 - **AI provider tier ([ADR-008](architecture-decisions.md)):** Academic evaluation uses the Gemini API free tier strictly with synthetic data and minimized non-identifying prompts; any future real-caregiver pilot requires migrating to a paid tier or Vertex AI.
 - **Offline persistence boundary:** Local in-memory caching supports offline viewing across profiles, plans, saved books, and catalogs, while offline writes remain disabled (`"Reconnect to save changes"`) and private journal entries are excluded from local caches.
-- **Final delivery schedule:** CC 207B live demonstration and individual code defense occur on **December 1, 2026 at 7:00 AM**; CIT 210 and CIT 246 finals follow on **December 2, 2026**.
+- **Final delivery schedule:** CC 207B documentation and slides due on or before **December 1, 2026** (Google Classroom) with live presentation and individual code defense on **December 2, 2026 (morning)**; CIT 246 Project Management Plan due **before December 3, 2026** (no presentation); CIT 210 System Documentation (IMRAD format) and live presentation on **December 4, 2026 at 8:00 AM**.
 
 ## 8. Delivery Status Summary (Milestone 5 — As of 2026-11-27)
 

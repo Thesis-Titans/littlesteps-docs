@@ -3,9 +3,9 @@
 **Course:** CIT 246 IT Project Management  
 **Institution:** West Visayas State University — College of Information and Communications Technology  
 **Source:** Summarized from the instructor's [Final Project: IT Project Management Plan](CIT246_Final_Project_IT_Project_Management_Plan.md) brief. The instructor's brief is the authority wherever this page differs from it.  
-**Key Deliverable:** One Project Management Plan, 25–40 pages including appendices, as a single PDF plus a printed copy, followed by a class presentation  
+**Key Deliverable:** One Project Management Plan, 25–40 pages including appendices, as a single PDF (plus printed copy if requested) — **no class presentation required**  
 **CIT 246 Team:** Mark Alvin Cadangin (Lead), Nherie C. Acebuche, Mae Daniella Faith C. Benjamin. CIT 246 is taken by these three members, who share this track; the other two LittleSteps members are on a different track. CC 207B and CIT 210 involve all five members.  
-**Final Presentation:** December 2, 2026 (15 minutes plus 5 minutes of questions; every CIT 246 team member speaks)
+**Submission Deadline:** **Before December 3, 2026** (on or before December 2, 2026; Project Management Plan submission only — no presentation)
 
 ---
 
@@ -31,8 +31,8 @@ The checkpoints are not optional and are not graded separately. A group that ski
 | **Checkpoint 1** | One-page project concept: the organization, the problem, the proposed system and the possible sponsor (Arial 11, A4). Must be approved before the full document is started. | October 14, 2026 | Completed ([Checkpoint 1 Concept](checkpoint-1-concept.md)). |
 | **Checkpoint 2** | Charter, stakeholder register and scope statement (template sections 3–6) | Per course schedule | Integrated in compiled v1.2 plan ([CIT246_FinalProject_ThesisTitans.md](CIT246_FinalProject_ThesisTitans.md)). |
 | **Checkpoint 3** | WBS, schedule and cost baseline (template sections 7–9) | Per course schedule | Integrated in compiled v1.2 plan with data-verified figures (`figures/fig-*.png`). |
-| **Final submission** | Complete Project Management Plan (PDF, Google Drive, printed copy) | December 2, 2026 | Version 1.2 compiled to [DOCX](CIT246_FinalProject_ThesisTitans.docx) and [PDF](CIT246_FinalProject_ThesisTitans.pdf); final review, signed Appendix C, and printing remaining before December 2. |
-| **Presentation** | 15 minutes per group plus 5 minutes of questions | December 2, 2026 | [Presentation outline](presentation-outline.md) aligned to v1.2; slide deck rehearsal remaining. |
+| **Final submission** | Complete Project Management Plan (PDF) | Before December 3, 2026 | Version 1.2 compiled to [DOCX](CIT246_FinalProject_ThesisTitans.docx) and [PDF](CIT246_FinalProject_ThesisTitans.pdf); final review, signed Appendix C, and submission remaining before December 3. |
+| **Presentation** | *(Not required)* | N/A | **No presentation required** for CIT 246 — only the Project Management Plan is submitted. Earlier [presentation outline](presentation-outline.md) is kept only as an optional reference. |
 
 ## 3. Key Deliverables
 
@@ -87,7 +87,7 @@ Each document follows the standard structure in the course decks and in Schwalbe
 | Length | 25 to 40 pages including appendices; quality over volume |
 | File name | `CIT246_FinalProject_GroupName.pdf` |
 | Where | Google Drive on or before the deadline, **and** a printed copy at the faculty office |
-| Presentation | 15 minutes plus 5 minutes of questions; every member speaks; slides submitted with the document |
+| Presentation | **Not required** (only the Project Management Plan document is submitted before December 3, 2026) |
 | Names | Every member on the title page, each with the sections they led |
 
 ## 6. Rubric (100 points: 5 criteria × 20)
@@ -110,7 +110,7 @@ Lower bands (15, 10, 0–5) apply when, for example, justification is not quanti
 | Compiled PMP (v1.2) | All 17 sections compiled in [CIT246_FinalProject_ThesisTitans.md](CIT246_FinalProject_ThesisTitans.md), exported to DOCX and PDF (`build_plan.py`), with data-verified diagrams (`data/make_figures.py`). |
 | Team of three | Three-member CIT 246 team (Mark Alvin Cadangin, Mae Daniella Faith C. Benjamin, Nherie C. Acebuche) reflected on the title page and Appendix C contribution statement. |
 | Simulated client scenario | Models a 6–12 month rollout for the **CSWDO La Paz–Lapuz District office** (request letter, courtesy meeting, and interview records included in Appendix A as part of the CIT 246 realism plan). |
-| Remaining pre-submission tasks | Final pass on the compiled PMP (tracked separately), wet-ink signatures on Appendix C, Google Drive upload, printed copy, and 15-minute presentation deck. |
+| Remaining pre-submission tasks | Final pass on the compiled PMP (tracked separately), wet-ink signatures on Appendix C, and final PDF submission before December 3, 2026 (no presentation required). |
 | Reusable inputs | [Product scope](../../product-scope.md), [architecture decisions](../../architecture-decisions.md), [security, privacy and AI safeguards](../../security-privacy-ai.md), and [execution plan](../../execution-plan.md). |
 
 ## Deliverables Index

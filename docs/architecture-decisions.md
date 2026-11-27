@@ -174,7 +174,7 @@ graph TD
   1. *Gemini API paid tier or Vertex AI:* prompts are not used for training. (Deferred: needs billing the course project does not have.)
   2. *Gemini API free tier with strict prompt minimization:* no cost; Google may use prompt content. (Chosen for the course.)
   3. *No external model; deterministic matching only:* no data leaves the system, but it would not meet the CC 207B AI-powered feature requirement.
-- **Decision:** Use the Gemini API free tier, called only server-side, for development, testing and the 2 December 2026 course demonstration, under these conditions:
+- **Decision:** Use the Gemini API free tier, called only server-side, for development, testing, and the December 2026 course demonstrations (CC 207B on December 2; CIT 210 on December 4), under these conditions:
   - Prompts carry only the coarse age band, time available, indoor or outdoor setting, a cleaned materials list and the language. Never a child's name, caregiver identifiers, location (including the weather city in ADR-009), observation notes or journal text (NFR-AI-02, NFR-PRIV-02).
   - The materials text is cleaned on the server before it is sent: it is cut to a short length and reduced to recognized household-material words, so anything else a caregiver types (such as a name) is dropped.
   - Only synthetic accounts and data are used while the free tier is in place (NFR-PRIV-03).

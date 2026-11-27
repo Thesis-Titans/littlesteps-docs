@@ -4,7 +4,7 @@
 **Project:** LittleSteps Early-Childhood Caregiver Companion  
 **Tracking Issue:** [Docs Issue #98](https://github.com/Thesis-Titans/littlesteps-docs/issues/98) (Coordinated with [API #60](https://github.com/Thesis-Titans/littlesteps-api/issues/60))  
 **Target Release:** Milestone 5 (M5 — Release-Readiness Review)  
-**Evaluation Dates:** CC 207B Presentation on Dec 1, 2026 (7:00 AM); CIT 210 & CIT 246 Finals on Dec 2, 2026  
+**Evaluation Dates:** CC 207B Docs & Slides due ≤ Dec 1, 2026 (Google Classroom) / Live Presentation & Defense Dec 2, 2026 (morning); CIT 246 PMP due before Dec 3, 2026 (no presentation); CIT 210 Live Presentation & System Documentation (IMRAD) on Dec 4, 2026 (8:00 AM)  
 
 ---
 

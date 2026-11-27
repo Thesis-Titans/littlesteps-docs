@@ -6,7 +6,7 @@
 **Base Framework:** Flutter. The brief allows a web or mobile application; LittleSteps builds an Android mobile app.  
 **Team Composition:** 5 members, so at least 6 core features (the AI-powered feature counts as one)  
 **Repository:** [`Thesis-Titans/CC-207B_26-27_Final-Project`](https://github.com/Thesis-Titans/CC-207B_26-27_Final-Project/tree/main/BSIT-3A/LittleSteps), the team's fork of the instructor's course repository; the app is in `BSIT-3A/LittleSteps`. See the [execution plan](../../execution-plan.md) §1.3.  
-**Submission & Defense:** **December 1, 2026 at 7:00 AM** *(extended from November 26)* — Application presentation, live demonstration, individual code defense (2–3 min/member with live modification), and submission of all deliverable packages (Topic Coverage Matrix, AI Usage Log, software documentation, and presentation deck). Final LMS upload window completes by December 2, 2026.
+**Submission & Defense:** Software documentation package (including Topic Coverage Matrix, AI Feature Specification, AI Usage Log, and Individual Reflections) and presentation slides must be submitted on or before **December 1, 2026** via **Google Classroom**. Live presentation, application demonstration, and Individual Code Defense (2–3 min/member with live modification) take place on **December 2, 2026 (morning)**.
 
 ---
 
@@ -120,4 +120,4 @@ Five points are deducted from the project score raw for each calendar day late, 
 | Course repository to fork | **Done:** Active fork at `Thesis-Titans/CC-207B_26-27_Final-Project` (`BSIT-3A/LittleSteps`); Milestones M1–M4 are complete on `main` with M5 modularization and adaptive layout polish passing `Flutter CI/Analyze and Test`. |
 | Collaboration history | **Active across all 5 members:** Feature branches, pull requests, and reviews from `@markalvincadangin`, `@Justin-Ardena`, `@vincenttamano`, `@Lovelly143`, and `@faithbn` are merged on `main`. |
 | AI Usage Log | **Done:** Maintained in `BSIT-3A/LittleSteps/docs/ai-usage-log.md` and synchronized in `software-documentation.md` §iv. |
-| Documentation package, presentation, reflections | **In final review (M5):** `software-documentation.md` (including Topic Coverage Matrix, AI Usage Log, and all 5 member reflections) and `ai-feature-specification.md` drafted; live demo rehearsal and backup video preparation underway for December 1, 7:00 AM. |
+| Documentation package, presentation, reflections | **In final review (M5):** `software-documentation.md` (including Topic Coverage Matrix, AI Usage Log, and all 5 member reflections) and `ai-feature-specification.md` drafted; slides & docs submission due on or before **December 1** (Google Classroom) ahead of the **December 2 (morning)** live presentation and code defense. |

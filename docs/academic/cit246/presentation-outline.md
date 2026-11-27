@@ -1,6 +1,8 @@
-# CIT 246 Presentation Outline
+# CIT 246 Presentation Outline *(Optional / Archived Reference)*
 
-**For:** the final presentation on 2 December 2026: 15 minutes plus 5 minutes of questions; every member speaks; slides are submitted with the document  
+> [!NOTE]
+> **No Presentation Required:** For CIT 246, only the IT Project Management Plan is required to be submitted **before December 3, 2026**; no oral presentation is required. This outline is retained solely as an optional reference.
+
 **Version:** 1.2 (aligned with compiled PMP), 27 November 2026  
 **Related Documents:** [Compiled Project Management Plan](CIT246_FinalProject_ThesisTitans.md), [CIT 246 Deliverables](README.md)
 

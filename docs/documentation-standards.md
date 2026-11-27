@@ -102,13 +102,14 @@ Evaluated under the [Official CIT 210 Final Project Evaluation Rubric](academic/
    - **Clarity & Structure (10 pts):** Logical project narrative, problem context, and system architecture.
    - **Explanation of API Integration (10 pts):** Detailed explanation of endpoints, request/response headers, token decoding, Open Library REST proxying, and AI prompt sanitization per [`docs/api-reference.md`](api-reference.md).
    - **Demo & Functionality (15 pts):** Stable live demonstration of core user journeys against local emulators with a rehearsed backup video.
-3. **Supporting Documentation:**
+3. **Supporting & Required Documentation (Presentation: December 4, 2026, 8:00 AM):**
+   - **System Documentation (IMRAD format):** Introduction, Methods, Results, and Discussion documenting the web system, API integrations, and evaluation.
    - [Developer Onboarding Guide](getting-started.md) for reproducible full-stack local execution.
    - [API Reference & Integration Guide](api-reference.md), Architecture decision records ([ADRs 001–016](architecture-decisions.md)), and [Traceability Matrix](traceability-matrix.md).
 
 ### 4.3 CIT 246: IT Project Management Plan
 1. **Checkpoint 1 Proposal (Due October 14, 2026):** One-page project concept covering Organization, Problem, Proposed System, and Possible Sponsor (A4, Arial 11), documented in [`docs/academic/cit246/checkpoint-1-concept.md`](academic/cit246/checkpoint-1-concept.md).
-2. **Full IT Project Management Plan (25–40 Pages, Due December 2, 2026):** 17-section PDF covering:
+2. **Full IT Project Management Plan (25–40 Pages, Due Before December 3, 2026; No Presentation Required):** 17-section PDF covering:
    - Sections 1–4: Title Page, Executive Summary, Business Case, and Project Charter.
    - Sections 5–6: Stakeholder Register (8+ entries with opponent) and Scope Statement (IN/OUT boundaries).
    - Sections 7–9: WBS (3+ levels with dictionary), Schedule (Network diagram & Gantt), and Cost Baseline (Peso amounts, WBS-linked).

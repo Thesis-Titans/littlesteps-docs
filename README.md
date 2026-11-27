@@ -6,9 +6,9 @@ LittleSteps is an early-learning and caregiver support application helping paren
 
 ### Coordinated Academic Courses
 
-- **CC 207B — Applications Development and Emerging Technologies:** Cross-platform Flutter application (`Thesis-Titans/CC-207B_26-27_Final-Project`, folder `BSIT-3A/LittleSteps`), live demonstration, software documentation, and individual code defense (**December 1, 2026 at 7:00 AM**; LMS upload window completes December 2, 2026).
-- **CIT 210 — Web Systems and Technologies:** Responsive React web application (`littlesteps-react`), shared Express REST API (`littlesteps-api`), external API integrations (Open Library, Open-Meteo, Google Gemini), and Cloud Firestore persistence (**December 2, 2026**).
-- **CIT 246 — IT Project Management:** Simulated 6–12 month IT Project Management Plan exercise for the CSWDO La Paz–Lapuz District office (**December 2, 2026**; maintained separately from the one-month software build).
+- **CC 207B — Applications Development and Emerging Technologies:** Cross-platform Flutter application (`Thesis-Titans/CC-207B_26-27_Final-Project`, folder `BSIT-3A/LittleSteps`), software documentation and presentation slides due on or before **December 1, 2026** (Google Classroom), with live demonstration and individual code defense on **December 2, 2026 (morning)**.
+- **CIT 210 — Web Systems and Technologies:** Responsive React web application (`littlesteps-react`), shared Express REST API (`littlesteps-api`), external API integrations (Open Library, Open-Meteo, Google Gemini), Cloud Firestore persistence, **System Documentation (IMRAD format)**, and live presentation on **December 4, 2026 at 8:00 AM**.
+- **CIT 246 — IT Project Management:** Simulated 6–12 month IT Project Management Plan exercise for the CSWDO La Paz–Lapuz District office (**Project Management Plan submission due before December 3, 2026; no presentation required**; maintained separately from the one-month software build).
 
 ### Core Capabilities
 
