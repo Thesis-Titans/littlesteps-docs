@@ -1,6 +1,6 @@
 # LittleSteps Cross-Platform Demo CLI
 
-Modular Node.js 20+/22 CLI (`run-demo.mjs`) powered by **Commander**, **`@clack/prompts`**, and **`picocolors`**. It verifies prerequisites, discovers sibling repositories dynamically, starts local Firebase Emulators, seeds the Firestore `catalog_activities` collection and demo family, launches React Web and/or Flutter Web, and manages Android ADB, release APK builds, and `scrcpy` screen mirroring.
+Modular Node.js 20+/22 CLI (`run-demo.mjs`) powered by **Commander**, **`@clack/prompts`**, and **`picocolors`**. It verifies prerequisites, discovers sibling repositories dynamically, starts local Firebase Emulators, seeds the Firestore catalog collections (`catalog_activities`, `catalog_milestones`, `catalog_rhymes`) and demo family, launches React Web and/or Flutter Web, and manages Android ADB, release APK builds, and `scrcpy` screen mirroring.
 
 Works identically on **Windows (PowerShell / CMD)**, **macOS**, **Linux**, and **WSL**.
 
@@ -13,7 +13,7 @@ cd littlesteps-docs/scripts/demo-cli
 npm install
 ```
 
-*(Running `run-demo.cmd` on Windows or the local `./run-demo.sh` wrapper installs dependencies automatically on first launch.)*
+*(On Windows, running `run-demo.cmd` installs CLI dependencies automatically on first launch.)*
 
 ---
 
@@ -43,10 +43,10 @@ node littlesteps-docs/scripts/demo-cli/run-demo.mjs
 | Command | Description |
 | :--- | :--- |
 | `start [target]` | Start Firebase Emulators + Firestore catalog seed + demo family + clients (`all`, `react`, `flutter`, `android`, `api`) |
-| `doctor [--json]` | Verify prerequisites, workspace repos, `catalog_activities` seed script, Gemini config, and ADB devices |
+| `doctor [--json]` | Verify prerequisites, workspace repos, catalog seed script, Gemini config, and ADB devices |
 | `status [--json]` | Inspect active demo ports (`4000, 5001, 8080, 9099, 5173, 5174`) and connected ADB devices |
 | `stop` | Cleanly stop all processes listening on LittleSteps demo ports |
-| `seed [--mode seeded\|empty] [--seed-file <path>] [--catalog-only]` | Seed Firestore catalogs (`activities`, `milestones`, `rhymes`) and demo family JSON against running emulators |
+| `seed [--mode seeded\|empty] [--seed-file <path>] [--catalog-only]` | Seed Firestore catalogs (`catalog_activities`, `catalog_milestones`, `catalog_rhymes`) and demo family JSON against running emulators |
 | `android connect` | Interactive USB / Wireless Debugging pair & connect helper |
 | `android apk --env <local\|prod>` | Validate config, build arm64 release APK, install via ADB, and launch (`prod` skips local emulators) |
 | `android mirror [--always-on-top] [--fps 60\|90\|120]` | Launch `scrcpy` phone mirroring & laptop control |
@@ -58,7 +58,7 @@ node littlesteps-docs/scripts/demo-cli/run-demo.mjs
 # Check prerequisites & workspace discovery
 node scripts/demo-cli/run-demo.mjs doctor
 
-# Start everything (Emulators + 23 catalog activities + React :5173 + Flutter Web :5174)
+# Start everything (Emulators + Firestore catalog seed + React :5173 + Flutter Web :5174)
 node scripts/demo-cli/run-demo.mjs start all --no-input
 
 # Start Flutter directly on Chrome instead of web-server
