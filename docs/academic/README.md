@@ -34,7 +34,7 @@ Governed by the [Official CC 207B Final Project Requirements](cc207b/CC207B_Fina
 - **AI Use Policy:** AI-generated code, text content and image assets must be recorded in the AI Usage Log; generating the application wholesale is not allowed.
 
 ### 3. [CIT 210 — Web Systems and Technologies](cit210/README.md)
-Governed by the [Official CIT 210 Evaluation Rubric](cit210/CIT210_Final_Project_Requirements.md). Covers the React web client, shared Node.js/TypeScript API, database integration, and required **System Documentation (IMRAD format)** for the **December 4, 2026 (8:00 AM)** presentation. Evaluated on a 100-point rubric: Application Development (65%) and Presentation (35%).
+Governed by the [Official CIT 210 Evaluation Rubric](cit210/CIT210_Final_Project_Requirements.md). Covers the React web client, shared Node.js/TypeScript API, database integration, and required **[System Documentation (IMRAD format)](cit210/system-documentation.md)** for the **December 4, 2026 (8:00 AM)** presentation. Evaluated on a 100-point rubric: Application Development (65%) and Presentation (35%).
 - **Technical Contract:** Canonical OpenAPI contract maintained in the [API repository OpenAPI specification](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml).
 - **Live Demo & Rehearsal:** Operational classroom demo plan in [Demonstration Environment & Rehearsal Plan](cit210/demo-environment-and-rehearsal.md).
 - **Local Onboarding:** Step-by-step full-stack local setup in [Developer Onboarding Guide](../getting-started.md).

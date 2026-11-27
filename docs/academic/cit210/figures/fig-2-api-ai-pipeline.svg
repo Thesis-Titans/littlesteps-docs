@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900">
+<defs><marker id="arr" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="#4B5D56"/></marker><marker id="arr-forest" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="#2D5A3D"/></marker><marker id="arr-terra" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="#D95D24"/></marker><marker id="arr-navy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="#1E3A8A"/></marker></defs>
+<rect width="1440" height="900" fill="#FFFFFF"/>
+<text x="36" y="44" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="22" fill="#1A2B29" text-anchor="start" font-weight="700">Figure 2. External REST Integration, Caching, and 3-Layer AI Guardrail Pipeline</text>
+<text x="36" y="68" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="13.5" fill="#5A6A64" text-anchor="start">Server-side orchestration across Open Library, Open-Meteo, and Google Gemini with deterministic fallbacks and RA 10173 data minimization</text>
+<path d="M 36 82 L 1404 82" fill="none" stroke="#C5D0CA" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="36" y="102" width="1368" height="224" rx="12" fill="#EAF3ED" stroke="#2D5A3D" stroke-width="1.6"/>
+<rect x="52" y="116" width="370" height="25" rx="12.5" fill="#2D5A3D" stroke="#2D5A3D" stroke-width="0"/>
+<text x="237.0" y="132.35" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#FFFFFF" text-anchor="middle" font-weight="700">LANE A · OPEN LIBRARY REST API &amp; FAMILY BOOKSHELF</text>
+<rect x="52" y="156" width="260" height="150" rx="8" fill="#FFFFFF" stroke="#C5D0CA" stroke-width="1.2"/>
+<text x="66" y="182" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#1E3F2B" text-anchor="start" font-weight="700">1. React Explore / Storybooks</text>
+<text x="66" y="204" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">GET /api/v1/catalog/books</text>
+<text x="66" y="222" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">GET /api/v1/catalog/books/search</text>
+<text x="66" y="240" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">Queries by subject or title,</text>
+<text x="66" y="258" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">plus saved Family Bookshelf</text>
+<text x="66" y="276" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">(POST /children/:id/books)</text>
+<rect x="366" y="156" width="290" height="150" rx="8" fill="#FFFFFF" stroke="#C5D0CA" stroke-width="1.2"/>
+<text x="380" y="182" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#1E3F2B" text-anchor="start" font-weight="700">2. Express Catalog Proxy &amp; Cache</text>
+<text x="380" y="204" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">Checks in-memory TTL cache</text>
+<text x="380" y="222" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">(60-min fresh, stale fallback).</text>
+<text x="380" y="240" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">Calls Open Library REST API:</text>
+<text x="380" y="258" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">/subjects/{s}.json &amp; /search.json</text>
+<text x="380" y="276" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">Normalizes covers &amp; authors</text>
+<rect x="710" y="156" width="300" height="150" rx="8" fill="#FFFFFF" stroke="#C5D0CA" stroke-width="1.2"/>
+<text x="724" y="182" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#1E3F2B" text-anchor="start" font-weight="700">3. Resilience &amp; Story Companion</text>
+<text x="724" y="204" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">Upstream failure/timeout -&gt; serves</text>
+<text x="724" y="222" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">local books.fallback.ts (60s TTL).</text>
+<text x="724" y="240" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">Optional closed-loop play idea:</text>
+<text x="724" y="258" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">POST /api/v1/ai/story-activity</text>
+<text x="724" y="276" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">(book title + subjects -&gt; play card)</text>
+<rect x="1064" y="156" width="322" height="150" rx="8" fill="#FFFFFF" stroke="#C5D0CA" stroke-width="1.2"/>
+<text x="1078" y="182" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#1E3F2B" text-anchor="start" font-weight="700">4. Schedule to Today&#x27;s Plan</text>
+<text x="1078" y="204" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">Caregiver taps &#x27;Add to today&#x27;s plan&#x27;</text>
+<text x="1078" y="222" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">POST /api/v1/children/:id/plans</text>
+<text x="1078" y="240" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">Stores inline customActivity snapshot</text>
+<text x="1078" y="258" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">in Firestore subcollection.</text>
+<text x="1078" y="276" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">Completable with 10s Undo toast</text>
+<path d="M 312 231 L 366 231" fill="none" stroke="#2D5A3D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-forest)"/>
+<path d="M 656 231 L 710 231" fill="none" stroke="#2D5A3D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-forest)"/>
+<path d="M 1010 231 L 1064 231" fill="none" stroke="#2D5A3D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-forest)"/>
+<rect x="36" y="344" width="1368" height="174" rx="12" fill="#EEF2FF" stroke="#1E3A8A" stroke-width="1.6"/>
+<rect x="52" y="358" width="396" height="25" rx="12.5" fill="#1E3A8A" stroke="#1E3A8A" stroke-width="0"/>
+<text x="250.0" y="374.35" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#FFFFFF" text-anchor="middle" font-weight="700">LANE B · OPEN-METEO WEATHER CONTEXT (PRIVACY-SAFE)</text>
+<rect x="52" y="396" width="360" height="104" rx="8" fill="#FFFFFF" stroke="#C5D0CA" stroke-width="1.2"/>
+<text x="66" y="420" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#1E3A8A" text-anchor="start" font-weight="700">1. Coarse Location Query (Today Screen)</text>
+<text x="66" y="442.0" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">GET /api/v1/catalog/weather?lat=10.72&amp;lon=122.56</text>
+<text x="66" y="459.5" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">Coordinates truncated to 2 decimals (~1.1 km).</text>
+<text x="66" y="477.0" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">Zero GPS history persisted in Firestore.</text>
+<rect x="468" y="396" width="420" height="104" rx="8" fill="#FFFFFF" stroke="#C5D0CA" stroke-width="1.2"/>
+<text x="482" y="420" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#1E3A8A" text-anchor="start" font-weight="700">2. Open-Meteo Proxy &amp; In-Memory Cache</text>
+<text x="482" y="442.0" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">Fetches WMO weather code, precipitation &amp; temperature</text>
+<text x="482" y="459.5" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">from api.open-meteo.com/v1/forecast (cached server-side).</text>
+<text x="482" y="477.0" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">Classifies indoor vs. outdoor play conditions.</text>
+<rect x="944" y="396" width="442" height="104" rx="8" fill="#FFFFFF" stroke="#C5D0CA" stroke-width="1.2"/>
+<text x="958" y="420" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#1E3A8A" text-anchor="start" font-weight="700">3. Symmetric Weather Hint Banner</text>
+<text x="958" y="442.0" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">Displays calm indoor or outdoor hint on /today.</text>
+<text x="958" y="459.5" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">CTA opens AI Idea Helper with setting preselected</text>
+<text x="958" y="477.0" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">(&#x27;Indoor&#x27; or &#x27;Outdoor&#x27;); silent hide if unavailable.</text>
+<path d="M 412 448 L 468 448" fill="none" stroke="#1E3A8A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-navy)"/>
+<path d="M 888 448 L 944 448" fill="none" stroke="#1E3A8A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-navy)"/>
+<rect x="36" y="536" width="1368" height="316" rx="12" fill="#FDF0E9" stroke="#D95D24" stroke-width="1.6"/>
+<rect x="52" y="550" width="445" height="25" rx="12.5" fill="#D95D24" stroke="#D95D24" stroke-width="0"/>
+<text x="274.5" y="566.35" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#FFFFFF" text-anchor="middle" font-weight="700">LANE C · GOOGLE GEMINI REST API &amp; 3-LAYER PEDIATRIC GUARDRAILS</text>
+<rect x="52" y="590" width="260" height="136" rx="8" fill="#FFFFFF" stroke="#C5D0CA" stroke-width="1.2"/>
+<text x="66" y="614" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#1A2B29" text-anchor="start" font-weight="700">Structured Request (No PII)</text>
+<text x="66" y="636.0" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#5A6A64" text-anchor="start">POST /api/v1/ai/recommendations</text>
+<text x="66" y="652.5" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#5A6A64" text-anchor="start">POST /api/v1/ai/adapt</text>
+<text x="66" y="669.0" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#5A6A64" text-anchor="start">Strict Zod: ageBand, setting,</text>
+<text x="66" y="685.5" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#5A6A64" text-anchor="start">timeMinutes, materials, language.</text>
+<text x="66" y="702.0" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#5A6A64" text-anchor="start">Rate limit: 10/hr/user · 30/hr/IP (429)</text>
+<rect x="352" y="590" width="232" height="136" rx="8" fill="#FFFFFF" stroke="#D95D24" stroke-width="1.4"/>
+<text x="366" y="614" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#D95D24" text-anchor="start" font-weight="700">Layer 1 · Input Gate</text>
+<text x="366" y="636.0" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#5A6A64" text-anchor="start">sanitize.ts blocks extreme</text>
+<text x="366" y="652.5" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#5A6A64" text-anchor="start">hazards (bleach, knife, fire,</text>
+<text x="366" y="669.0" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#5A6A64" text-anchor="start">medicine) &amp; prompt probes.</text>
+<text x="366" y="685.5" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#5A6A64" text-anchor="start">Permits typos &amp; FIL/HIL</text>
+<text x="366" y="702.0" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#5A6A64" text-anchor="start">household words to pass.</text>
+<rect x="624" y="590" width="272" height="136" rx="8" fill="#FFFFFF" stroke="#D95D24" stroke-width="1.4"/>
+<text x="638" y="614" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#D95D24" text-anchor="start" font-weight="700">Layer 2 · Gemini v1beta (Tier 1)</text>
+<text x="638" y="636.0" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#5A6A64" text-anchor="start">Node 22 fetch · 8s timeout ·</text>
+<text x="638" y="652.5" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#5A6A64" text-anchor="start">Circuit breaker (3 fails -&gt; 60s).</text>
+<text x="638" y="669.0" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#5A6A64" text-anchor="start">Catalog-first match; if custom</text>
+<text x="638" y="685.5" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#5A6A64" text-anchor="start">materials, evaluates structured</text>
+<text x="638" y="702.0" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#5A6A64" text-anchor="start">materialAssessments first.</text>
+<rect x="936" y="590" width="224" height="136" rx="8" fill="#FFFFFF" stroke="#D95D24" stroke-width="1.4"/>
+<text x="950" y="614" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#D95D24" text-anchor="start" font-weight="700">Layer 3 · Output Validator</text>
+<text x="950" y="636.0" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#5A6A64" text-anchor="start">validate-output.ts checks</text>
+<text x="950" y="652.5" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#5A6A64" text-anchor="start">catalog IDs, normalized</text>
+<text x="950" y="669.0" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#5A6A64" text-anchor="start">hazard terms &amp; 33-term</text>
+<text x="950" y="685.5" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#5A6A64" text-anchor="start">non-diagnostic denylist.</text>
+<text x="950" y="702.0" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#5A6A64" text-anchor="start">Fails closed on any slip.</text>
+<rect x="1200" y="590" width="186" height="136" rx="8" fill="#EAF3ED" stroke="#2D5A3D" stroke-width="1.4"/>
+<text x="1214" y="614" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#1E3F2B" text-anchor="start" font-weight="700">Provenance Badge</text>
+<text x="1214" y="636.0" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#5A6A64" text-anchor="start">• source: &#x27;ai&#x27;</text>
+<text x="1214" y="652.5" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#5A6A64" text-anchor="start">  (&#x27;Suggested by AI&#x27;)</text>
+<text x="1214" y="669.0" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#5A6A64" text-anchor="start">• source: &#x27;ai_custom&#x27;</text>
+<text x="1214" y="685.5" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#5A6A64" text-anchor="start">  (&#x27;Material adaptation&#x27;)</text>
+<text x="1214" y="702.0" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#5A6A64" text-anchor="start">• Zero fake citations</text>
+<path d="M 312 658 L 352 658" fill="none" stroke="#D95D24" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-terra)"/>
+<path d="M 584 658 L 624 658" fill="none" stroke="#D95D24" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-terra)"/>
+<path d="M 896 658 L 936 658" fill="none" stroke="#D95D24" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-terra)"/>
+<path d="M 1160 658 L 1200 658" fill="none" stroke="#D95D24" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-terra)"/>
+<rect x="352" y="756" width="1034" height="78" rx="8" fill="#FFFFFF" stroke="#2D5A3D" stroke-width="1.5" stroke-dasharray="6 3"/>
+<text x="368" y="782" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="13" fill="#1E3F2B" text-anchor="start" font-weight="700">Tier 3 Deterministic Fallback (fallback.ts) — Guaranteed Safe Response</text>
+<text x="368" y="804" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">Triggered automatically on: missing API key, 8s timeout, upstream 429/5xx, open circuit breaker, all materials unsafe, or Layer 3 validation rejection.</text>
+<text x="368" y="821" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.3" fill="#5A6A64" text-anchor="start">Returns reviewed Firestore catalog_activities filtered by ageBand/setting/domain with source: &#x27;fallback&#x27; (&#x27;Our picks&#x27; badge). (/ai/adapt uses Tier 2 rule-based fallback.)</text>
+<path d="M 760 726 L 760 756" fill="none" stroke="#2D5A3D" stroke-width="2.0" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-forest)" stroke-dasharray="4 3"/>
+<text x="772" y="745" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="10" fill="#5A6A64" text-anchor="start">timeout / error / open breaker</text>
+<path d="M 1048 726 L 1048 756" fill="none" stroke="#2D5A3D" stroke-width="2.0" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-forest)" stroke-dasharray="4 3"/>
+<text x="1060" y="745" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="10" fill="#5A6A64" text-anchor="start">invalid / unsafe output</text>
+<text x="36" y="878" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.5" fill="#5A6A64" text-anchor="start">Privacy Boundary (RA 10173): Child nicknames, birth months, exact locations, and private journal entries are stripped by schema and never leave the authenticated account.</text>
+</svg>

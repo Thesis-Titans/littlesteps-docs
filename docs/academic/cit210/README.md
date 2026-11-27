@@ -84,7 +84,7 @@ The course evaluates the final project through two primary categories:
 
 ## Required System Documentation (IMRAD Format)
 
-In addition to the live presentation and demonstration on **December 4, 2026 at 8:00 AM**, CIT 210 requires submitting **System Documentation in IMRAD format**:
+In addition to the live presentation and demonstration on **December 4, 2026 at 8:00 AM**, CIT 210 requires submitting **System Documentation in IMRAD format**, maintained in [System Documentation (IMRAD)](system-documentation.md) (with Chrome-rendered architecture and API/AI pipeline figures in `figures/`) and synced to the `LittleSteps - CIT210` Google Doc tab:
 - **Introduction:** Early-childhood caregiver problem statement, context, objectives, and scope of the LittleSteps web system and shared backend.
 - **Methods:** System architecture (React 19 + Vite, Express 5 on Firebase Cloud Functions, Cloud Firestore), OpenAPI 3.1 contract design, external REST integrations (Open Library, Open-Meteo, Google Gemini), BOLA/RA 10173 security and privacy methodology, and automated verification strategy.
 - **Results:** Implemented user interfaces and core workflows (FR-01..06), live API integration outputs, 3-layer AI guardrail & fallback behavior, WCAG 2.2 AA accessibility and heuristic audit outcomes, and cloud/emulator verification results.
@@ -101,4 +101,4 @@ In addition to the live presentation and demonstration on **December 4, 2026 at 
 | **Firestore Catalogs, Storybooks, Bookshelf & Daily Planning** | M2 | **Completed:** Firestore catalog collections (`catalog_activities`, `catalog_milestones`, `catalog_rhymes`), Open Library proxy/search, Family Bookshelf, and Today planning implemented across API and React. |
 | **Private Observation Journal & Weekly Reflection** | M3 | **Completed:** Caregiver-isolated journal CRUD and deterministic non-diagnostic weekly summary (`This week`) implemented across API and React. |
 | **Guardrailed Gemini AI, Weather Hint & Fallback** | M4 | **Completed:** `/ai/recommendations` (with 3-layer `ai_custom` guardrails), `/ai/story-activity`, `/ai/adapt`, hourly rate limiting, Open-Meteo weather hint, and deterministic fallback implemented across API and React. |
-| **System Documentation (IMRAD), Demo Rehearsal & Backup Video** | M5 | **In Progress:** Demo CLI (`scripts/demo-cli/run-demo.mjs`) verified; IMRAD System Documentation, slide rehearsal, and backup video preparation underway for **December 4, 2026 (8:00 AM)**. |
+| **System Documentation (IMRAD), Demo Rehearsal & Backup Video** | M5 | **In Progress:** [IMRAD System Documentation](system-documentation.md) drafted and synced to Google Docs; Demo CLI (`scripts/demo-cli/run-demo.mjs`) verified; slide rehearsal and backup video preparation underway for **December 4, 2026 (8:00 AM)**. |
