@@ -84,7 +84,7 @@ OPEN_LIBRARY_CONTACT=
 ```
 *(Allowlists local Vite frontend requests during development. Set `OPEN_LIBRARY_CONTACT` to a real contact address before calling the catalog books route.)*
 
-The file also lists optional settings: `GEMINI_API_KEY` and an explicit pinned stable `GEMINI_MODEL` (e.g., `gemini-3.5-flash-lite`; both needed to turn the Gemini provider on; leave empty locally), `SERVE_SYNTHETIC_CATALOG` and `DEMO_ALLOW_SYNTHETIC_AI` (local/demo fixtures only), `AI_IP_LIMIT_PER_HOUR`, and `TRUST_PROXY_HOPS`. See `.env.example` for what each does. Never commit real values.
+The file also lists optional settings: `GEMINI_API_KEY` and an explicit pinned stable `GEMINI_MODEL` (e.g., `gemini-3.5-flash-lite`; both needed to turn the Gemini provider on; leave empty locally), `AI_IP_LIMIT_PER_HOUR`, and `TRUST_PROXY_HOPS`. See `.env.example` for what each does. Never commit real values. Activity catalog documents are loaded from Firestore `catalog_activities` (seed the local emulator with `npm run seed:catalog:emulator`).
 
 > [!SECURITY]
 > `.env` is ignored by Git. Never commit service account keys, private secrets, or production credentials to `.env`.
@@ -216,15 +216,16 @@ To verify that the frontend and backend communicate properly:
 
 The Flutter app lives in the course fork under `BSIT-3A/LittleSteps` and talks to the same local API as the web client. Requirements: Flutter 3.47 (stable), and for Android an emulator or device on API 34 or newer with JDK 17 or 21.
 
-1. **Terminal 1**: start the API emulators with the demo catalog turned on. In `littlesteps-api/.env`, set:
-   ```bash
-   SERVE_SYNTHETIC_CATALOG=true
-   ```
-   Without it the catalog is empty, because no unreviewed content is served by default. Then:
+1. **Terminal 1**: build and start the API emulators, then seed the Firestore `catalog_activities` collection:
    ```bash
    cd littlesteps-api
    npm run build
    npm run emulators -- --project demo-littlesteps
+   ```
+   In another terminal (once the Firestore emulator is running on port `8080`):
+   ```bash
+   cd littlesteps-api
+   npm run seed:catalog:emulator
    ```
    Run `npm run build` again after pulling API changes, or the emulators keep running the old compiled code.
 2. **Terminal 2**: run the app.

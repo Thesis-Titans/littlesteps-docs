@@ -33,7 +33,7 @@ flowchart TD
 ### Why This Architecture Enhances Efficiency & Security (CIT 210 Presentation Focus)
 1. **Unified Dual-Client Backend:** A single, client-neutral REST API powers both the **CIT 210 React web client** and the **CC 207B Flutter mobile client**, eliminating duplicate database logic.
 2. **Strict Credential & Key Isolation:** Third-party credentials (Google Gemini API keys) and service account privileges remain strictly on the server. Client applications never possess external API keys.
-3. **Defense Against Broken Object Level Authorization (BOLA):** The API derives user identity directly from the verified cryptographic payload of the Firebase ID token (`req.user.uid`). It rejects requests that attempt to modify someone else's child records by manipulating URL parameters.
+3. **Defense Against Broken Object Level Authorization (BOLA):** The API derives user identity directly from the verified cryptographic payload of the Firebase ID token (`request.firebaseUser.uid`). It rejects requests that attempt to modify someone else's child records by manipulating URL parameters.
 4. **Resilient Data Augmentation Pipeline:** Combines real-world structured data from an external REST API (**Open Library**) with generative intelligence (**Google Gemini API**) through a multi-tier fallback that operates smoothly even offline.
 
 ---
@@ -245,16 +245,29 @@ To satisfy the CIT 210 requirement for a live external REST Data API, `littleste
 * **Closed-Loop Planning:** Books returned by this search can be passed to `POST /api/v1/ai/story-activity` to generate an AI play companion that can be scheduled directly to the child's daily routine (`POST /api/v1/children/:id/plans`).
 * **Offline Resilience:** On upstream failure or network interruption, returns a curated search fallback list matching common search queries.
 
-### 5.3 Learning Catalog: `GET /api/v1/catalog/activities` and `/api/v1/catalog/activities/:id`
+### 5.3 Learning Catalog: Activities, Milestones, and Rhymes
 
-> **Implemented in littlesteps-api PR #20** (OpenAPI version 0.2.0, review fixes in PR #23), using synthetic fixtures until the source review in Docs #3 is complete.
+> **Firestore-backed catalog (`catalog_activities`, `catalog_milestones`, `catalog_rhymes`)** with a 5-minute server-side in-memory TTL cache (`Cache-Control: public, max-age=3600`), seeded via `npm run seed:catalog:emulator` or `npm run seed:catalog:prod` (`littlesteps-api/scripts/seed-catalog.mjs`).
 
-* **Access:** Public read-only (unauthenticated).
-* **List query parameters (all optional):** `ageBand` (the seven bands in §4.2), `type` (`activity`, `story`, `rhyme`, `game`), `domain` (`cognitive`, `motor`, `language`, `socioEmotional`), `language` (`en`, `fil`, `hil`), `setting` (`indoor`, `outdoor`, `either`), `limit` (integer 1-50, default 20). Invalid values return `400 INVALID_INPUT`.
-* **List response:** `200 OK` with `{ "total": n, "items": [CatalogActivity] }` and `Cache-Control: public, max-age=3600`.
-* **By ID:** the `id` path parameter must match `^[a-z0-9-]+$` and be at most 64 characters, otherwise `400 INVALID_INPUT`. An unknown id returns `404 RESOURCE_NOT_FOUND`. Success is `200 OK` with one `CatalogActivity` and `Cache-Control: public, max-age=3600`.
-* **`CatalogActivity` fields:** `id`, `title`, `type`, `language`, `setting`, `ageBand`, `domain`, `durationMinutes` (1-180), `durationEstimate`, `materials`, `instructions` (array of steps), `provenanceSource`, `status` (`reviewed_approved`, `synthetic_fixture`; the OpenAPI draft also lists `draft`, which `data-model.md` does not) and `limitations`.
-* **Empty until reviewed:** production serves an empty catalog (`total: 0`, `items: []`, and `404` by id) until reviewed content is loaded. Synthetic engineering fixtures are never served as approved content.
+* **Activities (`GET /api/v1/catalog/activities` and `GET /api/v1/catalog/activities/:id`):**
+  * **Access:** Public read-only (unauthenticated).
+  * **List query parameters (all optional):** `ageBand` (the seven bands in §4.2), `type` (`activity`, `story`, `rhyme`, `game`), `domain` (`cognitive`, `motor`, `language`, `socioEmotional`), `language` (`en`, `fil`, `hil`), `setting` (`indoor`, `outdoor`, `either`), `limit` (integer 1-50, default 20). Invalid values return `400 INVALID_INPUT`.
+  * **List response:** `200 OK` with `{ "total": n, "items": [CatalogActivity] }` and `Cache-Control: public, max-age=3600`.
+  * **By ID:** the `id` path parameter must match `^[a-z0-9-]+$` and be at most 64 characters, otherwise `400 INVALID_INPUT`. An unknown id returns `404 RESOURCE_NOT_FOUND`. Success is `200 OK` with one `CatalogActivity` and `Cache-Control: public, max-age=3600`.
+  * **`CatalogActivity` fields:** `id`, `title`, `type`, `language`, `setting`, `ageBand`, `domain`, `durationMinutes` (1-180), `durationEstimate`, `materials`, `instructions` (array of steps), `provenanceSource`, `status` (`reviewed_approved`, `source_checked`, `synthetic_fixture`, `draft`) and `limitations`.
+  * **Content gating:** AI recommendations only draw from `reviewed_approved` and `source_checked` items; `synthetic_fixture` items are reserved for automated tests and never served as approved content.
+
+* **Reference Milestone Prompts (`GET /api/v1/catalog/milestones`):**
+  * **Access:** Public read-only (unauthenticated).
+  * **Query parameters (all optional):** `ageBand` (e.g., `0-11 months` through `60-71 months`), `domain` (`cognitive`, `motor`, `language`, `socioEmotional`), `limit` (integer 1-100, default 50). Invalid values return `400 INVALID_INPUT`.
+  * **Response:** `200 OK` with `{ "total": n, "items": [CatalogMilestone] }` and `Cache-Control: public, max-age=3600`.
+  * **`CatalogMilestone` fields:** `id`, `domain`, `title`, `lookFor` (array of observable caregiver cues), `ageBand`, `provenance`, `status`.
+
+* **Philippine Rhymes & Action Songs (`GET /api/v1/catalog/rhymes`):**
+  * **Access:** Public read-only (unauthenticated).
+  * **Query parameters (all optional):** `domain` (`cognitive`, `motor`, `language`, `socioEmotional`), `language` (`en`, `fil`, `hil`), `limit` (integer 1-100, default 50). Invalid values return `400 INVALID_INPUT`.
+  * **Response:** `200 OK` with `{ "total": n, "items": [CatalogRhyme] }` and `Cache-Control: public, max-age=3600`.
+  * **`CatalogRhyme` fields:** `id`, `title`, `subtitle`, `domain`, `domainLabel`, `language`, `lyrics` (array of lines), `actionPrompt`, `materials`, `durationMinutes`, `provenanceSource`, `status`.
 
 ### 5.4 Weather Hint: `GET /api/v1/catalog/weather`
 
@@ -295,7 +308,7 @@ LittleSteps integrates generative intelligence to enhance learning without relyi
 #### `POST /api/v1/ai/recommendations`
 Suggests up to three reviewed catalog activities for an age band, using only non-identifying parameters. Requires a Bearer token.
 
-> **Status:** implemented and merged in littlesteps-api PR #28 (30 October 2026); Gemini provider added in API PR #34; guardrailed hybrid custom material adaptation (`allowCustom: true`, `source: "ai_custom"`) merged in API PR #70 and upgraded to 3-layer defense-in-depth guardrails in API PR #73. The Gemini provider is off by default: it is used only when `GEMINI_API_KEY` and a pinned stable `GEMINI_MODEL` (e.g., `gemini-3.5-flash-lite`) are both set; otherwise, and on any provider failure, the response is the Tier 3 catalog fallback. Verified in backend CI (`npm test`) and local demo mode (`SERVE_SYNTHETIC_CATALOG=true`, `DEMO_ALLOW_SYNTHETIC_AI=true`).
+> **Status:** implemented and merged in littlesteps-api PR #28 (30 October 2026); Gemini provider added in API PR #34; guardrailed hybrid custom material adaptation (`allowCustom: true`, `source: "ai_custom"`) merged in API PR #70 and upgraded to 3-layer defense-in-depth guardrails in API PR #73. The Gemini provider is off by default: it is used only when `GEMINI_API_KEY` and a pinned stable `GEMINI_MODEL` (e.g., `gemini-3.5-flash-lite`) are both set; otherwise, and on any provider failure, the response is the Tier 3 catalog fallback. Verified in backend CI (`npm test`) and Firestore-backed `catalog_activities` (`reviewed_approved` and `source_checked` items).
 
 * **Request body (strict):** unknown fields are rejected with `400`, never ignored, so `childId`, nicknames, notes and similar fields cannot be sent.
 

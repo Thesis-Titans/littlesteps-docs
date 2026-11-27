@@ -331,7 +331,7 @@ graph TD
 - **Decision:**
   - Implement `/api/v1/children/:childId/books` (`GET`, `POST`, `DELETE`) mounted under authenticated child routes.
   - Store lightweight book metadata snapshots (`id`, `title`, `authors`, `coverUrl`, `subjects`, `createdAt`, `updatedAt`) using the Open Library work ID or sanitized slug as the document ID for natural idempotency.
-  - Enforce server-side Broken Object Level Authorization (BOLA) verifying `child.caregiverId === req.user.uid`.
+  - Enforce server-side Broken Object Level Authorization (BOLA) verifying `child.caregiverId === request.firebaseUser.uid`.
   - Include the bookshelf subcollection in cascade deletion when a child or caregiver profile is deleted (satisfying Data Privacy Act / RA 10173 and PRQ-02).
   - Update `openapi.yaml` to formalize the OpenAPI 3.1.0 contract.
 - **Consequences:**

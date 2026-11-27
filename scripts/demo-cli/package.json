@@ -1,0 +1,22 @@
+{
+  "name": "littlesteps-demo-cli",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Cross-platform interactive CLI for LittleSteps local emulators, seeding, web clients, and Android phone workflows",
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "bin": {
+    "littlesteps-demo": "./run-demo.mjs"
+  },
+  "scripts": {
+    "start": "node run-demo.mjs",
+    "test": "node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.10.1",
+    "commander": "^13.1.0",
+    "picocolors": "^1.1.1"
+  }
+}

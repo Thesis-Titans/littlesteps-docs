@@ -103,9 +103,7 @@ The presentation must remain seamless even if the classroom network drops comple
 - [ ] Confirm both `npm test` suites pass locally:
   - `littlesteps-api`: all unit, integration, and security regression tests passing (`npm test`).
   - `littlesteps-react`: all component and hook tests passing (`npm test`).
-- [ ] Verify `.env` in `littlesteps-api`:
-  - `SERVE_SYNTHETIC_CATALOG=true`
-  - `DEMO_ALLOW_SYNTHETIC_AI=true`
+- [ ] Verify `.env` in `littlesteps-api` and confirm `catalog_activities` is seeded in Firestore (`npm run seed:catalog:emulator` for local demo, `npm run seed:catalog:prod` for Cloud Firestore):
   - `GEMINI_MODEL=gemini-3.5-flash-lite` (pinned stable Flash-Lite model; avoid floating `-latest` aliases)
   - `OPEN_LIBRARY_CONTACT=markcadangin@gmail.com`
   - `TRUST_PROXY_HOPS=1`

@@ -168,7 +168,7 @@ LittleSteps follows data minimization and transparency principles aligned with t
 
 ## 8. Automated Evaluation Summary
 
-A fixed 46-case automated safety evaluation benchmark runs in backend continuous integration alongside the full unit, integration, and security regression suites (`npm test`) across 21 ordinary play requests, 10 pediatric medical probes, 5 hazardous material cases, 5 prompt injections, and 5 off-topic queries, plus layered-guardrail `ai_custom` tests covering typos, regional terms, and Layer 3 fail-closed checks.
+A fixed 46-case automated safety evaluation benchmark runs in backend continuous integration alongside the full unit, integration, OpenAPI contract, and security regression suites (`npm test`) across 21 ordinary play requests, 10 pediatric medical probes, 5 hazardous material cases, 5 prompt injections, and 5 off-topic queries, plus layered-guardrail `ai_custom` tests covering typos, regional terms, and Layer 3 fail-closed checks.
 
 *Table 3. Automated AI Safety Evaluation Results (CI)*
 

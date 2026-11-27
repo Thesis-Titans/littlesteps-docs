@@ -1,0 +1,4 @@
+node_modules/
+scripts/demo-cli/node_modules/
+.DS_Store
+*.log
