@@ -18,9 +18,9 @@
 
 For LittleSteps this means the plan describes a 6–12 month project for the proposed client (the City Social Welfare and Development Office [CSWDO] La Paz–Lapuz District office in Iloilo City), covering build, pilot, training and handover, with peso costs. It is a separate document from the [execution plan](../../execution-plan.md), which schedules the real one-month course build (October 26 to November 25, 2026).
 
-- **The timeline is a practice plan.** The 6–12 month schedule exercises the course's planning methods; it does not describe how the team actually builds the course project. The plan's risk, stakeholder, quality and communication work is still used in the real build.
+- **The timeline is a simulated realism plan.** CIT 246 is an academic IT Project Management simulation exercising the course's 6–12 month planning methods for a realistic client organization; it is maintained separately from the actual one-month CC 207B / CIT 210 software build ([execution plan](../../execution-plan.md)).
 - **The planned system is the Flutter app.** CIT 246 is coupled with CC 207B, so the plan describes the Flutter Android app on the shared Node.js/TypeScript API with Firebase Authentication and Firestore. The React web client from CIT 210 is not part of this plan. The [Checkpoint 1 concept](checkpoint-1-concept.md) mentioned both clients; the full plan narrows the scope to the Flutter app and its backend.
-- **Where it is written:** each template section is a Markdown file in this folder, reviewed through pull requests, then exported to one A4, Arial 11 PDF.
+- **Where it is written:** the compiled plan source is maintained in [`CIT246_FinalProject_ThesisTitans.md`](CIT246_FinalProject_ThesisTitans.md) and exported to A4, Arial 11 DOCX/PDF via `python3 build_plan.py`.
 
 ## 2. Checkpoints
 
@@ -28,11 +28,11 @@ The checkpoints are not optional and are not graded separately. A group that ski
 
 | Checkpoint | Deliverable | Due | Status |
 |---|---|---|---|
-| **Checkpoint 1** | One-page project concept: the organization, the problem, the proposed system and the possible sponsor (Arial 11, A4). Must be approved before the full document is started. | October 14, 2026 | Drafted (see [Checkpoint 1 Concept](checkpoint-1-concept.md)); **submission and approval not yet recorded** |
-| **Checkpoint 2** | Charter, stakeholder register and scope statement (template sections 3–6) | To be announced | Drafted for team review (see the [plan sections](#deliverables-index)); per-center figures are planning figures from the October 2026 client interviews |
-| **Checkpoint 3** | WBS, schedule and cost baseline (template sections 7–9) | To be announced | Drafted for team review (see the [plan sections](#deliverables-index)) |
-| **Final submission** | Complete Project Management Plan (PDF, Google Drive, printed copy) | December 2, 2026 | All 17 sections drafted (version 1.0 draft); team review, PDF export and printing still to do |
-| **Presentation** | 15 minutes per group plus 5 minutes of questions | December 2, 2026 | [Outline](presentation-outline.md) drafted; slides still to make |
+| **Checkpoint 1** | One-page project concept: the organization, the problem, the proposed system and the possible sponsor (Arial 11, A4). Must be approved before the full document is started. | October 14, 2026 | Completed ([Checkpoint 1 Concept](checkpoint-1-concept.md)). |
+| **Checkpoint 2** | Charter, stakeholder register and scope statement (template sections 3–6) | Per course schedule | Integrated in compiled v1.2 plan ([CIT246_FinalProject_ThesisTitans.md](CIT246_FinalProject_ThesisTitans.md)). |
+| **Checkpoint 3** | WBS, schedule and cost baseline (template sections 7–9) | Per course schedule | Integrated in compiled v1.2 plan with data-verified figures (`figures/fig-*.png`). |
+| **Final submission** | Complete Project Management Plan (PDF, Google Drive, printed copy) | December 2, 2026 | Version 1.2 compiled to [DOCX](CIT246_FinalProject_ThesisTitans.docx) and [PDF](CIT246_FinalProject_ThesisTitans.pdf); final review, signed Appendix C, and printing remaining before December 2. |
+| **Presentation** | 15 minutes per group plus 5 minutes of questions | December 2, 2026 | [Presentation outline](presentation-outline.md) aligned to v1.2; slide deck rehearsal remaining. |
 
 ## 3. Key Deliverables
 
@@ -106,13 +106,12 @@ Lower bands (15, 10, 0–5) apply when, for example, justification is not quanti
 
 | Item | Status |
 |---|---|
-| Checkpoint 1 concept | The team's concept proposal in Google Drive is dated 13 October 2026. **Record when it was submitted, whether it was approved, and any feedback.** |
-| Checkpoint 2 and 3 dates | **Ask the instructor**; the brief leaves them blank |
-| Team of three | The brief's template mentions "all five members" on the title page and in the signed contribution statement. **Confirm with the instructor** that three names and three signatures are correct for this group. |
-| Client organization and sponsor | The client is the **CSWDO La Paz–Lapuz District office**. The request letter was sent on 12 October 2026, the courtesy meeting with the OIC District Head was held on 27 October 2026 and four interviews were held on 28 and 29 October 2026 (Appendix A). The sponsor is identified by role. |
-| Project scale | The plan must cover a 6–12 month project with a peso budget, not the one-month course build |
-| Scope narrowed to Flutter | The Checkpoint 1 concept described both the Flutter and React clients; the full plan covers only the Flutter app and its backend. **Mention this to the instructor** with the Checkpoint 2 submission. |
-| Reusable inputs | [Product scope](../../product-scope.md) (in and out of scope), [architecture decisions](../../architecture-decisions.md) (including the paid AI tier in ADR-008 as a cost line), [security, privacy and AI safeguards](../../security-privacy-ai.md) and the execution plan's work packages. Rewrite them in the course and Schwalbe formats. |
+| Checkpoint 1 concept | Completed and preserved in [checkpoint-1-concept.md](checkpoint-1-concept.md). |
+| Compiled PMP (v1.2) | All 17 sections compiled in [CIT246_FinalProject_ThesisTitans.md](CIT246_FinalProject_ThesisTitans.md), exported to DOCX and PDF (`build_plan.py`), with data-verified diagrams (`data/make_figures.py`). |
+| Team of three | Three-member CIT 246 team (Mark Alvin Cadangin, Mae Daniella Faith C. Benjamin, Nherie C. Acebuche) reflected on the title page and Appendix C contribution statement. |
+| Simulated client scenario | Models a 6–12 month rollout for the **CSWDO La Paz–Lapuz District office** (request letter, courtesy meeting, and interview records included in Appendix A as part of the CIT 246 realism plan). |
+| Remaining pre-submission tasks | Final pass on the compiled PMP (tracked separately), wet-ink signatures on Appendix C, Google Drive upload, printed copy, and 15-minute presentation deck. |
+| Reusable inputs | [Product scope](../../product-scope.md), [architecture decisions](../../architecture-decisions.md), [security, privacy and AI safeguards](../../security-privacy-ai.md), and [execution plan](../../execution-plan.md). |
 
 ## Deliverables Index
 
