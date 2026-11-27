@@ -67,7 +67,8 @@ for name, size, color, before, after in (("Heading 1", 16, NAVY, 0, 10), ("Headi
     pf = st[name].paragraph_format
     pf.space_before, pf.space_after, pf.keep_with_next = Pt(before), Pt(after), True
 for name in ("Title", "Subtitle"):
-    font(st[name], 22 if name == "Title" else 15, bold=True, italic=False, color=NAVY if name == "Title" else BLUE)
+    font(st[name], 21 if name == "Title" else 11.5, bold=(name == "Title"), italic=(name == "Subtitle"),
+         color=INK if name == "Title" else GREY)
     st[name].paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
     for b in st[name].element.xpath(".//w:pBdr"):
         b.getparent().remove(b)
@@ -88,23 +89,42 @@ idx = lambda pred: next(i for i, p in enumerate(paras) if pred(p))
 
 # ---------------------------------------------------------------- 3. cover page
 toc_i = idx(lambda p: p.text.strip() == "Table of Contents")
+cover_img_n = 0
 for i, p in enumerate(paras[:toc_i]):
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     t = p.text.strip()
-    if p.style.name == "Heading 1":
+    if p._p.xpath(".//w:drawing"):
+        cover_img_n += 1
+        p.paragraph_format.space_before = Pt(0 if cover_img_n == 1 else 26)
+        p.paragraph_format.space_after = Pt(8 if cover_img_n == 1 else 14)
+        p.paragraph_format.keep_with_next = False
+    elif p.style.name == "Heading 1":
         p.style = st["Title"]
-        p.paragraph_format.space_before, p.paragraph_format.space_after = Pt(48), Pt(10)
+        p.paragraph_format.space_before, p.paragraph_format.space_after = Pt(6), Pt(4)
+        p.paragraph_format.keep_with_next = False
     elif p.style.name == "Heading 2":
         p.style = st["Subtitle"]
-        p.paragraph_format.space_after = Pt(54)
+        p.paragraph_format.space_before, p.paragraph_format.space_after = Pt(0), Pt(22)
+        p.paragraph_format.keep_with_next = False
     else:
-        p.paragraph_format.space_after = Pt(20)
-        p.paragraph_format.line_spacing = 1.25
+        is_footer_line = "|" in t and "2026" in t
+        p.paragraph_format.space_before = Pt(14 if is_footer_line else 0)
+        p.paragraph_format.space_after = Pt(0 if is_footer_line else 16)
+        p.paragraph_format.line_spacing = 1.3
         for r in p.runs:
-            r.font.size = Pt(11)
-            if r.bold:
-                r.font.color.rgb = NAVY
+            r.font.name = "Arial"
+            if is_footer_line:
+                r.font.size = Pt(10)
+                r.font.color.rgb = GREY
+            elif r.italic:
+                r.font.size = Pt(9.5)
+                r.font.color.rgb = GREY
+            elif r.bold:
                 r.font.size = Pt(10.5)
+                r.font.color.rgb = INK
+            else:
+                r.font.size = Pt(10)
+                r.font.color.rgb = GREY if r.text.strip().startswith(("Prepared for", "Submitted in Partial")) else INK
 
 # ---------------------------------------------------------------- 4. Word table of contents
 toc_head = paras[toc_i]
@@ -159,6 +179,8 @@ for t in doc.tables:
             for p in c.paragraphs:
                 p.paragraph_format.space_before, p.paragraph_format.space_after = Pt(0), Pt(0)
                 p.paragraph_format.line_spacing = 1.0
+                if ri == 0:
+                    p.paragraph_format.keep_with_next = True
                 for r in p.runs:
                     r.font.name = "Arial"
                     r.font.size = Pt(7.5 if wide else 8)
@@ -166,31 +188,58 @@ for t in doc.tables:
                         r.font.bold = True; r.font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
 
 # ---------------------------------------------------------------- 7. images fit the text area
-def fit_images(max_w, max_h):
-    for shp in doc.inline_shapes:
-        w, h = shp.width, shp.height
-        k = min(1.0, max_w / w, max_h / h)
-        shp.width, shp.height = int(w * k), int(h * k)
-fit_images(A4_W - 2 * MARGIN, Inches(9.1))
+def scale_shape(shp, max_w, max_h, allow_upscale=False):
+    w, h = shp.width, shp.height
+    k = min(max_w / w, max_h / h) if allow_upscale else min(1.0, max_w / w, max_h / h)
+    shp.width, shp.height = int(w * k), int(h * k)
+
+port_w = A4_W - 2 * MARGIN
+land_w, land_h = A4_H - Inches(1.2), A4_W - Inches(2.05)
+for si, shp in enumerate(doc.inline_shapes):
+    w, h = shp.width, shp.height
+    if si == 1 and abs(w - h) < w * 0.05:
+        # Centered LittleSteps rounded app logo on cover page
+        scale_shape(shp, Inches(1.25), Inches(1.25))
+    elif si > 1 and w > h and (w / h) > 1.35 and (w / h) < 1.50:
+        # Landscape A4 figure (Figure 8.1 Network Diagram)
+        scale_shape(shp, land_w, land_h, allow_upscale=True)
+    else:
+        scale_shape(shp, port_w, Inches(9.0))
+
 for p in doc.paragraphs:
     if p._p.xpath(".//w:drawing"):
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        p.paragraph_format.keep_with_next = True
+        if p.text.strip() or p._p.getnext() is not None:
+            # Keep figure attached to its caption (skip cover page images handled above)
+            if p not in doc.paragraphs[:toc_i]:
+                p.paragraph_format.keep_with_next = True
 
-# ---------------------------------------------------------------- 8. sections: portrait, landscape Appendix D.1, portrait
+# ---------------------------------------------------------------- 8. sections: portrait, landscape Fig 8.1, portrait, landscape Appendix D.1, portrait
 paras = doc.paragraphs
-d1 = idx(lambda p: p.text.strip() == "D.1 Cost by Work Package")
-ae = idx(lambda p: p.text.strip() == "Appendix E. References")
 base = doc.sections[-1]._sectPr
 base.append(parse_xml(f'<w:pgSz {nsdecls("w")} w:w="11906" w:h="16838"/>')) if base.find(qn("w:pgSz")) is None else None
-portrait = copy.deepcopy(base)
-paras[d1 - 1]._p.get_or_add_pPr().append(portrait)
-land = copy.deepcopy(base)
-end_land = parse_xml(f'<w:p {nsdecls("w")}><w:pPr/></w:p>')  # empty paragraph after the table closes the landscape section
-paras[ae]._p.addprevious(end_land)
-end_land.find(qn("w:pPr")).append(land)
-paras[d1 - 1].paragraph_format.page_break_before = False
-paras[ae].paragraph_format.page_break_before = False
+
+def insert_landscape_window(start_idx, end_idx):
+    """Wrap paragraphs [start_idx .. end_idx-1] in a landscape section."""
+    paras[start_idx - 1]._p.get_or_add_pPr().append(copy.deepcopy(base))
+    end_land = parse_xml(f'<w:p {nsdecls("w")}><w:pPr/></w:p>')
+    paras[end_idx]._p.addprevious(end_land)
+    end_land.find(qn("w:pPr")).append(copy.deepcopy(base))
+    paras[start_idx - 1].paragraph_format.page_break_before = False
+    paras[end_idx].paragraph_format.page_break_before = False
+
+# Landscape window 1: Figure 8.1 Network Diagram image + captions
+f81_cap = idx(lambda p: p.text.strip().startswith("Figure 8.1. Network diagram by WBS branch"))
+f81_img = next(i for i in range(f81_cap - 1, -1, -1) if paras[i]._p.xpath(".//w:drawing"))
+f81_after = f81_cap + 1
+insert_landscape_window(f81_img, f81_after)
+
+# Refresh paragraphs after inserting end-of-section marker
+paras = doc.paragraphs
+# Landscape window 2: Appendix D.1 Cost by Work Package
+d1 = idx(lambda p: p.text.strip() == "D.1 Cost by Work Package")
+ae = idx(lambda p: p.text.strip() == "Appendix E. References")
+insert_landscape_window(d1, ae)
 
 def header_footer(sec, text_w):
     for part, left, right in ((sec.header, "LittleSteps: Project Management Plan", "Thesis Titans | BSIT 3A-SDT"),
@@ -215,7 +264,7 @@ def header_footer(sec, text_w):
                     rr = p.add_run(tail); rr.font.size = Pt(8); rr.font.color.rgb = GREY
 
 for i, sec in enumerate(doc.sections):
-    landscape = i == 1
+    landscape = i in (1, 3)
     sec.orientation = WD_ORIENT.LANDSCAPE if landscape else WD_ORIENT.PORTRAIT
     sec.page_width, sec.page_height = (A4_H, A4_W) if landscape else (A4_W, A4_H)
     for m in ("top_margin", "bottom_margin", "left_margin", "right_margin"):
@@ -224,7 +273,6 @@ for i, sec in enumerate(doc.sections):
     header_footer(sec, sec.page_width - sec.left_margin - sec.right_margin)
 doc.sections[0].different_first_page_header_footer = True
 
-doc.settings.element.append(parse_xml(f'<w:updateFields {nsdecls("w")} w:val="true"/>'))
 doc.save(DOCX)
 print("wrote", DOCX)
 
@@ -232,16 +280,15 @@ print("wrote", DOCX)
 os.makedirs(WIN_TMP_WSL, exist_ok=True)
 shutil.copy(DOCX, os.path.join(WIN_TMP_WSL, NAME + ".docx"))
 ps = (f"$w=New-Object -ComObject Word.Application; $w.Visible=$false; $w.DisplayAlerts=0; "
-      f"$d=$w.Documents.Open('{WIN_TMP}\\{NAME}.docx'); "
-      "foreach($t in $d.TablesOfContents){$t.Update()}; $d.Fields.Update() | Out-Null; "
+      f"try {{ $d=$w.Documents.Open('{WIN_TMP}\\{NAME}.docx', $false, $false, $false); "
+      "$d.Fields.Update() | Out-Null; "
       "foreach($t in $d.TablesOfContents){$t.Update()}; "
-      f"$d.Save(); $d.ExportAsFixedFormat('{WIN_TMP}\\{NAME}.pdf',17); $d.Close(0); $w.Quit()")
-subprocess.run([POWERSHELL, "-NoProfile", "-Command", ps], check=True, timeout=300)
+      "$d.Fields.Update() | Out-Null; "
+      "foreach($t in $d.TablesOfContents){$t.Update()}; "
+      f"$d.Save(); $d.ExportAsFixedFormat('{WIN_TMP}\\{NAME}.pdf',17); }} "
+      "finally { if($d){$d.Close(0)}; if($w){$w.Quit()} }")
+subprocess.run([POWERSHELL, "-NoProfile", "-Command", ps], stdin=subprocess.DEVNULL, check=True, timeout=300)
 shutil.copy(os.path.join(WIN_TMP_WSL, NAME + ".pdf"), PDF)
-# Word has now filled the TOC; keep that copy but drop the update-on-open prompt
-d = docx.Document(os.path.join(WIN_TMP_WSL, NAME + ".docx"))
-for e in d.settings.element.findall(qn("w:updateFields")):
-    d.settings.element.remove(e)
-d.save(DOCX)
+shutil.copy(os.path.join(WIN_TMP_WSL, NAME + ".docx"), DOCX)
 pages = subprocess.run(["pdfinfo", PDF], capture_output=True, text=True).stdout
 print("wrote", PDF, [l for l in pages.splitlines() if l.startswith("Pages")])

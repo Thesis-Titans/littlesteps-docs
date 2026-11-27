@@ -1,31 +1,31 @@
 ![](letters/letterhead-header.png)
 
-# LittleSteps: Home Learning and Observation App for Barangay Child Development Centers
+![](letters/littlesteps-logo.png)
 
-## Project Management Plan
+# Project Management Plan: LittleSteps
 
-**Client Organization**  
-Iloilo City Social Welfare and Development Office (CSWDO)  
+## Home Learning and Observation App for Barangay Child Development Centers
+
+Prepared for  
+**Iloilo City Social Welfare and Development Office (CSWDO)**  
 La Paz–Lapuz District Office, Iloilo City
 
-**Submitted by**  
-Thesis Titans  
-Mark Alvin Cadangin  
-Mae Daniella Faith C. Benjamin  
-Nherie C. Acebuche  
-BSIT 3A-SDT
+Submitted in Partial Fulfillment of the Requirements for  
+**CIT 246 - IT Project Management**
 
-**Submitted to**  
+**Submitted By:**  
+**Thesis Titans** (BSIT 3A-SDT)  
+Acebuche, Nherie C. *(Sections 5, 11, 12, 14, 17)*  
+Benjamin, Mae Daniella Faith C. *(Sections 6, 10, 15)*  
+Cadangin, Mark Alvin C. *(Sections 1–4, 7–9, 13, 16)*
+
+**Submitted To:**  
 Ms. Tracy Marie Andrea C. Madresta  
-Instructor, CIT 246 IT Project Management  
-College of Information and Communications Technology, West Visayas State University
+*Instructor, CIT 246 IT Project Management*  
+The OIC District Head, CSWDO La Paz–Lapuz District Office  
+*Project Sponsor*
 
-The OIC District Head  
-CSWDO La Paz–Lapuz District Office  
-Project Sponsor
-
-**Date of Submission**  
-2 December 2026
+BSIT 3A-SDT  |  December 2, 2026
 
 ## Table of Contents
 
