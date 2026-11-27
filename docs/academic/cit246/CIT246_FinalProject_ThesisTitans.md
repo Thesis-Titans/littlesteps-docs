@@ -555,7 +555,7 @@ Six work packages: the riskiest and those on the critical path. Each entry gives
 | Owner | UI/UX designer, with the business analyst |
 | Output | Approved prototype (D2) and walkthrough findings |
 | Duration | 10 working days, 8–19 February 2027 |
-| Cost | ₱24,300 |
+| Cost | ₱20,475 |
 | Acceptance | Sponsor and a CDW representative approve it in writing; no severity 1–2 finding open |
 
 ### 3.2.1 Adapt 80 activities, stories and rhymes
@@ -567,7 +567,7 @@ Six work packages: the riskiest and those on the critical path. Each entry gives
 | Owner | Stakeholder and content coordinator |
 | Output | 80 draft catalog items with source records |
 | Duration | 25 working days, 15 February–19 March 2027 |
-| Cost | ₱38,700 |
+| Cost | ₱31,875 |
 | Acceptance | All 80 items have every catalog field and a source record, checked by the business analyst before review |
 
 ### 4.3.3 AI suggestion service and fallback
@@ -643,12 +643,12 @@ Each activity is a WBS work package; all dates are in 2027. Basis of the duratio
 | **1.4.2** | **Lessons learned and archive** | 2 | Analog. | 1.4.1 | 26 Aug | 27 Aug | 0 | 6,280 |
 | **2.1.1** | **Discovery interviews and baseline measures** | 10 | Param. | 1.1.1 | 11 Jan | 22 Jan | 0 | 30,040 |
 | 2.1.2 | Requirements specification (D1) | 10 | Param. | 2.1.1 | 25 Jan | 5 Feb | 13 | 13,650 |
-| 2.2.1 | Wireframes and design system | 10 | Analog. | 2.1.1 | 25 Jan | 5 Feb | 17 | 17,745 |
-| 2.2.2 | Clickable prototype and parent walkthrough (D2) | 10 | Analog. | 2.2.1, 2.1.2 | 8 Feb | 19 Feb | 43 | 24,300 |
+| 2.2.1 | Wireframes and design system | 10 | Analog. | 2.1.1 | 25 Jan | 5 Feb | 17 | 13,650 |
+| 2.2.2 | Clickable prototype and parent walkthrough (D2) | 10 | Analog. | 2.2.1, 2.1.2 | 8 Feb | 19 Feb | 43 | 20,475 |
 | 2.3.1 | Privacy impact assessment draft | 10 | Expert | 2.1.2 | 8 Feb | 19 Feb | 13 | 60,465 |
 | 2.3.2 | DPO review and approval (D3) | 10 | Expert | 2.3.1 | 22 Feb | 5 Mar | 13 | 1,820 |
 | 3.1.1 | Source selection and reuse permissions | 15 | Param. | 2.1.1 | 25 Jan | 12 Feb | 11 | 19,125 |
-| 3.2.1 | Adapt 80 activities, stories and rhymes | 25 | Param. | 3.1.1 | 15 Feb | 19 Mar | 11 | 38,700 |
+| 3.2.1 | Adapt 80 activities, stories and rhymes | 25 | Param. | 3.1.1 | 15 Feb | 19 Mar | 11 | 31,875 |
 | 3.2.2 | Translate items to Filipino and Hiligaynon | 15 | Param. | 3.2.1 | 22 Mar | 14 Apr | 11 | 53,738 |
 | 3.3.1 | Content reviewer sign-off (D4) | 10 | Param. | 3.2.1 | 22 Mar | 6 Apr | 16 | 63,825 |
 | 3.3.2 | Load the reviewed catalog into the database | 3 | Analog. | 3.3.1, 3.2.2, 4.3.1, 5.3.2 | 19 Apr | 21 Apr | 9 | 2,048 |
@@ -769,7 +769,7 @@ Each level-1 branch is shown with the work packages that carry non-labour costs.
 | 7.2.1 | Eight-week pilot with support (cloud and AI, 4 months × ₱5,000) | Parametric | ₱60,080 | ₱20,000 | ₱80,080 |
 | **8.0** | **Release, Training and Handover** | Parametric; analogous; expert judgment | ₱54,912 | ₱21,500 | ₱76,412 |
 | 8.1.1 | Training materials, D9 (printing) | Parametric | ₱16,845 | ₱20,000 | ₱36,845 |
-| 8.2.2 | Google Play release, D10 (registration, US5) | Analogous | ₱3,140 | ₱1,500 | ₱4,640 |
+| 8.2.2 | Google Play release, D10 (registration, US$25) | Analogous | ₱3,140 | ₱1,500 | ₱4,640 |
 | | **Subtotal** | | **₱704,052** | **₱259,500** | **₱963,552** |
 | | **Contingency reserve (10% of subtotal)** | | | | **₱96,355** |
 | | **Cost baseline (project budget)** | | | | **₱1,059,907** |
@@ -1278,7 +1278,7 @@ Labour is duration × each role's share × its daily rate (Section 9.1). The mon
 | 2.1.1 | Discovery interviews and baseline measures | 10 | BA 1; CC 1; PM 0.2 | 30,040 | 0 | 30,040 | Parametric: 8 interviews at about 1 day each plus analysis |
 | 2.1.2 | Requirements specification (D1) | 10 | BA 1 | 13,650 | 0 | 13,650 | Parametric: 6 features plus supporting functions, about 1.5 days each |
 | 2.2.1 | Wireframes and design system | 10 | UX 1 | 13,650 | 0 | 13,650 | Analogous: the 2026 prototype's design system |
-| 2.2.2 | Clickable prototype and parent walkthrough (D2) | 10 | UX 1; BA 0.5; CC 0.3 | 24,300 | 0 | 24,300 | Analogous |
+| 2.2.2 | Clickable prototype and parent walkthrough (D2) | 10 | UX 1; BA 0.5 | 20,475 | 0 | 20,475 | Analogous |
 | 2.3.1 | Privacy impact assessment draft | 10 | BA 0.5; PM 0.2 | 10,465 | 50,000 | 60,465 | Expert judgment (consultant's fixed fee) |
 | 2.3.2 | DPO review and approval (D3) | 10 | PM 0.1 | 1,820 | 0 | 1,820 | Expert judgment: two-week DPO review |
 | 3.1.1 | Source selection and reuse permissions | 15 | CC 1 | 19,125 | 0 | 19,125 | Parametric: about 12 candidate sources |

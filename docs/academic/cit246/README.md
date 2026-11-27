@@ -20,7 +20,7 @@ For LittleSteps this means the plan describes a 6–12 month project for the pro
 
 - **The timeline is a simulated realism plan.** CIT 246 is an academic IT Project Management simulation exercising the course's 6–12 month planning methods for a realistic client organization; it is maintained separately from the actual one-month CC 207B / CIT 210 software build ([execution plan](../../execution-plan.md)).
 - **The planned system is the Flutter app.** CIT 246 is coupled with CC 207B, so the plan describes the Flutter Android app on the shared Node.js/TypeScript API with Firebase Authentication and Firestore. The React web client from CIT 210 is not part of this plan. The [Checkpoint 1 concept](checkpoint-1-concept.md) mentioned both clients; the full plan narrows the scope to the Flutter app and its backend.
-- **Where it is written:** the compiled plan source is maintained in [`CIT246_FinalProject_ThesisTitans.md`](CIT246_FinalProject_ThesisTitans.md) and exported to A4, Arial 11 DOCX/PDF via `python3 build_plan.py`.
+- **Where it is written:** the compiled plan source is maintained in [`CIT246_FinalProject_ThesisTitans.md`](CIT246_FinalProject_ThesisTitans.md) and synced to the [`LittleSteps - CIT246` Google Doc tab](https://docs.google.com/document/d/1KAz7xv1JCGIoT8nHaNUknde5W6LqF0gKyZu9KkD7rs0/edit?tab=t.jernbzw1gc03) for final A4 PDF export (`CIT246_FinalProject_ThesisTitans.pdf`). Local DOCX/PDF exports can also be rebuilt on demand via `python3 build_plan.py`.
 
 ## 2. Checkpoints
 
@@ -31,7 +31,7 @@ The checkpoints are not optional and are not graded separately. A group that ski
 | **Checkpoint 1** | One-page project concept: the organization, the problem, the proposed system and the possible sponsor (Arial 11, A4). Must be approved before the full document is started. | October 14, 2026 | Completed ([Checkpoint 1 Concept](checkpoint-1-concept.md)). |
 | **Checkpoint 2** | Charter, stakeholder register and scope statement (template sections 3–6) | Per course schedule | Integrated in compiled v1.2 plan ([CIT246_FinalProject_ThesisTitans.md](CIT246_FinalProject_ThesisTitans.md)). |
 | **Checkpoint 3** | WBS, schedule and cost baseline (template sections 7–9) | Per course schedule | Integrated in compiled v1.2 plan with data-verified figures (`figures/fig-*.png`). |
-| **Final submission** | Complete Project Management Plan (PDF) | Before December 3, 2026 | Version 1.2 compiled to [DOCX](CIT246_FinalProject_ThesisTitans.docx) and [PDF](CIT246_FinalProject_ThesisTitans.pdf); final review, signed Appendix C, and submission remaining before December 3. |
+| **Final submission** | Complete Project Management Plan (PDF) | Before December 3, 2026 | Version 1.2 verified in [CIT246_FinalProject_ThesisTitans.md](CIT246_FinalProject_ThesisTitans.md) and synced to the [LittleSteps - CIT246 Google Doc tab](https://docs.google.com/document/d/1KAz7xv1JCGIoT8nHaNUknde5W6LqF0gKyZu9KkD7rs0/edit?tab=t.jernbzw1gc03) for final A4 PDF export; signed Appendix C and submission remaining before December 3. |
 | **Presentation** | *(Not required)* | N/A | **No presentation required** for CIT 246 — only the Project Management Plan is submitted. Earlier [presentation outline](presentation-outline.md) is kept only as an optional reference. |
 
 ## 3. Key Deliverables
@@ -107,16 +107,16 @@ Lower bands (15, 10, 0–5) apply when, for example, justification is not quanti
 | Item | Status |
 |---|---|
 | Checkpoint 1 concept | Completed and preserved in [checkpoint-1-concept.md](checkpoint-1-concept.md). |
-| Compiled PMP (v1.2) | All 17 sections compiled in [CIT246_FinalProject_ThesisTitans.md](CIT246_FinalProject_ThesisTitans.md), exported to DOCX and PDF (`build_plan.py`), with data-verified diagrams (`data/make_figures.py`). |
+| Compiled PMP (v1.2) | All 17 sections compiled and data-verified in [CIT246_FinalProject_ThesisTitans.md](CIT246_FinalProject_ThesisTitans.md) with Chrome-rendered diagrams (`data/make_figures.py`), synced to the [LittleSteps - CIT246 Google Doc tab](https://docs.google.com/document/d/1KAz7xv1JCGIoT8nHaNUknde5W6LqF0gKyZu9KkD7rs0/edit?tab=t.jernbzw1gc03) for final PDF export. |
 | Team of three | Three-member CIT 246 team (Mark Alvin Cadangin, Mae Daniella Faith C. Benjamin, Nherie C. Acebuche) reflected on the title page and Appendix C contribution statement. |
 | Simulated client scenario | Models a 6–12 month rollout for the **CSWDO La Paz–Lapuz District office** (request letter, courtesy meeting, and interview records included in Appendix A as part of the CIT 246 realism plan). |
-| Remaining pre-submission tasks | Final pass on the compiled PMP (tracked separately), wet-ink signatures on Appendix C, and final PDF submission before December 3, 2026 (no presentation required). |
+| Remaining pre-submission tasks | Final visual polish in Google Docs, wet-ink signatures on Appendix C, and final A4 PDF export & submission before December 3, 2026 (no presentation required). |
 | Reusable inputs | [Product scope](../../product-scope.md), [architecture decisions](../../architecture-decisions.md), [security, privacy and AI safeguards](../../security-privacy-ai.md), and [execution plan](../../execution-plan.md). |
 
 ## Deliverables Index
 
 - [CIT246_FinalProject_ThesisTitans.md](CIT246_FinalProject_ThesisTitans.md): the plan's source, Sections 1–17. Edit this file only.
-- [CIT246_FinalProject_ThesisTitans.docx](CIT246_FinalProject_ThesisTitans.docx) and [CIT246_FinalProject_ThesisTitans.pdf](CIT246_FinalProject_ThesisTitans.pdf): built from the source with `python3 build_plan.py`, which makes the DOCX with pandoc and then has Microsoft Word update the table of contents and export the PDF, so the PDF is exactly the DOCX.
+- [LittleSteps - CIT246 Google Doc tab](https://docs.google.com/document/d/1KAz7xv1JCGIoT8nHaNUknde5W6LqF0gKyZu9KkD7rs0/edit?tab=t.jernbzw1gc03): live Google Docs copy synced from the Markdown source for collaborative polish and A4 PDF export (compiled `.docx`/`.pdf` binaries are intentionally not committed to Git; `python3 build_plan.py` remains available for offline rebuilds).
 - [data/](data/): schedule and cost data. `data/make_figures.py` checks the plan against the data and draws Figures 7.1, 8.1, 8.2 and 11.1 as SVG in `figures/`; the PNGs are rendered from those SVGs with Chrome.
 - [letters/](letters/): the client request letter (`client-request-letter.docx`) and the WVSU CICT letterhead images used on the cover.
 - [Presentation outline](presentation-outline.md) and [Checkpoint 1 concept](checkpoint-1-concept.md).
