@@ -3,14 +3,14 @@
 **Status:** Canonical Data Architecture Baseline  
 **Governing Standard:** ISO/IEC/IEEE 42010:2022 (Data Viewpoint) & RA 10173 (Data Privacy Act of 2012)  
 **Owner:** Mark Alvin Cadangin (Technical Lead) & Justin (Backend Lead)  
-**Last Reviewed:** 2026-11-08  
+**Last Reviewed:** 2026-11-27  
 **Related Documents:** [API Reference & Integration Guide](api-reference.md), [Architecture Decisions](architecture-decisions.md) (ADR-003, ADR-004, ADR-010), [Security, Privacy, and AI Safeguards](security-privacy-ai.md) (NFR-SEC-02, NFR-PRIV-01..03)
 
 ---
 
 ## 1. Storage Architecture & Multi-Tenant Isolation
 
-The planned datastore is **Cloud Firestore**. Private records are organized under caregiver-scoped paths to support tenant isolation. Path structure alone does not enforce authorization: every API operation must verify the authenticated caregiver's ownership, and tests must cover cross-caregiver access.
+The primary datastore is **Cloud Firestore**. Private records are organized under caregiver-scoped paths to support tenant isolation. Path structure alone does not enforce authorization: every API operation must verify the authenticated caregiver's ownership, and automated security tests verify cross-caregiver access denial.
 
 ```mermaid
 flowchart TD
@@ -81,7 +81,7 @@ Caregiver observation recorded against a reviewed milestone prompt.
 | :--- | :--- | :---: | :--- |
 | `id` | string | Yes | Unique observation identifier. |
 | `milestoneId` | string | Yes | References a valid item in `catalog_milestones`. |
-| `status` | string (enum) | Yes | `observed` or `not_yet_observed` (strictly non-diagnostic). |
+| `status` | string (enum) | Yes | `observed`, `not_yet_observed`, or `not_sure` (strictly non-diagnostic). |
 | `observedDate` | string | Yes | ISO 8601 date string (`YYYY-MM-DD`). |
 | `notes` | string | No | Caregiver observation note (max 500 chars). |
 | `createdAt` | timestamp | Yes | UTC creation timestamp. |
@@ -100,6 +100,7 @@ A learning activity added to the daily routine or completed (stored under the `p
 | `completedAt` | timestamp | No | UTC timestamp when marked complete. |
 | `durationMinutes` | number | No | Engagement duration in minutes (integer, 1–180). |
 | `feedbackNote` | string | No | Optional caregiver reflection (max 300 chars). |
+| `customActivity` | map | No | Optional inline snapshot (`title`, `domain`, `durationMinutes`, `setting`, `materials`, `instructions`, optional `safetyNotice`, `sourceLabel`) for scheduling custom AI adaptations, story companions, or Philippine rhymes. |
 
 ---
 
@@ -133,7 +134,9 @@ Deterministic periodic recap of child activities and observations.
 | `weekEndDate` | string | Yes | ISO date for Sunday of the summary week. |
 | `completedActivityCount` | number | Yes | Total activities marked `completed` during the week. |
 | `observedMilestoneCount` | number | Yes | Total milestones marked `observed` during the week. |
-| `domainDistribution` | map | Yes | Counts per domain: `{ cognitive: N, motor: N, language: N, socioEmotional: N }`. |
+| `totalPlannedActivities` | number | Yes | Total activities scheduled during the week. |
+| `domainDistribution` | map | Yes | Counts per domain (including completed `customActivity` plans): `{ cognitive: N, motor: N, language: N, socioEmotional: N }`. |
+| `topActivityIds` | array of str | Yes | Most frequently completed activity IDs during the week. |
 | `reflectionPrompt` | string | Yes | Educational caregiver prompt (non-diagnostic). |
 | `generatedAt` | timestamp | Yes | UTC generation timestamp. |
 
@@ -210,6 +213,16 @@ Caregiver-curated bookshelf of physical picture books available at home for inte
 | `subjects` | array of str | Yes | Curated subject and genre tags (e.g., `["Bedtime", "Animals"]`). |
 | `createdAt` | string | Yes | ISO 8601 UTC creation timestamp. |
 | `updatedAt` | string | Yes | ISO 8601 UTC last-updated timestamp. |
+
+---
+
+### 2.11 Operational AI Rate-Limit Counters (`rate_limits/{uid}_{utcHour}`)
+Server-managed fixed-window counters enforcing per-user hourly AI quotas (`10` requests per UTC clock hour) atomically via Firestore transactions. Default-deny client rules block direct client SDK reads or writes.
+
+| Field | Type | Required | Description & Constraints |
+| :--- | :--- | :---: | :--- |
+| `count` | number | Yes | Number of authenticated AI requests consumed in the current UTC clock hour. |
+| `updatedAt` | timestamp | Yes | UTC timestamp of the most recent AI request in the window. |
 
 ---
 
