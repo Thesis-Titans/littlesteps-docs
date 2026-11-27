@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Generate crisp SVG and 300-dpi-equivalent PNG diagrams for CIT 210 System Documentation.
+"""Generate low-cognitive-load SVG and 2x Chrome PNG diagrams for CIT 210.
 
-Run:   python3 docs/academic/cit210/data/make_figures.py
-Uses:  Python 3 standard library + headless Linux Chrome (with ImageMagick fallback).
+Visual style matches CC 207B diagrams (LittleSteps forest green, warm cream,
+steel blue, muted purple, generous whitespace, concise scannable labels).
 """
 
 import glob
@@ -17,20 +17,24 @@ CIT210 = os.path.dirname(HERE)
 OUT = os.path.join(CIT210, "figures")
 
 FONT = 'Arial, "Liberation Sans", "DejaVu Sans", sans-serif'
-# LittleSteps visual palette aligned with docs/DESIGN.md
-FOREST = "#2D5A3D"
-FOREST_DARK = "#1E3F2B"
-FOREST_LIGHT = "#EAF3ED"
-TERRA = "#D95D24"
-TERRA_LIGHT = "#FDF0E9"
-NAVY = "#1E3A8A"
-NAVY_LIGHT = "#EEF2FF"
-SLATE_BG = "#F6F8F7"
-CARD_BG = "#FFFFFF"
-BORDER = "#C5D0CA"
-INK = "#1A2B29"
+
+# Standardized LittleSteps figure palette (aligned with CC 207B figures)
+FOREST = "#165A42"
+FOREST_LIGHT = "#F0F5F2"
+CREAM = "#F3F2E8"
+CREAM_BDR = "#D8D6C8"
+BLUE = "#2B6CB0"
+BLUE_BG = "#F3F7FB"
+TERRA = "#C25525"
+TERRA_BG = "#FDF3EE"
+AMBER_BG = "#FBE39B"
+AMBER_INK = "#5C4008"
+PURPLE = "#7C4D8B"
+PURPLE_BG = "#F7F3F9"
+INK = "#1E2925"
 SUB = "#5A6A64"
-ARROW = "#4B5D56"
+BORDER = "#D4DCD8"
+WHITE = "#FFFFFF"
 
 
 class Canvas:
@@ -39,19 +43,31 @@ class Canvas:
         self.defs = []
         self.els = []
 
-    def add_arrow_marker(self, mid, color):
+    def marker(self, mid, color):
         self.defs.append(
             f'<marker id="{mid}" viewBox="0 0 10 10" refX="8.5" refY="5" '
             f'markerWidth="7" markerHeight="7" orient="auto-start-reverse">'
             f'<path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="{color}"/></marker>'
         )
 
-    def rect(self, x, y, w, h, fill=CARD_BG, stroke=BORDER, sw=1.4, rx=8, dash=None):
+    def rect(self, x, y, w, h, fill=WHITE, stroke=BORDER, sw=1.6, rx=10, dash=None):
         d = f' stroke-dasharray="{dash}"' if dash else ""
         self.els.append(
             f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{rx}" '
             f'fill="{fill}" stroke="{stroke}" stroke-width="{sw}"{d}/>'
         )
+
+    def cap_card(self, x, y, w, h, title, cap_fill, cap_text, border_color, cap_h=44, rx=10):
+        """Card with colored top header cap (matching CC 207B figure style)."""
+        self.rect(x, y, w, h, fill=WHITE, stroke=border_color, sw=1.8, rx=rx)
+        # Clip top rounded cap using path
+        r = rx
+        d = (
+            f"M {x + r} {y} H {x + w - r} Q {x + w} {y} {x + w} {y + r} "
+            f"V {y + cap_h} H {x} V {y + r} Q {x} {y} {x + r} {y} Z"
+        )
+        self.els.append(f'<path d="{d}" fill="{cap_fill}"/>')
+        self.text(x + w / 2, y + cap_h / 2 + 6, title, 16, cap_text, bold=True, anchor="middle")
 
     def text(self, x, y, s, size=13, color=INK, bold=False, anchor="start", italic=False):
         fw = ' font-weight="700"' if bold else ""
@@ -61,12 +77,22 @@ class Canvas:
             f'fill="{color}" text-anchor="{anchor}"{fw}{fs}>{escape(s)}</text>'
         )
 
-    def lines(self, x, y, items, size=12, color=SUB, lh=17, anchor="start", bold_first=False):
-        for i, item in enumerate(items):
-            self.text(x, y + i * lh, item, size, INK if (bold_first and i == 0) else color,
-                      bold=(bold_first and i == 0), anchor=anchor)
+    def bullets(self, x, y, items, size=13.5, color=INK, lh=28, sub_color=SUB):
+        cy = y
+        for item in items:
+            if isinstance(item, tuple):
+                main, sub = item
+                self.text(x, cy, f"•  {main}", size, color)
+                self.text(x + 18, cy + 17, sub, size - 2, sub_color)
+                cy += lh + 16
+            else:
+                self.text(x, cy, f"•  {item}", size, color)
+                cy += lh
 
-    def path(self, d, stroke=ARROW, sw=2.0, marker_end=None, marker_start=None, dash=None):
+    def line(self, x1, y1, x2, y2, color=BORDER, sw=1.2):
+        self.els.append(f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" stroke="{color}" stroke-width="{sw}"/>')
+
+    def path(self, d, stroke=FOREST, sw=2.4, marker_end=None, marker_start=None, dash=None):
         me = f' marker-end="url(#{marker_end})"' if marker_end else ""
         ms = f' marker-start="url(#{marker_start})"' if marker_start else ""
         da = f' stroke-dasharray="{dash}"' if dash else ""
@@ -75,8 +101,8 @@ class Canvas:
             f'stroke-linecap="round" stroke-linejoin="round"{ms}{me}{da}/>'
         )
 
-    def badge(self, x, y, w, h, label, fill, color="#FFFFFF", size=11):
-        self.rect(x, y, w, h, fill=fill, stroke=fill, sw=0, rx=h / 2)
+    def pill(self, x, y, w, h, label, fill, color=WHITE, size=12):
+        self.rect(x, y, w, h, fill=fill, stroke=fill, sw=0, rx=6)
         self.text(x + w / 2, y + h / 2 + size * 0.35, label, size, color, bold=True, anchor="middle")
 
     def save(self, svg_path):
@@ -85,7 +111,9 @@ class Canvas:
             f'<svg xmlns="http://www.w3.org/2000/svg" width="{self.w}" height="{self.h}" '
             f'viewBox="0 0 {self.w} {self.h}">\n'
             f'<defs>{"".join(self.defs)}</defs>\n'
-            f'<rect width="{self.w}" height="{self.h}" fill="#FFFFFF"/>\n'
+            f'<rect width="{self.w}" height="{self.h}" fill="{WHITE}"/>\n'
+            f'<rect x="6" y="6" width="{self.w - 12}" height="{self.h - 12}" rx="16" '
+            f'fill="{WHITE}" stroke="{BORDER}" stroke-width="1.4"/>\n'
             + "\n".join(self.els)
             + "\n</svg>\n"
         )
@@ -94,322 +122,189 @@ class Canvas:
 
 
 def fig_web_architecture():
-    c = Canvas(1440, 860)
-    c.add_arrow_marker("arr", ARROW)
-    c.add_arrow_marker("arr-forest", FOREST)
-    c.add_arrow_marker("arr-terra", TERRA)
-    c.add_arrow_marker("arr-navy", NAVY)
+    """Fig. 1: Clean 4-column architecture matching CC 207B figure minimalism."""
+    c = Canvas(1280, 560)
+    c.marker("a-forest", FOREST)
+    c.marker("a-blue", BLUE)
+    c.marker("a-terra", TERRA)
+    c.marker("a-purple", PURPLE)
 
-    # Title block
-    c.text(36, 44, "Figure 1. LittleSteps Web System and Cloud Architecture", 22, INK, bold=True)
-    c.text(36, 68, "React 19 SPA (CIT 210), Express 5 API Gateway on Cloud Functions v2 (asia-southeast1), Firestore, and External REST Services", 13.5, SUB)
-    c.path("M 36 82 L 1404 82", stroke=BORDER, sw=1.2)
+    # Header
+    c.text(42, 48, "LittleSteps Web System and Cloud Architecture", 22, FOREST, bold=True)
+    c.text(42, 74, "Caregiver web client communicating with a shared Express 5 REST gateway, Firestore, and external APIs", 14, SUB)
+    c.line(42, 90, 1238, 90, BORDER, 1.2)
 
-    # Column 1: Client Layer (React Web App)
-    c.rect(36, 104, 340, 684, fill=FOREST_LIGHT, stroke=FOREST, sw=1.8, rx=12)
-    c.badge(52, 120, 210, 26, "PRESENTATION LAYER (CIT 210)", FOREST)
-    c.text(52, 174, "littlesteps-react (Web SPA)", 17, FOREST_DARK, bold=True)
-    c.text(52, 195, "React 19.1 · TypeScript 5.9 · Vite 6.3 · Router 7", 11.5, SUB)
+    # Col 1: Caregiver Inputs (Warm Cream cap)
+    c.cap_card(42, 112, 210, 260, "Caregiver Inputs", CREAM, INK, CREAM_BDR)
+    c.bullets(58, 186, [
+        ("Child Age Band", 'e.g., "12-23m"'),
+        ("Play Context", "setting, time, items"),
+        ("Book Search", "title or subject"),
+        "Private Notes",
+    ], size=13, lh=26)
 
-    c.rect(52, 212, 308, 174, fill=CARD_BG, stroke=BORDER, sw=1.2, rx=8)
-    c.text(66, 236, "Protected Caregiver Routes (AppShell)", 13, INK, bold=True)
-    c.lines(66, 258, [
-        "• /today — Daily plan, Undo toast, Weather Hint",
-        "• /explore — Activities, Storybooks, Bookshelf, AI",
-        "• /milestones — Non-diagnostic observations",
-        "• /journal — Caregiver-only private notes",
-        "• /this-week — Factual Monday–Sunday summary",
-        "• /children & /account/* — Profiles, Export, Privacy",
-    ], size=11.5, lh=19)
+    # Col 2: Web Client (React 19)
+    c.cap_card(294, 112, 250, 260, "Web Client (React 19)", FOREST, WHITE, FOREST)
+    c.bullets(312, 186, [
+        "5-Tab Responsive Shell",
+        "Explore & Bookshelf",
+        "Today Plan & Undo",
+        "Session Offline Cache",
+        "WCAG 2.2 AA Tokens",
+    ], size=13, lh=28)
+    c.text(312, 352, "littlesteps-react · Vite 6", 12.5, FOREST, bold=True)
 
-    c.rect(52, 402, 308, 152, fill=CARD_BG, stroke=BORDER, sw=1.2, rx=8)
-    c.text(66, 426, "Client Services & State", 13, INK, bold=True)
-    c.lines(66, 448, [
-        "• Firebase Web SDK v12 (ID Token session)",
-        "• Typed Fetch API Client (Bearer + X-Request-Id)",
-        "• Session Offline Cache (catalog, plans, books)",
-        "  (Private journal strictly excluded from cache)",
-        "• 5-State UI Matrix (populated, empty, loading,",
-        "  inline error with retry, offline / AI fallback)",
-    ], size=11.5, lh=17.5)
+    # Col 3: Backend Gateway API
+    c.cap_card(596, 112, 250, 260, "Backend Gateway API", FOREST, WHITE, FOREST)
+    c.bullets(614, 186, [
+        "Express 5 · Node 22",
+        "Firebase JWT & BOLA 404",
+        "Zod 4.1 Schema Guard",
+        "Hourly AI Rate Limits",
+        "Zero Client API Keys",
+    ], size=13, lh=28)
+    c.text(614, 352, "littlesteps-api · Cloud Fn v2", 12.5, FOREST, bold=True)
 
-    c.rect(52, 570, 308, 114, fill=CARD_BG, stroke=BORDER, sw=1.2, rx=8)
-    c.text(66, 594, "Responsive & Accessible UI", 13, INK, bold=True)
-    c.lines(66, 616, [
-        "• Tokenized CSS (tokens.css + feature styles)",
-        "• Desktop sidebar (1280px) & mobile bar (375px)",
-        "• WCAG 2.2 AA contrast (#5A6A64) & focus rings",
-        "• Hosted on Firebase Hosting (littlesteps-app-cict)",
-    ], size=11.5, lh=17.5)
+    # Col 4: 3 stacked cloud/external services (short, scannable)
+    # 4a: External REST APIs
+    c.rect(904, 112, 334, 78, fill=BLUE_BG, stroke=BLUE, sw=1.8, rx=10)
+    c.text(922, 138, "External REST APIs (Proxied)", 14.5, BLUE, bold=True)
+    c.text(922, 158, "Open Library (60m cache) · Open-Meteo (2-dec)", 12, INK)
+    c.text(922, 176, "Google Gemini v1beta · 3-layer guardrails · 8s cap", 11.5, SUB)
 
-    c.rect(52, 700, 308, 70, fill="#FFFFFF", stroke=FOREST, sw=1.2, rx=8, dash="5 3")
-    c.text(66, 724, "Shared Backend Consumer (CC 207B)", 12, FOREST_DARK, bold=True)
-    c.lines(66, 744, [
-        "Flutter mobile client (CC 207B) shares the same",
-        "client-neutral OpenAPI 3.1 REST contract.",
-    ], size=11, lh=15)
+    # 4b: Reviewed ECCD Catalog
+    c.rect(904, 203, 334, 78, fill=FOREST_LIGHT, stroke=FOREST, sw=1.8, rx=10)
+    c.text(922, 229, "Reviewed ECCD Catalog (Tier 3)", 14.5, FOREST, bold=True)
+    c.text(922, 249, "23 Activities · 25 Milestones · 6 Rhymes", 12, INK)
+    c.text(922, 267, "Firestore 5-min TTL · Deterministic fallback", 11.5, SUB)
 
-    # Column 2: API Gateway Layer (Express 5 on Cloud Functions v2)
-    c.rect(456, 104, 484, 684, fill=NAVY_LIGHT, stroke=NAVY, sw=1.8, rx=12)
-    c.badge(472, 120, 250, 26, "APPLICATION & API LAYER (NODE 22)", NAVY)
-    c.text(472, 174, "littlesteps-api (Express 5 + TypeScript)", 17, NAVY, bold=True)
-    c.text(472, 195, "Firebase Cloud Functions v2 · asia-southeast1 · OpenAPI 3.1", 11.5, SUB)
+    # 4c: Cloud Firestore & Auth
+    c.rect(904, 294, 334, 78, fill=PURPLE_BG, stroke=PURPLE, sw=1.8, rx=10)
+    c.text(922, 320, "Cloud Firestore & Firebase Auth", 14.5, PURPLE, bold=True)
+    c.text(922, 340, "Caregiver-isolated subcollections", 12, INK)
+    c.text(922, 358, "RA 10173 data export & cascade delete", 11.5, SUB)
 
-    c.rect(472, 212, 452, 150, fill=CARD_BG, stroke=NAVY, sw=1.2, rx=8)
-    c.text(486, 236, "Security, Validation & Observability Middleware", 13, INK, bold=True)
-    c.lines(486, 258, [
-        "1. requestIdMiddleware (X-Request-Id) + Helmet + no-store",
-        "2. Strict CORS allowlist (403) & 100kb JSON cap (413)",
-        "3. requireFirebaseUser (Firebase Admin JWT -> 401)",
-        "4. BOLA Guard: /caregivers/{uid}/children/{id} -> 404",
-        "5. Zod 4.1 strict schemas (unknown/null/ctrl -> 400 / 422)",
-    ], size=11.3, lh=19)
+    # Arrows
+    c.path("M 252 242 L 290 242", stroke=FOREST, sw=2.4, marker_end="a-forest")
+    c.path("M 544 242 L 592 242", stroke=FOREST, sw=2.4, marker_end="a-forest")
+    c.text(568, 232, "HTTPS", 11, FOREST, bold=True, anchor="middle")
+    c.text(568, 258, "Bearer", 10.5, SUB, anchor="middle")
 
-    c.rect(472, 378, 452, 206, fill=CARD_BG, stroke=BORDER, sw=1.2, rx=8)
-    c.text(486, 402, "Modular Domain Routers & Services (/api/v1/*)", 13, INK, bold=True)
-    c.lines(486, 424, [
-        "• /health & /ready — Liveness & Firestore readiness probes (public)",
-        "• /api/v1/me & /me/export — Profile, JSON export, cascade delete",
-        "• /api/v1/children — Profile CRUD, UTC age band, atomic 20-child cap",
-        "• /api/v1/children/:id/plans — Daily plans & inline customActivity snapshots",
-        "• /api/v1/children/:id/milestones — Observed / not_yet_observed / not_sure",
-        "• /api/v1/children/:id/journal — Caregiver-isolated private notes",
-        "• /api/v1/children/:id/books — Saved Family Bookshelf subcollection",
-        "• /api/v1/children/:id/summary — Factual Monday–Sunday rollups",
-    ], size=11.3, lh=19)
+    c.path("M 846 188 L 900 156", stroke=BLUE, sw=2.2, marker_end="a-blue")
+    c.path("M 846 242 L 900 242", stroke=FOREST, sw=2.2, marker_end="a-forest")
+    c.path("M 846 296 L 900 330", stroke=PURPLE, sw=2.2, marker_end="a-purple")
+    # Small fallback arrow from External REST -> Catalog
+    c.path("M 1071 190 L 1071 200", stroke=TERRA, sw=2.0, marker_end="a-terra", dash="3 2")
 
-    c.rect(472, 600, 452, 170, fill=TERRA_LIGHT, stroke=TERRA, sw=1.3, rx=8)
-    c.text(486, 624, "External Proxy, Caching & AI Orchestration", 13, TERRA, bold=True)
-    c.lines(486, 646, [
-        "• /api/v1/catalog/* — Firestore catalogs (5-min TTL), Open Library books",
-        "  (60-min TTL + local fallback), Open-Meteo weather (2-decimal coords)",
-        "• /api/v1/ai/* — Hourly Firestore rate limits (rate_limits), circuit breaker,",
-        "  8s timeout, 3-layer pediatric safety screening, Tier 3 catalog fallback",
-        "• Zero API keys in client bundle; zero child PII or journal text sent to AI",
-    ], size=11.3, lh=19)
+    # Down arrow to Target Outcome
+    c.path("M 419 372 L 419 418", stroke=FOREST, sw=2.4, marker_end="a-forest")
 
-    # Column 3: Data & External Services Layer
-    # Top card: Firebase Auth & Firestore
-    c.rect(1020, 104, 384, 340, fill=SLATE_BG, stroke=FOREST, sw=1.8, rx=12)
-    c.badge(1036, 120, 210, 26, "PERSISTENCE & IDENTITY", FOREST)
-    c.text(1036, 174, "Firebase Auth & Cloud Firestore", 16.5, FOREST_DARK, bold=True)
-
-    c.rect(1036, 192, 352, 114, fill=CARD_BG, stroke=BORDER, sw=1.2, rx=8)
-    c.text(1050, 214, "Multi-Tenant Caregiver Subcollections", 12.5, INK, bold=True)
-    c.lines(1050, 234, [
-        "• /caregivers/{uid}/children/{childId}",
-        "  └─ plans, milestone_observations,",
-        "     journal_entries, books, weekly_summaries",
-        "• Atomic transactions & recursive cascade delete",
-    ], size=11.3, lh=17.5)
-
-    c.rect(1036, 318, 352, 110, fill=CARD_BG, stroke=BORDER, sw=1.2, rx=8)
-    c.text(1050, 340, "Global Seeded Catalogs & Control", 12.5, INK, bold=True)
-    c.lines(1050, 360, [
-        "• catalog_activities (23 reviewed Philippine items)",
-        "• catalog_milestones (25 prompts across 6 bands)",
-        "• catalog_rhymes (6 EN/FIL/HIL traditional rhymes)",
-        "• rate_limits (atomic hourly AI quota counters)",
-    ], size=11.3, lh=17)
-
-    # Bottom card: External REST APIs
-    c.rect(1020, 464, 384, 324, fill=TERRA_LIGHT, stroke=TERRA, sw=1.8, rx=12)
-    c.badge(1036, 480, 210, 26, "EXTERNAL REST SERVICES", TERRA)
-    c.text(1036, 530, "Third-Party APIs (Server-Proxied)", 16, INK, bold=True)
-
-    c.rect(1036, 546, 352, 70, fill=CARD_BG, stroke=BORDER, sw=1.2, rx=8)
-    c.text(1050, 568, "Open Library REST API (Internet Archive)", 12.5, INK, bold=True)
-    c.lines(1050, 586, [
-        "GET /subjects/*.json & /search.json · Picture-book",
-        "metadata & covers · 60-min cache + local fallback",
-    ], size=11, lh=15)
-
-    c.rect(1036, 626, 352, 68, fill=CARD_BG, stroke=BORDER, sw=1.2, rx=8)
-    c.text(1050, 648, "Open-Meteo Forecast REST API (v1)", 12.5, INK, bold=True)
-    c.lines(1050, 666, [
-        "Real-time indoor/outdoor play hints · Coordinates",
-        "truncated to 2 decimals (~1.1 km); no GPS stored",
-    ], size=11, lh=15)
-
-    c.rect(1036, 704, 352, 70, fill=CARD_BG, stroke=BORDER, sw=1.2, rx=8)
-    c.text(1050, 726, "Google Gemini REST API (v1beta)", 12.5, INK, bold=True)
-    c.lines(1050, 744, [
-        "Server-pinned GEMINI_MODEL via Node 22 fetch ·",
-        "Structured JSON output · 3-layer safety guardrails",
-    ], size=11, lh=15)
-
-    # Connectors between columns
-    c.path("M 376 310 L 456 310", stroke=FOREST, sw=2.4, marker_start="arr-forest", marker_end="arr-forest")
-    c.text(416, 294, "HTTPS JSON", 10.5, FOREST_DARK, bold=True, anchor="middle")
-    c.text(416, 328, "Bearer JWT", 10, SUB, anchor="middle")
-
-    c.path("M 940 280 L 1020 280", stroke=NAVY, sw=2.4, marker_start="arr-navy", marker_end="arr-navy")
-    c.text(980, 264, "Admin SDK", 10.5, NAVY, bold=True, anchor="middle")
-    c.text(980, 298, "CRUD / Tx", 10, SUB, anchor="middle")
-
-    c.path("M 940 660 L 1020 660", stroke=TERRA, sw=2.4, marker_start="arr-terra", marker_end="arr-terra")
-    c.text(980, 644, "Server Fetch", 10.5, TERRA, bold=True, anchor="middle")
-    c.text(980, 678, "Cached/Safe", 10, SUB, anchor="middle")
-
-    # Footer note
-    c.text(36, 822, "Note: Client browsers never hold Gemini API keys or access other caregivers' Firestore paths. Uniform { error: { code, message, requestId } } envelopes govern all failure modes.", 11.5, SUB)
+    # Bottom Outcome Bar
+    c.rect(42, 422, 1196, 102, fill=CREAM, stroke=FOREST, sw=1.8, rx=10)
+    c.text(68, 456, "Target Outcome: Calm, Screen-Free Caregiver Play", 16.5, FOREST, bold=True)
+    c.text(68, 482, "Caregivers find an activity, picture-book companion, or weather hint in under a minute, set the device aside, and play.", 13.5, INK)
+    c.text(68, 504, "Grounded in WHO, AAP, and Philippine ECCD (RA 12199) guidance; strictly non-diagnostic with RA 10173 privacy isolation.", 12.5, SUB)
     return c
 
 
 def fig_api_ai_pipeline():
-    c = Canvas(1440, 900)
-    c.add_arrow_marker("arr", ARROW)
-    c.add_arrow_marker("arr-forest", FOREST)
-    c.add_arrow_marker("arr-terra", TERRA)
-    c.add_arrow_marker("arr-navy", NAVY)
+    """Fig. 2: Clean 3-column external REST & 3-layer AI guardrail flow matching CC 207B."""
+    c = Canvas(1280, 680)
+    c.marker("a-forest", FOREST)
+    c.marker("a-blue", BLUE)
+    c.marker("a-terra", TERRA)
 
-    # Title block
-    c.text(36, 44, "Figure 2. External REST Integration, Caching, and 3-Layer AI Guardrail Pipeline", 22, INK, bold=True)
-    c.text(36, 68, "Server-side orchestration across Open Library, Open-Meteo, and Google Gemini with deterministic fallbacks and RA 10173 data minimization", 13.5, SUB)
-    c.path("M 36 82 L 1404 82", stroke=BORDER, sw=1.2)
+    # Header
+    c.text(42, 48, "External REST Integration, Caching, and AI Fallback Pipeline", 22, FOREST, bold=True)
+    c.text(42, 74, "Server-proxied Open Library, Open-Meteo, and Google Gemini with three-layer safety screening and deterministic fallbacks", 14, SUB)
+    c.line(42, 90, 1238, 90, BORDER, 1.2)
 
-    # ---------------- LANE A: Open Library & Closed-Loop Family Bookshelf
-    c.rect(36, 102, 1368, 224, fill=FOREST_LIGHT, stroke=FOREST, sw=1.6, rx=12)
-    c.badge(52, 116, 370, 25, "LANE A · OPEN LIBRARY REST API & FAMILY BOOKSHELF", FOREST)
+    # Column 1: Web Client (React 19)
+    c.cap_card(42, 112, 314, 486, "Web Client (React 19)", FOREST, WHITE, FOREST)
 
-    boxes_a = [
-        (52, 156, 260, 150, "1. React Explore / Storybooks", [
-            "GET /api/v1/catalog/books",
-            "GET /api/v1/catalog/books/search",
-            "Queries by subject or title,",
-            "plus saved Family Bookshelf",
-            "(POST /children/:id/books)",
-        ]),
-        (366, 156, 290, 150, "2. Express Catalog Proxy & Cache", [
-            "Checks in-memory TTL cache",
-            "(60-min fresh, stale fallback).",
-            "Calls Open Library REST API:",
-            "/subjects/{s}.json & /search.json",
-            "Normalizes covers & authors",
-        ]),
-        (710, 156, 300, 150, "3. Resilience & Story Companion", [
-            "Upstream failure/timeout -> serves",
-            "local books.fallback.ts (60s TTL).",
-            "Optional closed-loop play idea:",
-            "POST /api/v1/ai/story-activity",
-            "(book title + subjects -> play card)",
-        ]),
-        (1064, 156, 322, 150, "4. Schedule to Today's Plan", [
-            "Caregiver taps 'Add to today's plan'",
-            "POST /api/v1/children/:id/plans",
-            "Stores inline customActivity snapshot",
-            "in Firestore subcollection.",
-            "Completable with 10s Undo toast",
-        ]),
-    ]
-    for x, y, w, h, title, body in boxes_a:
-        c.rect(x, y, w, h, fill=CARD_BG, stroke=BORDER, sw=1.2, rx=8)
-        c.text(x + 14, y + 26, title, 12.5, FOREST_DARK, bold=True)
-        c.lines(x + 14, y + 48, body, size=11.3, lh=18)
-    for x1, x2 in ((312, 366), (656, 710), (1010, 1064)):
-        c.path(f"M {x1} 231 L {x2} 231", stroke=FOREST, sw=2.2, marker_end="arr-forest")
+    c.rect(60, 174, 278, 176, fill=CREAM, stroke=CREAM_BDR, sw=1.3, rx=8)
+    c.text(76, 200, "Structured Requests", 14, INK, bold=True)
+    c.bullets(76, 228, [
+        "Open Library book search",
+        "Weather hint (2-dec lat/lon)",
+        "AI Idea Helper & Story idea",
+    ], size=12.5, lh=26)
+    c.text(76, 316, "No child names, PII, or journal text", 12, TERRA, italic=True)
+    c.text(76, 336, "HTTPS + Firebase Bearer token", 11.5, SUB)
 
-    # ---------------- LANE B: Open-Meteo Weather Context
-    c.rect(36, 344, 1368, 174, fill=NAVY_LIGHT, stroke=NAVY, sw=1.6, rx=12)
-    c.badge(52, 358, 396, 25, "LANE B · OPEN-METEO WEATHER CONTEXT (PRIVACY-SAFE)", NAVY)
+    c.rect(60, 368, 278, 212, fill=CREAM, stroke=CREAM_BDR, sw=1.3, rx=8)
+    c.text(76, 394, "Provenance Badges", 14, INK, bold=True)
+    c.pill(76, 412, 138, 26, "Suggested by AI", BLUE, WHITE, 11.5)
+    c.text(76, 454, "Tier 1: Reviewed catalog pick", 11.5, SUB)
+    c.pill(76, 468, 152, 26, "Material adaptation", AMBER_BG, AMBER_INK, 11.5)
+    c.text(76, 510, "Tier 1: Guarded custom activity", 11.5, SUB)
+    c.pill(76, 524, 102, 26, "Our picks", FOREST, WHITE, 11.5)
+    c.text(76, 566, "Tier 3: Reviewed ECCD fallback", 11.5, SUB)
 
-    boxes_b = [
-        (52, 396, 360, 104, "1. Coarse Location Query (Today Screen)", [
-            "GET /api/v1/catalog/weather?lat=10.72&lon=122.56",
-            "Coordinates truncated to 2 decimals (~1.1 km).",
-            "Zero GPS history persisted in Firestore.",
-        ]),
-        (468, 396, 420, 104, "2. Open-Meteo Proxy & In-Memory Cache", [
-            "Fetches WMO weather code, precipitation & temperature",
-            "from api.open-meteo.com/v1/forecast (cached server-side).",
-            "Classifies indoor vs. outdoor play conditions.",
-        ]),
-        (944, 396, 442, 104, "3. Symmetric Weather Hint Banner", [
-            "Displays calm indoor or outdoor hint on /today.",
-            "CTA opens AI Idea Helper with setting preselected",
-            "('Indoor' or 'Outdoor'); silent hide if unavailable.",
-        ]),
-    ]
-    for x, y, w, h, title, body in boxes_b:
-        c.rect(x, y, w, h, fill=CARD_BG, stroke=BORDER, sw=1.2, rx=8)
-        c.text(x + 14, y + 24, title, 12.5, NAVY, bold=True)
-        c.lines(x + 14, y + 46, body, size=11.3, lh=17.5)
-    for x1, x2 in ((412, 468), (888, 944)):
-        c.path(f"M {x1} 448 L {x2} 448", stroke=NAVY, sw=2.2, marker_end="arr-navy")
+    # Column 2: Express 5 API Gateway
+    c.cap_card(446, 112, 326, 486, "Express 5 API Gateway", FOREST, WHITE, FOREST)
 
-    # ---------------- LANE C: Google Gemini 3-Layer Pediatric Guardrails & Fallback
-    c.rect(36, 536, 1368, 316, fill=TERRA_LIGHT, stroke=TERRA, sw=1.6, rx=12)
-    c.badge(52, 550, 445, 25, "LANE C · GOOGLE GEMINI REST API & 3-LAYER PEDIATRIC GUARDRAILS", TERRA)
+    c.rect(464, 174, 290, 176, fill=FOREST_LIGHT, stroke=BORDER, sw=1.3, rx=8)
+    c.text(480, 200, "Proxy, Cache & Quotas", 14, INK, bold=True)
+    c.bullets(480, 228, [
+        ("Open Library & Open-Meteo", "60-min TTL · 100-entry cap"),
+        ("AI Rate Limits (HTTP 429)", "10 req/hr user · 30 req/hr IP"),
+        ("Zod 4.1 Strict Schemas", "Zero API keys in browser"),
+    ], size=12.5, lh=24)
 
-    # Top row inside Lane C: Happy path (Layers 1 -> 2 -> 3 -> Response)
-    c.rect(52, 590, 260, 136, fill=CARD_BG, stroke=BORDER, sw=1.2, rx=8)
-    c.text(66, 614, "Structured Request (No PII)", 12.5, INK, bold=True)
-    c.lines(66, 636, [
-        "POST /api/v1/ai/recommendations",
-        "POST /api/v1/ai/adapt",
-        "Strict Zod: ageBand, setting,",
-        "timeMinutes, materials, language.",
-        "Rate limit: 10/hr/user · 30/hr/IP (429)",
-    ], size=11, lh=16.5)
+    c.rect(464, 368, 290, 212, fill=FOREST_LIGHT, stroke=BORDER, sw=1.3, rx=8)
+    c.text(480, 394, "3-Layer Pediatric Guardrails", 14, INK, bold=True)
+    c.text(480, 424, "L1. Thin input gate (sanitize.ts)", 12.5, INK, bold=True)
+    c.text(496, 443, "Blocks hazards; allows FIL/HIL terms", 11.5, SUB)
+    c.text(480, 472, "L2. Model assessment (Gemini)", 12.5, INK, bold=True)
+    c.text(496, 491, "Structured materialAssessments JSON", 11.5, SUB)
+    c.text(480, 520, "L3. Output validator (fail-closed)", 12.5, INK, bold=True)
+    c.text(496, 539, "Hazard + 33-term clinical denylist", 11.5, TERRA)
+    c.text(480, 566, "Any slip falls back cleanly to Tier 3", 11.5, FOREST, bold=True)
 
-    c.rect(352, 590, 232, 136, fill=CARD_BG, stroke=TERRA, sw=1.4, rx=8)
-    c.text(366, 614, "Layer 1 · Input Gate", 12.5, TERRA, bold=True)
-    c.lines(366, 636, [
-        "sanitize.ts blocks extreme",
-        "hazards (bleach, knife, fire,",
-        "medicine) & prompt probes.",
-        "Permits typos & FIL/HIL",
-        "household words to pass.",
-    ], size=11, lh=16.5)
+    # Column 3 Top: Live External REST APIs
+    c.cap_card(866, 112, 372, 212, "Live External REST APIs", BLUE, WHITE, BLUE)
+    c.bullets(884, 184, [
+        ("Open Library REST API", "Picture books -> Family Bookshelf -> Plan"),
+        ("Open-Meteo Forecast API", "3s timeout · Indoor / Outdoor weather hint"),
+        ("Google Gemini API (v1beta)", "Node 22 fetch · 8s timeout · 3-fail breaker"),
+    ], size=12.5, lh=28)
 
-    c.rect(624, 590, 272, 136, fill=CARD_BG, stroke=TERRA, sw=1.4, rx=8)
-    c.text(638, 614, "Layer 2 · Gemini v1beta (Tier 1)", 12.5, TERRA, bold=True)
-    c.lines(638, 636, [
-        "Node 22 fetch · 8s timeout ·",
-        "Circuit breaker (3 fails -> 60s).",
-        "Catalog-first match; if custom",
-        "materials, evaluates structured",
-        "materialAssessments first.",
-    ], size=11, lh=16.5)
+    # Column 3 Bottom: Deterministic Fallbacks
+    c.cap_card(866, 392, 372, 206, "Deterministic Fallbacks", FOREST, WHITE, FOREST)
+    c.bullets(884, 464, [
+        ("Local Books Fallback", "books.fallback.ts (60s recovery TTL)"),
+        ("Neutral Weather Fallback", "Hides banner calmly if unreachable"),
+        ("Tier 3 ECCD Catalog Pool", "Firestore activities labeled 'Our picks'"),
+    ], size=12.5, lh=26)
 
-    c.rect(936, 590, 224, 136, fill=CARD_BG, stroke=TERRA, sw=1.4, rx=8)
-    c.text(950, 614, "Layer 3 · Output Validator", 12.5, TERRA, bold=True)
-    c.lines(950, 636, [
-        "validate-output.ts checks",
-        "catalog IDs, normalized",
-        "hazard terms & 33-term",
-        "non-diagnostic denylist.",
-        "Fails closed on any slip.",
-    ], size=11, lh=16.5)
+    # Arrows between columns
+    c.path("M 356 226 L 442 226", stroke=FOREST, sw=2.4, marker_end="a-forest")
+    c.text(399, 216, "1. Request", 11.5, FOREST, bold=True, anchor="middle")
 
-    c.rect(1200, 590, 186, 136, fill=FOREST_LIGHT, stroke=FOREST, sw=1.4, rx=8)
-    c.text(1214, 614, "Provenance Badge", 12.5, FOREST_DARK, bold=True)
-    c.lines(1214, 636, [
-        "• source: 'ai'",
-        "  ('Suggested by AI')",
-        "• source: 'ai_custom'",
-        "  ('Material adaptation')",
-        "• Zero fake citations",
-    ], size=11, lh=16.5)
+    c.path("M 446 474 L 360 474", stroke=FOREST, sw=2.4, marker_end="a-forest")
+    c.text(403, 464, "4. Response", 11.5, FOREST, bold=True, anchor="middle")
 
-    for x1, x2 in ((312, 352), (584, 624), (896, 936), (1160, 1200)):
-        c.path(f"M {x1} 658 L {x2} 658", stroke=TERRA, sw=2.1, marker_end="arr-terra")
+    c.path("M 772 200 L 862 200", stroke=BLUE, sw=2.4, marker_end="a-blue")
+    c.text(817, 190, "2a. Fetch", 11.5, BLUE, bold=True, anchor="middle")
 
-    # Bottom row inside Lane C: Deterministic Tier 3 Fallback bar
-    c.rect(352, 756, 1034, 78, fill="#FFFFFF", stroke=FOREST, sw=1.5, rx=8, dash="6 3")
-    c.text(368, 782, "Tier 3 Deterministic Fallback (fallback.ts) — Guaranteed Safe Response", 13, FOREST_DARK, bold=True)
-    c.lines(368, 804, [
-        "Triggered automatically on: missing API key, 8s timeout, upstream 429/5xx, open circuit breaker, all materials unsafe, or Layer 3 validation rejection.",
-        "Returns reviewed Firestore catalog_activities filtered by ageBand/setting/domain with source: 'fallback' ('Our picks' badge). (/ai/adapt uses Tier 2 rule-based fallback.)",
-    ], size=11.3, lh=17)
+    c.path("M 866 266 L 776 266", stroke=BLUE, sw=2.4, marker_end="a-blue")
+    c.text(821, 256, "3a. Valid", 11.5, BLUE, bold=True, anchor="middle")
 
-    # Downward fallback arrows from Layer 2 and Layer 3 into Tier 3 bar
-    c.path("M 760 726 L 760 756", stroke=FOREST, sw=2.0, marker_end="arr-forest", dash="4 3")
-    c.text(772, 745, "timeout / error / open breaker", 10, SUB)
-    c.path("M 1048 726 L 1048 756", stroke=FOREST, sw=2.0, marker_end="arr-forest", dash="4 3")
-    c.text(1060, 745, "invalid / unsafe output", 10, SUB)
+    # Fallback pill + vertical arrow between Col 3 Top and Bottom
+    c.path("M 1052 324 L 1052 388", stroke=TERRA, sw=2.2, marker_end="a-terra", dash="5 4")
+    c.rect(942, 344, 220, 26, fill=TERRA_BG, stroke=TERRA, sw=1.2, rx=6)
+    c.text(1052, 361, "Timeout / Error / Safety Fail", 11.5, TERRA, bold=True, anchor="middle")
 
-    c.text(36, 878, "Privacy Boundary (RA 10173): Child nicknames, birth months, exact locations, and private journal entries are stripped by schema and never leave the authenticated account.", 11.5, SUB)
+    c.path("M 772 470 L 862 470", stroke=TERRA, sw=2.2, marker_end="a-terra", dash="5 4")
+    c.text(817, 460, "2b. Fallback", 11.5, TERRA, bold=True, anchor="middle")
+
+    c.path("M 866 534 L 776 534", stroke=FOREST, sw=2.4, marker_end="a-forest")
+    c.text(821, 524, "3b. Safe Pick", 11.5, FOREST, bold=True, anchor="middle")
+
+    # Footer note
+    c.text(42, 626, "Note: Single-activity tweaks (/api/v1/ai/adapt) fall back to Tier 2 rule-based adaptations when Gemini is unavailable.", 12, SUB)
+    c.text(42, 648, "Exceeding hourly rate limits returns HTTP 429 with a Retry-After cooldown notice instead of silent fallback.", 12, SUB)
     return c
 
 
@@ -451,7 +346,7 @@ def render_png(svg_path, png_path, w, h, scale=2):
     if cv:
         subprocess.run([cv, "-density", "200", svg_path, png_path], check=True)
         return
-    raise RuntimeError("No Chrome or ImageMagick available to render PNGs")
+    raise RuntimeError("No Chrome or ImageMagick available")
 
 
 def main():

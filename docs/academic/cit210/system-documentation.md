@@ -1,8 +1,8 @@
 ![](figures/littlesteps-logo.png)
 
-# System Documentation: LittleSteps Web Application
+# System Documentation: LittleSteps
 
-*A React Web Companion and REST API Platform for Screen-Free Early Learning and Caregiver Observation*
+*A React Web Companion and REST API Platform for Screen-Free Early Learning*
 
 Submitted in Partial Fulfillment of the Requirements for
 
@@ -30,7 +30,7 @@ BSIT-3A  |  December 4, 2026
 
 ## Abstract
 
-Caregivers of children aged 0 to 5 years frequently rely on smartphones to occupy toddlers during household routines despite guidance from the World Health Organization (WHO), the American Academy of Pediatrics (AAP), and the Philippine Early Childhood Care and Development (ECCD) Council recommending screen-free interactive play. Existing baby-tracking web applications are largely foreign, commercialized, or framed around clinical milestone scoring that induces parental anxiety. This documentation presents the design, implementation, and verification of **LittleSteps**, a caregiver-facing web system developed for **CIT 210 (Web Systems and Technologies)**. The system pairs a **React 19 + TypeScript + Vite** single-page application (`littlesteps-react`) with a modular **Node.js 22 / Express 5** REST API gateway (`littlesteps-api`) hosted on **Firebase Cloud Functions (2nd Gen, `asia-southeast1`)** and backed by **Firebase Authentication** and **Cloud Firestore**. The API unifies caregiver-scoped CRUD operations with three external REST integrations: the **Open Library REST API** (proxied with a 60-minute TTL cache and deterministic local fallback for picture-book discovery and a saved Family Bookshelf), the **Open-Meteo Forecast API** (privacy-safe indoor/outdoor play hints using coordinates rounded to two decimal places), and the **Google Gemini REST API** (structured play recommendations, storybook companions, and activity adaptations protected by hourly rate limits, a circuit breaker, a three-layer pediatric safety pipeline, and deterministic catalog fallback). Security enforces Firebase ID Bearer tokens, strict Zod 4.1 schema validation, uniform error envelopes, and Broken Object Level Authorization (BOLA) protection returning `404` on unowned resources in alignment with the Philippine Data Privacy Act (RA 10173). Verification through automated unit, DOM, Supertest, and Firebase Emulator integration suites, an informal parent walkthrough, a five-evaluator Nielsen heuristic audit, and cloud deployment (`littlesteps-app-cict`) demonstrates stable client-server execution across desktop and mobile browser viewports.
+Caregivers of children aged 0 to 5 years frequently rely on smartphones to occupy toddlers during household routines despite guidance from the World Health Organization (WHO), the American Academy of Pediatrics (AAP), and the Philippine Early Childhood Care and Development (ECCD) Council recommending screen-free interactive play. Existing baby-tracking web applications are largely foreign, commercialized, or framed around clinical milestone scoring that induces parental anxiety. This documentation presents the design, implementation, and verification of **LittleSteps**, a caregiver-facing web system developed for **CIT 210 (Web Systems and Technologies)**. The system pairs a **React 19 + TypeScript + Vite** single-page application (`littlesteps-react`) with a modular **Node.js 22 / Express 5** REST API gateway (`littlesteps-api`) hosted on **Firebase Cloud Functions (2nd Gen, asia-southeast1)** and backed by **Firebase Authentication** and **Cloud Firestore**. The API unifies caregiver-scoped CRUD operations with three external REST integrations: the **Open Library REST API** (proxied with a 60-minute TTL cache and deterministic local fallback for picture-book discovery and a saved Family Bookshelf), the **Open-Meteo Forecast API** (privacy-safe indoor/outdoor play hints using coordinates rounded to two decimal places), and the **Google Gemini REST API** (structured play recommendations, storybook companions, and activity adaptations protected by hourly rate limits, a circuit breaker, a three-layer pediatric safety pipeline, and deterministic catalog fallback). Security enforces Firebase ID Bearer tokens, strict Zod 4.1 schema validation, uniform error envelopes, and Broken Object Level Authorization (BOLA) protection returning `404` on unowned resources in alignment with the Philippine Data Privacy Act (RA 10173). Verification through automated unit, DOM, Supertest, and Firebase Emulator integration suites, an informal parent walkthrough, a five-evaluator Nielsen heuristic audit, and cloud deployment (`littlesteps-app-cict`) demonstrates stable client-server execution across desktop and mobile browser viewports.
 
 **Keywords:** React web application, REST API integration, Express 5, Cloud Firestore, Open Library API, Open-Meteo API, guardrailed generative AI, early childhood care and development (ECCD), BOLA security, WCAG 2.2 AA.
 
@@ -77,9 +77,9 @@ Within **CIT 210 (Web Systems and Technologies)**, the system scope covers the *
 
 LittleSteps employs a decoupled client-gateway-database architecture in which the React browser application communicates exclusively over HTTPS JSON with a centralized Express 5 API deployed on Firebase Cloud Functions (2nd Gen, `asia-southeast1`). Direct browser-to-Firestore reads and writes are avoided for business records so that schema validation, ownership checks, rate limits, and third-party API keys remain strictly enforced on the server. Figure 1 illustrates the end-to-end web system and cloud topology, and Table 1 records the verified runtime and development dependencies from `littlesteps-react/package.json` and `littlesteps-api/package.json`.
 
-![Figure 1. LittleSteps Web System and Cloud Architecture](figures/fig-1-web-architecture.png)
+![LittleSteps Web System and Cloud Architecture](figures/fig-1-web-architecture.png)
 
-*Figure 1. LittleSteps web system architecture linking the React 19 SPA (`littlesteps-react`), Express 5 Cloud Functions gateway (`littlesteps-api`), Firebase Auth and Cloud Firestore, and server-proxied external REST APIs.*
+**Fig. 1.** *LittleSteps web system architecture linking the React 19 SPA (`littlesteps-react`), Express 5 Cloud Functions gateway (`littlesteps-api`), Firebase Auth and Cloud Firestore, and server-proxied external REST APIs.*
 
 **Table 1.** *Verified Web System Technology Stack and Versions*
 
@@ -121,9 +121,9 @@ The backend API is governed by a contract-first OpenAPI 3.1 specification (`litt
 
 A central requirement of CIT 210 is integrating external REST services in a way that enhances user efficiency while remaining resilient to upstream latency, rate limits, or outages. Figure 2 traces all three external integrations implemented in `littlesteps-api`.
 
-![Figure 2. External REST Integration, Caching, and 3-Layer AI Guardrail Pipeline](figures/fig-2-api-ai-pipeline.png)
+![External REST Integration, Caching, and AI Fallback Pipeline](figures/fig-2-api-ai-pipeline.png)
 
-*Figure 2. Server-side integration pipelines for Open Library (Lane A), Open-Meteo (Lane B), and Google Gemini with three-layer pediatric safety screening and Tier 3 deterministic fallback (Lane C).*
+**Fig. 2.** *Server-side integration pipelines for Open Library, Open-Meteo, and Google Gemini with three-layer pediatric safety screening and deterministic fallbacks.*
 
 ### Open Library REST API and Closed-Loop Family Bookshelf
 In `src/catalog/catalog-service.ts`, the server proxies queries to the Internet Archive's Open Library REST API (`openlibrary.org/subjects/{subject}.json` and `openlibrary.org/search.json?q={query}`), passing an ASCII-sanitized `User-Agent` header and normalizing cover image URLs, author arrays, and subject tags into a consistent `BookItem` payload. Responses are cached in memory for **60 minutes** (`CACHE_TTL_MS = 3,600,000 ms`, capped at 100 entries to prevent memory exhaustion from arbitrary queries). If Open Library times out or returns an upstream error, the proxy serves a curated local fallback list (`books.fallback.ts`) with a short **60-second** TTL so recovery happens promptly once upstream connectivity returns. Caregivers can save books they own into the child's Firestore `books` subcollection (`Family Bookshelf`), request a screen-free play companion via `POST /api/v1/ai/story-activity`, and schedule that companion straight into `Today` with an inline `customActivity` snapshot.
