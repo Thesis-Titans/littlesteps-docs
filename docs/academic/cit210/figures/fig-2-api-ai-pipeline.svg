@@ -1,85 +1,120 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="680" viewBox="0 0 1280 680">
-<defs><marker id="a-forest" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="#165A42"/></marker><marker id="a-blue" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="#2B6CB0"/></marker><marker id="a-terra" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="#C25525"/></marker></defs>
-<rect width="1280" height="680" fill="#FFFFFF"/>
-<rect x="6" y="6" width="1268" height="668" rx="16" fill="#FFFFFF" stroke="#D4DCD8" stroke-width="1.4"/>
-<text x="42" y="48" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="22" fill="#165A42" text-anchor="start" font-weight="700">External REST Integration, Caching, and AI Fallback Pipeline</text>
-<text x="42" y="74" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="14" fill="#5A6A64" text-anchor="start">Server-proxied Open Library, Open-Meteo, and Google Gemini with three-layer safety screening and deterministic fallbacks</text>
-<line x1="42" y1="90" x2="1238" y2="90" stroke="#D4DCD8" stroke-width="1.2"/>
-<rect x="42" y="112" width="314" height="486" rx="10" fill="#FFFFFF" stroke="#165A42" stroke-width="1.8"/>
-<path d="M 52 112 H 346 Q 356 112 356 122 V 156 H 42 V 122 Q 42 112 52 112 Z" fill="#165A42"/>
-<text x="199.0" y="140.0" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="16" fill="#FFFFFF" text-anchor="middle" font-weight="700">Web Client (React 19)</text>
-<rect x="60" y="174" width="278" height="176" rx="8" fill="#F3F2E8" stroke="#D8D6C8" stroke-width="1.3"/>
-<text x="76" y="200" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="14" fill="#1E2925" text-anchor="start" font-weight="700">Structured Requests</text>
-<text x="76" y="228" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#1E2925" text-anchor="start">•  Open Library book search</text>
-<text x="76" y="254" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#1E2925" text-anchor="start">•  Weather hint (2-dec lat/lon)</text>
-<text x="76" y="280" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#1E2925" text-anchor="start">•  AI Idea Helper &amp; Story idea</text>
-<text x="76" y="316" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12" fill="#C25525" text-anchor="start" font-style="italic">No child names, PII, or journal text</text>
-<text x="76" y="336" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.5" fill="#5A6A64" text-anchor="start">HTTPS + Firebase Bearer token</text>
-<rect x="60" y="368" width="278" height="212" rx="8" fill="#F3F2E8" stroke="#D8D6C8" stroke-width="1.3"/>
-<text x="76" y="394" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="14" fill="#1E2925" text-anchor="start" font-weight="700">Provenance Badges</text>
-<rect x="76" y="412" width="138" height="26" rx="6" fill="#2B6CB0" stroke="#2B6CB0" stroke-width="0"/>
-<text x="145.0" y="429.025" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.5" fill="#FFFFFF" text-anchor="middle" font-weight="700">Suggested by AI</text>
-<text x="76" y="454" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.5" fill="#5A6A64" text-anchor="start">Tier 1: Reviewed catalog pick</text>
-<rect x="76" y="468" width="152" height="26" rx="6" fill="#FBE39B" stroke="#FBE39B" stroke-width="0"/>
-<text x="152.0" y="485.025" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.5" fill="#5C4008" text-anchor="middle" font-weight="700">Material adaptation</text>
-<text x="76" y="510" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.5" fill="#5A6A64" text-anchor="start">Tier 1: Guarded custom activity</text>
-<rect x="76" y="524" width="102" height="26" rx="6" fill="#165A42" stroke="#165A42" stroke-width="0"/>
-<text x="127.0" y="541.025" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.5" fill="#FFFFFF" text-anchor="middle" font-weight="700">Our picks</text>
-<text x="76" y="566" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.5" fill="#5A6A64" text-anchor="start">Tier 3: Reviewed ECCD fallback</text>
-<rect x="446" y="112" width="326" height="486" rx="10" fill="#FFFFFF" stroke="#165A42" stroke-width="1.8"/>
-<path d="M 456 112 H 762 Q 772 112 772 122 V 156 H 446 V 122 Q 446 112 456 112 Z" fill="#165A42"/>
-<text x="609.0" y="140.0" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="16" fill="#FFFFFF" text-anchor="middle" font-weight="700">Express 5 API Gateway</text>
-<rect x="464" y="174" width="290" height="176" rx="8" fill="#F0F5F2" stroke="#D4DCD8" stroke-width="1.3"/>
-<text x="480" y="200" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="14" fill="#1E2925" text-anchor="start" font-weight="700">Proxy, Cache &amp; Quotas</text>
-<text x="480" y="228" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#1E2925" text-anchor="start">•  Open Library &amp; Open-Meteo</text>
-<text x="498" y="245" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="10.5" fill="#5A6A64" text-anchor="start">60-min TTL · 100-entry cap</text>
-<text x="480" y="268" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#1E2925" text-anchor="start">•  AI Rate Limits (HTTP 429)</text>
-<text x="498" y="285" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="10.5" fill="#5A6A64" text-anchor="start">10 req/hr user · 30 req/hr IP</text>
-<text x="480" y="308" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#1E2925" text-anchor="start">•  Zod 4.1 Strict Schemas</text>
-<text x="498" y="325" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="10.5" fill="#5A6A64" text-anchor="start">Zero API keys in browser</text>
-<rect x="464" y="368" width="290" height="212" rx="8" fill="#F0F5F2" stroke="#D4DCD8" stroke-width="1.3"/>
-<text x="480" y="394" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="14" fill="#1E2925" text-anchor="start" font-weight="700">3-Layer Pediatric Guardrails</text>
-<text x="480" y="424" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#1E2925" text-anchor="start" font-weight="700">L1. Thin input gate (sanitize.ts)</text>
-<text x="496" y="443" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.5" fill="#5A6A64" text-anchor="start">Blocks hazards; allows FIL/HIL terms</text>
-<text x="480" y="472" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#1E2925" text-anchor="start" font-weight="700">L2. Model assessment (Gemini)</text>
-<text x="496" y="491" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.5" fill="#5A6A64" text-anchor="start">Structured materialAssessments JSON</text>
-<text x="480" y="520" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#1E2925" text-anchor="start" font-weight="700">L3. Output validator (fail-closed)</text>
-<text x="496" y="539" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.5" fill="#C25525" text-anchor="start">Hazard + 33-term clinical denylist</text>
-<text x="480" y="566" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.5" fill="#165A42" text-anchor="start" font-weight="700">Any slip falls back cleanly to Tier 3</text>
-<rect x="866" y="112" width="372" height="212" rx="10" fill="#FFFFFF" stroke="#2B6CB0" stroke-width="1.8"/>
-<path d="M 876 112 H 1228 Q 1238 112 1238 122 V 156 H 866 V 122 Q 866 112 876 112 Z" fill="#2B6CB0"/>
-<text x="1052.0" y="140.0" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="16" fill="#FFFFFF" text-anchor="middle" font-weight="700">Live External REST APIs</text>
-<text x="884" y="184" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#1E2925" text-anchor="start">•  Open Library REST API</text>
-<text x="902" y="201" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="10.5" fill="#5A6A64" text-anchor="start">Picture books -&gt; Family Bookshelf -&gt; Plan</text>
-<text x="884" y="228" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#1E2925" text-anchor="start">•  Open-Meteo Forecast API</text>
-<text x="902" y="245" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="10.5" fill="#5A6A64" text-anchor="start">3s timeout · Indoor / Outdoor weather hint</text>
-<text x="884" y="272" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#1E2925" text-anchor="start">•  Google Gemini API (v1beta)</text>
-<text x="902" y="289" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="10.5" fill="#5A6A64" text-anchor="start">Node 22 fetch · 8s timeout · 3-fail breaker</text>
-<rect x="866" y="392" width="372" height="206" rx="10" fill="#FFFFFF" stroke="#165A42" stroke-width="1.8"/>
-<path d="M 876 392 H 1228 Q 1238 392 1238 402 V 436 H 866 V 402 Q 866 392 876 392 Z" fill="#165A42"/>
-<text x="1052.0" y="420.0" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="16" fill="#FFFFFF" text-anchor="middle" font-weight="700">Deterministic Fallbacks</text>
-<text x="884" y="464" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#1E2925" text-anchor="start">•  Local Books Fallback</text>
-<text x="902" y="481" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="10.5" fill="#5A6A64" text-anchor="start">books.fallback.ts (60s recovery TTL)</text>
-<text x="884" y="506" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#1E2925" text-anchor="start">•  Neutral Weather Fallback</text>
-<text x="902" y="523" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="10.5" fill="#5A6A64" text-anchor="start">Hides banner calmly if unreachable</text>
-<text x="884" y="548" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#1E2925" text-anchor="start">•  Tier 3 ECCD Catalog Pool</text>
-<text x="902" y="565" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="10.5" fill="#5A6A64" text-anchor="start">Firestore activities labeled &#x27;Our picks&#x27;</text>
-<path d="M 356 226 L 442 226" fill="none" stroke="#165A42" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#a-forest)"/>
-<text x="399" y="216" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.5" fill="#165A42" text-anchor="middle" font-weight="700">1. Request</text>
-<path d="M 446 474 L 360 474" fill="none" stroke="#165A42" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#a-forest)"/>
-<text x="403" y="464" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.5" fill="#165A42" text-anchor="middle" font-weight="700">4. Response</text>
-<path d="M 772 200 L 862 200" fill="none" stroke="#2B6CB0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#a-blue)"/>
-<text x="817" y="190" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.5" fill="#2B6CB0" text-anchor="middle" font-weight="700">2a. Fetch</text>
-<path d="M 866 266 L 776 266" fill="none" stroke="#2B6CB0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#a-blue)"/>
-<text x="821" y="256" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.5" fill="#2B6CB0" text-anchor="middle" font-weight="700">3a. Valid</text>
-<path d="M 1052 324 L 1052 388" fill="none" stroke="#C25525" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#a-terra)" stroke-dasharray="5 4"/>
-<rect x="942" y="344" width="220" height="26" rx="6" fill="#FDF3EE" stroke="#C25525" stroke-width="1.2"/>
-<text x="1052" y="361" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.5" fill="#C25525" text-anchor="middle" font-weight="700">Timeout / Error / Safety Fail</text>
-<path d="M 772 470 L 862 470" fill="none" stroke="#C25525" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#a-terra)" stroke-dasharray="5 4"/>
-<text x="817" y="460" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.5" fill="#C25525" text-anchor="middle" font-weight="700">2b. Fallback</text>
-<path d="M 866 534 L 776 534" fill="none" stroke="#165A42" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#a-forest)"/>
-<text x="821" y="524" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.5" fill="#165A42" text-anchor="middle" font-weight="700">3b. Safe Pick</text>
-<text x="42" y="626" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12" fill="#5A6A64" text-anchor="start">Note: Single-activity tweaks (/api/v1/ai/adapt) fall back to Tier 2 rule-based adaptations when Gemini is unavailable.</text>
-<text x="42" y="648" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12" fill="#5A6A64" text-anchor="start">Exceeding hourly rate limits returns HTTP 429 with a Retry-After cooldown notice instead of silent fallback.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600">
+  <defs>
+    <marker id="arrow-pf" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="#1F634D"/>
+    </marker>
+    <marker id="arrow-pb" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="#2B6CB0"/>
+    </marker>
+    <marker id="arrow-pt" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="#C25525"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="600" fill="#FFFFFF"/>
+  <rect x="6" y="6" width="1188" height="588" rx="14" fill="#FFFFFF" stroke="#D4DCD8" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <text x="40" y="44" font-family="Arial, Liberation Sans, sans-serif" font-size="22" font-weight="700" fill="#1F634D">External Web Services, Caching &amp; Safety Flow</text>
+  <text x="40" y="68" font-family="Arial, Liberation Sans, sans-serif" font-size="14" fill="#5A6A64">How Open Library, Open-Meteo, and Google Gemini work reliably behind the Express backend</text>
+  <line x1="40" y1="84" x2="1160" y2="84" stroke="#E0E5DB" stroke-width="1.2"/>
+
+  <!-- Column 1: Web App -->
+  <rect x="40" y="108" width="296" height="422" rx="10" fill="#FAFBF9" stroke="#1F634D" stroke-width="2"/>
+  <path d="M 50 108 H 326 Q 336 108 336 118 V 150 H 40 V 118 Q 40 108 50 108 Z" fill="#1F634D"/>
+  <text x="188" y="135" font-family="Arial, Liberation Sans, sans-serif" font-size="15.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">Web App (React 19)</text>
+
+  <rect x="58" y="168" width="260" height="150" rx="8" fill="#F4F2E8" stroke="#D8D6C8" stroke-width="1.2"/>
+  <text x="74" y="194" font-family="Arial, Liberation Sans, sans-serif" font-size="14" font-weight="700" fill="#1A2B29">Caregiver Requests</text>
+  <text x="74" y="220" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#1A2B29">• Picture book search</text>
+  <text x="74" y="244" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#1A2B29">• Weather play hint</text>
+  <text x="74" y="268" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#1A2B29">• Idea Helper &amp; story play</text>
+  <text x="74" y="298" font-family="Arial, Liberation Sans, sans-serif" font-size="12" font-style="italic" fill="#C25525">No child names or private notes</text>
+
+  <rect x="58" y="334" width="260" height="178" rx="8" fill="#F4F2E8" stroke="#D8D6C8" stroke-width="1.2"/>
+  <text x="74" y="360" font-family="Arial, Liberation Sans, sans-serif" font-size="14" font-weight="700" fill="#1A2B29">Source Badges in UI</text>
+  <rect x="74" y="374" width="136" height="24" rx="5" fill="#2B6CB0"/>
+  <text x="142" y="391" font-family="Arial, Liberation Sans, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">Suggested by AI</text>
+  <text x="74" y="414" font-family="Arial, Liberation Sans, sans-serif" font-size="12" fill="#5A6A64">Matched reviewed activity</text>
+
+  <rect x="74" y="426" width="154" height="24" rx="5" fill="#FAE8A8"/>
+  <text x="151" y="443" font-family="Arial, Liberation Sans, sans-serif" font-size="12" font-weight="700" fill="#5C4008" text-anchor="middle">Material adaptation</text>
+  <text x="74" y="466" font-family="Arial, Liberation Sans, sans-serif" font-size="12" fill="#5A6A64">Safe household-item play idea</text>
+
+  <rect x="74" y="478" width="104" height="24" rx="5" fill="#1F634D"/>
+  <text x="126" y="495" font-family="Arial, Liberation Sans, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">Our picks</text>
+
+  <!-- Connectors 1 <-> 2 -->
+  <line x1="336" y1="226" x2="410.0" y2="226.0" stroke="#1F634D" stroke-width="2.4"/>
+  <polygon points="416.0,226.0 407.0,230.5 407.0,221.5" fill="#1F634D"/>
+  <text x="378" y="214" font-family="Arial, Liberation Sans, sans-serif" font-size="12.5" font-weight="700" fill="#1F634D" text-anchor="middle">1. Request</text>
+
+  <line x1="420" y1="418" x2="346.0" y2="418.0" stroke="#1F634D" stroke-width="2.4"/>
+  <polygon points="340.0,418.0 349.0,413.5 349.0,422.5" fill="#1F634D"/>
+  <text x="378" y="406" font-family="Arial, Liberation Sans, sans-serif" font-size="12.5" font-weight="700" fill="#1F634D" text-anchor="middle">4. Reply</text>
+
+  <!-- Column 2: Backend API -->
+  <rect x="420" y="108" width="320" height="422" rx="10" fill="#FAFBF9" stroke="#1F634D" stroke-width="2"/>
+  <path d="M 430 108 H 730 Q 740 108 740 118 V 150 H 420 V 118 Q 420 108 430 108 Z" fill="#1F634D"/>
+  <text x="580" y="135" font-family="Arial, Liberation Sans, sans-serif" font-size="15.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">Backend API (Express 5)</text>
+
+  <rect x="438" y="168" width="284" height="140" rx="8" fill="#F0F5F2" stroke="#D4DCD8" stroke-width="1.2"/>
+  <text x="454" y="194" font-family="Arial, Liberation Sans, sans-serif" font-size="14" font-weight="700" fill="#1A2B29">Proxy, Caching &amp; Limits</text>
+  <text x="454" y="220" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#1A2B29">• 1-hour cache for books &amp; weather</text>
+  <text x="454" y="244" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#1A2B29">• Hourly AI request limits</text>
+  <text x="454" y="268" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#1A2B29">• Strict field &amp; length checks</text>
+  <text x="454" y="292" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#1A2B29">• Keeps API keys off the browser</text>
+
+  <rect x="438" y="324" width="284" height="188" rx="8" fill="#F0F5F2" stroke="#D4DCD8" stroke-width="1.2"/>
+  <text x="454" y="350" font-family="Arial, Liberation Sans, sans-serif" font-size="14" font-weight="700" fill="#1A2B29">Three-Stage Safety Check</text>
+  <text x="454" y="378" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#1A2B29">1. Block clearly unsafe items</text>
+  <text x="454" y="406" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#1A2B29">2. Check item safety for young kids</text>
+  <text x="454" y="434" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#1A2B29">3. Filter clinical &amp; hazard terms</text>
+  <text x="454" y="470" font-family="Arial, Liberation Sans, sans-serif" font-size="13" font-weight="700" fill="#1F634D">Falls back smoothly whenever an</text>
+  <text x="454" y="490" font-family="Arial, Liberation Sans, sans-serif" font-size="13" font-weight="700" fill="#1F634D">external service fails or times out</text>
+
+  <!-- Connectors 2 <-> 3 -->
+  <line x1="740" y1="194" x2="818.0" y2="194.0" stroke="#2B6CB0" stroke-width="2.4"/>
+  <polygon points="824.0,194.0 815.0,198.5 815.0,189.5" fill="#2B6CB0"/>
+  <text x="784" y="182" font-family="Arial, Liberation Sans, sans-serif" font-size="12.5" font-weight="700" fill="#2B6CB0" text-anchor="middle">2a. Fetch</text>
+
+  <line x1="828" y1="256" x2="750.0" y2="256.0" stroke="#2B6CB0" stroke-width="2.4"/>
+  <polygon points="744.0,256.0 753.0,251.5 753.0,260.5" fill="#2B6CB0"/>
+  <text x="784" y="244" font-family="Arial, Liberation Sans, sans-serif" font-size="12.5" font-weight="700" fill="#2B6CB0" text-anchor="middle">3a. Valid</text>
+
+  <!-- Right Top: External APIs -->
+  <rect x="828" y="108" width="332" height="190" rx="10" fill="#FAFBF9" stroke="#2B6CB0" stroke-width="2"/>
+  <path d="M 838 108 H 1150 Q 1160 108 1160 118 V 150 H 828 V 118 Q 828 108 838 108 Z" fill="#2B6CB0"/>
+  <text x="994" y="135" font-family="Arial, Liberation Sans, sans-serif" font-size="15.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">External Web Services</text>
+  <text x="846" y="182" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" fill="#1A2B29">• Open Library — picture books</text>
+  <text x="846" y="212" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" fill="#1A2B29">• Open-Meteo — local weather hint</text>
+  <text x="846" y="242" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" fill="#1A2B29">• Google Gemini — play ideas</text>
+  <text x="846" y="274" font-family="Arial, Liberation Sans, sans-serif" font-size="12.5" fill="#5A6A64">Short timeouts protect responsiveness</text>
+
+  <!-- Fallback Vertical Connector -->
+  <line x1="994" y1="298" x2="994.0" y2="350.0" stroke="#C25525" stroke-width="2.2" stroke-dasharray="5 4"/>
+  <polygon points="994.0,356.0 989.5,347.0 998.5,347.0" fill="#C25525"/>
+  <rect x="888" y="314" width="212" height="26" rx="6" fill="#FDF3EE" stroke="#C25525" stroke-width="1.2"/>
+  <text x="994" y="331" font-family="Arial, Liberation Sans, sans-serif" font-size="12" font-weight="700" fill="#C25525" text-anchor="middle">On Timeout, Error, or Safety Block</text>
+
+  <!-- Fallback Return Arrows -->
+  <line x1="740" y1="418" x2="818.0" y2="418.0" stroke="#C25525" stroke-width="2.2" stroke-dasharray="5 4"/>
+  <polygon points="824.0,418.0 815.0,422.5 815.0,413.5" fill="#C25525"/>
+  <text x="784" y="406" font-family="Arial, Liberation Sans, sans-serif" font-size="12" font-weight="700" fill="#C25525" text-anchor="middle">2b. Backup</text>
+
+  <line x1="828" y1="478" x2="750.0" y2="478.0" stroke="#1F634D" stroke-width="2.4"/>
+  <polygon points="744.0,478.0 753.0,473.5 753.0,482.5" fill="#1F634D"/>
+  <text x="784" y="466" font-family="Arial, Liberation Sans, sans-serif" font-size="12.5" font-weight="700" fill="#1F634D" text-anchor="middle">3b. Safe Pick</text>
+
+  <!-- Right Bottom: Built-in Fallbacks -->
+  <rect x="828" y="360" width="332" height="170" rx="10" fill="#FAFBF9" stroke="#1F634D" stroke-width="2"/>
+  <path d="M 838 360 H 1150 Q 1160 360 1160 370 V 402 H 828 V 370 Q 828 360 838 360 Z" fill="#1F634D"/>
+  <text x="994" y="387" font-family="Arial, Liberation Sans, sans-serif" font-size="15.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">Built-in Fallbacks</text>
+  <text x="846" y="432" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" fill="#1A2B29">• Curated local picture book list</text>
+  <text x="846" y="460" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" fill="#1A2B29">• Quiet weather state (no error spam)</text>
+  <text x="846" y="488" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" fill="#1A2B29">• Reviewed activity picks</text>
+
+  <!-- Footer Note -->
+  <text x="40" y="566" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#5A6A64">Note: Single-activity tweaks use fast rule-based adjustments if Gemini is unavailable; hourly usage limits show a calm cooldown message.</text>
 </svg>

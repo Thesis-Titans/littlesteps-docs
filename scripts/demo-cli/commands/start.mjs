@@ -39,6 +39,34 @@ import { seedDemoData } from '../lib/seeder.mjs';
 import { ensureRequiredRepos } from '../lib/workspace.mjs';
 import { c, createSpinner, ui } from '../lib/ui.mjs';
 
+const DESKTOP_OR_WEB_DEVICES = new Set(['web-server', 'chrome', 'linux', 'macos', 'windows']);
+
+/**
+ * Resolves whether to launch `flutter run` and which device target to use.
+ * Prevents launching a debug `flutter run` onto an Android phone right after
+ * installing and launching an arm64 APK onto that same device.
+ */
+export function resolveFlutterRunPlan({ target, device, androidSerial, installApkMode }) {
+  if (target !== 'flutter' && target !== 'all') {
+    return { shouldRunFlutter: false, flutterTargetDevice: null };
+  }
+
+  const requestedDevice = device || 'web-server';
+  const installedApkOnRequestedDevice =
+    installApkMode !== 'none' &&
+    !DESKTOP_OR_WEB_DEVICES.has(requestedDevice) &&
+    (!androidSerial || requestedDevice === androidSerial);
+
+  if (installedApkOnRequestedDevice) {
+    if (target === 'all') {
+      return { shouldRunFlutter: true, flutterTargetDevice: 'web-server' };
+    }
+    return { shouldRunFlutter: false, flutterTargetDevice: null };
+  }
+
+  return { shouldRunFlutter: true, flutterTargetDevice: requestedDevice };
+}
+
 function scaffoldEnvFiles(ws) {
   const apiEnvPath = path.join(ws.apiDir, '.env');
   if (!fs.existsSync(apiEnvPath) && fs.existsSync(path.join(ws.apiDir, '.env.example'))) {
@@ -187,6 +215,8 @@ export async function runStartCommand(ws, opts) {
 
   const seedConfig = await seedDemoData(ws, { mode: demoDataMode, seedFile: opts.seedFile || '' });
 
+  let connectedAndroidSerial = '';
+
   // Android device setup
   if (adbReverse || installApkMode !== 'none' || startScrcpy) {
     const adb = findAdbBin();
@@ -195,9 +225,8 @@ export async function runStartCommand(ws, opts) {
     } else {
       if (opts.wireless) runSync(adb, ['connect', opts.wireless], { stdio: 'inherit' });
       const explicitSerial =
-        opts.device && !['web-server', 'chrome', 'linux', 'macos', 'windows'].includes(opts.device)
-          ? opts.device
-          : '';
+        opts.androidSerial ||
+        (opts.device && !DESKTOP_OR_WEB_DEVICES.has(opts.device) ? opts.device : '');
       const devices = await detectAdbDevices();
       const serial = opts.wireless || explicitSerial || (devices[0]?.serial ?? '');
 
@@ -209,6 +238,7 @@ export async function runStartCommand(ws, opts) {
           return EXIT_ERROR;
         }
       } else {
+        connectedAndroidSerial = serial;
         if (installApkMode !== 'none') {
           const apkRes = buildAndInstallApk({
             adb,
@@ -259,10 +289,22 @@ export async function runStartCommand(ws, opts) {
   }
 
   // Print clean summary note
-  const flutterTargetDevice = opts.device || 'web-server';
+  const { shouldRunFlutter, flutterTargetDevice } = resolveFlutterRunPlan({
+    target,
+    device: opts.device,
+    androidSerial: connectedAndroidSerial,
+    installApkMode,
+  });
   const isFlutterWebServer = flutterTargetDevice === 'web-server';
+  const androidStatusLine =
+    connectedAndroidSerial && installApkMode !== 'none'
+      ? `Android Device:       ${c.cyan(connectedAndroidSerial)} (APK launched)`
+      : connectedAndroidSerial && adbReverse
+        ? `Android Device:       ${c.cyan(connectedAndroidSerial)} (ADB reverse)`
+        : '';
   const summaryLines = [
-    ...(target === 'flutter' || target === 'all'
+    ...(androidStatusLine ? [androidStatusLine] : []),
+    ...(shouldRunFlutter
       ? [
           isFlutterWebServer
             ? `Flutter Web App:      ${c.cyan('http://localhost:5174')}`
@@ -283,7 +325,7 @@ export async function runStartCommand(ws, opts) {
   ui.note(summaryLines.join('\n'), 'LittleSteps Services Running');
 
   // Launch Flutter in foreground when requested
-  if (target === 'flutter' || target === 'all') {
+  if (shouldRunFlutter) {
     const flutterArgs = isFlutterWebServer
       ? ['run', '-d', 'web-server', '--web-port=5174', '--web-hostname=0.0.0.0']
       : ['run', '-d', flutterTargetDevice];

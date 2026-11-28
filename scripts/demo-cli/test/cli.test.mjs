@@ -9,6 +9,7 @@ import { CLI_VERSION, EXIT_OK, EXIT_USAGE } from '../lib/constants.mjs';
 import { isValidDeviceSerial, isValidFps, isValidHostPort } from '../lib/process.mjs';
 import { DEFAULT_SEED_FILE, loadDemoSeedConfig, resolveSeedDate } from '../lib/seeder.mjs';
 import { resolveWorkspace } from '../lib/workspace.mjs';
+import { resolveFlutterRunPlan } from '../commands/start.mjs';
 import { normalizeLegacyArgv } from '../run-demo.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -152,4 +153,43 @@ test('resolveSeedDate supports explicit ISO dates and relative dayOffset', () =>
   assert.equal(resolveSeedDate({ dayOffset: 0, baseDate: base }), '2026-12-01');
   assert.equal(resolveSeedDate({ dayOffset: -2, baseDate: base }), '2026-11-29');
   assert.equal(resolveSeedDate({ explicitDate: '2026-11-15', dayOffset: 0, baseDate: base }), '2026-11-15');
+});
+
+test('resolveFlutterRunPlan avoids debug flutter run collision after installing Android APK', () => {
+  assert.deepEqual(
+    resolveFlutterRunPlan({
+      target: 'all',
+      device: 'adb-1234._adb-tls-connect._tcp',
+      androidSerial: 'adb-1234._adb-tls-connect._tcp',
+      installApkMode: 'local',
+    }),
+    { shouldRunFlutter: true, flutterTargetDevice: 'web-server' }
+  );
+
+  assert.deepEqual(
+    resolveFlutterRunPlan({
+      target: 'flutter',
+      device: 'adb-1234._adb-tls-connect._tcp',
+      androidSerial: 'adb-1234._adb-tls-connect._tcp',
+      installApkMode: 'local',
+    }),
+    { shouldRunFlutter: false, flutterTargetDevice: null }
+  );
+
+  assert.deepEqual(
+    resolveFlutterRunPlan({
+      target: 'flutter',
+      device: 'adb-1234._adb-tls-connect._tcp',
+      androidSerial: 'adb-1234._adb-tls-connect._tcp',
+      installApkMode: 'none',
+    }),
+    { shouldRunFlutter: true, flutterTargetDevice: 'adb-1234._adb-tls-connect._tcp' }
+  );
+
+  for (const target of ['react', 'android', 'api']) {
+    assert.deepEqual(
+      resolveFlutterRunPlan({ target, device: '', androidSerial: '', installApkMode: 'none' }),
+      { shouldRunFlutter: false, flutterTargetDevice: null }
+    );
+  }
 });
