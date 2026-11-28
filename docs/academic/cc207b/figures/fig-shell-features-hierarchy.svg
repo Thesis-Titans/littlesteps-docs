@@ -1,125 +1,91 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="395" viewBox="0 0 800 395" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="480" viewBox="0 0 1200 480">
   <defs>
-    <filter id="shadow-feat" x="-2%" y="-3%" width="104%" height="108%" filterUnits="userSpaceOnUse">
-      <feDropShadow dx="0" dy="1.5" stdDeviation="2.5" flood-color="#000000" flood-opacity="0.06"/>
-    </filter>
+    <marker id="arrow-nav" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="#1F634D"/>
+    </marker>
   </defs>
 
-  <!-- Background -->
-  <rect width="800" height="395" fill="#FFFFFF" rx="6" stroke="#D1DCD1" stroke-width="1"/>
+  <rect width="1200" height="480" fill="#FFFFFF"/>
+  <rect x="6" y="6" width="1188" height="468" rx="14" fill="#FFFFFF" stroke="#D4DCD8" stroke-width="1.5"/>
 
   <!-- Header -->
-  <text x="25" y="30" font-size="14.5" font-weight="700" fill="#1F634D">Shell Navigation and Core Features Architecture</text>
-  <text x="25" y="46" font-size="11" fill="#5A655F">Root ShellScreen mapping 5 bottom tabs, Child Profile management, and AI Idea Helper (7 core flows)</text>
-  <line x1="25" y1="56" x2="775" y2="56" stroke="#E2E8E2" stroke-width="1"/>
+  <text x="40" y="44" font-family="Arial, Liberation Sans, sans-serif" font-size="22" font-weight="700" fill="#1F634D">Navigation &amp; Core Features Structure</text>
+  <text x="40" y="68" font-family="Arial, Liberation Sans, sans-serif" font-size="14" fill="#5A6A64">Five main navigation tabs paired with the Child Profile Switcher and AI Idea Helper (seven core features)</text>
+  <line x1="40" y1="84" x2="1160" y2="84" stroke="#E0E5DB" stroke-width="1.2"/>
 
-  <!-- Root Shell Box -->
-  <g transform="translate(130, 70)">
-    <rect width="540" height="56" rx="5" fill="#1F634D" filter="url(#shadow-feat)"/>
-    <text x="270" y="21" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">ShellScreen (Root Navigation Shell)</text>
-    <text x="270" y="36" font-size="8.6" fill="#E2E8E2" text-anchor="middle">Top Bar: BrandLogo · Feature 1: Child Profile Switcher (ChildChip → lib/screens/children) · AccountMenuSheet</text>
-    <text x="270" y="49" font-size="8.2" fill="#C7DDD3" text-anchor="middle">NavigationBar / Rail (IndexedStack · 5 Tabs) + Canonical NoChildrenView when 0 children registered</text>
-  </g>
+  <!-- Top Navigation Root -->
+  <rect x="190" y="104" width="820" height="70" rx="10" fill="#1F634D"/>
+  <text x="600" y="132" font-family="Arial, Liberation Sans, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">Main App Shell (Top Bar + Five Bottom Tabs)</text>
+  <text x="600" y="156" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" fill="#E0F2E5" text-anchor="middle">Feature 1: Child Profile Switcher (Nickname &amp; Age Band) · Account Settings Menu</text>
 
   <!-- Connector Spine -->
-  <line x1="400" y1="126" x2="400" y2="148" stroke="#1F634D" stroke-width="1.8"/>
-  <line x1="94" y1="148" x2="706" y2="148" stroke="#1F634D" stroke-width="1.8"/>
-
-  <!-- Drop lines with arrowheads into 5 equal columns -->
-  <line x1="94" y1="148" x2="94" y2="166" stroke="#1F634D" stroke-width="1.8"/>
-  <polygon points="90,162 94,170 98,162" fill="#1F634D"/>
-
-  <line x1="247" y1="148" x2="247" y2="166" stroke="#1F634D" stroke-width="1.8"/>
-  <polygon points="243,162 247,170 251,162" fill="#1F634D"/>
-
-  <line x1="400" y1="148" x2="400" y2="166" stroke="#1F634D" stroke-width="1.8"/>
-  <polygon points="396,162 400,170 404,162" fill="#1F634D"/>
-
-  <line x1="553" y1="148" x2="553" y2="166" stroke="#1F634D" stroke-width="1.8"/>
-  <polygon points="549,162 553,170 557,162" fill="#1F634D"/>
-
-  <line x1="706" y1="148" x2="706" y2="166" stroke="#1F634D" stroke-width="1.8"/>
-  <polygon points="702,162 706,170 710,162" fill="#1F634D"/>
+  <line x1="600" y1="174" x2="600" y2="196" stroke="#1F634D" stroke-width="2"/>
+  <line x1="146" y1="196" x2="1054" y2="196" stroke="#1F634D" stroke-width="2"/>
+  <line x1="146" y1="196" x2="146.0" y2="210.0" stroke="#1F634D" stroke-width="2"/>
+  <polygon points="146.0,216.0 141.5,207.0 150.5,207.0" fill="#1F634D"/>
+  <line x1="373" y1="196" x2="373.0" y2="210.0" stroke="#1F634D" stroke-width="2"/>
+  <polygon points="373.0,216.0 368.5,207.0 377.5,207.0" fill="#1F634D"/>
+  <line x1="600" y1="196" x2="600.0" y2="210.0" stroke="#1F634D" stroke-width="2"/>
+  <polygon points="600.0,216.0 595.5,207.0 604.5,207.0" fill="#1F634D"/>
+  <line x1="827" y1="196" x2="827.0" y2="210.0" stroke="#1F634D" stroke-width="2"/>
+  <polygon points="827.0,216.0 822.5,207.0 831.5,207.0" fill="#1F634D"/>
+  <line x1="1054" y1="196" x2="1054.0" y2="210.0" stroke="#1F634D" stroke-width="2"/>
+  <polygon points="1054.0,216.0 1049.5,207.0 1058.5,207.0" fill="#1F634D"/>
 
   <!-- Tab 1: Today -->
-  <g transform="translate(25, 170)">
-    <rect width="138" height="196" rx="4" fill="#FFFFFF" stroke="#D1DCD1" stroke-width="1.2" filter="url(#shadow-feat)"/>
-    <rect width="138" height="24" rx="4" fill="#F4F2E8"/>
-    <text x="69" y="16" font-size="10" font-weight="700" fill="#2D312E" text-anchor="middle">Tab 1: Today</text>
-    <text x="8" y="42" font-size="8.4" font-weight="700" fill="#1F634D">Feature 2: Daily Plan</text>
-    <text x="8" y="57" font-size="7.8" fill="#5A655F">• Scheduled play cards</text>
-    <text x="8" y="71" font-size="7.8" fill="#5A655F">• Completion toggle</text>
-    <text x="8" y="85" font-size="7.8" fill="#5A655F">• Open-Meteo hint</text>
-    <text x="8" y="99" font-size="7.8" fill="#5A655F">• LocalDataCache read</text>
-    <text x="8" y="113" font-size="7.8" fill="#5A655F">• OfflineBanner state</text>
-    <rect x="8" y="164" width="122" height="22" rx="3" fill="#E2E8E2"/>
-    <text x="69" y="178" font-size="8.2" font-weight="500" fill="#1F634D" text-anchor="middle">lib/screens/today</text>
-  </g>
+  <rect x="40" y="220" width="212" height="226" rx="8" fill="#FAFBF9" stroke="#C5CEC9" stroke-width="2"/>
+  <path d="M 48 220 H 244 Q 252 220 252 228 V 256 H 40 V 228 Q 40 220 48 220 Z" fill="#F4F2E8"/>
+  <text x="146" y="244" font-family="Arial, Liberation Sans, sans-serif" font-size="14.5" font-weight="700" fill="#1A2B29" text-anchor="middle">1. Today</text>
+  <text x="56" y="284" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" font-weight="700" fill="#1F634D">Feature 2: Daily Plan</text>
+  <text x="56" y="314" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#5A6A64">• Today's activities</text>
+  <text x="56" y="340" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#5A6A64">• Quick filters</text>
+  <text x="56" y="366" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#5A6A64">• 1-tap complete &amp; undo</text>
+  <text x="56" y="392" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#5A6A64">• Weather play hint</text>
+  <text x="56" y="418" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#5A6A64">• Offline reading view</text>
 
-  <!-- Tab 2: Explore (Catalog + AI Idea Helper) -->
-  <g transform="translate(178, 170)">
-    <rect width="138" height="196" rx="4" fill="#FFFFFF" stroke="#1F634D" stroke-width="1.2" filter="url(#shadow-feat)"/>
-    <rect width="138" height="24" rx="4" fill="#1F634D"/>
-    <text x="69" y="16" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">Tab 2: Explore</text>
-
-    <text x="8" y="40" font-size="8.2" font-weight="700" fill="#1F634D">Feature 3: Catalog</text>
-    <text x="8" y="53" font-size="7.5" fill="#5A655F">• 4 domains &amp; filters</text>
-    <text x="8" y="65" font-size="7.5" fill="#5A655F">• Firestore rhymes &amp; books</text>
-    <text x="8" y="77" font-size="7.5" fill="#5A655F">• ActivityDetailScreen</text>
-
-    <line x1="8" y1="88" x2="130" y2="88" stroke="#E2E8E2" stroke-width="1"/>
-
-    <text x="8" y="102" font-size="8.2" font-weight="700" fill="#3B7EA1">Feature 7: AI Helper</text>
-    <text x="8" y="115" font-size="7.5" fill="#5A655F">• IdeaHelperEntryCard</text>
-    <text x="8" y="127" font-size="7.5" fill="#5A655F">• Route: /ai-suggest</text>
-    <text x="8" y="139" font-size="7.5" fill="#5A655F">• Gemini + catalog fallback</text>
-
-    <rect x="8" y="164" width="122" height="22" rx="3" fill="#E2E8E2"/>
-    <text x="69" y="178" font-size="7.8" font-weight="500" fill="#1F634D" text-anchor="middle">explore/ &amp; ai/</text>
-  </g>
+  <!-- Tab 2: Explore -->
+  <rect x="267" y="220" width="212" height="226" rx="8" fill="#FAFBF9" stroke="#1F634D" stroke-width="2"/>
+  <path d="M 275 220 H 471 Q 479 220 479 228 V 256 H 267 V 228 Q 267 220 275 220 Z" fill="#1F634D"/>
+  <text x="373" y="244" font-family="Arial, Liberation Sans, sans-serif" font-size="14.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">2. Explore</text>
+  <text x="283" y="284" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" font-weight="700" fill="#1F634D">Feature 3: Library</text>
+  <text x="283" y="310" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#5A6A64">• Reviewed play ideas</text>
+  <text x="283" y="334" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#5A6A64">• Books &amp; local rhymes</text>
+  <line x1="283" y1="350" x2="463" y2="350" stroke="#E0E5DB" stroke-width="1.2"/>
+  <text x="283" y="374" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" font-weight="700" fill="#2B6CB0">Feature 7: AI Helper</text>
+  <text x="283" y="400" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#5A6A64">• Custom Idea Helper</text>
+  <text x="283" y="424" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#5A6A64">• Activity adaptation</text>
 
   <!-- Tab 3: Milestones -->
-  <g transform="translate(331, 170)">
-    <rect width="138" height="196" rx="4" fill="#FFFFFF" stroke="#D1DCD1" stroke-width="1.2" filter="url(#shadow-feat)"/>
-    <rect width="138" height="24" rx="4" fill="#F4F2E8"/>
-    <text x="69" y="16" font-size="10" font-weight="700" fill="#2D312E" text-anchor="middle">Tab 3: Milestones</text>
-    <text x="8" y="42" font-size="8.4" font-weight="700" fill="#1F634D">Feature 4: Milestones</text>
-    <text x="8" y="57" font-size="7.8" fill="#5A655F">• Non-clinical prompts</text>
-    <text x="8" y="71" font-size="7.8" fill="#5A655F">• 4 domains · 6 age bands</text>
-    <text x="8" y="85" font-size="7.8" fill="#5A655F">• ObservationFormSheet</text>
-    <text x="8" y="99" font-size="7.8" fill="#5A655F">• Zero diagnostic scores</text>
-    <text x="8" y="113" font-size="7.8" fill="#5A655F">• API prompts &amp; dated logs</text>
-    <rect x="8" y="164" width="122" height="22" rx="3" fill="#E2E8E2"/>
-    <text x="69" y="178" font-size="8" font-weight="500" fill="#1F634D" text-anchor="middle">lib/screens/milestones</text>
-  </g>
+  <rect x="494" y="220" width="212" height="226" rx="8" fill="#FAFBF9" stroke="#C5CEC9" stroke-width="2"/>
+  <path d="M 502 220 H 698 Q 706 220 706 228 V 256 H 494 V 228 Q 494 220 502 220 Z" fill="#F4F2E8"/>
+  <text x="600" y="244" font-family="Arial, Liberation Sans, sans-serif" font-size="14.5" font-weight="700" fill="#1A2B29" text-anchor="middle">3. Milestones</text>
+  <text x="510" y="284" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" font-weight="700" fill="#1F634D">Feature 4: Prompts</text>
+  <text x="510" y="314" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#5A6A64">• Age-band play cues</text>
+  <text x="510" y="340" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#5A6A64">• Four play domains</text>
+  <text x="510" y="366" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#5A6A64">• Dated parent notes</text>
+  <text x="510" y="392" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#5A6A64">• Calm non-diagnostic</text>
+  <text x="520" y="412" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#5A6A64">framing (no scores)</text>
 
   <!-- Tab 4: Journal -->
-  <g transform="translate(484, 170)">
-    <rect width="138" height="196" rx="4" fill="#FFFFFF" stroke="#D1DCD1" stroke-width="1.2" filter="url(#shadow-feat)"/>
-    <rect width="138" height="24" rx="4" fill="#F4F2E8"/>
-    <text x="69" y="16" font-size="10" font-weight="700" fill="#2D312E" text-anchor="middle">Tab 4: Journal</text>
-    <text x="8" y="42" font-size="8.4" font-weight="700" fill="#1F634D">Feature 5: Journal</text>
-    <text x="8" y="57" font-size="7.8" fill="#5A655F">• Chronological notes</text>
-    <text x="8" y="71" font-size="7.8" fill="#5A655F">• Caregiver-scoped data</text>
-    <text x="8" y="85" font-size="7.8" fill="#5A655F">• Excluded from AI calls</text>
-    <text x="8" y="99" font-size="7.8" fill="#5A655F">• Excluded from cache</text>
-    <text x="8" y="113" font-size="7.8" fill="#5A655F">• RA 10173 privacy</text>
-    <rect x="8" y="164" width="122" height="22" rx="3" fill="#E2E8E2"/>
-    <text x="69" y="178" font-size="8.2" font-weight="500" fill="#1F634D" text-anchor="middle">lib/screens/journal</text>
-  </g>
+  <rect x="721" y="220" width="212" height="226" rx="8" fill="#FAFBF9" stroke="#C5CEC9" stroke-width="2"/>
+  <path d="M 729 220 H 925 Q 933 220 933 228 V 256 H 721 V 228 Q 721 220 729 220 Z" fill="#F4F2E8"/>
+  <text x="827" y="244" font-family="Arial, Liberation Sans, sans-serif" font-size="14.5" font-weight="700" fill="#1A2B29" text-anchor="middle">4. Journal</text>
+  <text x="737" y="284" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" font-weight="700" fill="#1F634D">Feature 5: Notes</text>
+  <text x="737" y="314" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#5A6A64">• Private caregiver notes</text>
+  <text x="737" y="340" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#5A6A64">• Filter by date</text>
+  <text x="737" y="366" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#5A6A64">• Edit or delete safely</text>
+  <text x="737" y="392" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#5A6A64">• Never shared with AI</text>
+  <text x="737" y="418" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#5A6A64">• Excluded from cache</text>
 
   <!-- Tab 5: This week -->
-  <g transform="translate(637, 170)">
-    <rect width="138" height="196" rx="4" fill="#FFFFFF" stroke="#D1DCD1" stroke-width="1.2" filter="url(#shadow-feat)"/>
-    <rect width="138" height="24" rx="4" fill="#F4F2E8"/>
-    <text x="69" y="16" font-size="10" font-weight="700" fill="#2D312E" text-anchor="middle">Tab 5: This week</text>
-    <text x="8" y="42" font-size="8.4" font-weight="700" fill="#1F634D">Feature 6: Reflection</text>
-    <text x="8" y="57" font-size="7.8" fill="#5A655F">• WeeklySummaryScreen</text>
-    <text x="8" y="71" font-size="7.8" fill="#5A655F">• Monday–Sunday picker</text>
-    <text x="8" y="85" font-size="7.8" fill="#5A655F">• Domain activity counts</text>
-    <text x="8" y="99" font-size="7.8" fill="#5A655F">• Factual reflection cards</text>
-    <text x="8" y="113" font-size="7.8" fill="#5A655F">• Supportive empty view</text>
-    <rect x="8" y="164" width="122" height="22" rx="3" fill="#E2E8E2"/>
-    <text x="69" y="178" font-size="8" font-weight="500" fill="#1F634D" text-anchor="middle">lib/screens/reflection</text>
-  </g>
+  <rect x="948" y="220" width="212" height="226" rx="8" fill="#FAFBF9" stroke="#C5CEC9" stroke-width="2"/>
+  <path d="M 956 220 H 1152 Q 1160 220 1160 228 V 256 H 948 V 228 Q 948 220 956 220 Z" fill="#F4F2E8"/>
+  <text x="1054" y="244" font-family="Arial, Liberation Sans, sans-serif" font-size="14.5" font-weight="700" fill="#1A2B29" text-anchor="middle">5. This week</text>
+  <text x="964" y="284" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" font-weight="700" fill="#1F634D">Feature 6: Reflection</text>
+  <text x="964" y="314" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#5A6A64">• Monday–Sunday view</text>
+  <text x="964" y="340" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#5A6A64">• Activities &amp; observations</text>
+  <text x="964" y="366" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#5A6A64">• Play area breakdown</text>
+  <text x="964" y="392" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#5A6A64">• Supportive weekly tip</text>
+  <text x="964" y="418" font-family="Arial, Liberation Sans, sans-serif" font-size="13" fill="#5A6A64">• No scores or streaks</text>
 </svg>

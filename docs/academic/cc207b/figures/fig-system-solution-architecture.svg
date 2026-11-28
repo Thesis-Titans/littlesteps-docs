@@ -1,117 +1,98 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="350" viewBox="0 0 800 350" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520">
   <defs>
-    <filter id="shadow-sys" x="-2%" y="-3%" width="104%" height="108%" filterUnits="userSpaceOnUse">
-      <feDropShadow dx="0" dy="1.5" stdDeviation="2.5" flood-color="#000000" flood-opacity="0.06"/>
-    </filter>
+    <marker id="arrow-forest" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="#1F634D"/>
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="#2B6CB0"/>
+    </marker>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="#7C4D8B"/>
+    </marker>
+    <marker id="arrow-terra" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="#C25525"/>
+    </marker>
   </defs>
 
-  <!-- Background -->
-  <rect width="800" height="350" fill="#FFFFFF" rx="6" stroke="#D1DCD1" stroke-width="1"/>
+  <rect width="1200" height="520" fill="#FFFFFF"/>
+  <rect x="6" y="6" width="1188" height="508" rx="14" fill="#FFFFFF" stroke="#D4DCD8" stroke-width="1.5"/>
 
-  <!-- Header -->
-  <text x="28" y="30" font-size="14.5" font-weight="700" fill="#1F634D">LittleSteps System and Solution Architecture</text>
-  <text x="28" y="46" font-size="11" fill="#5A655F">Caregiver-facing digital companion facilitating offline, screen-free physical child play</text>
-  <line x1="28" y1="56" x2="772" y2="56" stroke="#E2E8E2" stroke-width="1"/>
+  <!-- Title -->
+  <text x="40" y="44" font-family="Arial, Liberation Sans, sans-serif" font-size="22" font-weight="700" fill="#1F634D">LittleSteps Mobile System Architecture</text>
+  <text x="40" y="68" font-family="Arial, Liberation Sans, sans-serif" font-size="14" fill="#5A6A64">Connecting the Flutter mobile app with a shared backend server, reviewed activities, and cloud storage</text>
+  <line x1="40" y1="84" x2="1160" y2="84" stroke="#E0E5DB" stroke-width="1.2"/>
 
-  <!-- Node A: Caregiver Inputs -->
-  <g transform="translate(28, 68)">
-    <rect width="135" height="144" rx="5" fill="#FFFFFF" stroke="#D1DCD1" stroke-width="1.2" filter="url(#shadow-sys)"/>
-    <rect width="135" height="26" rx="5" fill="#F4F2E8"/>
-    <rect y="20" width="135" height="6" fill="#F4F2E8"/>
-    <text x="67" y="17" font-size="10.5" font-weight="700" fill="#2D312E" text-anchor="middle">Caregiver Inputs</text>
-    <text x="12" y="45" font-size="9" fill="#5A655F">• Child Age Band</text>
-    <text x="20" y="58" font-size="8" fill="#71717A">(e.g., &quot;12-23m&quot;)</text>
-    <text x="12" y="74" font-size="9" fill="#5A655F">• Available Materials</text>
-    <text x="20" y="87" font-size="8" fill="#71717A">(household recyclables)</text>
-    <text x="12" y="103" font-size="9" fill="#5A655F">• Available Time</text>
-    <text x="20" y="116" font-size="8" fill="#71717A">(5 to 120 minutes)</text>
-    <text x="12" y="132" font-size="9" fill="#5A655F">• Play Setting</text>
-  </g>
+  <!-- Column 1: Caregiver Inputs -->
+  <rect x="40" y="108" width="210" height="252" rx="10" fill="#FAFBF9" stroke="#C5CEC9" stroke-width="2"/>
+  <path d="M 50 108 H 240 Q 250 108 250 118 V 150 H 40 V 118 Q 40 108 50 108 Z" fill="#F4F2E8"/>
+  <text x="145" y="135" font-family="Arial, Liberation Sans, sans-serif" font-size="15.5" font-weight="700" fill="#1A2B29" text-anchor="middle">Caregiver Inputs</text>
+  <text x="58" y="184" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" fill="#1A2B29">• Child age group</text>
+  <text x="58" y="220" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" fill="#1A2B29">• Household items</text>
+  <text x="58" y="256" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" fill="#1A2B29">• Time available</text>
+  <text x="58" y="292" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" fill="#1A2B29">• Indoor or outdoor</text>
+  <text x="58" y="334" font-family="Arial, Liberation Sans, sans-serif" font-size="12.5" fill="#5A6A64">Privacy-first profile setup</text>
 
-  <!-- Connection A -> B -->
-  <line x1="163" y1="140" x2="183" y2="140" stroke="#1F634D" stroke-width="1.8"/>
-  <polygon points="181,136 187,140 181,144" fill="#1F634D"/>
+  <!-- Arrow 1 -> 2 -->
+  <line x1="250" y1="234" x2="282.0" y2="234.0" stroke="#1F634D" stroke-width="2.4"/>
+  <polygon points="288.0,234.0 279.0,238.5 279.0,229.5" fill="#1F634D"/>
 
-  <!-- Node B: LittleSteps Mobile Client -->
-  <g transform="translate(187, 68)">
-    <rect width="160" height="144" rx="5" fill="#FFFFFF" stroke="#1F634D" stroke-width="1.2" filter="url(#shadow-sys)"/>
-    <rect width="160" height="26" rx="5" fill="#1F634D"/>
-    <rect y="20" width="160" height="6" fill="#1F634D"/>
-    <text x="80" y="17" font-size="10.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">Mobile Client (Flutter)</text>
-    <text x="12" y="45" font-size="9" fill="#5A655F">• Material 3 UI Layer</text>
-    <text x="12" y="61" font-size="9" fill="#5A655F">• 5-Tab Shell Navigation</text>
-    <text x="12" y="77" font-size="9" fill="#5A655F">• Idea Helper Feed Card</text>
-    <text x="12" y="93" font-size="9" fill="#5A655F">• Offline Catalog Cache</text>
-    <text x="12" y="109" font-size="9" fill="#5A655F">• Canonical NoChildrenView</text>
-    <text x="12" y="130" font-size="8.5" font-weight="500" fill="#1F634D">Dart SDK ^3.13.5</text>
-  </g>
+  <!-- Column 2: Mobile App -->
+  <rect x="292" y="108" width="244" height="252" rx="10" fill="#FAFBF9" stroke="#1F634D" stroke-width="2"/>
+  <path d="M 302 108 H 526 Q 536 108 536 118 V 150 H 292 V 118 Q 292 108 302 108 Z" fill="#1F634D"/>
+  <text x="414" y="135" font-family="Arial, Liberation Sans, sans-serif" font-size="15.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">Mobile App (Flutter)</text>
+  <text x="310" y="184" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" fill="#1A2B29">• 5-tab navigation</text>
+  <text x="310" y="220" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" fill="#1A2B29">• Daily play plan</text>
+  <text x="310" y="256" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" fill="#1A2B29">• Activity &amp; book library</text>
+  <text x="310" y="292" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" fill="#1A2B29">• Offline reading support</text>
+  <text x="310" y="334" font-family="Arial, Liberation Sans, sans-serif" font-size="12.5" font-weight="700" fill="#1F634D">Dart SDK &amp; Material 3</text>
 
-  <!-- Connection B -> C -->
-  <line x1="347" y1="140" x2="368" y2="140" stroke="#1F634D" stroke-width="1.8"/>
-  <polygon points="366,136 372,140 366,144" fill="#1F634D"/>
-  <text x="359" y="132" font-size="7.5" font-weight="700" fill="#1F634D" text-anchor="middle">HTTPS</text>
+  <!-- Arrow 2 -> 3 -->
+  <line x1="536" y1="234" x2="578.0" y2="234.0" stroke="#1F634D" stroke-width="2.4"/>
+  <polygon points="584.0,234.0 575.0,238.5 575.0,229.5" fill="#1F634D"/>
+  <text x="560" y="223" font-family="Arial, Liberation Sans, sans-serif" font-size="12" font-weight="700" fill="#1F634D" text-anchor="middle">HTTPS</text>
 
-  <!-- Node C: Backend Proxy API -->
-  <g transform="translate(372, 68)">
-    <rect width="155" height="144" rx="5" fill="#FFFFFF" stroke="#1F634D" stroke-width="1.2" filter="url(#shadow-sys)"/>
-    <rect width="155" height="26" rx="5" fill="#1F634D"/>
-    <rect y="20" width="155" height="6" fill="#1F634D"/>
-    <text x="77" y="17" font-size="10.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">Backend Proxy API</text>
-    <text x="12" y="45" font-size="9" fill="#5A655F">• Node.js / Express Gateway</text>
-    <text x="12" y="61" font-size="9" fill="#5A655F">• Hourly Rate Limiting</text>
-    <text x="12" y="77" font-size="9" fill="#5A655F">• Zod Schema Validation</text>
-    <text x="12" y="93" font-size="9" fill="#5A655F">• Non-Diagnostic Denylist</text>
-    <text x="12" y="109" font-size="9" fill="#5A655F">• Zero Client Credentials</text>
-    <text x="12" y="130" font-size="8.5" font-weight="500" fill="#1F634D">littlesteps-api</text>
-  </g>
+  <!-- Column 3: Backend Server -->
+  <rect x="588" y="108" width="244" height="252" rx="10" fill="#FAFBF9" stroke="#1F634D" stroke-width="2"/>
+  <path d="M 598 108 H 822 Q 832 108 832 118 V 150 H 588 V 118 Q 588 108 598 108 Z" fill="#1F634D"/>
+  <text x="710" y="135" font-family="Arial, Liberation Sans, sans-serif" font-size="15.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">Backend Server (Express)</text>
+  <text x="606" y="184" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" fill="#1A2B29">• Sign-in verification</text>
+  <text x="606" y="220" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" fill="#1A2B29">• Input &amp; safety checks</text>
+  <text x="606" y="256" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" fill="#1A2B29">• Usage rate limits</text>
+  <text x="606" y="292" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" fill="#1A2B29">• Private API keys on server</text>
+  <text x="606" y="334" font-family="Arial, Liberation Sans, sans-serif" font-size="12.5" font-weight="700" fill="#1F634D">Node.js · Cloud Functions</text>
 
-  <!-- Connectors C -> D, E, F -->
-  <line x1="527" y1="99" x2="558" y2="89" stroke="#3B7EA1" stroke-width="1.5"/>
-  <polygon points="554,85 562,87 556,93" fill="#3B7EA1"/>
+  <!-- Arrows 3 -> 4 -->
+  <line x1="832" y1="176" x2="874.9" y2="149.2" stroke="#2B6CB0" stroke-width="2.2"/>
+  <polygon points="880.0,146.0 874.8,154.6 870.0,147.0" fill="#2B6CB0"/>
+  <line x1="832" y1="234" x2="874.0" y2="234.0" stroke="#1F634D" stroke-width="2.2"/>
+  <polygon points="880.0,234.0 871.0,238.5 871.0,229.5" fill="#1F634D"/>
+  <line x1="832" y1="292" x2="874.8" y2="317.0" stroke="#7C4D8B" stroke-width="2.2"/>
+  <polygon points="880.0,320.0 870.0,319.4 874.5,311.6" fill="#7C4D8B"/>
 
-  <line x1="527" y1="140" x2="558" y2="140" stroke="#1F634D" stroke-width="1.5"/>
-  <polygon points="556,136 562,140 556,144" fill="#1F634D"/>
+  <!-- Column 4: Services -->
+  <rect x="884" y="108" width="276" height="74" rx="8" fill="#F3F7FB" stroke="#2B6CB0" stroke-width="1.6"/>
+  <text x="902" y="136" font-family="Arial, Liberation Sans, sans-serif" font-size="14.5" font-weight="700" fill="#2B6CB0">Google Gemini AI</text>
+  <text x="902" y="160" font-family="Arial, Liberation Sans, sans-serif" font-size="12.5" fill="#1A2B29">Matches household items &amp; adapts steps</text>
 
-  <line x1="527" y1="181" x2="558" y2="191" stroke="#7A5C96" stroke-width="1.5"/>
-  <polygon points="556,187 562,193 554,195" fill="#7A5C96"/>
+  <!-- Fallback arrow -->
+  <line x1="1022" y1="182" x2="1022.0" y2="189.0" stroke="#C25525" stroke-width="1.8" stroke-dasharray="3 2"/>
+  <polygon points="1022.0,195.0 1017.5,186.0 1026.5,186.0" fill="#C25525"/>
 
-  <!-- Node D: Cloud Gemini (Tier 1) -->
-  <g transform="translate(562, 68)">
-    <rect width="210" height="42" rx="4" fill="#FFFFFF" stroke="#3B7EA1" stroke-width="1.2" filter="url(#shadow-sys)"/>
-    <text x="10" y="16" font-size="9" font-weight="700" fill="#3B7EA1">Google Gemini REST API (Tier 1)</text>
-    <text x="10" y="28" font-size="8" fill="#5A655F">Hybrid catalog ranking &amp; guarded adaptations</text>
-    <text x="10" y="38" font-size="7.5" fill="#71717A">Node 22 fetch &#8226; 3-layer guardrails &#8226; 8s cap</text>
-  </g>
+  <rect x="884" y="198" width="276" height="74" rx="8" fill="#F0F5F2" stroke="#1F634D" stroke-width="1.6"/>
+  <text x="902" y="226" font-family="Arial, Liberation Sans, sans-serif" font-size="14.5" font-weight="700" fill="#1F634D">Reviewed Activity Catalog</text>
+  <text x="902" y="250" font-family="Arial, Liberation Sans, sans-serif" font-size="12.5" fill="#1A2B29">Activities, milestones &amp; local rhymes</text>
 
-  <!-- Fallback D -> E -->
-  <line x1="667" y1="110" x2="667" y2="115" stroke="#C85A32" stroke-width="1.2" stroke-dasharray="2 2"/>
-  <polygon points="663,113 667,118 671,113" fill="#C85A32"/>
+  <rect x="884" y="286" width="276" height="74" rx="8" fill="#F7F3F9" stroke="#7C4D8B" stroke-width="1.6"/>
+  <text x="902" y="314" font-family="Arial, Liberation Sans, sans-serif" font-size="14.5" font-weight="700" fill="#7C4D8B">Cloud Firestore</text>
+  <text x="902" y="338" font-family="Arial, Liberation Sans, sans-serif" font-size="12.5" fill="#1A2B29">Private family records &amp; daily plans</text>
 
-  <!-- Node E: ECCD Activity Catalog (Tier 3) -->
-  <g transform="translate(562, 119)">
-    <rect width="210" height="42" rx="4" fill="#FFFFFF" stroke="#1F634D" stroke-width="1.2" filter="url(#shadow-sys)"/>
-    <text x="10" y="16" font-size="9" font-weight="700" fill="#1F634D">ECCD Catalog Pool (Tier 3)</text>
-    <text x="10" y="28" font-size="8" fill="#5A655F">Activities, milestones &amp; regional rhymes</text>
-    <text x="10" y="38" font-size="7.5" fill="#71717A">Firestore 5-min cache &#8226; Zero empty states</text>
-  </g>
+  <!-- Down connector to outcome -->
+  <line x1="414" y1="360" x2="414.0" y2="388.0" stroke="#1F634D" stroke-width="2.4"/>
+  <polygon points="414.0,394.0 409.5,385.0 418.5,385.0" fill="#1F634D"/>
 
-  <!-- Node F: Cloud Firestore Persistence -->
-  <g transform="translate(562, 170)">
-    <rect width="210" height="42" rx="4" fill="#FFFFFF" stroke="#7A5C96" stroke-width="1.2" filter="url(#shadow-sys)"/>
-    <text x="10" y="16" font-size="9" font-weight="700" fill="#7A5C96">Cloud Firestore Database</text>
-    <text x="10" y="28" font-size="8" fill="#5A655F">Caregiver records &amp; 3 global catalogs</text>
-    <text x="10" y="38" font-size="7.5" fill="#71717A">Isolated subcollections &#8226; RA 10173</text>
-  </g>
-
-  <!-- Terminal Outcome Box -->
-  <g transform="translate(28, 242)">
-    <rect width="744" height="74" rx="5" fill="#F4F2E8" stroke="#1F634D" stroke-width="1.2" filter="url(#shadow-sys)"/>
-    <text x="20" y="26" font-size="11.5" font-weight="700" fill="#1F634D">Target Outcome: Screen-Free Physical Play</text>
-    <text x="20" y="44" font-size="9" fill="#2D312E">Caregiver receives step-by-step guidance, puts the mobile device aside, and engages toddler in direct physical play.</text>
-    <text x="20" y="58" font-size="8.5" fill="#5A655F">Supports WHO and Philippine ECCD pediatric guidelines: active caregiver-child interaction with zero passive toddler screen time.</text>
-  </g>
-
-  <!-- Downward connector from Mobile Client to Outcome -->
-  <line x1="267" y1="212" x2="267" y2="238" stroke="#1F634D" stroke-width="1.8"/>
-  <polygon points="263,234 267,242 271,234" fill="#1F634D"/>
+  <!-- Goal Banner -->
+  <rect x="40" y="398" width="1120" height="86" rx="10" fill="#F4F2E8" stroke="#1F634D" stroke-width="1.6"/>
+  <text x="64" y="432" font-family="Arial, Liberation Sans, sans-serif" font-size="16" font-weight="700" fill="#1F634D">Goal: Calm, Screen-Free Play at Home</text>
+  <text x="64" y="458" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" fill="#1A2B29">Caregivers pick a safe activity in under a minute, set the phone aside, and play directly with their child.</text>
 </svg>

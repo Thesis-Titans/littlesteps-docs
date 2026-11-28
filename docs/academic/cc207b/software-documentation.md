@@ -5,7 +5,6 @@
 **Submitted By:** Acebuche, Nherie C.; Ardeña, Justin Ace D.; Benjamin, Mae Daniella Faith C.; Cadangin, Mark Alvin C.; Tamaño, Vincent John A. (BSIT-3A — Thesis Titans)  
 **Submitted To:** John Cristopher Mateo  
 **Base Framework:** Flutter 3.47.9 (Dart SDK `^3.13.5`)  
-**Primary Repository:** `Thesis-Titans/CC-207B_26-27_Final-Project` (`BSIT-3A/LittleSteps`)  
 **Related Specifications:** [CC 207B Final Project Requirements](CC207B_Final_Project_Requirements.md), [AI Feature Specification](ai-feature-specification.md)
 
 ---
@@ -18,28 +17,28 @@
 
 ### 2. Purpose and Target Users
 
-Parents and caregivers of children aged 0 to 5 years frequently turn to smartphones or tablets to keep toddlers occupied during household routines. Although guidance from the World Health Organization (WHO), the American Academy of Pediatrics (AAP), and the Philippine Early Childhood Care and Development (ECCD) Council advises against passive screen exposure in early childhood, busy caregivers rarely have time to look up age-appropriate, screen-free play ideas that work with ordinary household items.
+Parents and caregivers of children aged 0 to 5 years often turn to phones or tablets to keep young children busy during daily chores. Guidance from the World Health Organization (WHO), the American Academy of Pediatrics (AAP), and the Philippine Early Childhood Care and Development (ECCD) Council recommends interactive, screen-free play instead. In practice, busy adults rarely have time to look up safe, age-appropriate activities using simple items already at home.
 
-LittleSteps addresses this gap as a caregiver-facing mobile application rather than a child-facing screen game. The primary target users are parents, guardians, and household caregivers of infants, toddlers, and preschoolers (ages 0–5) across Western Visayas and broader Philippine households; community ECCD facilitators and daycare workers serve as secondary users who can recommend home-based play routines to families. Design decisions are grounded in published WHO, AAP, and Philippine ECCD early-learning frameworks and informal parent walkthrough feedback.
+LittleSteps is a mobile companion built for caregivers—not a screen game for children. Its main users are parents, guardians, and household caregivers of children aged 0 to 5 years in Western Visayas and across the Philippines, along with community ECCD workers who share home play routines with families.
 
-The application lets an adult select a short, safe, screen-free activity in under a minute and then set the device aside. It organizes daily play across four developmental domains (Cognitive, Motor, Language, and Socio-Emotional), matches available household items to reviewed activities through an AI-assisted Idea Helper, provides regional action rhymes and storybooks in English, Filipino, and Hiligaynon, and records private, non-diagnostic observations and weekly summaries.
+The app helps an adult choose a short, safe play activity in less than a minute and then set the phone aside. Activities cover four early learning areas (**Cognitive**, **Motor**, **Language**, and **Socio-Emotional**). Caregivers can match household items with help from an AI Idea Helper, browse English activities across all age bands alongside selected Filipino and Hiligaynon cultural activities and rhymes, view picture books, log private milestone notes, and read calm weekly summaries.
 
-![LittleSteps System and Solution Architecture](figures/fig-system-solution-architecture.svg)  
-*Fig. 1. LittleSteps system architecture linking the Flutter client, Node.js/Express proxy, Gemini REST API, ECCD catalog, and Cloud Firestore.*
+![LittleSteps System Architecture](figures/fig-system-solution-architecture.svg)  
+*Fig. 1. LittleSteps mobile system architecture linking the Flutter app, Express backend server, AI selection, activity catalog, and Cloud Firestore.*
 
 ### 3. Technology Stack
 
 *Table 1. System Technology Stack and Versions*
 
-| Layer | Technology | Version | Architectural Role |
+| Layer | Technology | Version | Role |
 |---|---|---|---|
-| Client Framework | Flutter SDK | `3.47.9` (stable) | Cross-platform Material 3 client targeting Android, iOS, and Web |
-| Client Language | Dart SDK | `^3.13.5` (tested `3.13.7`) | Null-safe application logic, data models, UI components, and automated unit/widget test suites (`flutter test`) |
-| Client State | Built-in Flutter state (`StatefulWidget`, `ChangeNotifier`, `InheritedWidget`) | Flutter SDK built-in | Lightweight reactive session and active-child state management without external state libraries |
-| Backend Proxy API | Node.js / Express / TypeScript / Zod | Node `22`, Express `^5.1.0`, TS `^5.9.2`, Zod `^4.1.0` | Shared Firebase Cloud Functions gateway (`firebase-functions ^6.4.0`) enforcing authentication, CORS, hourly rate limits, and schema validation |
-| Database & Auth | Firebase Auth & Cloud Firestore | `firebase-admin ^13.5.0` | Caregiver authentication, user-isolated cloud storage (profiles, plans, milestones, journals, saved books), and global catalog collections (`catalog_activities`, `catalog_milestones`, `catalog_rhymes`) |
-| AI Service | Google Gemini REST API (`v1beta`) | Server-pinned via `GEMINI_MODEL` (e.g., `gemini-3.5-flash-lite`; avoids floating `-latest` aliases in production) | Server-side JSON play selection, book companions, and activity adaptations called via Node 22 `fetch` |
-| Weather Service | Open-Meteo Forecast API | REST v1 | Optional indoor/outdoor play guidance using coordinates rounded to 2 decimal places (~1.1 km) |
+| Mobile Framework | Flutter SDK | `3.47.9` | Cross-platform Material 3 user interface |
+| App Language | Dart SDK | `^3.13.5` | Null-safe models, services, validation, and screens |
+| State Management | Flutter built-in state | SDK built-in | Manages sign-in state and the selected child profile |
+| Backend Server | Node.js & Express | Node `22`, Express `^5.1.0` | Shared API gateway enforcing sign-in checks, rate limits, and input validation |
+| Database & Auth | Firebase Auth & Cloud Firestore | `firebase-admin ^13.5.0` | Caregiver accounts, private family records, and shared activity catalogs |
+| AI Service | Google Gemini REST API | Server-configured model | Picks reviewed activities, adapts steps, and suggests safe household play |
+| Weather Service | Open-Meteo API | REST v1 | Optional indoor or outdoor play hint using coarse city coordinates |
 
 ---
 
@@ -47,101 +46,95 @@ The application lets an adult select a short, safe, screen-free activity in unde
 
 ### 1. Libraries and Packages Used
 
-The Flutter application keeps third-party dependencies to six runtime packages to preserve compact build sizes and clear maintainability.
+The mobile app uses six runtime packages to stay lightweight, responsive, and easy to maintain.
 
 ![Flutter Client Package Dependencies](figures/fig-client-package-dependencies.svg)  
-*Fig. 2. Flutter client package dependencies declared in `pubspec.yaml`.*
+*Fig. 2. Flutter runtime packages used in the LittleSteps mobile app.*
 
 *Table 2. Flutter Packages and Purpose*
 
-| Package | Version | Scope | Purpose |
-|---|---|---|---|
-| `flutter` (`material.dart`) | SDK `3.47.9` | Core SDK | Material 3 layout, navigation bar, forms, cards, chips, and accessibility semantics |
-| `http` | `^1.6.0` | Runtime | Authenticated JSON REST requests, Firebase bearer-token headers, and 10-second timeouts (`AppMotion.apiRequestTimeout`) |
-| `intl` | `^0.20.3` | Runtime | Formatting observation dates, journal dates, and Monday–Sunday weekly summary date ranges |
-| `flutter_svg` | `^2.5.0` | Runtime | Rendering scalable SVG brand marks, wordmarks, and parent-child onboarding artwork |
-| `share_plus` | `^13.3.1` | Runtime | Opening the native share sheet for caregiver account data export |
-| `url_launcher` | `^6.3.3` | Runtime | Opening verified external citation portals (ECCD Council, DepEd MATATAG, WHO, CDC, AAP, Open-Meteo) in the system browser |
-| `cupertino_icons` | `^1.0.8` | Runtime | Standard iOS/Cupertino icon glyphs complementing Material icons |
-| `flutter_lints` | `^6.0.0` | Dev | Strict Effective Dart static analysis (`public_member_api_docs`, `comment_references`, `directives_ordering`) verified via `flutter analyze --fatal-infos` (0 issues) |
-| `flutter_test` | SDK | Dev | Automated unit and widget test runner covering models, utilities, services, offline states, and screens (`flutter test`) |
+| Package | Version | Purpose |
+|---|---|---|
+| `flutter` (`material.dart`) | SDK `3.47.9` | Core Material 3 widgets, navigation bar, cards, forms, and accessibility |
+| `http` | `^1.6.0` | Sends authenticated JSON requests to the backend server with 10-second timeouts |
+| `intl` | `^0.20.3` | Formats milestone dates, journal dates, and Monday–Sunday weekly date ranges |
+| `flutter_svg` | `^2.5.0` | Displays crisp SVG brand logos and caregiver-child illustrations |
+| `share_plus` | `^13.3.1` | Opens the phone's share sheet when exporting caregiver data from Settings |
+| `url_launcher` | `^6.3.3` | Opens trusted ECCD, DepEd, WHO, CDC, AAP, and Open Library references in the browser |
+| `cupertino_icons` | `^1.0.8` | Standard iOS icon glyphs complementing Material icons |
 
 ### 2. Low- and High-Fidelity Prototypes
 
-The interface progressed from low-fidelity Figma wireframes prioritizing one-handed ergonomics to high-fidelity Material 3 screens. Colors, spacing, corner radii, and touch-target dimensions are managed through a shared design token system (Table 3).
+Screens evolved from early wireframes focused on comfortable one-handed mobile use into high-fidelity Material 3 screens. Colors, spacing, rounded corners, and 48 dp touch targets are shared across the app (Table 3).
 
 | Low-Fidelity Wireframe | High-Fidelity Prototype |
 |:---:|:---:|
 | ![Low-Fidelity Add Child Wireframe](figures/low-fi-add-child.png) | ![High-Fidelity Child Profile](figures/hi-fi-children.png) |
 | ![Low-Fidelity Today Dashboard](figures/low-fi-today.png) | ![High-Fidelity Today Screen](figures/hi-fi-today.png) |
 
-*Fig. 3. Low-fidelity wireframes to high-fidelity prototypes for child onboarding and the Today dashboard.*
+*Fig. 3. Early wireframes alongside final screens for child onboarding and the Today dashboard.*
 
 *Table 3. Visual Design System Tokens*
 
-| Design Category | Primary Values | Purpose |
+| Category | Key Values | Purpose |
 |---|---|---|
-| Brand & Surfaces | Forest green `#1F634D`, warm cream `#F4F2E8`, canvas `#F7F7ED`, white card `#FFFFFF`, soft green `#E0F2E5` | Primary actions, low-glare caregiver reading canvas, cards, and completion highlights |
-| Status & Accents | Sage `#8DAF98`, warning orange `#EC6A2C`, error `#853029`, advisory yellow `#FAE8A8`, offline slate `#F1F5F9` | Secondary highlights, accessible error feedback, advisory notices, and offline banners |
-| Typography Ink | Primary ink `#1A2B29`, secondary `#5A6A64`, tertiary `#7E8C86` | High-contrast WCAG 2.2 AA readable body text and muted metadata labels |
-| Spacing & Targets | 4–32 dp spacing scale; 4/6/10/16/20 dp radii (`skeleton`, `badge`, `control`, `card`, `chip`, `sheet`); 48 dp minimum touch target; `AppTypography` & `AppMotion` tokens | Consistent 8pt layout rhythm, standardized motion/debounce timings, and comfortable one-handed touch targets |
+| Brand & Surfaces | Forest green `#1F634D`, warm cream `#F4F2E8`, canvas `#F7F7ED`, white `#FFFFFF`, soft green `#E0F2E5` | Primary buttons, warm low-glare reading background, and completion highlights |
+| Status & Accents | Sage `#8DAF98`, warning orange `#EC6A2C`, error `#853029`, advisory yellow `#FAE8A8`, offline `#F1F5F9` | Gentle alerts, readable error states, and clear offline banners |
+| Text Colors | Primary `#1A2B29`, secondary `#5A6A64`, muted `#7E8C86` | High-contrast text meeting WCAG AA readability standards |
+| Spacing & Targets | 4–32 dp spacing scale; 48 dp minimum button height | Clean layout rhythm and comfortable mobile tapping |
 
 ### 3. Implemented Core Features
 
-A five-member team requires at least six core user-facing features (excluding login, registration, splash, About, and Settings). LittleSteps implements seven core features organized across its five bottom navigation tabs, top-bar child profile switcher, and AI Idea Helper flow.
+LittleSteps provides seven core caregiver features across five main bottom tabs, the top-bar child profile switcher, and the Idea Helper flow (Fig. 4).
 
 ![Shell Navigation and Core Features Architecture](figures/fig-shell-features-hierarchy.svg)  
-*Fig. 4. Application navigation hierarchy mapping the five bottom tabs, child profile management, and the AI Idea Helper.*
+*Fig. 4. Five-tab navigation structure, child profile switcher, and the seven core features.*
 
-**1. Child Profile and Age-Band Management.** Caregivers register one or more children using only a nickname and one of seven canonical age bands (`0–5m`, `6–11m`, `12–23m`, `24–35m`, `36–47m`, `48–59m`, or `60–71m`, optionally derived from birth month), without providing exact birthdates, legal names, or photos. Inline form validation prevents empty or overly long nicknames and prevents duplicate submissions while saving to the cloud. Selecting a child from the top profile switcher updates all child-dependent tabs; when no child is registered yet, those tabs display a guided onboarding prompt.
+**1. Child Profile and Age-Band Management.** Caregivers add children using only a nickname and an age band (`0–5` through `60–71` months), without storing exact birthdates or photos. Form validation checks nickname length and prevents duplicate submissions. Switching the active child updates every screen across the app.
 
-**2. Today's Play Plan, Completion Tracking, and Offline Reading.** Displays the active child's scheduled activities for the current day alongside symmetric quick filters (`Under 10 mins`, `No materials needed`, `Indoor`, `Outdoor`), live Firestore milestone cues, and an optional Open-Meteo weather hint banner whose action routes directly to the AI Idea Helper with `"Where will you play?"` preselected (`Indoor`, `Outdoor`, or `Indoor or outdoor`). Caregivers can mark activities complete or undo completion with immediate feedback. Previously loaded child profiles, daily plans, saved storybooks, and public catalog datasets (`activities`, `milestones`, `rhymes`, `books`) are cached in memory for offline reading with an offline status banner, while write actions are safely disabled until connectivity returns.
+**2. Today's Play Plan and Offline Reading.** Shows the child's scheduled activities for today with quick filter chips (`Under 10 mins`, `No materials needed`, `Indoor`, `Outdoor`), age-appropriate milestone cues, and an optional weather banner that opens the Idea Helper preset to indoor or outdoor play. Caregivers can mark activities complete with an instant undo option, and previously loaded plans, activities, and books stay readable offline.
 
-**3. Early Learning Activity Catalog and Cultural Rhymes/Storybooks.** Provides a searchable, filterable library of source-checked screen-free activities, Open Library children's storybooks, and traditional Philippine action rhymes in English, Filipino, and Hiligaynon (including Western Visayas *Ili-Ili Tulog Anay*) served directly from Cloud Firestore (`catalog_activities`, `catalog_rhymes`) and the backend book proxy with zero hardcoded catalog lists in the Flutter binary. Caregivers can filter by developmental domain (Cognitive, Motor, Language, Socio-Emotional), indoor or outdoor setting, and time available, view preparation steps and safety notes, and add any activity directly to Today's play plan.
+**3. Early Learning Activity Catalog, Adaptation, and Books.** Offers searchable English activities across all seven age bands alongside selected Filipino and Hiligaynon cultural activities, Open Library storybooks, and traditional Philippine rhymes (such as *Bahay Kubo* and *Ili-Ili Tulog Anay*) loaded live from the backend. Caregivers can filter by play area, setting, or age, open an activity's detail screen to review steps and safety notes, adjust an activity (`Shorter`, `Easier`, `Extra challenge`, or `Missing a material`), or add any original or adapted idea to Today's plan.
 
-**4. Developmental Milestone Observations.** Presents age-appropriate observational prompts across six age bands (`0–11 months` through `60–71 months` DepEd MATATAG Kindergarten) loaded from Firestore (`GET /api/v1/catalog/milestones`), grouped by developmental domain, and lets caregivers log dated notes through a quick entry sheet. Every view carries an observational advisory notice and avoids clinical scores, pass/fail grades, or developmental delay labels.
+**4. Developmental Milestone Observations.** Displays everyday cues to watch for during play across early childhood age bands (`0–11` months through Kindergarten), grouped by play area. Caregivers can log simple dated notes under a clear notice stating these are personal reminders rather than medical tests or scores.
 
 ![Feature 1: Child Profile](figures/hi-fi-children.png) ![Feature 2: Today Plan](figures/hi-fi-today.png) ![Feature 3: Activity Catalog](figures/hi-fi-activities.png) ![Feature 4: Milestones](figures/hi-fi-milestones.png)  
-*Fig. 5. Core features 1–4: Child profile management, Today play plan, activity catalog, and milestone observations.*
+*Fig. 5. Core features 1–4: Child profile switcher, Today plan, Explore catalog, and Milestones.*
 
-**5. Private Caregiver Journal.** Lets caregivers record chronological reflections and play preferences in a private notebook stored in user-isolated cloud storage. Journal entries are excluded from local offline caching for privacy and are never sent to any AI service.
+**5. Private Caregiver Journal.** Lets parents record personal reflections about their child's play moments. Notes are stored strictly per account, kept out of temporary offline caches, and never sent to AI tools.
 
-**6. Weekly Reflection Summary.** Aggregates completed play activities, milestone observations, and journal entry counts across selectable Monday–Sunday weeks, presenting factual domain breakdowns and supportive empty states for quiet weeks.
+**6. Weekly Reflection Summary.** Summarizes completed activities, noticed milestones, and play areas across selectable Monday–Sunday weeks, paired with calm encouragement on quiet weeks.
 
-**7. AI-Powered Idea Helper.** Accessible from a prompt card inside the Explore tab and directly from Today's Weather Hint banner (which preselects `"Where will you play?"` for `Indoor`, `Outdoor`, or `Indoor or outdoor`), the Idea Helper collects available household materials, time window (10, 15, 30, or 45 minutes), setting, language, and age band. It displays a loading state while querying the backend AI service, presents matched reviewed activities labeled `"Suggested by AI"` (or guardrailed `"Material adaptation"` cards with safety notes when custom household items have no catalog match) alongside a non-diagnostic disclaimer, groups 30-to-45-minute requests into toddler-paced Play Blocks, provides `"Add to today's plan"`, `"Another idea"`, and `"Edit preferences"` actions, and falls back to reviewed catalog picks whenever the device is offline or the AI service is unavailable.
+**7. AI-Powered Idea Helper.** Available from Explore and Today's weather banner, the Idea Helper takes available household items, time (`10`, `15`, `30`, or `45` minutes), indoor/outdoor setting, and language. It groups longer `30–45` minute sessions into shorter play blocks, suggests matching reviewed ideas (`Suggested by AI`) or safe custom household ideas (`Material adaptation`), and switches to reviewed catalog picks (`Our picks`) whenever offline or when inputs look unsafe.
 
 ![Feature 5: Private Journal](figures/hi-fi-journal.png) ![Feature 6: Weekly Reflection](figures/hi-fi-this-week.png) ![Feature 7: AI Idea Helper](figures/hi-fi-ai-idea-helper.png)  
-*Fig. 6. Core features 5–7: Private caregiver journal, weekly reflection summary, and AI Idea Helper.*
+*Fig. 6. Core features 5–7: Private Journal, This Week summary, and AI Idea Helper.*
 
 ### 4. Topic Coverage Matrix
 
-*Table 4. CC 207B Topic Coverage Matrix (`BSIT-3A/LittleSteps`)*
+*Table 4. CC 207B Topic Coverage Matrix*
 
-| Course topic | Where applied (file and widget/class) | Brief description |
+| Course Topic | Where Applied (File and Class) | Brief Description |
 |---|---|---|
-| Layout widgets | `lib/screens/shell_screen.dart` — `ShellScreen`<br/>`lib/screens/shell_navigation_sidebar.dart` — `ShellNavigationSidebar`<br/>`lib/widgets/responsive_layout.dart` — `AppWindowSize`, `ResponsiveContentBox`, `AdaptiveTwoPane`<br/>`lib/widgets/horizontal_scroll_fade.dart` — `HorizontalScrollFade`<br/>`lib/screens/today/today_screen.dart` — `TodayScreen`<br/>`lib/screens/today/widgets/today_activity_card.dart` — `TodayActivityCard`<br/>`lib/screens/explore/widgets/explore_activity_card.dart` — `ExploreActivityCard`<br/>`lib/widgets/no_children_view.dart` — `NoChildrenView`<br/>`lib/widgets/brand_logo.dart` — `BrandLogo`, `GrowthSymbol`<br/>`lib/widgets/screen_header.dart` — `ScreenHeader` | Composes adaptive Material 3 layouts using `Scaffold`, `AppBar`, `LayoutBuilder`, `Column`, `Row`, `Wrap`, `ListView.builder`, `SliverGridDelegateWithMaxCrossAxisExtent`, `Card`, `Padding`, and `SafeArea` with shared spacing/breakpoint tokens and 48 dp touch targets. |
-| Navigation and routing | `lib/routing/app_router.dart` — `AppRouter`<br/>`lib/screens/shell_screen.dart` — `_ShellScreenState`<br/>`lib/widgets/account_menu_sheet.dart` — `AccountMenuSheet` | Named routing (`onGenerateRoute`) across splash, auth, `/home`, `/ai-suggest`, `/children`, `/children/add`, `/activity-detail`, and account views, paired with a 5-tab `NavigationBar` and `IndexedStack`. |
-| Forms and validation | `lib/screens/children/add_child_screen.dart` — `AddChildScreen`<br/>`lib/screens/auth/sign_in_screen.dart` — `SignInScreen`<br/>`lib/screens/auth/register_screen.dart` — `RegisterScreen`<br/>`lib/screens/milestones/observation_form_sheet.dart` — `ObservationFormSheet`<br/>`lib/screens/journal/journal_note_screen.dart` — `JournalNoteScreen`<br/>`lib/models/journal_validators.dart` — `validateJournalContent`, `validateEntryDate` | Uses `Form`, `GlobalKey<FormState>`, `TextEditingController`, `TextFormField`, and `DropdownButtonFormField` with inline validation errors, submit locking, and clear error feedback. |
-| Asynchronous operations / API calls | `lib/services/api_client.dart` — `ApiClient`<br/>`lib/services/ai_service.dart` — `AiService`<br/>`lib/services/plan_service.dart` — `PlanService`<br/>`lib/widgets/state_views.dart` — `LoadingView`, `EmptyStateView`, `ErrorView`, `InlineErrorCard`, `OfflineBanner`, `OfflineStatusCard` | Non-blocking `async`/`await` calls via `package:http` with 10-second timeouts, typed exceptions (`NoConnectionApiException`, `TimeoutApiException`, `AuthApiException`, `NotFoundApiException`, `ServerApiException`), `mounted` guards, and explicit state views. |
-| Data persistence | `lib/services/children_service.dart` — `ChildrenService`<br/>`lib/services/plan_service.dart` — `PlanService`<br/>`lib/services/milestones_service.dart` — `MilestonesService`<br/>`lib/services/journal_service.dart` — `JournalService`<br/>`lib/services/local_cache.dart` — `LocalDataCache` | Persists caregiver-scoped child profiles, plans, milestone observations, and journals to Cloud Firestore via REST API, with in-memory whitelisted read caching cleared on sign-out. |
-| AI-powered feature | `lib/screens/ai/ai_suggestions_screen.dart` — `AiSuggestionsScreen`<br/>`lib/screens/ai/widgets/ai_suggestion_card.dart` — `AiSuggestionCard`<br/>`lib/screens/ai/widgets/ai_play_block_banner.dart` — `AiPlayBlockBanner`<br/>`lib/services/ai_service.dart` — `AiService`<br/>`littlesteps-api/src/ai/` (`ai-service.ts`, `gemini.ts`, `prompt.ts`, `validate-output.ts`) | Hybrid catalog-first Idea Helper proxying requests to Google Gemini with zero client API keys, 3-layer safety and 33-term non-diagnostic validation, `"Suggested by AI"` and `"Material adaptation"` labeling, Play Blocks, and deterministic catalog fallback. |
+| Layout widgets | `lib/screens/shell_screen.dart` — `ShellScreen`<br/>`lib/widgets/responsive_layout.dart` — `ResponsiveContentBox`, `AdaptiveTwoPane`<br/>`lib/screens/today/today_screen.dart` — `TodayScreen` | Uses `Scaffold`, `LayoutBuilder`, `Column`, `Row`, `Wrap`, `Card`, `ListView`, and `SafeArea` for phones and wide tablets with 48 dp touch targets. |
+| Navigation & routing | `lib/routing/app_router.dart` — `AppRouter`<br/>`lib/screens/shell_screen.dart` — `_ShellScreenState`<br/>`lib/screens/explore/activity_detail_screen.dart` — `ActivityDetailScreen` | Named routes connect splash, sign-in, the 5-tab home shell, child profiles, Idea Helper, activity adaptation, and account screens. |
+| Forms & validation | `lib/screens/children/add_child_screen.dart` — `AddChildScreen`<br/>`lib/screens/auth/register_screen.dart` — `RegisterScreen`<br/>`lib/screens/journal/journal_note_screen.dart` — `JournalNoteScreen` | Validates inputs with `Form`, `GlobalKey<FormState>`, inline field messages, privacy consent checks, and submit locks. |
+| Async calls & API handling | `lib/services/api_client.dart` — `ApiClient`<br/>`lib/services/ai_service.dart` — `AiService`<br/>`lib/widgets/state_views.dart` — `LoadingView`, `EmptyStateView`, `InlineErrorCard`, `OfflineBanner` | Executes non-blocking REST calls over `http` with 10-second timeouts, typed error handling, and clear loading, empty, error, and offline views. |
+| Data persistence | `lib/services/children_service.dart` — `ChildrenService`<br/>`lib/services/plan_service.dart` — `PlanService`<br/>`lib/services/local_cache.dart` — `LocalDataCache` | Saves caregiver records to Cloud Firestore via the backend API and keeps session-scoped read caches cleared on sign-out. |
+| AI-powered feature | `lib/screens/ai/ai_suggestions_screen.dart` — `AiSuggestionsScreen`<br/>`lib/screens/explore/activity_detail_screen.dart` — `ActivityDetailScreen`<br/>`lib/services/ai_service.dart` — `AiService` | Connects Idea Helper, storybook play ideas, and single-activity adaptations to Google Gemini via the backend with clear labels and automatic catalog fallback. |
 
-**Code Organization & Standards (Technical Requirement f).** The Flutter codebase under `BSIT-3A/LittleSteps/lib/` is organized strictly by architectural layer: `config/` (`AppConfig` with release-build HTTPS enforcement and centralized `AppLinks`/`ProvenanceLinkInfo`), `theme/` (`AppColors`, `AppSpacing`, `AppRadius`, `AppSizes`, `AppTypography`, `AppMotion`, and Material 3 `AppTheme`), `models/` (`@immutable` data models and validators with uniform `fromJson`/`toJson`), `services/` (API, auth, and caching services), `utils/` (`accessibility.dart`, `date_formatting.dart`, `domain_labels.dart`, `plan_errors.dart`, `url_helper.dart`), `routing/` (`AppRoutes`, `AppRouter`), `widgets/` (shared `AuthScope`, `AdvisoryBanner`, `StateViews`, `BrandLogo`, `BookCard`, `ChildChip`, `ChildAgeHeader`, `ScreenHeader`, `NoChildrenView`, `AccountMenuSheet`, `WeatherHintBanner`, `HorizontalScrollFade`, and adaptive layout primitives `AppWindowSize`, `ResponsiveContentBox`, `AdaptiveTwoPane`), and `screens/` where all five primary tabs (`today/`, `explore/`, `milestones/`, `journal/`, `reflection/`) and `ai/` extract reusable presentation components into dedicated `widgets/` subfolders. Every public declaration carries Effective Dart `///` API documentation enforced by `public_member_api_docs: true` (`flutter analyze --fatal-infos`, 0 issues), backed by automated Flutter unit/widget tests (`flutter test`) and backend API/OpenAPI contract tests (`npm test`).
+**Code Organization & Standards.** The mobile codebase is organized cleanly by responsibility: `config/` (app configuration and reference URLs), `theme/` (colors, spacing, radii, and Material 3 theme tokens), `models/` (immutable data models and validators), `services/` (REST API and caching services), `utils/` (date, domain, material, and accessibility helpers), `routing/`, `widgets/` (shared banners, state cards, responsive wrappers), and feature subfolders under `screens/`. All public classes and methods carry Effective Dart `///` doc comments.
 
 ### 5. AI Feature Specification
 
-*Full schemas, sample JSON payloads, and evaluation tables appear in [ai-feature-specification.md](ai-feature-specification.md).*
+*Full request schemas, prompts, safety rules, and sample outputs are detailed in [ai-feature-specification.md](ai-feature-specification.md).*
 
 ![AI Selection Pipeline and Fallback Architecture](figures/fig-ai-pipeline-fallback.svg)  
-*Fig. 7. AI selection pipeline, output validation, and deterministic fallback architecture.*
+*Fig. 7. How the mobile app connects to Google Gemini through the backend safety checks and falls back to reviewed activities.*
 
-LittleSteps implements a hybrid **catalog-first + guardrailed AI generation** pipeline rather than an open-ended chatbot. All AI requests travel from the Flutter client through the shared Node.js/Express backend proxy on Firebase Cloud Functions to the Google Gemini REST API (`v1beta`) using Node 22's built-in `fetch`—no third-party Gemini SDK package is used, and the API key never enters the mobile binary or repository. The active model is configured dynamically on the server via `GEMINI_MODEL` and pinned to an explicit stable version (e.g., `gemini-3.5-flash-lite`) rather than a floating `-latest` alias or client-supplied parameter to prevent unexpected schema drift in production. Payloads are validated with `zod` (`^4.1.0`), and the Flutter client communicates via `package:http` (`^1.6.0`) using Firebase Auth bearer tokens across three backend endpoints (`/api/v1/ai/recommendations`, `/api/v1/ai/story-activity`, and `/api/v1/ai/adapt`).
+LittleSteps uses a **catalog-first AI approach** rather than an open chat window. The mobile app sends caregiver selections (age band, indoor/outdoor space, minutes available, language, and optional household items) to the shared Node.js/Express backend server, which calls the Google Gemini API. No AI keys are ever stored in the mobile app.
 
-Strict input validation accepts only non-identifying fields—age band, indoor or outdoor setting, duration (5–120 minutes), up to 10 household materials (max 40 characters each), language (`en`, `fil`, `hil`), optional domain, suggestion count (1–3), and optional `allowCustom` flag—rejecting extra or personal fields with HTTP `400`. When reviewed catalog activities match the caregiver's materials, Gemini ranks and explains those reviewed IDs (`source: "ai"`, `reviewed: true`). When materials have zero catalog overlap, a **3-layer defense-in-depth** pipeline applies: Layer 1 (`sanitize.ts`) blocks extreme dangers (`bleach`, `knife`, `fire`, `medicine`) while letting typos and Filipino/Hiligaynon terms reach Gemini; Layer 2 (`prompt.ts` & `gemini.ts`) requires Gemini to normalize and evaluate every item in `materialAssessments` under pediatric safety principles before generating a `"Material adaptation"` card (`source: "ai_custom"`, `reviewed: false`, zero fabricated citations, plus a calm `materialNote` derived from actual card materials); and Layer 3 (`validate-output.ts`) deterministically checks the normalized output and fails closed to Tier 3 catalog fallback on any hazard or diagnostic slip.
-
-Every model reply passes schema validation, candidate-ID verification, HTML/URL stripping, and a 33-term English and Filipino non-diagnostic wording filter before reaching the client. Tier 1 responses carry `source: "ai"`, a `"Suggested by AI"` badge, and the standard observational disclaimer; Tier 3 fallback responses carry `source: "catalog_fallback"` and `"Catalog picks · not AI"` (with zero AI labels and a `"Using our activity list"` banner). Runtime safeguards enforce an 8,000 ms timeout, a 64 KB response byte cap, a circuit breaker (opening for 60 s after 3 consecutive failures), and hourly rate limits (10 requests per user in Firestore and 30 per IP, returning HTTP `429` with a wait notice alongside non-AI catalog picks). Any timeout, service error, open circuit, or validation rejection automatically falls back to deterministic reviewed catalog ranking (or rule-based adaptation on `/api/v1/ai/adapt`), and if no catalog items can be loaded offline, the mobile app renders a clear empty recovery card rather than blank space.
-
-Static database filters match structured fields well but struggle with informal household item descriptions (*"empty delivery box, clean sock"*). Constraining Gemini to catalog-grounded selection provides semantic matching without the clinical hallucination risks of an open chatbot. Under the Philippine Data Privacy Act of 2012 (RA 10173), child profiles store only a nickname and age band, prompts exclude child names and caregiver IDs, private journals are never read by AI endpoints, weather coordinates are rounded to ~1.1 km, and caregivers can edit or override every suggestion. Automated backend CI tests across a 46-case benchmark verify 0.0% false-block rate on ordinary play (0/21) and 0.0% unsafe or clinical answer rate across medical, hazardous, prompt-injection, and off-topic probes (0/25).
+Three server-side safety checks protect families whenever household items are entered: obvious dangers (such as bleach, knives, or medicine) are rejected first, Gemini checks everyday items for toddler safety before creating a `"Material adaptation"` card, and a final filter blocks unsafe items or diagnostic/medical wording. If the network is offline, slow, or blocked by a safety check, the app automatically falls back to reviewed catalog activities labeled `"Our picks"` (or rule-based tweaks when adjusting an individual activity). Under the Philippine Data Privacy Act (RA 10173), child names, caregiver IDs, and private journal notes are never sent to AI services.
 
 ---
 
@@ -149,7 +142,10 @@ Static database filters match structured fields well but struggle with informal 
 
 ### 1. Known Limitations
 
-Four technical constraints remain in the current release. First, offline read caching is retained in memory only for the active session rather than persisting to device storage across full app restarts, and offline writes remain disabled (`"Reconnect to save changes"`). Second, live Gemini material matching requires network connectivity to the backend API, although cached catalog browsing and fallback picks work offline. Third, regional Philippine action rhymes display text lyrics and parent hand-motion guides without audio recordings, and caregiver journals omit photo attachments to keep storage and rural mobile data consumption low. Fourth, the non-diagnostic wording filter covers 27 English and 6 Filipino clinical terms; Hiligaynon terms still require native-speaker review.
+- **Session-only offline reading:** Cached activities, plans, and books stay available during temporary signal drops, but edits wait until connectivity returns and caches reset when the app closes.
+- **Internet required for live AI:** Custom household item ideas and activity tweaks need an active connection; offline users receive reviewed backup picks from the local session cache instead.
+- **Regional language scope:** The Idea Helper recognizes Filipino and Hiligaynon household item words and replies in the selected language (`English`, `Filipino`, or `Hiligaynon`). While English catalog activities cover all seven age bands, dedicated reviewed Filipino and Hiligaynon activities do not yet span every age band, so catalog fallback automatically falls back to age-matched reviewed activities when a regional age band has no dedicated entry.
+- **Text-only rhymes and notes:** Traditional Philippine rhymes include lyrics and movement guides without audio files, and journals focus on text notes to keep mobile data usage low.
 
 ### 2. Planned Features and Improvements
 
@@ -157,35 +153,35 @@ Four technical constraints remain in the current release. First, offline read ca
 
 | Phase | Planned Improvement | Benefit to Caregivers |
 |---|---|---|
-| Phase 2 (Q1 2027) | Persistent on-device storage (SQLite / Drift) with queued offline plan sync | Retains cached plans across restarts and syncs completed activities automatically upon reconnection |
-| Phase 2 (Q1 2027) | Native Hiligaynon and Tagalog audio tracks for action rhymes | Allows caregivers to hear traditional melodies while playing hands-free |
-| Phase 2 (Q1 2027) | Printable PDF summary export from weekly reflections | Extends native sharing so caregivers can optionally share non-diagnostic play summaries |
-| Phase 3 (Q2 2027) | Hiligaynon wording filter review and expanded Western Visayas activity pool | Broadens regional language safety containment and local activity coverage |
-| Phase 3 (Q2 2027) | Multi-caregiver household access | Shares daily play routines across parents and guardians while keeping personal journals isolated |
+| Phase 2 | On-device persistent storage with offline edit sync | Saves plans and notes locally and syncs automatically once back online |
+| Phase 2 | Audio recordings for Filipino and Hiligaynon rhymes | Lets caregivers listen and sing along hands-free |
+| Phase 2 | Printable PDF weekly reflection export | Makes sharing non-diagnostic play logs with family members easy |
+| Phase 3 | Expanded Filipino & Hiligaynon activity catalog across all age bands | Ensures dedicated regional activities match every age group without English fallback |
+| Phase 3 | Shared household access for co-parents | Coordinates daily play schedules while keeping private journals separate |
 
 ---
 
 ## iv. AI Usage Log (Appendix)
 
-*Records Generative AI use under the CC 207B AI Use Policy. Verified rows are synchronized with `BSIT-3A/LittleSteps/docs/ai-usage-log.md` and the group Software Documentation.*
+*Records Generative AI use under the CC 207B AI Use Policy.*
 
 *Table 6. AI Usage Log*
 
 | Member | Date | AI tool | What it was used for / prompt summary | What was generated | What the member changed |
 |---|---|---|---|---|---|
-| Tamaño, Vincent John A. | 2026-11-20 | Antigravity (Gemini 3.8 Flash) | Sample data & testing: Generate synthetic milestone observation prompts for 4 ECCD domains (12–23m) and automated test assertion loop for banned clinical words (#6) | 4 `MilestonePrompt` objects with non-diagnostic provenance label; `testWidgets` loop checking banned words list | Reviewed wording against non-diagnostic requirements; integrated prompts and enum into `lib/models/milestone.dart`; built `MilestonesScreen` and verified test execution |
-| Ardeña, Justin Ace D. | 2026-11-20 | Antigravity (Gemini 3.8 Flash) | Environment setup, Git synchronization, and troubleshooting local Firebase emulator & Flutter Web startup | Terminal commands, emulator configuration steps, and environment scripts for running Flutter Web with local Firebase emulators | Resolved merge conflicts, configured local emulator ports, executed `flutter run -d chrome`, and validated web build |
-| Benjamin, Mae Daniella Faith C. | 2026-11-21 | Antigravity (Gemini 3.8 Flash) | Structure hooks, callbacks, and fallback states to connect with pending sign-in (#1) and shared app state (#13) | Constructor parameters and callback interfaces on `ShellScreen`, `AccountMenuSheet`, and `SettingsScreen`, plus unauthenticated fallback messages | Designed decoupling architecture so account screens function independently before #1 and #13 landed; verified snackbars and empty states in browser |
-| Cadangin, Mark Alvin C. | 2026-11-23 | Antigravity (Gemini 3.8 Flash) | Testing: Widget test assertions for shell child onboarding state and about screen sources | Widget test cases for `NoChildrenView` rendering on shell tabs and about page source citations | Added test cases to `test/widget_test.dart` and `test/account_screens_test.dart`; verified navigation flow in browser |
-| Cadangin, Mark Alvin C. | 2026-11-23 | Antigravity (Gemini 4 Neon) | Theme contrast sync: Align `AppColors.textSecondary` to `#5A6A64` for WCAG 2.2 AA compliance across surfaces (ref Issue #10 / React PR #65) | Updated `AppColors.textSecondary` hex constant in `lib/theme/app_tokens.dart` from `0xFF63756E` to `0xFF5A6A64` | Verified contrast sync against `DESIGN.md` and ran `flutter analyze` and `flutter test` |
-| Tamaño, Vincent John A. | 2026-11-23 | Antigravity (Gemini 3.8 Flash) | UI layout scaffolding & test fixtures for Weekly Summary reflection (#8) | Initial `WeeklySummaryScreen` layout structure, Monday–Sunday picker scaffold, and sample data fixtures | Reviewed and styled UI with design tokens, wired domain breakdown cards, integrated with Shell navigation, and verified non-diagnostic copy |
-| Benjamin, Mae Daniella Faith C. | 2026-11-24 | OpenAI Codex | Accessibility: Make the Explore no-results state announced by screen readers when it appears; curate Philippine nursery rhymes and fallback storybook metadata (#12) | Optional live-region announcement for empty state; 5 Philippine rhymes with domain mappings and fallback book definitions | Integrated into Explore and Read & Sing Together shelf with `toActivity` conversion; tested shelf switcher, keyboard focus, and plan integration |
-| Acebuche, Nherie C. | 2026-11-24 | Claude Code (Claude Opus 5.5) | Issue #3 child profiles & Issue #7 private observation journal: validators, search/date filters, and widget tests | Form validators, journal list states, edit/delete confirmation, and widget tests in `test/journal_screen_test.dart` | Planned each step, reviewed every change, and verified `flutter analyze` and `flutter test` |
-| Tamaño, Vincent John A. | 2026-11-24 | Antigravity (Gemini 3.8 Flash) | Weekly summary live sync & ISO-8601 math fix (#8), CI formatting (#10), and Track D QA testing (#38) | ISO-8601 week helper, DB past-weeks query, Express CORS regex, `dart format` cleanup, and TC-16–TC-21 test verification report | Fixed W48 calculation bug, wired Explore navigation, validated tests across Child Profiles/Journal, and confirmed 0 log leakage (RA 10173) |
-| Ardeña, Justin Ace D. | 2026-11-24 | Antigravity (Gemini 3.8 Flash) | Track B QA cross-testing (TC-06 to TC-10: Explore catalog, Bookshelf, Weather settings, Account citations, and Auth session reset); edge-case code inspection and test automation | Comprehensive automated widget test suite in `test/track_b_qa_test.dart` covering TC-06 to TC-10, narrow viewport (`360x800`) checks, and QA bug-bash report template | Ran and verified automated tests in `flutter test`, performed manual browser validation on mobile viewports (`393x852` & `360x800`), and submitted the Track B QA report |
-| Cadangin, Mark Alvin C. | 2026-11-25 | Antigravity (Gemini 4 Neon) | Bug fixes, weather hint UX, hybrid AI helper updates, and adaptive sign-in polish (PRs #42–#51) | Draft fixes for child-switch refresh on Today and This week, AI fallback and material adaptation cards, weather filter wiring, adaptive sign-in layout, and widget tests | Reviewed and edited the diffs, tested flows on an Android phone including 200% text scaling, and verified `flutter analyze` and `flutter test` |
-| Ardeña, Justin Ace D. | 2026-11-25 | Antigravity (Gemini 4 Argon) | AI suggestion helper verification (ADR-008), offline connectivity debugging on child profile creation, Google Gemini API key integration, and CRUD/database architecture review | Diagnostics for 3-tier safe fallback, Gemini API integration scripts for `littlesteps-api`, CORS configurations, and architectural breakdown of Firestore schemas | Verified live AI generation on story activities, tested emulator endpoints, and prepared architectural defense for professor presentation |
-| Cadangin, Mark Alvin C. | 2026-11-27 | Antigravity (Gemini 4 Neon) | Codebase cleanup, widget extraction, adaptive layouts, and Firestore catalog migration (PR #52) | Refactored sub-widgets across the main tabs and AI screen, shared layout and utility helpers, API-backed catalog loaders, and doc comments | Planned the refactor steps, removed hardcoded catalog data in favor of live API endpoints, reviewed all changes, ran `dart format`, `flutter analyze`, and `flutter test`, and rebuilt the release APK |
+| Tamaño, Vincent John A. | 2026-11-20 | Antigravity (Gemini 3.8 Flash) | Sample data & testing: Generate sample milestone observation prompts for 4 ECCD domains (12–23m) and an automated check for clinical words | 4 `MilestonePrompt` objects with non-diagnostic labels and a widget check for clinical terms | Reviewed wording against non-diagnostic guidelines, integrated prompts into `MilestonePrompt`, and built `MilestonesScreen` |
+| Ardeña, Justin Ace D. | 2026-11-20 | Antigravity (Gemini 3.8 Flash) | Environment setup, Git synchronization, and running Flutter Web alongside local Firebase emulators | Terminal commands and emulator configuration steps | Resolved merge conflicts, configured emulator ports, and validated the local web build |
+| Benjamin, Mae Daniella Faith C. | 2026-11-21 | Antigravity (Gemini 3.8 Flash) | Decoupling hooks, callbacks, and fallback states between account screens and shared app state | Constructor callbacks and unauthenticated fallback messages on account and settings screens | Designed clean callbacks so account views work independently and verified notices in the browser |
+| Cadangin, Mark Alvin C. | 2026-11-23 | Antigravity (Gemini 3.8 Flash) | Testing: Widget assertions for empty child onboarding state and About page source citations | Widget test cases for `NoChildrenView` and citation links | Integrated tests into `widget_test.dart` and `account_screens_test.dart` and checked flows in the browser |
+| Cadangin, Mark Alvin C. | 2026-11-23 | Antigravity (Gemini 4 Neon) | Theme contrast sync: Align secondary text color to `#5A6A64` for WCAG AA compliance | Updated `AppColors.textSecondary` constant in `app_tokens.dart` | Verified contrast compliance and ran static analysis and widget tests |
+| Tamaño, Vincent John A. | 2026-11-23 | Antigravity (Gemini 3.8 Flash) | UI layout scaffolding and sample fixtures for the Weekly Summary screen | Initial layout structure for `WeeklySummaryScreen` and Monday–Sunday week picker | Styled the UI with design tokens, wired domain breakdown cards, and verified calm non-diagnostic wording |
+| Benjamin, Mae Daniella Faith C. | 2026-11-24 | OpenAI Codex | Screen-reader announcements on Explore and curation of Philippine nursery rhymes and fallback book items | Live-region empty state announcement and five traditional rhymes with action cues | Integrated rhymes and Read & Sing Together shelf into Explore and verified plan scheduling |
+| Acebuche, Nherie C. | 2026-11-24 | Claude Code (Claude Opus 5.5) | Child profile validators, date filtering, edit/delete confirmation, and journal widget tests | Form validation helpers, journal filter controls, and widget tests | Planned each step, reviewed every diff, and verified analyzer and test checks |
+| Tamaño, Vincent John A. | 2026-11-24 | Antigravity (Gemini 3.8 Flash) | ISO-8601 week calculation fix, past-week history query, CORS localhost matching, and QA verification | True week-start calculation for Monday–Sunday boundaries and formatting cleanup | Fixed off-by-one week mapping, verified multi-week summaries, and confirmed zero private journal leakage |
+| Ardeña, Justin Ace D. | 2026-11-24 | Antigravity (Gemini 3.8 Flash) | Cross-feature QA checks across Explore catalog, Bookshelf, Weather settings, citations, and auth reset | Automated widget checks for narrow phone viewports (`360x800`) | Verified mobile viewports manually and compiled QA findings |
+| Cadangin, Mark Alvin C. | 2026-11-25 | Antigravity (Gemini 4 Neon) | Child-switch refresh fixes on Today and This Week, weather hint routing, and adaptive sign-in polish | Draft state-reset fixes on child switching and weather-to-AI setting preselection | Edited diffs directly, tested on an Android phone at 200% text scaling, and ran analyzer and test suites |
+| Ardeña, Justin Ace D. | 2026-11-25 | Antigravity (Gemini 4 Argon) | AI fallback verification, offline handling during child creation, Gemini setup, and Firestore review | Diagnostic scripts for fallback verification and CORS configuration review | Verified live AI story companions, checked emulator endpoints, and prepared architecture walkthrough notes |
+| Cadangin, Mark Alvin C. | 2026-11-27 | Antigravity (Gemini 4 Neon) | Codebase modularization, adaptive layout helpers, API-backed catalogs, and documentation comments | Extracted sub-widgets across main tabs, shared responsive layout helpers, and Dart doc comments | Removed hardcoded catalog lists in favor of live API endpoints, verified checks, and rebuilt the release APK |
 
 ---
 

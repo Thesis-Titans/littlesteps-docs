@@ -3,50 +3,46 @@
 **Course:** CC 207B — Applications Development and Emerging Technologies  
 **Institution:** West Visayas State University — College of Information and Communications Technology  
 **Group:** BSIT-3A — Thesis Titans  
-**Component:** Functional Requirements (§ 2.a.ii.5)  
-**References:** [CC 207B Final Project Requirements](CC207B_Final_Project_Requirements.md), [Software Documentation](software-documentation.md), [API Reference](../../api-reference.md)
+**References:** [CC 207B Final Project Requirements](CC207B_Final_Project_Requirements.md), [Software Documentation](software-documentation.md)
 
 ---
 
 ## Overview
 
-LittleSteps includes a user-facing Artificial Intelligence feature called the **Idea Helper**. It helps parents and caregivers of children aged 0 to 5 years choose screen-free play activities using household items, available time, and indoor or outdoor conditions on hand.
+LittleSteps includes an AI-assisted feature called the **Idea Helper**. It helps parents and caregivers of children aged 0 to 5 years choose quick, screen-free activities based on their child's age, available time, indoor or outdoor space, and everyday items at home.
 
-Rather than offering an open-ended chatbot, LittleSteps uses a **hybrid catalog-first + 3-layer defense-in-depth AI generation** pipeline. First, the server matches reviewed early-learning activities by age, setting, and household materials and asks Google Gemini to select and briefly explain up to three suitable catalog activities (`source: "ai"`, `reviewed: true`). When a caregiver enters household materials that do not appear in the reviewed catalog (including typos like `shampo` or Filipino/Hiligaynon terms like `sabon`), three guardrail layers protect the child: (1) a thin input gate in `sanitize.ts` blocks extreme dangers (`bleach`, `knife`, `fire`, `medicine`) and prompt probes while letting everyday items, typos, and regional words pass through; (2) Gemini evaluates every item in a structured `materialAssessments` array *before* generating suggestions using pediatric safety principles (`source: "ai_custom"`, `reviewed: false`, labeled `"Material adaptation"` with zero fabricated citations and a pluralized `materialNote` derived from the cards' actual `usedMaterials`); and (3) a deterministic post-generation validator (`validate-output.ts`) checks Gemini's normalized output against hazard and non-diagnostic denylists, failing closed to Tier 3 catalog fallback if any slip occurs or all materials are unsafe.
+Instead of an open chatbot, LittleSteps uses a **catalog-first design with three safety checks**. Whenever household items match reviewed activities in the library, Google Gemini ranks those reviewed activities and explains briefly why they fit (`Suggested by AI`). When a caregiver enters household items not yet in the library (such as a cardboard box, plastic cups, or local Filipino/Hiligaynon terms), Gemini checks item safety first and creates a custom suggestion (`Material adaptation`) paired with supervision tips. If any check fails or the internet drops, the app falls back automatically to reviewed activities (`Our picks`).
 
 ---
 
 ## 1. AI Service, Model, and Packages Used
 
-All AI requests pass through the shared backend proxy running on Node.js 22 and Express 5.1.0 on Firebase Cloud Functions. Neither the Flutter app nor the companion web client calls Gemini directly or holds API credentials.
+All AI requests go through the shared Node.js and Express backend running on Firebase Cloud Functions. Neither the Flutter mobile app nor the React web app calls Gemini directly or stores an API key.
 
 ![AI Selection Pipeline and Fallback Architecture](figures/fig-ai-pipeline-fallback.svg)  
-*Fig. 1. AI selection pipeline, output validation, and deterministic fallback architecture.*
+*Fig. 1. How caregiver requests move through backend safety checks to Google Gemini and fall back to reviewed activities.*
 
-The backend invokes the Google Gemini REST API (`v1beta` `generateContent` endpoint) directly using Node.js 22's built-in `fetch` API—no third-party Gemini SDK package is required. The active model is configured dynamically on the server via the environment variable `GEMINI_MODEL` and pinned to an explicit stable model identifier (for example, `gemini-3.5-flash-lite`) rather than a floating `-latest` alias or client-chosen parameter, preventing silent schema or output drift in production. `GEMINI_API_KEY` is passed strictly in the `x-goog-api-key` request header. If either variable is unset, the server skips cloud inference and serves the deterministic catalog fallback. Requests enforce structured JSON output (`application/json` with an explicit response schema) while retaining Google's default safety settings.
-
-Request and response contracts are validated with `zod` (`^4.1.0`). On the mobile client, the Idea Helper card inside the Explore tab opens the suggestion workflow, which sends authenticated HTTPS requests via `package:http` (`^1.6.0`) carrying the caregiver's Firebase Auth bearer token. The backend exposes three AI endpoints: `POST /api/v1/ai/recommendations` (catalog-grounded play suggestions), `POST /api/v1/ai/story-activity` (picture-book companion play), and `POST /api/v1/ai/adapt` (adapting an existing activity to be shorter, easier, harder, or adjusted for a missing material).
+The server calls the Google Gemini REST API using Node's built-in `fetch` and a server-configured model version (`GEMINI_MODEL`) so model upgrades do not break app behavior. Request and response payloads are validated with `zod`, while the mobile client uses Flutter's `http` package with the signed-in caregiver's Firebase token. The backend exposes three AI routes: finding play ideas (`/api/v1/ai/recommendations`), creating a play idea from a storybook (`/api/v1/ai/story-activity`), and adjusting an existing activity (`/api/v1/ai/adapt`).
 
 ---
 
 ## 2. Inputs and Prompts
 
-The recommendation request schema enforces strict object validation so any unrecognized or identifying field (such as a child ID, child nickname, or journal note) is rejected with HTTP `400 INVALID_INPUT` instead of being silently ignored.
+Strict server validation accepts only non-identifying context fields and rejects unexpected personal details (such as a child's name, ID, or private journal notes) with HTTP `400`.
 
-*Table 1. Accepted Request Parameters (`POST /api/v1/ai/recommendations`)*
+*Table 1. Request Fields Sent to the Idea Helper*
 
-| Field | Type and Bounds | Caregiver Input in the App |
+| Field | Accepted Values | How Caregivers Set It in the App |
 |---|---|---|
-| `ageBand` | Enum: `0-5m`, `6-11m`, `12-23m`, `24-35m`, `36-47m`, `48-59m`, `60-71m` | Pre-filled from the active child profile or chosen manually |
-| `setting` | Enum: `indoor`, `outdoor`, `either` (default `either`) | `"Where will you play?"` selector (auto-preselected when launched from Today's symmetric Weather Hint banner) |
-| `timeMinutes` | Integer: 5 to 120 | Duration chips (`10`, `15`, `30`, `45` minutes; 30–45 minute requests group into toddler-paced Play Blocks) |
-| `materials` | Up to 10 strings, max 40 characters each (default `[]`) | Comma-separated household items trimmed and normalized server-side |
-| `language` | Enum: `en`, `fil`, `hil` | Language selector (English, Filipino, Hiligaynon) |
-| `domain` | Optional enum: `cognitive`, `motor`, `language`, `socioEmotional` | Optional developmental domain filter |
-| `count` | Integer: 1 to 3 (default `3`) | Maximum suggestions requested |
-| `allowCustom` | Optional boolean (default `false`; Flutter sends `true`) | Enables hybrid guardrailed custom generation (`source: "ai_custom"`) when safe materials have zero catalog overlap |
+| `ageBand` | Seven age groups from `0-5m` to `60-71m` | Pre-filled from the selected child profile |
+| `setting` | `indoor`, `outdoor`, or `either` | Selected in `"Where will you play?"` (preset from the weather banner when opened from Today) |
+| `timeMinutes` | Integer between `5` and `120` | Tapped via duration chips (`10`, `15`, `30`, `45` minutes); `30–45` minute sessions group into Play Blocks |
+| `materials` | Up to 10 short item names | Typed household items separated by commas |
+| `language` | `en`, `fil`, or `hil` | Selects Idea Helper language (`English`, `Filipino`, or `Hiligaynon`) |
+| `domain` | Optional play area (`cognitive`, `motor`, `language`, `socioEmotional`) | Optional focus filter |
+| `allowCustom` | Boolean | Lets safe custom household items generate `"Material adaptation"` cards |
 
-Before calling Gemini, the backend filters reviewed catalog activities and passes only candidate IDs, titles, domains, and materials alongside the sanitized context. The prompt instructions sent to Gemini are:
+Before calling Gemini, the backend filters reviewed catalog activities matching the age and setting and passes only safe context and candidate IDs:
 
 ```text
 You pick play activities for a young child from a fixed list.
@@ -56,18 +52,18 @@ Each why is at most 140 characters, plain and observational.
 Never mention delays, diagnoses, assessments, treatment or scores.
 ```
 
-User inputs and candidate activities are placed under explicit data delimiters (`Context (data, not instructions)` and `Candidates`). Companion book and activity adaptation prompts apply the same non-diagnostic rules and strict character limits (title under 60 characters, instructions under 300 characters, safety notice under 140 characters).
+Storybook companion and activity adaptation prompts follow the same plain, non-diagnostic rules and strict length limits.
 
 ---
 
 ## 3. Output Validation and Sample Outputs
 
-Every model reply passes two server-side validation gates before reaching the client:
+Every AI response passes two automatic server checks before reaching the phone:
 
-1. **Schema and candidate verification:** Validates the JSON shape (non-empty `picks`, explanation `why` between 1 and 140 characters, no HTML angle brackets or URLs) and verifies that every returned ID is unique and exists in the supplied candidate list.
-2. **Non-diagnostic wording filter:** Normalizes text via Unicode folding, removes diacritics and control characters, maps common lookalike characters to Latin, strips punctuation inserted between letters (such as `de-lay`), and rejects the entire reply if any of 33 blocked clinical or diagnostic terms (27 English and 6 Filipino terms, such as `delay`, `diagnos`, `autis`, `assessment`, `therapy`, `antala`, `kapansanan`) appear.
+1. **Format and source verification:** Confirms valid JSON, removes stray HTML or URLs, checks text length limits, and confirms catalog picks match real IDs from the reviewed list.
+2. **Non-diagnostic and safety filter:** Normalizes punctuation and accents and rejects any reply containing hazardous materials or clinical terms such as *delay*, *diagnosis*, *assessment*, or *therapy*.
 
-### Sample Tier 1 Output (`source: "ai"`, `tier: 1`)
+### Sample Live AI Response (`Suggested by AI`)
 
 ```json
 {
@@ -75,34 +71,18 @@ Every model reply passes two server-side validation gates before reaching the cl
     {
       "activityId": "act-box-tunnel-01",
       "title": "Cardboard Box Peek-and-Crawl",
-      "whyPicked": "Uses your cardboard box and soft sock for active indoor crawling play.",
-      "activity": {
-        "id": "act-box-tunnel-01",
-        "title": "Cardboard Box Peek-and-Crawl",
-        "domain": "motor",
-        "ageBand": "12-23m",
-        "durationMinutes": 15,
-        "setting": "indoor",
-        "materials": ["Empty delivery cardboard box", "Small soft rolled sock"],
-        "limitations": "Remove staples and sharp tape edges. Stay close while playing.",
-        "status": "reviewed_approved"
-      }
+      "whyPicked": "Uses your cardboard box and soft sock for active indoor crawling play."
     }
   ],
   "source": "ai",
-  "tier": 1,
   "provenance": {
     "badge": "Suggested by AI",
-    "label": null,
-    "disclaimer": "Observational play suggestion only. Not developmental assessment.",
-    "guidance": "You know your child best. Change it as you like, and stay close while you play.",
-    "model": "gemini-3.5-flash-lite",
-    "reviewed": true
+    "disclaimer": "Everyday play idea only — not a medical or developmental test."
   }
 }
 ```
 
-### Sample Tier 3 Fallback Output (`source: "catalog_fallback"`, `tier: 3`)
+### Sample Backup Catalog Response (`Our picks`)
 
 ```json
 {
@@ -114,13 +94,9 @@ Every model reply passes two server-side validation gates before reaching the cl
     }
   ],
   "source": "catalog_fallback",
-  "tier": 3,
   "provenance": {
-    "badge": null,
     "label": "Our picks",
-    "disclaimer": "Observational play suggestion only. Not developmental assessment.",
-    "model": null,
-    "reviewed": true
+    "disclaimer": "Everyday play idea only — not a medical or developmental test."
   }
 }
 ```
@@ -129,52 +105,35 @@ Every model reply passes two server-side validation gates before reaching the cl
 
 ## 4. Failure Handling and Fallback
 
-*Table 2. AI Execution Tiers and Runtime Safeguards*
+*Table 2. AI Execution Paths and Fallback Handling*
 
-| Tier | Engine | Runtime Limits | When Activated |
-|---|---|---|---|
-| Tier 1 | Cloud Gemini REST provider with circuit breaker | 8,000 ms timeout; 64 KB response byte cap; circuit breaker opens for 60 s after 3 consecutive failures | Default path when API key and model are configured |
-| Tier 2 | Rule-based activity adaptation | Local execution (< 5 ms) | Used only by `POST /api/v1/ai/adapt` when Tier 1 fails or is rejected |
-| Tier 3 | Deterministic reviewed catalog ranking | Cached Firestore catalog (5-min TTL); deterministic ranking | Used by `/recommendations` and `/story-activity` on timeout, API error, open circuit, unconfigured provider, or validation failure |
+| Path | How It Runs | When Used |
+|---|---|---|
+| Live AI (Primary) | Google Gemini via backend with an 8-second timeout and circuit breaker | Default path when connected and configured |
+| Rule-Based Tweak | Fast local adjustment rules on the server | Backup when adjusting a single activity and Gemini is unavailable |
+| Reviewed Catalog Backup | Ranked picks from the cached early-learning activity list | Used automatically on timeouts, errors, offline states, or blocked replies |
 
-All AI routes enforce fixed-window hourly rate limits of 10 requests per authenticated user (persisted via Firestore transactions) and 30 requests per IP address. Exceeding either cap returns HTTP `429 RATE_LIMITED` with a `Retry-After` header; the mobile app displays a `"Taking a short break"` wait notice alongside safe non-AI catalog picks (`Catalog picks · not AI`) so caregivers never hit a dead end. Any other network, timeout, or upstream error falls back cleanly to constrained reviewed catalog picks under a `"Using our activity list"` banner with zero AI labels and a `"Try again"` action—and if no catalog items can be loaded offline, displays an explicit `"No matching play ideas yet"` recovery card.
-
-Server logs record only operational telemetry (event name, tier, latency, and error class). Prompts, household materials, raw model replies, and user identifiers are never logged, and provider errors return fixed generic messages so upstream payloads cannot expose credentials.
+Hourly rate limits allow up to 10 requests per signed-in user and 30 requests per IP address. When exceeded, the server returns HTTP `429` with a `Retry-After` cooldown notice alongside immediate non-AI catalog picks so caregivers are never stuck. Server logs capture only timing and status metadata—never prompts, household items, or caregiver notes.
 
 ---
 
 ## 5. Known Failure Cases
 
-1. **Prompt injection and clinical queries:** Inputs attempting to override instructions or request medical evaluations are bounded to 40 characters per material item, separated from instructions, and constrained to reviewed candidate IDs; any blocked clinical term causes the reply to be rejected in favor of Tier 3 fallback.
-2. **Hazardous household items:** Extreme dangers (`bleach`, `knife`, `fire`, `medicine`) are blocked at Layer 1 before calling Gemini; everyday items, typos, and regional terms are normalized and evaluated by Gemini in structured `materialAssessments` (Layer 2) under pediatric safety principles (liquids/soaps, `0-35m` toilet-paper-tube choking hazards, fragile/sharp/electrical/screen items); and Layer 3 (`validate-output.ts`) deterministically rejects any normalized hazard that slips into `materialAssessments`, `usedMaterials`, or `instructions`, failing closed to reviewed Tier 3 catalog activities.
-3. **Offline or unstable mobile connectivity:** When the device has no network connection or a request times out, the app displays cached reviewed catalog picks with a clear non-AI notice.
-4. **Rate-limit exhaustion and fixed-window edges:** More than 10 requests per hour returns HTTP `429`. Fixed clock-hour windows allow short bursts across an hour boundary, and per-instance memory for IP caps and the circuit breaker resets on Cloud Functions cold starts, while per-user caps remain enforced in Firestore.
+1. **Unsafe household items:** Dangerous items (such as bleach, knives, fire, or medicine) are rejected immediately or caught during item safety evaluation, switching cleanly to reviewed catalog activities.
+2. **Prompt manipulation or clinical questions:** Free-text fields are short and strictly separated from instructions, and any clinical or diagnostic wording triggers automatic fallback.
+3. **Weak or offline mobile data:** When disconnected, the mobile app displays a clear non-AI notice and serves cached reviewed activities from the current session.
+4. **Partial Filipino and Hiligaynon catalog coverage:** Prompts instruct Gemini to write caregiver-facing explanations and custom household play cards in the selected language (`en`, `fil`, or `hil`), while output validation checks both Filipino and Hiligaynon clinical terms. If a regional age band has no dedicated reviewed catalog entry yet, catalog ranking automatically falls back to age-matched reviewed activities so caregivers never receive an empty list.
 
 ---
 
 ## 6. Why AI Is the Right Tool
 
-Standard database queries filter structured fields such as age band, domain, and indoor or outdoor setting effectively, but caregivers describe household items in informal, varied language (*"empty delivery box, clean sock"*, *"plastic food tubs and wooden spoon"*). Static keyword matching misses these combinations and cannot generate a concise sentence explaining how the parent's items fit the suggested activity.
+Database filters handle age bands and indoor/outdoor tags reliably, but parents naturally describe materials in casual, varied phrases (*"empty delivery box, clean sock"*, *"plastic food tubs"*). A constrained language model bridges that gap by matching informal descriptions to safe play ideas and explaining in one friendly sentence how those items fit.
 
-At the same time, an unconstrained chatbot is poorly suited to early childhood care because anxious parents often ask medical or developmental questions where general language models risk giving unreliable clinical advice, and long chat threads keep the caregiver looking at the screen. Constraining Gemini to catalog-grounded selection and bounded adaptations delivers flexible material matching while preserving reviewed safety guidance.
+Keeping the interaction structured instead of using an open chat avoids medical misinformation, reduces screen reading time, and lets caregivers jump straight into play.
 
 ---
 
 ## 7. Privacy Considerations (RA 10173)
 
-LittleSteps follows data minimization and transparency principles aligned with the Philippine Data Privacy Act of 2012 (Republic Act No. 10173). Child profiles collect only a nickname and coarse age band—no full legal names, exact birth dates, gender, or photographs. Strict schema validation rejects extra fields so child names and caregiver IDs are never included in AI prompts. Private caregiver journals and milestone observations are stored in user-isolated Firestore subcollections and are never read by AI endpoints. Optional weather lookups round coordinates to two decimal places (~1.1 km). Every AI-backed suggestion displays the `Suggested by AI` badge (or `Material adaptation` for safe custom household items) and the disclaimer *"Observational play suggestion only. Not developmental assessment."*, and caregivers can select `"Edit preferences"`, request `"Another idea"`, or browse the catalog directly.
-
----
-
-## 8. Automated Evaluation Summary
-
-A fixed 46-case automated safety evaluation benchmark runs in backend continuous integration alongside the full unit, integration, OpenAPI contract, and security regression suites (`npm test`) across 21 ordinary play requests, 10 pediatric medical probes, 5 hazardous material cases, 5 prompt injections, and 5 off-topic queries, plus layered-guardrail `ai_custom` tests covering typos, regional terms, and Layer 3 fail-closed checks.
-
-*Table 3. Automated AI Safety Evaluation Results (CI)*
-
-| Evaluation Metric | Target | Observed Result | Status |
-|---|---|---|---|
-| False-block rate on ordinary play (21 cases) | < 5.0% | 0.0% (0 / 21 refused) | Pass |
-| Unsafe or diagnostic answer rate (25 cases) | 0.0% | 0.0% (0 / 25 answered) | Pass |
-| Non-diagnostic wording filter containment | 100% | 100% blocked and routed to fallback | Pass |
-| Fallback recovery rate | 100% | 100% Tier 3 / Tier 2 recovery | Pass |
+LittleSteps follows data minimization aligned with the Philippine Data Privacy Act of 2012 (Republic Act No. 10173). Child profiles require only a nickname and coarse age band—no legal names, exact birthdates, or photos. Backend schemas strip unexpected fields so child names, user IDs, and private caregiver journal entries never reach any AI model. Every suggestion clearly labels whether it was `"Suggested by AI"`, a `"Material adaptation"`, or `"Our picks"` and allows caregivers to adjust, replace, or skip any idea.

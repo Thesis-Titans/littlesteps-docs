@@ -1,112 +1,94 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="504" viewBox="0 0 800 504" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'>
-  <defs>
-    <filter id="shadow-pkg" x="-2%" y="-3%" width="104%" height="108%" filterUnits="userSpaceOnUse">
-      <feDropShadow dx="0" dy="1.5" stdDeviation="2.5" flood-color="#000000" flood-opacity="0.06"/>
-    </filter>
-  </defs>
-
-  <!-- Background -->
-  <rect width="800" height="504" fill="#FFFFFF" rx="6" stroke="#D1DCD1" stroke-width="1"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560">
+  <rect width="1200" height="560" fill="#FFFFFF"/>
+  <rect x="6" y="6" width="1188" height="548" rx="14" fill="#FFFFFF" stroke="#D4DCD8" stroke-width="1.5"/>
 
   <!-- Header -->
-  <text x="25" y="30" font-size="14.5" font-weight="700" fill="#1F634D">Flutter Client Package Dependencies</text>
-  <text x="25" y="46" font-size="11" fill="#5A655F">Core SDK and pub.dev packages declared in BSIT-3A/LittleSteps/pubspec.yaml</text>
-  <line x1="25" y1="56" x2="775" y2="56" stroke="#E2E8E2" stroke-width="1"/>
+  <text x="40" y="44" font-family="Arial, Liberation Sans, sans-serif" font-size="22" font-weight="700" fill="#1F634D">Flutter Client Package Dependencies</text>
+  <text x="40" y="68" font-family="Arial, Liberation Sans, sans-serif" font-size="14" fill="#5A6A64">UML dependency tree linking the mobile app to its six runtime packages</text>
+  <line x1="40" y1="84" x2="1160" y2="84" stroke="#E0E5DB" stroke-width="1.2"/>
 
-  <!-- Root Package -->
-  <g transform="translate(230, 70)">
-    <rect width="340" height="44" rx="5" fill="#1F634D" filter="url(#shadow-pkg)"/>
-    <text x="170" y="21" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">littlesteps (Flutter 3.47.9 · Dart ^3.13.5)</text>
-    <text x="170" y="36" font-size="8.8" fill="#E2E8E2" text-anchor="middle">Core SDK: flutter/material.dart + flutter_test</text>
-  </g>
+  <!-- Root App Box -->
+  <rect x="340" y="98" width="520" height="56" rx="10" fill="#1F634D"/>
+  <text x="600" y="123" font-family="Arial, Liberation Sans, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">LittleSteps Mobile App (Flutter &amp; Dart)</text>
+  <text x="600" y="143" font-family="Arial, Liberation Sans, sans-serif" font-size="12.5" fill="#E0F2E5" text-anchor="middle">Built with Material 3 UI components</text>
 
-  <!-- Connector Spine to Row 1 (3 columns: centers 145, 400, 655) -->
-  <line x1="400" y1="114" x2="400" y2="134" stroke="#1F634D" stroke-width="1.8"/>
-  <line x1="145" y1="134" x2="655" y2="134" stroke="#1F634D" stroke-width="1.8"/>
-  <line x1="145" y1="134" x2="145" y2="148" stroke="#1F634D" stroke-width="1.8"/>
-  <polygon points="141,144 145,152 149,144" fill="#1F634D"/>
-  <line x1="400" y1="134" x2="400" y2="148" stroke="#1F634D" stroke-width="1.8"/>
-  <polygon points="396,144 400,152 404,144" fill="#1F634D"/>
-  <line x1="655" y1="134" x2="655" y2="148" stroke="#1F634D" stroke-width="1.8"/>
-  <polygon points="651,144 655,152 659,144" fill="#1F634D"/>
+  <!-- Central Orthogonal UML Dependency Trunk -->
+  <line x1="600" y1="154" x2="600" y2="486" stroke="#1F634D" stroke-width="2" stroke-dasharray="6,4"/>
+  <rect x="572" y="164" width="56" height="20" rx="10" fill="#F4F2E8" stroke="#C5CEC9" stroke-width="1.2"/>
+  <text x="600" y="178" font-family="Arial, Liberation Sans, sans-serif" font-size="11.5" font-weight="700" fill="#1F634D" text-anchor="middle">&#171;uses&#187;</text>
 
-  <!-- Row 1: Core Runtime Packages -->
-  <!-- Package 1: package:http -->
-  <g transform="translate(25, 152)">
-    <rect width="240" height="96" rx="4" fill="#FFFFFF" stroke="#1F634D" stroke-width="1.2" filter="url(#shadow-pkg)"/>
-    <rect width="240" height="24" rx="4" fill="#1F634D"/>
-    <text x="120" y="16" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">http (^1.6.0)</text>
-    <text x="12" y="42" font-size="8.8" font-weight="600" fill="#1F634D">Authenticated REST Networking</text>
-    <text x="12" y="57" font-size="8.2" fill="#5A655F">• Centralized ApiClient &amp; AuthService</text>
-    <text x="12" y="71" font-size="8.2" fill="#5A655F">• Firebase bearer tokens &amp; 10s timeouts</text>
-    <text x="12" y="85" font-size="7.8" fill="#71717A">lib/services/api_client.dart</text>
-  </g>
+  <!-- Column Group Subtitles -->
+  <text x="40" y="188" font-family="Arial, Liberation Sans, sans-serif" font-size="13" font-weight="700" fill="#5A6A64">Connectivity, Links &amp; Export</text>
+  <text x="1160" y="188" font-family="Arial, Liberation Sans, sans-serif" font-size="13" font-weight="700" fill="#5A6A64" text-anchor="end">UI, Media &amp; Formatting</text>
 
-  <!-- Package 2: package:intl -->
-  <g transform="translate(280, 152)">
-    <rect width="240" height="96" rx="4" fill="#FFFFFF" stroke="#D1DCD1" stroke-width="1.2" filter="url(#shadow-pkg)"/>
-    <rect width="240" height="24" rx="4" fill="#F4F2E8"/>
-    <text x="120" y="16" font-size="9.5" font-weight="700" fill="#2D312E" text-anchor="middle">intl (^0.20.3)</text>
-    <text x="12" y="42" font-size="8.8" font-weight="600" fill="#1F634D">Date &amp; Week Formatting</text>
-    <text x="12" y="57" font-size="8.2" fill="#5A655F">• Observation &amp; journal date formatting</text>
-    <text x="12" y="71" font-size="8.2" fill="#5A655F">• Monday–Sunday week labels (WeeklySummary)</text>
-    <text x="12" y="85" font-size="7.8" fill="#71717A">lib/models/summary.dart</text>
-  </g>
+  <!-- Left Orthogonal Branches (x=600 -> x=530 at y=246, 366, 486) -->
+  <line x1="600" y1="246" x2="538" y2="246" stroke="#1F634D" stroke-width="2" stroke-dasharray="6,4"/>
+  <polygon points="532,246 542,241 542,251" fill="#1F634D"/>
 
-  <!-- Package 3: package:flutter_svg -->
-  <g transform="translate(535, 152)">
-    <rect width="240" height="96" rx="4" fill="#FFFFFF" stroke="#D1DCD1" stroke-width="1.2" filter="url(#shadow-pkg)"/>
-    <rect width="240" height="24" rx="4" fill="#F4F2E8"/>
-    <text x="120" y="16" font-size="9.5" font-weight="700" fill="#2D312E" text-anchor="middle">flutter_svg (^2.5.0)</text>
-    <text x="12" y="42" font-size="8.8" font-weight="600" fill="#1F634D">Scalable Vector Brand Assets</text>
-    <text x="12" y="57" font-size="8.2" fill="#5A655F">• Brandmark &amp; horizontal/stacked logos</text>
-    <text x="12" y="71" font-size="8.2" fill="#5A655F">• Parent-child onboarding illustration</text>
-    <text x="12" y="85" font-size="7.8" fill="#71717A">lib/widgets/brand_logo.dart</text>
-  </g>
+  <line x1="600" y1="366" x2="538" y2="366" stroke="#1F634D" stroke-width="2" stroke-dasharray="6,4"/>
+  <polygon points="532,366 542,361 542,371" fill="#1F634D"/>
 
-  <!-- Row 2: Sharing, External Links & Platform Icons -->
-  <!-- Package 4: package:share_plus -->
-  <g transform="translate(25, 268)">
-    <rect width="240" height="96" rx="4" fill="#FFFFFF" stroke="#D1DCD1" stroke-width="1.2" filter="url(#shadow-pkg)"/>
-    <rect width="240" height="24" rx="4" fill="#F4F2E8"/>
-    <text x="120" y="16" font-size="9.5" font-weight="700" fill="#2D312E" text-anchor="middle">share_plus (^13.3.1)</text>
-    <text x="12" y="42" font-size="8.8" font-weight="600" fill="#1F634D">Native Share &amp; Data Export</text>
-    <text x="12" y="57" font-size="8.2" fill="#5A655F">• Caregiver account data export sheet</text>
-    <text x="12" y="71" font-size="8.2" fill="#5A655F">• Cross-platform share sheet integration</text>
-    <text x="12" y="85" font-size="7.8" fill="#71717A">lib/screens/account/settings_screen.dart</text>
-  </g>
+  <line x1="600" y1="486" x2="538" y2="486" stroke="#1F634D" stroke-width="2" stroke-dasharray="6,4"/>
+  <polygon points="532,486 542,481 542,491" fill="#1F634D"/>
 
-  <!-- Package 5: package:url_launcher -->
-  <g transform="translate(280, 268)">
-    <rect width="240" height="96" rx="4" fill="#FFFFFF" stroke="#D1DCD1" stroke-width="1.2" filter="url(#shadow-pkg)"/>
-    <rect width="240" height="24" rx="4" fill="#F4F2E8"/>
-    <text x="120" y="16" font-size="9.5" font-weight="700" fill="#2D312E" text-anchor="middle">url_launcher (^6.3.3)</text>
-    <text x="12" y="42" font-size="8.8" font-weight="600" fill="#1F634D">External Citation Portals</text>
-    <text x="12" y="57" font-size="8.2" fill="#5A655F">• Opens ECCD, DepEd, WHO, CDC &amp; AAP</text>
-    <text x="12" y="71" font-size="8.2" fill="#5A655F">• Safe external browser launch helper</text>
-    <text x="12" y="85" font-size="7.8" fill="#71717A">lib/utils/url_helper.dart</text>
-  </g>
+  <!-- Right Orthogonal Branches (x=600 -> x=670 at y=246, 366, 486) -->
+  <line x1="600" y1="246" x2="662" y2="246" stroke="#1F634D" stroke-width="2" stroke-dasharray="6,4"/>
+  <polygon points="668,246 658,241 658,251" fill="#1F634D"/>
 
-  <!-- Package 6: package:cupertino_icons -->
-  <g transform="translate(535, 268)">
-    <rect width="240" height="96" rx="4" fill="#FFFFFF" stroke="#D1DCD1" stroke-width="1.2" filter="url(#shadow-pkg)"/>
-    <rect width="240" height="24" rx="4" fill="#F4F2E8"/>
-    <text x="120" y="16" font-size="9.5" font-weight="700" fill="#2D312E" text-anchor="middle">cupertino_icons (^1.0.8)</text>
-    <text x="12" y="42" font-size="8.8" font-weight="600" fill="#1F634D">Platform Iconography</text>
-    <text x="12" y="57" font-size="8.2" fill="#5A655F">• Standard iOS / Cupertino icon font</text>
-    <text x="12" y="71" font-size="8.2" fill="#5A655F">• Complements Material 3 Icons</text>
-    <text x="12" y="85" font-size="7.8" fill="#71717A">Runtime dependency</text>
-  </g>
+  <line x1="600" y1="366" x2="662" y2="366" stroke="#1F634D" stroke-width="2" stroke-dasharray="6,4"/>
+  <polygon points="668,366 658,361 658,371" fill="#1F634D"/>
 
-  <!-- Row 3: Dev & Static Analysis -->
-  <!-- Package 7: package:flutter_lints -->
-  <g transform="translate(280, 384)">
-    <rect width="240" height="96" rx="4" fill="#FFFFFF" stroke="#D1DCD1" stroke-width="1.2" filter="url(#shadow-pkg)"/>
-    <rect width="240" height="24" rx="4" fill="#E2E8E2"/>
-    <text x="120" y="16" font-size="9.5" font-weight="700" fill="#1F634D" text-anchor="middle">flutter_lints (^6.0.0 · dev)</text>
-    <text x="12" y="42" font-size="8.8" font-weight="600" fill="#1F634D">Static Code Analysis</text>
-    <text x="12" y="57" font-size="8.2" fill="#5A655F">• Effective Dart &amp; public_member_api_docs</text>
-    <text x="12" y="71" font-size="8.2" fill="#5A655F">• Enforces 0 issues (--fatal-infos)</text>
-    <text x="12" y="85" font-size="7.8" fill="#71717A">analysis_options.yaml</text>
-  </g>
+  <line x1="600" y1="486" x2="662" y2="486" stroke="#1F634D" stroke-width="2" stroke-dasharray="6,4"/>
+  <polygon points="668,486 658,481 658,491" fill="#1F634D"/>
+
+  <!-- Left Column Package Cards (x=40, w=490, h=96) -->
+  <!-- L1: http -->
+  <rect x="40" y="198" width="490" height="96" rx="8" fill="#FAFBF9" stroke="#C5CEC9" stroke-width="1.8"/>
+  <path d="M 48 198 H 522 Q 530 198 530 206 V 232 H 40 V 206 Q 40 198 48 198 Z" fill="#F4F2E8"/>
+  <line x1="40" y1="232" x2="530" y2="232" stroke="#DCE2DF" stroke-width="1"/>
+  <text x="58" y="220" font-family="Arial, Liberation Sans, sans-serif" font-size="14" font-weight="700" fill="#1A2B29">http (^1.6.0)</text>
+  <text x="58" y="256" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" font-weight="700" fill="#1F634D">Server Communication</text>
+  <text x="58" y="278" font-family="Arial, Liberation Sans, sans-serif" font-size="12.5" fill="#5A6A64">Sends authenticated JSON requests with 10-second timeouts</text>
+
+  <!-- L2: url_launcher -->
+  <rect x="40" y="318" width="490" height="96" rx="8" fill="#FAFBF9" stroke="#C5CEC9" stroke-width="1.8"/>
+  <path d="M 48 318 H 522 Q 530 318 530 326 V 352 H 40 V 326 Q 40 318 48 318 Z" fill="#F4F2E8"/>
+  <line x1="40" y1="352" x2="530" y2="352" stroke="#DCE2DF" stroke-width="1"/>
+  <text x="58" y="340" font-family="Arial, Liberation Sans, sans-serif" font-size="14" font-weight="700" fill="#1A2B29">url_launcher (^6.3.3)</text>
+  <text x="58" y="376" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" font-weight="700" fill="#1F634D">Trusted Reference Links</text>
+  <text x="58" y="398" font-family="Arial, Liberation Sans, sans-serif" font-size="12.5" fill="#5A6A64">Opens ECCD, DepEd, WHO, CDC, AAP, and Open Library links</text>
+
+  <!-- L3: share_plus -->
+  <rect x="40" y="438" width="490" height="96" rx="8" fill="#FAFBF9" stroke="#C5CEC9" stroke-width="1.8"/>
+  <path d="M 48 438 H 522 Q 530 438 530 446 V 472 H 40 V 446 Q 40 438 48 438 Z" fill="#F4F2E8"/>
+  <line x1="40" y1="472" x2="530" y2="472" stroke="#DCE2DF" stroke-width="1"/>
+  <text x="58" y="460" font-family="Arial, Liberation Sans, sans-serif" font-size="14" font-weight="700" fill="#1A2B29">share_plus (^13.3.1)</text>
+  <text x="58" y="496" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" font-weight="700" fill="#1F634D">Family Data Export</text>
+  <text x="58" y="518" font-family="Arial, Liberation Sans, sans-serif" font-size="12.5" fill="#5A6A64">Opens the phone share sheet from Account Settings</text>
+
+  <!-- Right Column Package Cards (x=670, w=490, h=96) -->
+  <!-- R1: flutter_svg -->
+  <rect x="670" y="198" width="490" height="96" rx="8" fill="#FAFBF9" stroke="#C5CEC9" stroke-width="1.8"/>
+  <path d="M 678 198 H 1152 Q 1160 198 1160 206 V 232 H 670 V 206 Q 670 198 678 198 Z" fill="#F4F2E8"/>
+  <line x1="670" y1="232" x2="1160" y2="232" stroke="#DCE2DF" stroke-width="1"/>
+  <text x="688" y="220" font-family="Arial, Liberation Sans, sans-serif" font-size="14" font-weight="700" fill="#1A2B29">flutter_svg (^2.5.0)</text>
+  <text x="688" y="256" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" font-weight="700" fill="#1F634D">Vector Artwork</text>
+  <text x="688" y="278" font-family="Arial, Liberation Sans, sans-serif" font-size="12.5" fill="#5A6A64">Renders crisp app logos and parent-child illustrations</text>
+
+  <!-- R2: cupertino_icons -->
+  <rect x="670" y="318" width="490" height="96" rx="8" fill="#FAFBF9" stroke="#C5CEC9" stroke-width="1.8"/>
+  <path d="M 678 318 H 1152 Q 1160 318 1160 326 V 352 H 670 V 326 Q 670 318 678 318 Z" fill="#F4F2E8"/>
+  <line x1="670" y1="352" x2="1160" y2="352" stroke="#DCE2DF" stroke-width="1"/>
+  <text x="688" y="340" font-family="Arial, Liberation Sans, sans-serif" font-size="14" font-weight="700" fill="#1A2B29">cupertino_icons (^1.0.8)</text>
+  <text x="688" y="376" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" font-weight="700" fill="#1F634D">Platform Icons</text>
+  <text x="688" y="398" font-family="Arial, Liberation Sans, sans-serif" font-size="12.5" fill="#5A6A64">Provides standard iOS-style navigation glyphs</text>
+
+  <!-- R3: intl -->
+  <rect x="670" y="438" width="490" height="96" rx="8" fill="#FAFBF9" stroke="#C5CEC9" stroke-width="1.8"/>
+  <path d="M 678 438 H 1152 Q 1160 438 1160 446 V 472 H 670 V 446 Q 670 438 678 438 Z" fill="#F4F2E8"/>
+  <line x1="670" y1="472" x2="1160" y2="472" stroke="#DCE2DF" stroke-width="1"/>
+  <text x="688" y="460" font-family="Arial, Liberation Sans, sans-serif" font-size="14" font-weight="700" fill="#1A2B29">intl (^0.20.3)</text>
+  <text x="688" y="496" font-family="Arial, Liberation Sans, sans-serif" font-size="13.5" font-weight="700" fill="#1F634D">Date &amp; Week Formatting</text>
+  <text x="688" y="518" font-family="Arial, Liberation Sans, sans-serif" font-size="12.5" fill="#5A6A64">Formats milestone dates, journal dates, and weekly ranges</text>
 </svg>
