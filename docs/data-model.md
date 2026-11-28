@@ -3,14 +3,14 @@
 **Status:** Canonical Data Architecture Baseline  
 **Governing Standard:** ISO/IEC/IEEE 42010:2022 (Data Viewpoint) & RA 10173 (Data Privacy Act of 2012)  
 **Owner:** Mark Alvin Cadangin (Technical Lead) & Justin (Backend Lead)  
-**Last Reviewed:** 2026-11-08  
+**Last Reviewed:** 2026-11-27  
 **Related Documents:** [API Reference & Integration Guide](api-reference.md), [Architecture Decisions](architecture-decisions.md) (ADR-003, ADR-004, ADR-010), [Security, Privacy, and AI Safeguards](security-privacy-ai.md) (NFR-SEC-02, NFR-PRIV-01..03)
 
 ---
 
 ## 1. Storage Architecture & Multi-Tenant Isolation
 
-The planned datastore is **Cloud Firestore**. Private records are organized under caregiver-scoped paths to support tenant isolation. Path structure alone does not enforce authorization: every API operation must verify the authenticated caregiver's ownership, and tests must cover cross-caregiver access.
+The primary datastore is **Cloud Firestore**. Private records are organized under caregiver-scoped paths to support tenant isolation. Path structure alone does not enforce authorization: every API operation must verify the authenticated caregiver's ownership, and automated security tests verify cross-caregiver access denial.
 
 ```mermaid
 flowchart TD
@@ -34,11 +34,12 @@ flowchart TD
     subgraph GlobalCatalogs["Global Reviewed Catalogs (Read-Only)"]
         CA["<b>catalog_activities/{activityId}</b><br/><i>(Curated Activity Skeletons · FR-04)</i>"]
         CM["<b>catalog_milestones/{milestoneId}</b><br/><i>(ECCD / DepEd Observational Prompts · FR-01)</i>"]
+        CR["<b>catalog_rhymes/{rhymeId}</b><br/><i>(Philippine Traditional Rhymes &amp; Songs · FR-04)</i>"]
     end
 ```
 
 > [!SECURITY]
-> **Server-Enforced Isolation:** All API operations must execute server-side authorization checks verifying that `child.caregiverId === req.user.uid`. Admin SDK access bypasses Firestore rules, so this boundary is enforced in application code. Restrictive Firestore Security Rules block client SDK direct writes.
+> **Server-Enforced Isolation:** All API operations must execute server-side authorization checks verifying that `child.caregiverId === request.firebaseUser.uid`. Admin SDK access bypasses Firestore rules, so this boundary is enforced in application code. Restrictive Firestore Security Rules block client SDK direct writes.
 
 ---
 
@@ -80,7 +81,7 @@ Caregiver observation recorded against a reviewed milestone prompt.
 | :--- | :--- | :---: | :--- |
 | `id` | string | Yes | Unique observation identifier. |
 | `milestoneId` | string | Yes | References a valid item in `catalog_milestones`. |
-| `status` | string (enum) | Yes | `observed` or `not_yet_observed` (strictly non-diagnostic). |
+| `status` | string (enum) | Yes | `observed`, `not_yet_observed`, or `not_sure` (strictly non-diagnostic). |
 | `observedDate` | string | Yes | ISO 8601 date string (`YYYY-MM-DD`). |
 | `notes` | string | No | Caregiver observation note (max 500 chars). |
 | `createdAt` | timestamp | Yes | UTC creation timestamp. |
@@ -99,6 +100,7 @@ A learning activity added to the daily routine or completed (stored under the `p
 | `completedAt` | timestamp | No | UTC timestamp when marked complete. |
 | `durationMinutes` | number | No | Engagement duration in minutes (integer, 1–180). |
 | `feedbackNote` | string | No | Optional caregiver reflection (max 300 chars). |
+| `customActivity` | map | No | Optional inline snapshot (`title`, `domain`, `durationMinutes`, `setting`, `materials`, `instructions`, optional `safetyNotice`, `sourceLabel`) for scheduling custom AI adaptations, story companions, or Philippine rhymes. |
 
 ---
 
@@ -132,18 +134,20 @@ Deterministic periodic recap of child activities and observations.
 | `weekEndDate` | string | Yes | ISO date for Sunday of the summary week. |
 | `completedActivityCount` | number | Yes | Total activities marked `completed` during the week. |
 | `observedMilestoneCount` | number | Yes | Total milestones marked `observed` during the week. |
-| `domainDistribution` | map | Yes | Counts per domain: `{ cognitive: N, motor: N, language: N, socioEmotional: N }`. |
+| `totalPlannedActivities` | number | Yes | Total activities scheduled during the week. |
+| `domainDistribution` | map | Yes | Counts per domain (including completed `customActivity` plans): `{ cognitive: N, motor: N, language: N, socioEmotional: N }`. |
+| `topActivityIds` | array of str | Yes | Most frequently completed activity IDs during the week. |
 | `reflectionPrompt` | string | Yes | Educational caregiver prompt (non-diagnostic). |
 | `generatedAt` | timestamp | Yes | UTC generation timestamp. |
 
 ---
 
 ### 2.7 Reviewed Activity Catalog (`catalog_activities/{activityId}`)
-Curated learning activities available to all caregivers.
+Curated learning activities stored in Cloud Firestore (with a 5-minute server-side in-memory TTL cache in `littlesteps-api`, Admin SDK read-only, default-deny client rules) and available to all caregivers via `/api/v1/catalog/activities`.
 
 | Field | Type | Required | Description & Constraints |
 | :--- | :--- | :---: | :--- |
-| `id` | string | Yes | Canonical slug (e.g., `act-ph-bahay-bahayan-01`). |
+| `id` | string | Yes | Canonical slug (e.g., `act-001` or `act-ph-bahay-bahayan-01`). |
 | `title` | string | Yes | Title in Filipino/English/Hiligaynon (max 100 chars). |
 | `type` | string (enum) | Yes | `activity`, `story`, `rhyme`, `game`. Supports FR-04 library type filtering. |
 | `language` | string (enum) | Yes | `en`, `fil`, `hil`. Supports FR-04 language filter. |
@@ -154,28 +158,48 @@ Curated learning activities available to all caregivers.
 | `durationEstimate` | string | Yes | Human-readable duration (e.g., `10-15 mins`). |
 | `materials` | array of str | Yes | Required household items (e.g., `["blanket", "cushions"]`). |
 | `instructions` | array of str | Yes | 3–4 step-by-step guidance points. |
-| `provenanceSource` | string | Yes | Official curriculum citation locator (Issue #3). |
-| `status` | string (enum) | Yes | `reviewed_approved`, `synthetic_fixture`. |
+| `provenanceSource` | string | Yes | Official curriculum or ECD framework citation locator. |
+| `status` | string (enum) | Yes | `reviewed_approved`, `source_checked`, `synthetic_fixture`, `draft` (AI only serves `reviewed_approved` and `source_checked`). |
+| `limitations` | string | Yes | Mandatory non-diagnostic and safety supervision notice. |
 
 ---
 
-### 2.8 Reviewed Milestone Prompts (`catalog_milestones/{milestoneId}`)
-Authoritative developmental observation prompts derived from Philippine Early Learning standards (ECCD / RA 12199).
+### 2.8 Reference Milestone Prompts (`catalog_milestones/{milestoneId}`)
+Non-diagnostic developmental observation prompts stored in Cloud Firestore (with a 5-minute server-side in-memory TTL cache in `littlesteps-api`, Admin SDK read-only, default-deny client rules) and served via `GET /api/v1/catalog/milestones` (seeded from `seed/catalog-milestones.json`).
 
 | Field | Type | Required | Description & Constraints |
 | :--- | :--- | :---: | :--- |
-| `id` | string | Yes | Canonical milestone ID (e.g., `ms-mot-12-23m-01`). |
+| `id` | string | Yes | Canonical milestone ID (e.g., `lan-12-01`, `mot-60-01`). |
 | `domain` | string (enum) | Yes | `cognitive`, `motor`, `language`, `socioEmotional`. |
-| `ageBand` | string (enum) | Yes | Target observation age band (`0-5m` to `60-71m`). |
-| `title` | string | Yes | Observable milestone skill statement (e.g., "Pulls self up to stand"). |
-| `indicators` | array of str | Yes | 2–3 observable everyday indicators for caregivers. |
-| `guidanceText` | string | Yes | Supportive, non-clinical caregiver guidance explaining that development happens across ranges. |
-| `provenanceSource` | string | Yes | ECCD Checklist / DepEd Kindergarten Curriculum citation. |
-| `status` | string (enum) | Yes | `reviewed_approved`, `synthetic_fixture`. |
+| `ageBand` | string | Yes | Target observation age band label (`0-11 months`, `12-23 months`, `24-35 months`, `36-47 months`, `48-59 months`, `60-71 months`). |
+| `title` | string | Yes | Observable milestone skill statement (max 160 chars, non-diagnostic). |
+| `lookFor` | array of str | Yes | 1–3 concrete everyday examples caregivers can watch for during play. |
+| `provenance` | string | Yes | ECCD Checklist, CDC, AAP, WHO/UNICEF, or DepEd MATATAG Kindergarten citation. |
+| `status` | string (enum) | Yes | `reviewed_approved`, `source_checked`, `synthetic_fixture`, `draft`. |
 
 ---
 
-### 2.9 Saved Family Storybooks (`caregivers/{uid}/children/{childId}/books/{bookId}`)
+### 2.9 Philippine Rhymes & Action Songs (`catalog_rhymes/{rhymeId}`)
+Curated Filipino, English, and Hiligaynon traditional rhymes and action songs stored in Cloud Firestore (with a 5-minute server-side in-memory TTL cache in `littlesteps-api`, Admin SDK read-only, default-deny client rules) and served via `GET /api/v1/catalog/rhymes` (seeded from `seed/catalog-rhymes.json`).
+
+| Field | Type | Required | Description & Constraints |
+| :--- | :--- | :---: | :--- |
+| `id` | string | Yes | Canonical rhyme slug (e.g., `rhyme-bahay-kubo`, `rhyme-ili-ili-tulog-anay`). |
+| `title` | string | Yes | Rhyme display title (max 120 chars). |
+| `subtitle` | string | Yes | Short caregiver-facing play focus summary (max 200 chars). |
+| `domain` | string (enum) | Yes | `cognitive`, `motor`, `language`, `socioEmotional`. |
+| `domainLabel` | string | Yes | Friendly domain badge label (`Thinking`, `Moving`, `Talking`, `Feelings`). |
+| `language` | string (enum) | Yes | `en`, `fil`, `hil`. |
+| `lyrics` | array of str | Yes | Lines of lyrics sung with the child. |
+| `actionPrompt` | string | Yes | Movement or gesture cue performed while singing. |
+| `materials` | array of str | Yes | Optional household items (defaults to `["None required"]`). |
+| `durationMinutes` | number | Yes | Integer estimated duration in minutes (1–60, default `5`). |
+| `provenanceSource` | string | Yes | Traditional Philippine folk song or ECCD Council NELF citation. |
+| `status` | string (enum) | Yes | `reviewed_approved`, `source_checked`, `synthetic_fixture`, `draft`. |
+
+---
+
+### 2.10 Saved Family Storybooks (`caregivers/{uid}/children/{childId}/books/{bookId}`)
 Caregiver-curated bookshelf of physical picture books available at home for interactive play routines (FR-04b).
 
 | Field | Type | Required | Description & Constraints |
@@ -189,6 +213,16 @@ Caregiver-curated bookshelf of physical picture books available at home for inte
 | `subjects` | array of str | Yes | Curated subject and genre tags (e.g., `["Bedtime", "Animals"]`). |
 | `createdAt` | string | Yes | ISO 8601 UTC creation timestamp. |
 | `updatedAt` | string | Yes | ISO 8601 UTC last-updated timestamp. |
+
+---
+
+### 2.11 Operational AI Rate-Limit Counters (`rate_limits/{uid}_{utcHour}`)
+Server-managed fixed-window counters enforcing per-user hourly AI quotas (`10` requests per UTC clock hour) atomically via Firestore transactions. Default-deny client rules block direct client SDK reads or writes.
+
+| Field | Type | Required | Description & Constraints |
+| :--- | :--- | :---: | :--- |
+| `count` | number | Yes | Number of authenticated AI requests consumed in the current UTC clock hour. |
+| `updatedAt` | timestamp | Yes | UTC timestamp of the most recent AI request in the window. |
 
 ---
 

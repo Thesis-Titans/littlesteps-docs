@@ -3,8 +3,8 @@
 **Status:** Canonical Governance Baseline  
 **Governing Standard:** Diátaxis Framework (Information Architecture) & ISO/IEC/IEEE 26515:2018  
 **Owner:** Mark Alvin Cadangin (Technical Lead)  
-**Last Reviewed:** 2026-10-26  
-**Related Documents:** [Development Workflow](development-workflow.md), [Academic Deliverables](academic/README.md), [API Reference & Integration Guide](api-reference.md)
+**Last Reviewed:** 2026-11-27  
+**Related Documents:** [Contribution Guidelines](../CONTRIBUTING.md), [Academic Deliverables](academic/README.md), [API Reference & Integration Guide](api-reference.md)
 
 ---
 
@@ -24,20 +24,20 @@ LittleSteps documentation is version-controlled and organized to answer four que
 To prevent documentation drift across multiple codebases, documentation is organized into three distinct tiers:
 
 ```
-Level 1: Organization Principles (Shared conventions, review boundaries, academic terms)
+Level 1: Organization Principles (CONTRIBUTING.md, SECURITY.md, CODE_OF_CONDUCT.md)
    │
    ▼
-Level 2: Canonical Project Documentation (`littlesteps-docs`)
-   │      ├── Product Scope & Boundaries
-   │      ├── Architecture & ADRs (ADRs 001–014)
-   │      ├── API Reference & Open Library REST Integration
-   │      ├── Security, Privacy & AI Guardrails
-   │      ├── Research Register & Content Provenance
-   │      └── Full-Stack Onboarding Tutorial
+Level 2: Canonical Project Documentation (`littlesteps-docs/docs/`, 13 Specifications)
+   │      ├── Product Scope & Verification Traceability Matrix
+   │      ├── Architecture & ADRs (ADRs 001–016)
+   │      ├── API Reference, Data Model & Security/Privacy/AI Safeguards
+   │      ├── DESIGN.md, UI/UX Specification & Usability/Design Evaluation
+   │      ├── Philippine Content Provenance & External Research Register
+   │      └── Onboarding Tutorial, Execution Plan & Documentation Standards
    ▼
-Level 3: Repository-Specific Documentation (`littlesteps-api`, `littlesteps-react`)
+Level 3: Repository-Specific Documentation (`littlesteps-api`, `littlesteps-react`, `CC-207B_26-27_Final-Project`)
           ├── Quickstart & Local Dev Commands
-          ├── Local Environment Variables (.env.example)
+          ├── Local Environment Templates (.env.example, config/example.json)
           ├── Test & Verification Scripts
           └── Technical Contracts (e.g., OpenAPI in API repo)
 ```
@@ -60,15 +60,13 @@ LittleSteps uses a **docs-as-code** workflow: Markdown documents are version-con
 | **IEEE 29148 / PMBOK** | Requirements Traceability Matrix (**RTM**) & Quality Control | [`docs/traceability-matrix.md`](traceability-matrix.md) | Mapping connecting FR-01..06, PRQs, NFRs, and CIT 210 rubric items to planned verification, work packages, and GitHub tracking issues. |
 | **IEEE 29148 / ISO 9241** | Human-Centered Design & Ergonomics Specification | [`docs/ui-ux-design-specification.md`](ui-ux-design-specification.md) | Usability heuristics, cognitive load principles, touch ergonomics (44px floor, 48px for primary controls), WCAG 2.2 AA contrast, and 5-state interaction matrices. |
 | **ISO 9241 / WCAG 2.2 AA** | Design System Reference (agent- and client-readable) | [`docs/DESIGN.md`](DESIGN.md) | Single design brief in the open DESIGN.md format: tokens, voice, accessibility rules and agent guide, summarizing Figma and the UI/UX specification for the React and Flutter clients. |
-| **WCAG 2.2 AA / ISO 9241** | Design Review Checklist | [`docs/design-review-rubric.md`](design-review-rubric.md) | Written rubric for reviewing React code and exported Figma frames: LittleSteps rules, accessibility, forms, motion and content handling, with source attribution. |
-| **ISO 9241 / Usability** | Prototype Traceability & Storyboards | [`docs/prototype-traceability-storyboards.md`](prototype-traceability-storyboards.md) | Provisional caregiver storyboards, minimal prototype scope (P0/P1), and 10-point walkthrough acceptance checklist for Docs Issue #15. |
-| **ISO 9241-11:2018** | Usability Field Protocol & User Research Guide | [`docs/parent-walkthrough-guide.md`](parent-walkthrough-guide.md) | Informal caregiver testing protocol, ethical consent script, task matrix, and findings template for M0 prototype evaluation. |
-| **IEEE 29148 / Statutory** | Domain Sourcing & Legislative Foundations | [`docs/philippine-content-provenance.md`](philippine-content-provenance.md) & [`docs/research-register.md`](research-register.md) | Statutory frameworks (RA 12199, RA 10173), official curriculum references, item-level citation schemas, and external regulatory registers. |
-| **ISO/IEC/IEEE 42010:2022** | Architecture Description | [`docs/architecture-decisions.md`](architecture-decisions.md) | Architecture Decision Records (ADRs 001–014), component topology, and selected architecture views. |
-| **IEEE 1016** | Software Design Description (**SDD**) — Data Model Detail | [`docs/data-model.md`](data-model.md) | Proposed Cloud Firestore collection hierarchies, entity schemas, caregiver ownership paths, and data lifecycle requirements. |
-| **OpenAPI 3.1 & ISO 42010** | Software Design Description (**SDD**) — Interface View | [`docs/api-reference.md`](api-reference.md) & [`littlesteps-api/openapi/openapi.yaml`](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml) | Machine-readable technical contract, Open Library REST integration, 3-tier AI fallback engine, request/response envelopes, and error codes. |
-| **PMBOK / ISO 21500** | Project Management Plan (**PMP**) — Scope & Schedule Baseline | [`docs/execution-plan.md`](execution-plan.md) | Delivery milestones (M0–M5), academic dates, work packages, dependencies, and the prototype validation gate. |
-| **PMBOK / ISO 21500** | Project Management Plan (**PMP**) — Quality & Change Control | [`docs/development-workflow.md`](development-workflow.md) | Branch protection, PR peer reviews, GitHub status checks (`Docs CI/verify`, `API CI/verify`, `Web CI/verify`), and code defense criteria. |
+| **ISO 9241-11 / Nielsen / WCAG 2.2 AA** | Usability & Design Evaluation Package | [`docs/usability-and-design-evaluation.md`](usability-and-design-evaluation.md) | Consolidated M0 prototype storyboards, informal parent walkthrough protocol, Nielsen heuristic audit, and React/Flutter/Figma design review rubric. |
+| **IEEE 29148 / Statutory** | Domain Sourcing, Provenance & Research Register | [`docs/philippine-content-provenance.md`](philippine-content-provenance.md) | Statutory frameworks (RA 12199, RA 10173), official curriculum references, Firestore catalog provenance audit, review gate, and external research register. |
+| **ISO/IEC/IEEE 42010:2022** | Architecture Description | [`docs/architecture-decisions.md`](architecture-decisions.md) | Architecture Decision Records (ADRs 001–016), component topology, and architectural rationale. |
+| **IEEE 1016** | Software Design Description (**SDD**) — Data Model Detail | [`docs/data-model.md`](data-model.md) | Cloud Firestore collection hierarchies, entity schemas, global catalog collections, caregiver ownership paths, and data lifecycle requirements. |
+| **OpenAPI 3.1 & ISO 42010** | Software Design Description (**SDD**) — Interface View | [`docs/api-reference.md`](api-reference.md) & [`littlesteps-api/openapi/openapi.yaml`](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml) | Machine-readable technical contract, Open Library & Open-Meteo REST integrations, AI fallback hierarchy, request/response envelopes, and error codes. |
+| **PMBOK / ISO 21500** | Project Management Plan (**PMP**) — Scope & Schedule Baseline | [`docs/execution-plan.md`](execution-plan.md) | Delivery milestones (M0–M5), work packages, dependencies, and synchronized academic dates. |
+| **ISO/IEC/IEEE 12207** | Contributor Workflow, Coding Standards & Change Control | [`CONTRIBUTING.md`](../CONTRIBUTING.md) | Branch protection, peer reviews, React/Flutter layered coding standards, required CI checks (`Docs CI/verify`, `API CI/verify`, `Web CI/verify`, `Flutter CI/Analyze and Test`), and code defense criteria. |
 | **Diátaxis Framework** | Learning-Oriented Tutorial | [`docs/getting-started.md`](getting-started.md) | Reproducible full-stack local setup guide for Node.js 22, Java 21, and Firebase Emulator Suite. |
 | **Diátaxis Framework** | Quality & Information Architecture | [`docs/documentation-standards.md`](documentation-standards.md) | Documentation governance, three-tier hierarchy, Diátaxis quadrant mapping, and repository consistency audits. |
 
@@ -104,13 +102,14 @@ Evaluated under the [Official CIT 210 Final Project Evaluation Rubric](academic/
    - **Clarity & Structure (10 pts):** Logical project narrative, problem context, and system architecture.
    - **Explanation of API Integration (10 pts):** Detailed explanation of endpoints, request/response headers, token decoding, Open Library REST proxying, and AI prompt sanitization per [`docs/api-reference.md`](api-reference.md).
    - **Demo & Functionality (15 pts):** Stable live demonstration of core user journeys against local emulators with a rehearsed backup video.
-3. **Supporting Documentation:**
+3. **Supporting & Required Documentation (Presentation: December 4, 2026, 8:00 AM):**
+   - **System Documentation (IMRAD format):** Introduction, Methods, Results, and Discussion documenting the web system, API integrations, and evaluation.
    - [Developer Onboarding Guide](getting-started.md) for reproducible full-stack local execution.
-   - [API Reference & Integration Guide](api-reference.md), Architecture decision records ([ADRs 001–014](architecture-decisions.md)), and [Traceability Matrix](traceability-matrix.md).
+   - [API Reference & Integration Guide](api-reference.md), Architecture decision records ([ADRs 001–016](architecture-decisions.md)), and [Traceability Matrix](traceability-matrix.md).
 
 ### 4.3 CIT 246: IT Project Management Plan
 1. **Checkpoint 1 Proposal (Due October 14, 2026):** One-page project concept covering Organization, Problem, Proposed System, and Possible Sponsor (A4, Arial 11), documented in [`docs/academic/cit246/checkpoint-1-concept.md`](academic/cit246/checkpoint-1-concept.md).
-2. **Full IT Project Management Plan (25–40 Pages, Due December 2, 2026):** 17-section PDF covering:
+2. **Full IT Project Management Plan (25–40 Pages, Due Before December 3, 2026; No Presentation Required):** 17-section PDF covering:
    - Sections 1–4: Title Page, Executive Summary, Business Case, and Project Charter.
    - Sections 5–6: Stakeholder Register (8+ entries with opponent) and Scope Statement (IN/OUT boundaries).
    - Sections 7–9: WBS (3+ levels with dictionary), Schedule (Network diagram & Gantt), and Cost Baseline (Peso amounts, WBS-linked).
@@ -124,9 +123,9 @@ Documentation in `littlesteps-docs` aligns with the Diátaxis documentation fram
 | Type | Reader's Question | Focus | LittleSteps Document |
 | :--- | :--- | :--- | :--- |
 | **Tutorial** | *"Help me get started from scratch."* | Learning-oriented step-by-step guidance | [Developer onboarding guide](getting-started.md) |
-| **How-To Guide** | *"How do I complete a specific operational task?"* | Task-oriented problem solving | [Development workflow](development-workflow.md), [Parent walkthrough field guide](parent-walkthrough-guide.md) |
-| **Reference** | *"What is the exact technical contract or specification?"* | Information-oriented technical facts | [API reference & integration guide](api-reference.md), [OpenAPI contract in the API repository](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml), [Data model specification](data-model.md), [Verification & traceability matrix](traceability-matrix.md), [UI/UX design specification](ui-ux-design-specification.md), and provenance schemas |
-| **Explanation** | *"Why is the system designed this way?"* | Understanding-oriented rationale and context | [Product scope](product-scope.md), [Architecture decisions](architecture-decisions.md), [Security, privacy, and AI safeguards](security-privacy-ai.md), [Philippine content provenance](philippine-content-provenance.md), [Prototype storyboards](prototype-traceability-storyboards.md) |
+| **How-To Guide** | *"How do I complete a specific operational task?"* | Task-oriented problem solving | [Contribution Guidelines](../CONTRIBUTING.md), [Usability & Design Evaluation](usability-and-design-evaluation.md) |
+| **Reference** | *"What is the exact technical contract or specification?"* | Information-oriented technical facts | [API reference & integration guide](api-reference.md), [OpenAPI contract in the API repository](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml), [Data model specification](data-model.md), [Verification & traceability matrix](traceability-matrix.md), [UI/UX design specification](ui-ux-design-specification.md), [DESIGN.md](DESIGN.md), and provenance schemas |
+| **Explanation** | *"Why is the system designed this way?"* | Understanding-oriented rationale and context | [Product scope](product-scope.md), [Architecture decisions](architecture-decisions.md), [Security, privacy, and AI safeguards](security-privacy-ai.md), [Philippine content provenance](philippine-content-provenance.md) |
 
 These are intended locations for information, not a claim that every linked document or contract is complete or production-ready. Check each resource's status before relying on it.
 
@@ -185,7 +184,7 @@ The table records the observed baseline at the time of this Stage 1 draft and th
 | | `CONTRIBUTING.md` | Web-specific test/lint commands and PR rules | Present on main (Stage 3) |
 | | `SECURITY.md` | Web security reporting pointer | Present on main (Stage 3; Private Vulnerability Reporting enabled) |
 | | PR / Issue Templates | Web UI change and test evidence templates | Present on main (Stage 3) |
-| **`CC-207B_26-27_Final-Project`** (`BSIT-3A/LittleSteps`) | All files | Open for changes | Scaffold commit with README, contributing guide, pull request template and CI |
+| **`CC-207B_26-27_Final-Project`** (`BSIT-3A/LittleSteps`) | All files | Complete M1–M4 implementation + M5 release readiness | Active on `main` (and PR #52 refactor); README, contributing guide, PR template, AI usage log, strict `flutter analyze --fatal-infos`, and `Flutter CI/Analyze and Test` |
 
 ---
 

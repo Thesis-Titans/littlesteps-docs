@@ -2,97 +2,104 @@
 
 ## Project Overview
 
-LittleSteps is an academic software development project focused on helping parents and caregivers support the early learning and development of children.
+LittleSteps is an early-learning and caregiver support application helping parents and caregivers of children aged 0–5 years (0–71 months) plan screen-free home play, record private non-diagnostic observations, and review weekly participation summaries.
 
-### Courses Involved
+### Coordinated Academic Courses
 
-- **CC 207B — Applications Development and Emerging Technologies:** Flutter application development.
-- **CIT 210 — Web Systems and Technologies:** React web application, API, and database integration.
-- **CIT 246 — IT Project Management:** Project planning, documentation, scheduling, and management.
+- **CC 207B — Applications Development and Emerging Technologies:** Cross-platform Flutter application (`Thesis-Titans/CC-207B_26-27_Final-Project`, folder `BSIT-3A/LittleSteps`), software documentation and presentation slides due on or before **December 1, 2026** (Google Classroom), with live demonstration and individual code defense on **December 2, 2026 (morning)**.
+- **CIT 210 — Web Systems and Technologies:** Responsive React web application (`littlesteps-react`), shared Express REST API (`littlesteps-api`), external API integrations (Open Library, Open-Meteo, Google Gemini), Cloud Firestore persistence, **System Documentation (IMRAD format)**, and live presentation on **December 4, 2026 at 8:00 AM**.
+- **CIT 246 — IT Project Management:** Simulated 6–12 month IT Project Management Plan exercise for the CSWDO La Paz–Lapuz District office (**Project Management Plan submission due before December 3, 2026; no presentation required**; maintained separately from the one-month software build).
 
-### What the System Does
+### Core Capabilities
 
-The application has six core features:
+LittleSteps implements six core functional capabilities (FR-01 through FR-06):
 
-1. **Child Profile and Milestone Tracking** — record child information and caregiver observations.
-2. **Daily Activity Planning and Tracking** — plan and track everyday learning activities.
-3. **Private Observation Journal** — keep personal notes about a child's experiences and progress.
-4. **Story, Rhyme, and Learning Activity Library** — explore learning resources suitable for young children.
-5. **Weekly Progress Summary** — review recorded activities and observations without making unsupported developmental claims.
-6. **AI Activity Suggestion Helper** — recommend activities from a reviewed catalog, with a fallback when AI is unavailable.
+1. **Child Profile and Milestone Tracking** — data-minimized child profiles (nickname + birth month or age band) and non-diagnostic observational milestone prompts.
+2. **Daily Activity Planning and Tracking** — daily play scheduling, completion toggling with undo, quick filters, and optional coarse-location weather play hints.
+3. **Private Observation Journal** — caregiver-isolated qualitative notes excluded from external AI prompts, telemetry, and local offline caches.
+4. **Story, Rhyme, and Learning Activity Library** — searchable Firestore-backed Philippine early-learning catalog, Open Library picture-book discovery, saved Family Bookshelf, and in-app traditional rhymes (English, Filipino, Hiligaynon).
+5. **Weekly Progress Summary** — deterministic, factual Monday–Sunday reflection recaps without diagnostic scores or developmental rankings.
+6. **AI Activity Suggestion Helper and Storybook Companion** — server-side Google Gemini selection and guardrailed custom material adaptation with deterministic catalog fallback.
 
-### Technical Direction
+### Technical Architecture
 
-- **Frontend:** React for the web (`littlesteps-react`) and Flutter for mobile (course fork `CC-207B_26-27_Final-Project`, folder `BSIT-3A/LittleSteps`).
-- **Backend:** A shared API and data model (`littlesteps-api`).
-- **Database and services:** Firebase Authentication, Cloud Functions (2nd Gen), and Cloud Firestore.
-- **AI:** A constrained helper for activity suggestions, not a diagnostic tool.
+- **Frontend Clients:** React 19 + TypeScript + Vite (`littlesteps-react`) and Flutter + Dart Material 3 (`CC-207B_26-27_Final-Project`, `BSIT-3A/LittleSteps`).
+- **Shared Backend:** Node.js 22 + Express 5 + TypeScript + Zod REST API (`littlesteps-api`) hosted on Firebase Cloud Functions (2nd Gen, `asia-southeast1`).
+- **Database & Auth:** Firebase Authentication and Cloud Firestore (caregiver-scoped subcollections plus global seeded catalog collections `catalog_activities`, `catalog_milestones`, `catalog_rhymes`).
+- **External Services:** Open Library REST API (picture books), Open-Meteo Forecast API (coarse city-level weather hints), and Google Gemini REST API (`v1beta`, server-pinned `GEMINI_MODEL`).
 
-### Project Context and Current Status
+### Project Status
 
-The project has initiated Sprint 1 foundation implementation on the API and React web client, with the prototype walkthrough running alongside the foundation build.
+All six core functional capabilities (FR-01–FR-06) and cross-cutting prerequisites (PRQ-01–PRQ-03) are implemented across the shared API, React web client, and Flutter mobile client. The project is in **Milestone 5 (Release-Readiness Review & Final Evaluation Prep)** with automated CI checks active across all four repositories.
 
-The work must remain evidence-based: the initial caregiver research is limited, so user needs and design assumptions still require further validation. The prototype is intended to demonstrate the planned screens and workflows; it should not be mistaken for a fully functioning application.
+This repository is the canonical Level 2 source of truth for system scope, architecture decisions, API and data specifications, security and privacy safeguards, content provenance, and academic course deliverables.
 
-The project also needs to meet the separate academic requirements of the three courses, including implementation, documentation, presentation, demonstration, and code defense as applicable.
+---
 
-In short: LittleSteps is one coordinated academic project with mobile, web, and project-management deliverables, intended to make everyday early-learning support more organized and accessible for caregivers.
+## Getting Started & Local Demo CLI
 
-This repository is the canonical home for product scope, decisions, research provenance, privacy and safety requirements, and course deliverables.
+- [Developer Onboarding Guide](docs/getting-started.md): step-by-step setup for Node.js 22, Java 21, Flutter SDK, Firebase Local Emulator Suite, and Firestore catalog seeding.
+- [Cross-Platform Demo CLI](scripts/demo-cli/README.md): interactive Node.js CLI (`node scripts/demo-cli/run-demo.mjs`) for checking prerequisites (`doctor`), starting local emulators and clients (`start`), seeding demo data (`seed`), and managing Android ADB / APK workflows (`android`).
 
-## Getting started
-- [Developer onboarding guide](docs/getting-started.md): step-by-step tutorial for Node.js 22, Java 21, Firebase Emulators, and local full-stack development. Verify the guide against the current code before relying on it.
+---
 
-## Canonical Documentation Suite (15 Specifications)
+## Canonical Documentation Suite
 
-All system-wide specifications live centrally in `docs/` and adhere to ISO/IEC/IEEE, PMBOK, and Diátaxis standards:
+All system-wide specifications live in `docs/` and follow ISO/IEC/IEEE, PMBOK, OpenAPI 3.1, WCAG 2.2 AA, and Diátaxis standards:
 
-### 1. Requirements & System Scope
-- [Product scope](docs/product-scope.md) (ISO/IEC/IEEE 29148): six core functional requirements (FR-01..06), single-caregiver actor boundary, and IN/OUT scope definitions.
-- [Verification and traceability matrix](docs/traceability-matrix.md) (ISO 29148 / PMBOK): end-to-end traceability linking requirements and CIT 210 rubric items to test suites, tracking issues, and evidence.
+### 1. Requirements & Traceability
+- [Product Scope](docs/product-scope.md) (ISO/IEC/IEEE 29148): six core functional requirements (FR-01..06), single-caregiver actor boundary, age navigation bands, and explicit IN/OUT boundaries.
+- [Verification & Traceability Matrix](docs/traceability-matrix.md) (ISO 29148 / PMBOK): end-to-end traceability linking FRs, PRQs, NFRs, and CIT 210 rubric criteria to implementation and verification evidence.
 
-### 2. Architecture, API & Security
-- [Architecture decisions](docs/architecture-decisions.md) (ISO/IEC/IEEE 42010): Architecture Decision Records (ADRs 001–014) detailing system topology, Firebase Cloud Functions, and Gemini AI integration.
-- [API reference and integration guide](docs/api-reference.md) (OpenAPI 3.1 & ISO 42010): REST endpoints catalog, Open Library data integration, 3-tier AI fallback engine, error codes, and sequence diagrams.
-- [Data model specification](docs/data-model.md) (IEEE 1016): Cloud Firestore collection hierarchies, entity schemas, and data lifecycle requirements.
-- [Security, privacy, and AI safeguards](docs/security-privacy-ai.md) (RA 10173 / RA 12199): mandatory token verification, BOLA non-leakage defenses, and child privacy guardrails.
+### 2. Architecture, API, Data & Security
+- [Architecture Decisions](docs/architecture-decisions.md) (ISO/IEC/IEEE 42010): Architecture Decision Records (ADRs 001–016) covering shared backend topology, Firestore catalog migration, hybrid AI guardrails, and external integrations.
+- [API Reference & Integration Guide](docs/api-reference.md) (OpenAPI 3.1 / ISO 42010): REST endpoint catalog, Open Library and Open-Meteo integrations, AI fallback hierarchy, caching rules, and standardized error envelopes.
+- [Data Model Specification](docs/data-model.md) (IEEE 1016): Cloud Firestore multi-tenant collection hierarchy, entity schemas, global catalog collections, and data lifecycle rules.
+- [Security, Privacy, and AI Safeguards](docs/security-privacy-ai.md) (RA 10173 / RA 12199): Bearer token verification, BOLA non-leakage defenses, data minimization, and 3-layer AI safety guardrails.
 
-### 3. UI/UX Design & User Research
-- [UI/UX design specification](docs/ui-ux-design-specification.md) (ISO 9241 / WCAG 2.2 AA): human-computer interaction principles, responsive design system, and prototype validation requirements.
-- [Prototype traceability and storyboards](docs/prototype-traceability-storyboards.md) (ISO 9241): provisional caregiver scenarios, minimal prototype scope (P0/P1), and walkthrough acceptance criteria.
-- [Parent walkthrough guide](docs/parent-walkthrough-guide.md) (ISO 9241-11:2018): practical field protocol, ethical consent script, task matrix, and findings template for caregiver usability evaluation.
+### 3. UI/UX Design & Usability Evaluation
+- [Design System Brief (DESIGN.md)](docs/DESIGN.md) (ISO 9241 / WCAG 2.2 AA): machine-readable token brief, color/type/spacing rules, component inventory, and React/Flutter agent guidance.
+- [UI/UX Design Specification](docs/ui-ux-design-specification.md) (ISO 9241 / WCAG 2.2 AA): HCI principles, ergonomic targets, voice and wording rules, 5-state interaction matrix, and Flutter Material 3 adaptation.
+- [Usability & Design Evaluation](docs/usability-and-design-evaluation.md) (ISO 9241-11 / Nielsen Heuristics / WCAG 2.2 AA): M0 prototype storyboards, informal caregiver walkthrough protocol, heuristic audit, and React/Flutter/Figma design review rubric.
 
-### 4. Content Research & Philippine Provenance
-- [Philippine content provenance](docs/philippine-content-provenance.md) (RA 12199 / ECCD): source candidates, item-level citation fields, and content-review gates.
-- [Research register](docs/research-register.md): external statutory, regulatory, and public health sources informing product design.
+### 4. Content Provenance & Research
+- [Philippine Content Provenance](docs/philippine-content-provenance.md) (RA 12199 / ECCD / DepEd): statutory baseline, item-level provenance schemas, Firestore catalog audit, review gates, and external technical/statutory research register.
 
-### 5. Engineering, Governance & Delivery
-- [Developer onboarding guide](docs/getting-started.md) (Diátaxis Tutorial): step-by-step local setup for Node.js 22, Java 21, and Firebase Local Emulator Suite.
-- [Development workflow](docs/development-workflow.md) (ISO/IEC/IEEE 12207): branch, review, and verification expectations.
-- [Execution plan](docs/execution-plan.md) (PMBOK / ISO 21500): delivery milestones (M0–M5), work breakdown structure, and synchronized academic deadlines.
-- [Documentation standards](docs/documentation-standards.md) (Diátaxis Governance): canonical documentation hierarchy, academic deliverables mapping, and repository consistency.
+### 5. Onboarding, Governance & Delivery
+- [Developer Onboarding Guide](docs/getting-started.md) (Diátaxis Tutorial): reproducible local setup for API, Web, Mobile, and Firebase Emulators.
+- [Execution Plan](docs/execution-plan.md) (PMBOK / ISO 21500): delivery milestones (M0–M5), work breakdown structure, and synchronized academic calendar.
+- [Documentation Standards](docs/documentation-standards.md) (Diátaxis Governance): three-tier documentation hierarchy, standards mapping, and repository consistency baseline.
+
+---
 
 ## Academic Course Deliverables
+
 - [Academic Deliverables Index](docs/academic/README.md): centralized directory for course-specific evaluation packages.
-- [CIT 246 — IT Project Management Plan](docs/academic/cit246/README.md): project management plan packages (including [Checkpoint 1 Concept Proposal](docs/academic/cit246/checkpoint-1-concept.md)).
-- [CC 207B — Applications Development](docs/academic/cc207b/README.md): Flutter mobile client deliverables and defense requirements.
-- [CIT 210 — Web Systems & Technologies](docs/academic/cit210/README.md): React web application and API integration deliverables.
+- [CC 207B — Applications Development](docs/academic/cc207b/README.md): Flutter mobile client deliverables, software documentation, AI specification, and defense requirements.
+- [CIT 210 — Web Systems & Technologies](docs/academic/cit210/README.md): React web application, shared API integration, and live demonstration plan.
+- [CIT 246 — IT Project Management Plan](docs/academic/cit246/README.md): simulated 6–12 month IT Project Management Plan package and Checkpoint 1 concept.
+
+---
 
 ## Repositories
-- [Documentation](https://github.com/Thesis-Titans/littlesteps-docs)
-- [API](https://github.com/Thesis-Titans/littlesteps-api)
-- [Web](https://github.com/Thesis-Titans/littlesteps-react)
-- [Mobile](https://github.com/Thesis-Titans/CC-207B_26-27_Final-Project/tree/main/BSIT-3A/LittleSteps) (CC 207B course fork)
 
-## Community & Contribution
-- [Contribution guidelines](CONTRIBUTING.md): branch conventions, verification expectations, synthetic data rules, and PR review workflow.
-- [Security policy](SECURITY.md): vulnerability reporting, responsible disclosure, and academic response expectations.
-- [Code of conduct](CODE_OF_CONDUCT.md): expectations for respectful academic collaboration.
+- [Documentation (`littlesteps-docs`)](https://github.com/Thesis-Titans/littlesteps-docs)
+- [Backend API (`littlesteps-api`)](https://github.com/Thesis-Titans/littlesteps-api)
+- [Web Client (`littlesteps-react`)](https://github.com/Thesis-Titans/littlesteps-react)
+- [Mobile Client (`CC-207B_26-27_Final-Project`, `BSIT-3A/LittleSteps`)](https://github.com/Thesis-Titans/CC-207B_26-27_Final-Project/tree/main/BSIT-3A/LittleSteps)
 
-## Status
-This is an initial foundation proposal for review, not evidence of a deployed or production-ready system. Test locally before deployment. Review privacy obligations, Firebase billing, and GitHub repository settings before a public demo or production use.
+---
 
-The age bands are app navigation categories, not clinical developmental classifications. Milestone content is observational and educational, not diagnostic.
+## Community & Governance
 
-## Rights Notice — Wording Pending Review
-**All Rights Reserved (Academic Evaluation Only)** is the project's intended rights policy. The repositories are public for academic course evaluation, faculty review, and demonstration; this notice does not technically restrict who can view or interact with public repositories. The wording and intended restrictions have not been represented as legally reviewed. Before relying on the notice as a formal legal instrument, seek review from the course instructor or an appropriate legal resource. No open-source license is intentionally granted by this project; do not interpret this notice as a reviewed license instrument.
+- [Contribution Guidelines](CONTRIBUTING.md): branching, PR reviews, coding standards, local verification commands, and synthetic data rules.
+- [Security Policy](SECURITY.md): private vulnerability reporting, academic response expectations, and child privacy safeguards.
+- [Code of Conduct](CODE_OF_CONDUCT.md): standards for respectful academic collaboration.
+
+---
+
+## Boundaries & Rights Notice
+
+LittleSteps is an academic software evaluation system. Age bands are app navigation categories, not clinical developmental classifications, and milestone prompts are observational and educational, never diagnostic.
+
+**All Rights Reserved (Academic Evaluation Only)** is the project's intended rights policy. Repositories are public for academic evaluation, faculty review, and course demonstration; public visibility does not grant an open-source license for general reuse, modification, or commercial redistribution. This notice is not a formally reviewed legal instrument; seek faculty or legal review before relying on it for commercial or public deployment.

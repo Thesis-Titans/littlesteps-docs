@@ -1,0 +1,91 @@
+{
+  "caregiver": {
+    "email": "littlesteps@demo.com",
+    "password": "Password123!"
+  },
+  "children": [
+    {
+      "nickname": "Maya",
+      "ageBand": "12-23m",
+      "plans": [
+        { "activityId": "act-008", "dayOffset": 0, "status": "planned" },
+        { "activityId": "act-003", "dayOffset": 0, "status": "completed" },
+        { "activityId": "act-009", "dayOffset": -1, "status": "completed" },
+        { "activityId": "act-010", "dayOffset": -2, "status": "completed" },
+        { "activityId": "act-008", "dayOffset": -7, "status": "completed" },
+        { "activityId": "act-003", "dayOffset": -8, "status": "completed" }
+      ],
+      "milestones": [
+        {
+          "milestoneId": "lan-12-01",
+          "status": "observed",
+          "dayOffset": 0,
+          "notes": "Smiled, turned head when called, and pointed to her cup."
+        },
+        {
+          "milestoneId": "mot-12-01",
+          "status": "observed",
+          "dayOffset": -2,
+          "notes": "Walked four steady steps across the mat toward a cushion."
+        },
+        {
+          "milestoneId": "cog-12-01",
+          "status": "observed",
+          "dayOffset": -5,
+          "notes": "Nested two plastic cups together after watching once."
+        }
+      ],
+      "journal": [
+        {
+          "dayOffset": 0,
+          "content": "Maya enjoyed stacking empty plastic cups after breakfast."
+        },
+        {
+          "dayOffset": -2,
+          "content": "Sang Bahay Kubo before afternoon nap and waved both hands."
+        },
+        {
+          "dayOffset": -5,
+          "content": "Rainy afternoon indoors—crawled over soft pillows laughing for ten minutes."
+        }
+      ],
+      "books": [
+        {
+          "id": "OL45804W",
+          "title": "Goodnight Moon",
+          "authors": ["Margaret Wise Brown"],
+          "coverUrl": "https://covers.openlibrary.org/b/id/8225266-M.jpg?default=false",
+          "subjects": ["Bedtime", "Stories in rhyme"]
+        },
+        {
+          "id": "OL1968368W",
+          "title": "The Very Hungry Caterpillar",
+          "authors": ["Eric Carle"],
+          "coverUrl": "https://covers.openlibrary.org/b/id/8231990-M.jpg?default=false",
+          "subjects": ["Picture books", "Animals", "Counting"]
+        }
+      ]
+    },
+    {
+      "nickname": "Leo",
+      "ageBand": "6-11m",
+      "plans": [
+        { "activityId": "act-002", "dayOffset": 0, "status": "planned" },
+        { "activityId": "act-012", "dayOffset": -1, "status": "completed" }
+      ],
+      "milestones": [],
+      "journal": [],
+      "books": []
+    },
+    {
+      "nickname": "Tala",
+      "ageBand": "24-35m",
+      "plans": [
+        { "activityId": "act-004", "dayOffset": -7, "status": "completed" }
+      ],
+      "milestones": [],
+      "journal": [],
+      "books": []
+    }
+  ]
+}

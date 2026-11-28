@@ -1,12 +1,14 @@
-# CIT 246 Presentation Outline
+# CIT 246 Presentation Outline *(Optional / Archived Reference)*
 
-**For:** the final presentation on 2 December 2026: 15 minutes plus 5 minutes of questions; every member speaks; slides are submitted with the document  
-**Version:** 1.1 draft, 4 November 2026  
-**Related Documents:** [Executive Summary](archive/02-executive-summary.md), [CIT 246 Deliverables](../README.md)
+> [!NOTE]
+> **No Presentation Required:** For CIT 246, only the IT Project Management Plan is required to be submitted **before December 3, 2026**; no oral presentation is required. This outline is retained solely as an optional reference.
+
+**Version:** 1.2 (aligned with compiled PMP), 27 November 2026  
+**Related Documents:** [Compiled Project Management Plan](CIT246_FinalProject_ThesisTitans.md), [CIT 246 Deliverables](README.md)
 
 ---
 
-Thirteen slides in 15 minutes, about 70 seconds each, with 5 minutes left for questions. Each member speaks for exactly 5:00, because the rubric marks a group down when one or two members dominate. Speakers take the slides closest to the sections they led (see the [title page](archive/01-title-page.md)); because Mark leads eight sections, Faith presents the WBS and the closing slides. All three rehearse the whole deck and answer questions on any section.
+Thirteen slides in 15 minutes, about 70 seconds each, with 5 minutes left for questions. Each member speaks for exactly 5:00, because the rubric marks a group down when one or two members dominate. Speakers take the slides closest to the sections they led (see Appendix C in [CIT246_FinalProject_ThesisTitans.md](CIT246_FinalProject_ThesisTitans.md)); because Mark leads eight sections, Faith presents the WBS and the closing slides. All three rehearse the whole deck and answer questions on any section.
 
 | # | Slide | Speaker | Time | Key content |
 |---|---|---|---|---|

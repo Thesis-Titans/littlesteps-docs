@@ -636,27 +636,31 @@ def find_chrome():
     c = os.environ.get("CHROME")
     cand = [c] if c else []
     cand += glob.glob(os.path.expanduser("~/.cache/puppeteer/chrome-headless-shell/*/*/chrome-headless-shell"))
-    cand += [shutil.which(n) for n in ("chrome-headless-shell", "google-chrome", "chromium", "chromium-browser")]
+    cand += glob.glob(os.path.expanduser("~/.cache/puppeteer/chrome/*/*/chrome"))
+    cand += [shutil.which(n) for n in ("chrome-headless-shell", "chromium", "chromium-browser", "google-chrome")]
     return next((x for x in cand if x and os.path.exists(x)), None)
 
 
 def to_png(svg, png, w, h):
-    cv = shutil.which("convert")
-    if cv:
-        subprocess.run([cv, "-density", "300", svg, "-resize", f"{w}x{h}!", png], check=True)
-        return True
     chrome = find_chrome()
     if chrome:
         with tempfile.TemporaryDirectory() as td:
             html = os.path.join(td, "p.html")
+            tmp_png = os.path.join(td, "out.png")
             with open(html, "w") as f:
-                f.write(f'<html><body style="margin:0"><img src="file://{svg}" '
+                f.write(f'<html><body style="margin:0;background:#fff"><img src="file://{svg}" '
                         f'style="display:block;width:{w}px;height:{h}px"></body></html>')
-            subprocess.run([chrome, "--headless=new", "--no-sandbox", "--hide-scrollbars", "--force-device-scale-factor=1",
-                            f"--window-size={w},{h}", f"--screenshot={png}", "file://" + html],
+            subprocess.run([chrome, "--headless=new", "--no-sandbox", "--disable-gpu", "--hide-scrollbars",
+                            "--force-device-scale-factor=1", f"--window-size={w},{h}",
+                            f"--screenshot={tmp_png}", "file://" + html],
                            check=True, capture_output=True)
-        if os.path.exists(png) and os.path.getsize(png) > 0:
-            return True
+            if os.path.exists(tmp_png) and os.path.getsize(tmp_png) > 0:
+                shutil.move(tmp_png, png)
+                return True
+    cv = shutil.which("convert")
+    if cv:
+        subprocess.run([cv, "-density", "300", svg, "-resize", f"{w}x{h}!", png], check=True)
+        return True
     print("no browser or ImageMagick: PNG skipped for", svg)
     return False
 

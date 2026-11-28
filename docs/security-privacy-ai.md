@@ -3,7 +3,7 @@
 **Status:** Canonical Security & Non-Functional Requirements Baseline  
 **Governing Standard:** ISO/IEC/IEEE 29148:2018 (Non-Functional Requirements) & RA 10173  
 **Owner:** Mark Alvin Cadangin (Technical Lead)  
-**Last Reviewed:** 2026-10-26  
+**Last Reviewed:** 2026-11-27  
 **Related Documents:** [API Reference & Integration Guide](api-reference.md), [Product Scope](product-scope.md), [Data Model Specification](data-model.md), [Traceability Matrix](traceability-matrix.md)
 
 ---
@@ -29,7 +29,7 @@ LittleSteps processes sensitive family and early-learning observations. System a
 - **Verification Rule:** The backend Node.js API verifies tokens using the Firebase Admin SDK. The trusted caller identity is derived strictly from the decoded cryptographic token `uid`. The system must never trust or accept a client-supplied user identifier in URL parameters or request bodies as the authenticated identity.
 
 ### NFR-SEC-02: Broken Object Level Authorization (BOLA) Defense
-- **Requirement:** Every child-scoped operation (child profiles, activity history, milestone observations, journal entries, progress summaries) must execute server-side authorization checks prior to performing any database read, mutation, or deletion.
+- **Requirement:** Every child-scoped operation (child profiles, activity plans, milestone observations, journal entries, saved family bookshelf books, and progress summaries) must execute server-side authorization checks prior to performing any database read, mutation, or deletion.
 - **Verification Rule:** The API checks that `child.caregiverId === authenticatedUid`. Any attempt to access, modify, or delete a resource belonging to another caregiver must result in a safe `404 Not Found` response with error code `RESOURCE_NOT_FOUND`. A `403 Forbidden` response must not be returned for cross-caregiver resource lookups because returning 403 confirms that the resource ID exists, leaking metadata to potential attackers.
 - **Firestore Direct Access Boundary:** Firebase Admin SDK calls within Cloud Functions bypass Firestore Security Rules. Authorization checks must be implemented in API application code, while restrictive Firestore Security Rules must be deployed to block unauthorized direct client-SDK database access.
 
@@ -88,7 +88,7 @@ To satisfy the **CC 207B AI-Powered Feature Requirements (§2a–d, §3)**, the 
 
 ### NFR-AI-01: Relevance & Problem Fit (CC 207B §2a Relevance)
 - **Caregiver Need:** Caregivers often have limited time, diverse home settings, and arbitrary materials on hand (e.g., "recycled boxes, plastic cups, spoons").
-- **Technical Rationale:** Simple keyword matching often matches poorly when processing unstructured natural-language descriptions of household materials. The semantic helper matches caregiver constraints to eligible activity IDs from the reviewed catalog without rigid query rules. The storybook companion ([ADR-010](architecture-decisions.md)) is the one place the model writes new text: a short play idea for a public book, which the server validates before showing (NFR-AI-04).
+- **Technical Rationale:** Simple keyword matching often matches poorly when processing unstructured natural-language descriptions of household materials. The semantic helper matches caregiver constraints to eligible activity IDs from the reviewed catalog without rigid query rules. When safe household items have zero catalog overlap and `allowCustom: true` is sent, a 3-layer defense-in-depth guardrail pipeline generates one bounded custom material adaptation (`source: "ai_custom"`, `reviewed: false`). The storybook companion (`POST /api/v1/ai/story-activity`) and activity adaptation endpoint (`POST /api/v1/ai/adapt`) similarly apply strict schema, hazard, and non-diagnostic validation before returning any text (NFR-AI-04).
 
 ### NFR-AI-02: Server-Side Execution & Credential Isolation (CC 207B §2b Security)
 - **Execution Boundary:** All AI model invocations (Gemini API free tier under [ADR-008](architecture-decisions.md), deferring Vertex AI / paid tiers) execute exclusively server-side inside Cloud Functions.
@@ -142,7 +142,7 @@ flowchart TD
 
 ### NFR-REL-01: Performance & Operational Limits
 - **API Response Latency:** Standard CRUD operations (profiles, activities, journal, summaries) must respond within 500ms under local emulator conditions.
-- **Rate & Cost Limiting:** AI suggestion endpoints enforce per-caregiver rate limits to prevent API quota exhaustion and denial-of-wallet attacks. This is implemented on `POST /api/v1/ai/recommendations` (API PR #33): 10 requests per signed-in user per UTC clock hour, plus a per-address cap (default 30 per hour, configurable with `AI_IP_LIMIT_PER_HOUR`). When a limit is reached, the API responds with HTTP 429 `RATE_LIMITED` and a `Retry-After` header holding the real seconds until the window resets, and the client shows the rate-limited state or the Tier 3 catalog. If the counting store is unavailable the check fails open.
+- **Rate & Cost Limiting:** All three AI endpoints (`POST /api/v1/ai/recommendations`, `POST /api/v1/ai/story-activity`, and `POST /api/v1/ai/adapt`) enforce per-caregiver rate limits to prevent API quota exhaustion and denial-of-wallet attacks: 10 requests per signed-in user per UTC clock hour (persisted in Firestore `rate_limits`), plus a per-address cap (default 30 per hour, configurable with `AI_IP_LIMIT_PER_HOUR`). When a limit is reached, the API responds with HTTP 429 `RATE_LIMITED` and a `Retry-After` header holding the real seconds until the window resets, and clients show a calm wait notice alongside non-AI catalog picks. If the counting store is unavailable the check fails open.
 - **Payload Constraints:** Request body parsers enforce a 100KB payload limit to prevent memory exhaustion attacks.
 
 ---

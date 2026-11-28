@@ -3,9 +3,9 @@
 **Status:** Canonical Design Specification for Prototype Validation  
 **Governing Standard:** ISO 9241 (Ergonomics of Human-System Interaction) & WCAG 2.2 AA  
 **Owner:** Nherie (Frontend Lead) & Faith (Usability Lead)  
-**Last Reviewed:** 2026-11-23  
+**Last Reviewed:** 2026-11-27  
 **Associated Gate:** [Docs Issue #15 — [M0] Plan and validate the LittleSteps UI prototype before implementation](https://github.com/Thesis-Titans/littlesteps-docs/issues/15)  
-**Related Documents:** [Product Scope](product-scope.md), [Traceability Matrix](traceability-matrix.md), [Prototype Traceability & Storyboards](prototype-traceability-storyboards.md), [Philippine Content Provenance](philippine-content-provenance.md)  
+**Related Documents:** [Product Scope](product-scope.md), [Traceability Matrix](traceability-matrix.md), [Usability & Design Evaluation](usability-and-design-evaluation.md), [Philippine Content Provenance](philippine-content-provenance.md)  
 **Prototype Medium:** Figma, shared by the React and Flutter clients (§1, §9). This gate changes no code in `littlesteps-api`, `littlesteps-react`, or the Flutter app.
 
 ---
@@ -45,7 +45,7 @@ graph TD
 | **4. Consistency & Standards** | Caregivers must not re-learn interaction models between desktop and mobile. | One meaning per color (§6.3 semantic color map). Every page title matches the tab or menu item that opened it, with any slogan moved to the subtitle. Standard bottom tab bar on mobile; persistent sidebar on desktop. |
 | **5. Error Prevention** | Typing long notes while supervising toddlers leads to errors and frustration; recording for the wrong child is easy when two children share an account. | Constrained UI inputs: month and year pickers for the child's birth month, and chips for materials, time and setting. The "For [child]" chip on every child-scoped form prevents recording against the wrong child. Shared-phone protection (for example a lock) is a hypothesis to test, not a requirement (§4). |
 | **6. Recognition Over Recall** | Sleep-deprived caregivers have diminished working memory capacity. | Activity cards display required household items as visual pill tags at the top of the card. Step-by-step instructions chunked into a maximum of 3–4 concise bullet points. Form fields keep their labels and hints visible outside the field; placeholders hold only short examples. |
-| **7. Flexibility & Efficiency** | Caregiver time availability varies wildly from day to day (5 minutes vs 30 minutes). | 1-tap quick filters on the home dashboard: *"Under 10 mins"*, *"No materials needed"*, *"Indoor"*. |
+| **7. Flexibility & Efficiency** | Caregiver time availability varies wildly from day to day (5 minutes vs 30 minutes). | 1-tap quick filters on the home dashboard: *"Under 10 mins"*, *"No materials needed"*, *"Indoor"*, *"Outdoor"*. |
 | **8. Aesthetic & Minimalist Design** | Visual clutter and dense text exacerbate parental stress. | Clean, spacious layouts with high whitespace. Soft neutral backgrounds (`#F7F7ED`, `#FFFFFF`). **Strictly zero gamification streaks, countdown timers, or guilt-inducing badges.** |
 | **9. Help Recognize & Recover from Errors** | Technical error codes alienate non-technical caregivers. | Non-technical, reassuring error copy that never overstates what was saved: *"We couldn't connect right now. Your note hasn't been saved yet. Keep this screen open and tap Retry when you're back online."* |
 | **10. Contextual Coaching & Help** | Parents need guidance on *how* to facilitate play, not just instructions, and a known place to turn when they have a question or a worry. | Embedded **Caregiver Coaching Tips** on activity cards (*"Tip: Follow your child's lead. If they look away, it's okay to stop or switch games."*). A **Help and support** item in the account menu, always in the same place, covers how LittleSteps works, what to do if you're worried about your child, and how to contact the team. |
@@ -120,7 +120,7 @@ Parents read LittleSteps in short bursts, often one-handed, sometimes in their s
 
 | Instead of | Say | Note |
 |---|---|---|
-| AI helper · Generate another · catalog | Idea helper · Another idea · our activity list | AI output keeps the "Suggested by AI" badge. |
+| AI helper · Generate another · Change answers · catalog | Idea helper · Another idea · Edit preferences · our activity list | AI output keeps the "Suggested by AI" badge. |
 | Cognitive · Motor · Language · Socio-Emotional | Thinking · Moving · Talking · Feelings | Labels only; the data model keeps `cognitive`, `motor`, `language`, `socioEmotional`. |
 | Domain | Kind of play | |
 | Age band · Young Toddlers (12–23 months) | Child's age · 12–23 months | |
@@ -129,7 +129,7 @@ Parents read LittleSteps in short bursts, often one-handed, sometimes in their s
 | This is not a developmental assessment | It's not a test | Once per screen. |
 | Not a Diagnostic Tool (banner title) | Not a diagnostic tool | Follows the sentence-case rule. |
 | Non-diagnostic banner body | LittleSteps shares play ideas and things to look for. It's not a test. Children develop at different rates. Talk to a health professional, like your pediatrician or barangay health worker, if you have concerns. | Canonical banner wording across spec, Figma and app shell. |
-| Provisional Academic Reference — Pending Review | Source: early learning guide · still being checked | Honest about review status without sounding unsafe. |
+| Provisional Academic Reference — Pending Review (internal review note) | Documented source citation (e.g., `ECCD Council NELF`, `DepEd MATATAG`, `CDC`) | Never expose internal review placeholders in user-facing UI; review governance status lives in [Philippine Content Provenance](philippine-content-provenance.md). |
 | Never sent to AI, analytics or error logs | Only you can see these notes. We never share them. | |
 | A JSON file of everything in your account | A copy of everything you've saved | |
 | Talk to a pediatrician or health worker | Talk to your pediatrician or barangay health worker | |
@@ -170,7 +170,7 @@ This matrix records the evidence or policy that informs each design choice. Publ
 | **Caregiver-Facing UI (Not Child Screen)** | WHO (2020) Responsive Caregiving; WHO (2019) Screen Limits | Keeps the product focused on caregiver guidance and adult-child interaction. | Interface designed exclusively for adult caregiver guidance; no child-direct game loops. |
 | **Data-Minimized Child Model** | [Security, Privacy, and AI Guardrails](security-privacy-ai.md); NPC guidance; [Data Model](data-model.md) §2.2 | Reduces collection of unnecessary child personal data. | Stores a nickname (`name`), the derived age band (`ageBand`) and an optional birth month (`birthMonth`, `YYYY-MM`) only; **no exact birth dates, surnames or photos**. |
 | **Non-Diagnostic Observation Prompts** | [Product Scope](product-scope.md); RA 12199; preliminary P01 interview (exploratory only) | Keeps the interface from presenting observations as clinical pass/fail judgments. Whether the wording is clear and reassuring requires testing. | Replaces "Pass/Fail" with "Seen on [date]" / "Not seen yet"; displays a clear non-diagnostic explanation. |
-| **Provisional Content Attribution** | [Philippine Content Provenance](philippine-content-provenance.md) (Issue #3 Gate) | Avoids misleading claims of official government endorsement or clinical validation. | Catalog cards display: *"Provisional Academic Reference — Pending Review"*; no unreviewed claims. |
+| **Source Content Attribution** | [Philippine Content Provenance](philippine-content-provenance.md) (Issue #3 Gate) | Avoids misleading claims of official government endorsement or clinical validation while keeping caregiver UI clean. | Activity and milestone cards show verifiable public source citations (`ECCD Council NELF`, `DepEd MATATAG`, `CDC`, `WHO/UNICEF`) alongside the non-diagnostic notice; internal review status (`source_checked`) is tracked in documentation and seed metadata rather than exposed as engineering placeholders. |
 | **Household-Material Activity Catalog** | UNICEF Care for Child Development; preliminary P01 interview (exploratory only) | Tests whether activities using common household materials are practical for caregivers. | Prototype examples use common materials; caregiver usability testing checks availability, clarity, and suitability. |
 | **Offline-Resilient Workflow** | PSA 2024 NICTHS (verify the cited statistic and its context before publication) | Explores access under intermittent connectivity or data constraints. | Prototype demonstrates only simulated offline behavior; real caching, persistence, and synchronization require implementation tests. |
 | **Multilingual Support (EN / FIL / HIL)** | Product scope; RA 12027 and RA 12199 as context requiring careful interpretation; caregiver language needs remain unvalidated | Tests whether caregivers can understand instructions in their preferred language. | If included in the prototype, language selection and sample copy are illustrative; translation quality and user comprehension require review. |
@@ -224,7 +224,7 @@ Sign-in and the settings, privacy-notice, about and help views cover PRQ-01 and 
 
 ### 5.3 Weather Hint (Optional)
 
-Off by default. When a caregiver chooses a city in Settings ("Weather for activity ideas"), Today shows a hint such as "Rain likely this afternoon · Indoor ideas" that applies the Indoor filter, and the AI helper preselects the matching setting. It carries the attribution "Weather data by Open-Meteo.com" and disappears silently when weather data is unavailable. See [ADR-009](architecture-decisions.md).
+Off by default. When a caregiver chooses a city in Settings ("Weather for activity ideas"), Today shows a calm, symmetric weather hint recommending indoor play during rain or high heat (`Find indoor ideas`), outdoor play in favorable weather (`Find outdoor ideas`), or flexible play otherwise (`Find play ideas`). Tapping the action routes directly to matching play ideas — in Flutter, opening the AI Idea Helper (`/ai-suggest`) with **"Where will you play?"** automatically preselected to `Indoor`, `Outdoor`, or `Indoor or outdoor` (editable at any time). It carries the attribution `"Weather data by Open-Meteo.com"` and disappears silently when weather data is unavailable. See [ADR-009](architecture-decisions.md).
 
 ---
 
@@ -293,8 +293,8 @@ Every user journey in the Figma prototype must include all five interaction stat
 | **J2: Daily Plan** | 2 scheduled activities with completion toggles. | "No activities planned for today. Want a quick idea? Most take 10 minutes or less." | Activity card pulse skeleton. | `RESOURCE_NOT_FOUND`: "This activity isn't available anymore. It was taken off our list. The rest of your plan is still here." | "You're offline. This activity wasn't marked complete." with Retry. |
 | **J3: Milestones** | Prompts grouped by kind of play (Thinking, Moving, Talking, Feelings) with "Seen on [date]" and 2–3 "Look for" signs. | "Nothing noted yet. Look for small moments during play." | Milestone prompt pulse skeleton. | `INTERNAL_ERROR`: Safe error banner; zero stack traces exposed. | "You're offline. Your observation wasn't saved." Entered text stays on screen with Retry. |
 | **J4: Private Journal** | Date-stamped notes with `🔒 Private` badge. | "Your journal is private to you. Jot down a memory or funny moment." | Note list pulse skeleton. | `INVALID_INPUT`: "Notes can be up to 2,000 characters. Please make this one a little shorter." (The 2,000-character limit comes from the [Data Model](data-model.md); the API's separate 100KB request-body limit is never the user-facing note limit.) | "You're offline. Your note wasn't saved." Draft stays on screen with Retry; `🔒 Private` badge still visible. |
-| **J5: Learning Library** | Filterable activity cards with a "Source: early learning guide · still being checked" line. | "No activities match these filters. Try clearing 'Materials'." | Catalog grid pulse skeleton. | `SERVICE_UNAVAILABLE`: "The activity list didn't load. Check your connection, then choose Retry." | "You're offline. Activities marked 'Available offline' still open." Others show "Needs a connection." |
-| **J6: Idea Helper (AI)** | A suggestion from the activity list with the "Suggested by AI" badge and "Why we picked it". | Form: "How much time do you have?", "Where will you play?", "What do you have at home?" | Shimmering helper card: "Finding ideas for Maya… This usually takes a few seconds." | `RATE_LIMITED`: "Let's take a short break. You've asked for many ideas in a row. Please wait a minute, then try again." | **Deterministic Fallback:** "The idea helper isn't working right now. Here are a few favorites for Maya's age from our activity list," labeled "Our picks". |
+| **J5: Learning Library** | Filterable activity cards with verified early-learning source citations (e.g., `ECCD Council NELF`, `DepEd MATATAG`, `CDC`). | "No activities match these filters. Try clearing 'Materials'." | Catalog grid pulse skeleton. | `SERVICE_UNAVAILABLE`: "The activity list didn't load. Check your connection, then choose Retry." | "You're offline. Activities marked 'Available offline' still open." Others show "Needs a connection." |
+| **J6: Idea Helper (AI)** | A suggestion from the activity list with the `"Suggested by AI"` badge (or `"Material adaptation"` for safe custom household items), `"Why we picked it"`, `"Another idea"`, and `"Edit preferences"`. | Form: `"How much time do you have?"`, `"Where will you play?"` (preselected when opened from Weather Hint), `"What do you have at home?"` | Shimmering helper card: "Finding ideas for Maya… This usually takes a few seconds." | `RATE_LIMITED`: "Taking a short break. You've asked for many ideas in a row. Please wait a minute, then try again." alongside non-AI catalog picks. | **Deterministic Fallback:** "Using our activity list. Here are a few favorites for Maya's age from our activity list," labeled `"Our picks"` / `"Catalog picks · not AI"`. |
 | **J7: Storybooks & Play Idea** | 3-shelf selector (`Books from Open Library`, `Our Bookshelf`, `Read & Sing Together`). Book cards show cover art, bookmark toggle button, and "Get a play idea" action; book detail presents AI play companion with safety notice, Open Library outbound link, and **"Add to today's plan"** action button ([ADR-013](architecture-decisions.md), [ADR-015](architecture-decisions.md)). | Open Library: "No books found for this topic. Try another search or topic."<br/>Our Bookshelf: "Your bookshelf is empty. Have favorite books at home? Search Open Library to save bedtime stories or picture books here." with "Search books" CTA. | Book card pulse skeleton; shimmering idea card. | `RATE_LIMITED`: "Let's take a short break. You've asked for many play ideas in a row. Please wait a minute, then try again." | **Fallbacks:** Saved books on Our Bookshelf remain readable from cache; if Open Library is down, a saved list shows with "Showing books we saved earlier."; if AI is unavailable, an activity from the catalog shows, labeled "Our pick". |
 
 **Permission-denied frames:** J1 also includes a signed-out frame (`UNAUTHENTICATED`: "Please sign in again to continue."), and J4 includes an access-denied frame for a profile or note that belongs to another caregiver (API returns 404 `RESOURCE_NOT_FOUND` per NFR-SEC-02 and the [API Reference](api-reference.md) §3: "We can't open this note. It may have been deleted. Your own notes are safe.").
@@ -340,7 +340,7 @@ The Flutter app (CC 207B) uses the reviewed 375px mobile-web frames as its desig
 |---|---|---|
 | Design tokens (§6.1, §6.3) | `ThemeData` with a custom `ColorScheme`, plus a `ThemeExtension` for status colors | One source of truth; no hard-coded colors in widgets. |
 | Type styles (§6.2) | `TextTheme` using Inter bundled as an app asset | Bundle the font rather than downloading it at runtime, to avoid data cost. |
-| Bottom tab bar (5 tabs) | `NavigationBar` with five destinations | Labels always shown. |
+| Bottom tab bar (5 tabs) / Adaptive sidebar | `NavigationBar` on compact/medium (`< 840 dp`); `ShellNavigationSidebar` on expanded (`≥ 840 dp`) via `AppWindowSize` | Labels always shown; adaptive `ResponsiveContentBox` and `AdaptiveTwoPane` (`≥ 860 dp`) keep tablets and wide screens balanced. |
 | Top bar with child chip | `AppBar` with `BrandLogo`, conditional `ChildChip`, and account avatar | Child chip displays only when `activeChild != null` to eliminate dead clicks. Brand logo taps navigate to Today. No standalone unlabelled AI icon in `AppBar`. |
 | Account menu | `showModalBottomSheet` | Same items, including Help and support. |
 | Cards | `Card.outlined` | Borders use `color/border/subtle`. |
@@ -420,7 +420,9 @@ Empty states (§7) use the title-and-action pattern first. Under option A, a lea
 6. **Non-diagnostic banner:** decided 2026-10-31, canonical title and body standardized (§2.6).
 7. **Child Chip Conditional Visibility:** decided 2026-11-23, omit the `ChildChip` from the shell `AppBar` when no child profiles exist (`activeChild == null`) to avoid misleading dead clicks. All child-dependent tabs render the canonical `NoChildrenView` onboarding view.
 8. **Idea Helper Ergonomic Placement:** decided 2026-11-23, remove detached brain icon from the mobile `AppBar` actions and co-locate `IdeaHelperCard` within the Explore tab directly above the activity catalog.
-9. **Secondary Text Contrast Update:** decided 2026-11-23, darkened `color/text/secondary` from `#63756E` to `#5A6A64` (React PR #65) so secondary text meets WCAG 2.2 AA (≥4.5:1) on all surfaces and status tints; mirror in Figma variables and Flutter `app_tokens.dart`.
+9. **Secondary Text Contrast Update:** decided 2026-11-23, darkened `color/text/secondary` from `#63756E` to `#5A6A64` so secondary text meets WCAG 2.2 AA (≥4.5:1) on all surfaces and status tints across React, Flutter, and Figma.
+10. **Symmetric Weather Hint & Preference Copy:** decided 2026-11-27, Weather Hint CTA routes to the AI Idea Helper with `"Where will you play?"` preselected across all settings (`indoor`, `outdoor`, `either`); Today provides symmetric `Indoor` and `Outdoor` quick filter chips; AI results use `"Edit preferences"` instead of `"Change answers"`.
+11. **Adaptive Flutter Material 3 Primitives:** decided 2026-11-27, standardized `AppWindowSize` (`< 600` compact, `600–839` medium, `≥ 840` expanded), `ResponsiveContentBox`, `AdaptiveTwoPane`, and `HorizontalScrollFade` across Flutter screens.
 
 ---
 
@@ -446,10 +448,10 @@ Source: Figma file `yqUHW4lOuuly4jDPNMkMVI`, page `02 · Components`, synced on 
 
 | Component | Figma frame | States | React | Flutter |
 |---|---|---|---|---|
-| Sidebar item | `Nav / Sidebar item` | Default, Active, each with Focus | `SideNav` (built) | n/a (mobile frames only) |
-| Bottom tab | `Nav / Bottom tab` | Default, Active, each with Focus | `BottomTabBar` (built) | `NavigationBar` |
+| Sidebar item | `Nav / Sidebar item` | Default, Active, each with Focus | `SideNav` (built) | `ShellNavigationSidebar` (expanded `≥ 840 dp`) |
+| Bottom tab | `Nav / Bottom tab` | Default, Active, each with Focus | `BottomTabBar` (built) | `NavigationBar` (`< 840 dp`) |
 | Child switcher | `Child switcher`, `Child context / Switcher` | Default, Focus, Hidden when no children | `ChildSwitcher` (built) | `ChildChip` (conditional) |
-| Shells | `Shell / Desktop sidebar`, `Shell / Mobile top bar`, `Shell / Mobile tab bar` | n/a | `AppShell`, `TopBar`, `ScreenHeader` (built) | `AppBar`, `NavigationBar` |
+| Shells | `Shell / Desktop sidebar`, `Shell / Mobile top bar`, `Shell / Mobile tab bar` | n/a | `AppShell`, `TopBar`, `ScreenHeader` (built) | `ShellScreen`, `AppBar`, `NavigationBar`, `ShellNavigationSidebar` |
 | Account menu | `Sheet / Account menu`, `Row / Settings item` | Default, Focus | `AccountLink`, account screens (built) | `showModalBottomSheet` |
 
 ### 11.3 Product patterns

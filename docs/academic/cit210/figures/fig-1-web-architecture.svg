@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="560" viewBox="0 0 1280 560">
+<defs><marker id="a-forest" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="#165A42"/></marker><marker id="a-blue" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="#2B6CB0"/></marker><marker id="a-terra" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="#C25525"/></marker><marker id="a-purple" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="#7C4D8B"/></marker></defs>
+<rect width="1280" height="560" fill="#FFFFFF"/>
+<rect x="6" y="6" width="1268" height="548" rx="16" fill="#FFFFFF" stroke="#D4DCD8" stroke-width="1.4"/>
+<text x="42" y="48" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="22" fill="#165A42" text-anchor="start" font-weight="700">LittleSteps Web System and Cloud Architecture</text>
+<text x="42" y="74" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="14" fill="#5A6A64" text-anchor="start">Caregiver web client communicating with a shared Express 5 REST gateway, Firestore, and external APIs</text>
+<line x1="42" y1="90" x2="1238" y2="90" stroke="#D4DCD8" stroke-width="1.2"/>
+<rect x="42" y="112" width="210" height="260" rx="10" fill="#FFFFFF" stroke="#D8D6C8" stroke-width="1.8"/>
+<path d="M 52 112 H 242 Q 252 112 252 122 V 156 H 42 V 122 Q 42 112 52 112 Z" fill="#F3F2E8"/>
+<text x="147.0" y="140.0" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="16" fill="#1E2925" text-anchor="middle" font-weight="700">Caregiver Inputs</text>
+<text x="58" y="186" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="13" fill="#1E2925" text-anchor="start">•  Child Age Band</text>
+<text x="76" y="203" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#5A6A64" text-anchor="start">e.g., &quot;12-23m&quot;</text>
+<text x="58" y="228" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="13" fill="#1E2925" text-anchor="start">•  Play Context</text>
+<text x="76" y="245" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#5A6A64" text-anchor="start">setting, time, items</text>
+<text x="58" y="270" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="13" fill="#1E2925" text-anchor="start">•  Book Search</text>
+<text x="76" y="287" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#5A6A64" text-anchor="start">title or subject</text>
+<text x="58" y="312" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="13" fill="#1E2925" text-anchor="start">•  Private Notes</text>
+<rect x="294" y="112" width="250" height="260" rx="10" fill="#FFFFFF" stroke="#165A42" stroke-width="1.8"/>
+<path d="M 304 112 H 534 Q 544 112 544 122 V 156 H 294 V 122 Q 294 112 304 112 Z" fill="#165A42"/>
+<text x="419.0" y="140.0" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="16" fill="#FFFFFF" text-anchor="middle" font-weight="700">Web Client (React 19)</text>
+<text x="312" y="186" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="13" fill="#1E2925" text-anchor="start">•  5-Tab Responsive Shell</text>
+<text x="312" y="214" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="13" fill="#1E2925" text-anchor="start">•  Explore &amp; Bookshelf</text>
+<text x="312" y="242" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="13" fill="#1E2925" text-anchor="start">•  Today Plan &amp; Undo</text>
+<text x="312" y="270" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="13" fill="#1E2925" text-anchor="start">•  Session Offline Cache</text>
+<text x="312" y="298" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="13" fill="#1E2925" text-anchor="start">•  WCAG 2.2 AA Tokens</text>
+<text x="312" y="352" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#165A42" text-anchor="start" font-weight="700">littlesteps-react · Vite 6</text>
+<rect x="596" y="112" width="250" height="260" rx="10" fill="#FFFFFF" stroke="#165A42" stroke-width="1.8"/>
+<path d="M 606 112 H 836 Q 846 112 846 122 V 156 H 596 V 122 Q 596 112 606 112 Z" fill="#165A42"/>
+<text x="721.0" y="140.0" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="16" fill="#FFFFFF" text-anchor="middle" font-weight="700">Backend Gateway API</text>
+<text x="614" y="186" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="13" fill="#1E2925" text-anchor="start">•  Express 5 · Node 22</text>
+<text x="614" y="214" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="13" fill="#1E2925" text-anchor="start">•  Firebase JWT &amp; BOLA 404</text>
+<text x="614" y="242" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="13" fill="#1E2925" text-anchor="start">•  Zod 4.1 Schema Guard</text>
+<text x="614" y="270" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="13" fill="#1E2925" text-anchor="start">•  Hourly AI Rate Limits</text>
+<text x="614" y="298" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="13" fill="#1E2925" text-anchor="start">•  Zero Client API Keys</text>
+<text x="614" y="352" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#165A42" text-anchor="start" font-weight="700">littlesteps-api · Cloud Fn v2</text>
+<rect x="904" y="112" width="334" height="78" rx="10" fill="#F3F7FB" stroke="#2B6CB0" stroke-width="1.8"/>
+<text x="922" y="138" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="14.5" fill="#2B6CB0" text-anchor="start" font-weight="700">External REST APIs (Proxied)</text>
+<text x="922" y="158" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12" fill="#1E2925" text-anchor="start">Open Library (60m cache) · Open-Meteo (2-dec)</text>
+<text x="922" y="176" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.5" fill="#5A6A64" text-anchor="start">Google Gemini v1beta · 3-layer guardrails · 8s cap</text>
+<rect x="904" y="203" width="334" height="78" rx="10" fill="#F0F5F2" stroke="#165A42" stroke-width="1.8"/>
+<text x="922" y="229" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="14.5" fill="#165A42" text-anchor="start" font-weight="700">Reviewed ECCD Catalog (Tier 3)</text>
+<text x="922" y="249" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12" fill="#1E2925" text-anchor="start">23 Activities · 25 Milestones · 6 Rhymes</text>
+<text x="922" y="267" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.5" fill="#5A6A64" text-anchor="start">Firestore 5-min TTL · Deterministic fallback</text>
+<rect x="904" y="294" width="334" height="78" rx="10" fill="#F7F3F9" stroke="#7C4D8B" stroke-width="1.8"/>
+<text x="922" y="320" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="14.5" fill="#7C4D8B" text-anchor="start" font-weight="700">Cloud Firestore &amp; Firebase Auth</text>
+<text x="922" y="340" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12" fill="#1E2925" text-anchor="start">Caregiver-isolated subcollections</text>
+<text x="922" y="358" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11.5" fill="#5A6A64" text-anchor="start">RA 10173 data export &amp; cascade delete</text>
+<path d="M 252 242 L 290 242" fill="none" stroke="#165A42" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#a-forest)"/>
+<path d="M 544 242 L 592 242" fill="none" stroke="#165A42" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#a-forest)"/>
+<text x="568" y="232" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="11" fill="#165A42" text-anchor="middle" font-weight="700">HTTPS</text>
+<text x="568" y="258" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="10.5" fill="#5A6A64" text-anchor="middle">Bearer</text>
+<path d="M 846 188 L 900 156" fill="none" stroke="#2B6CB0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#a-blue)"/>
+<path d="M 846 242 L 900 242" fill="none" stroke="#165A42" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#a-forest)"/>
+<path d="M 846 296 L 900 330" fill="none" stroke="#7C4D8B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#a-purple)"/>
+<path d="M 1071 190 L 1071 200" fill="none" stroke="#C25525" stroke-width="2.0" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#a-terra)" stroke-dasharray="3 2"/>
+<path d="M 419 372 L 419 418" fill="none" stroke="#165A42" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#a-forest)"/>
+<rect x="42" y="422" width="1196" height="102" rx="10" fill="#F3F2E8" stroke="#165A42" stroke-width="1.8"/>
+<text x="68" y="456" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="16.5" fill="#165A42" text-anchor="start" font-weight="700">Target Outcome: Calm, Screen-Free Caregiver Play</text>
+<text x="68" y="482" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="13.5" fill="#1E2925" text-anchor="start">Caregivers find an activity, picture-book companion, or weather hint in under a minute, set the device aside, and play.</text>
+<text x="68" y="504" font-family="Arial, &quot;Liberation Sans&quot;, &quot;DejaVu Sans&quot;, sans-serif" font-size="12.5" fill="#5A6A64" text-anchor="start">Grounded in WHO, AAP, and Philippine ECCD (RA 12199) guidance; strictly non-diagnostic with RA 10173 privacy isolation.</text>
+</svg>

@@ -3,7 +3,7 @@
 **Status:** Canonical Architecture Baseline  
 **Governing Standard:** ISO/IEC/IEEE 42010:2022 (Software Architecture Description)  
 **Owner:** Mark Alvin Cadangin (Technical Lead)  
-**Last Reviewed:** 2026-10-26  
+**Last Reviewed:** 2026-11-27  
 **Related Documents:** [API Reference & Integration Guide](api-reference.md), [Data Model Specification](data-model.md), [OpenAPI Specification](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml), [Product Scope](product-scope.md)
 
 ---
@@ -37,7 +37,7 @@ graph TD
 
     subgraph Persistence["Data & External Services Layer"]
         Firestore["Cloud Firestore<br/>(Caregiver-Scoped Collections)"]
-        ReviewedCatalog["Static Reviewed Catalog<br/>(Verified Milestones & Activities)"]
+        ReviewedCatalog["Cloud Firestore Catalogs<br/>(catalog_activities, catalog_milestones, catalog_rhymes)"]
         OpenLibrary["Open Library REST API<br/>(Picture Books & Covers · ADR-010)"]
         ExternalAI["Cloud Gemini<br/>(Tier 1 AI · Sanitized Prompts · ADR-008)"]
         Weather["Open-Meteo Forecast API<br/>(Rounded City Coordinates Only · ADR-009)"]
@@ -174,7 +174,7 @@ graph TD
   1. *Gemini API paid tier or Vertex AI:* prompts are not used for training. (Deferred: needs billing the course project does not have.)
   2. *Gemini API free tier with strict prompt minimization:* no cost; Google may use prompt content. (Chosen for the course.)
   3. *No external model; deterministic matching only:* no data leaves the system, but it would not meet the CC 207B AI-powered feature requirement.
-- **Decision:** Use the Gemini API free tier, called only server-side, for development, testing and the 2 December 2026 course demonstration, under these conditions:
+- **Decision:** Use the Gemini API free tier, called only server-side, for development, testing, and the December 2026 course demonstrations (CC 207B on December 2; CIT 210 on December 4), under these conditions:
   - Prompts carry only the coarse age band, time available, indoor or outdoor setting, a cleaned materials list and the language. Never a child's name, caregiver identifiers, location (including the weather city in ADR-009), observation notes or journal text (NFR-AI-02, NFR-PRIV-02).
   - The materials text is cleaned on the server before it is sent: it is cut to a short length and reduced to recognized household-material words, so anything else a caregiver types (such as a name) is dropped.
   - Only synthetic accounts and data are used while the free tier is in place (NFR-PRIV-03).
@@ -199,7 +199,7 @@ graph TD
 - **Decision:** Use Open-Meteo for an optional weather hint, under these conditions:
   - **Optional and coarse:** off by default. A caregiver can choose a city or municipality in Settings (looked up with Open-Meteo's geocoding API). The app stores only the place name and coordinates rounded to two decimal places. No device GPS is ever used, and the setting can be cleared at any time.
   - **Server-side only:** our API calls Open-Meteo, so caregiver devices never contact it directly. Open-Meteo receives only the rounded coordinates, never account or child data. Responses are cached per rounded location for one hour to stay far below the daily limit.
-  - **What it changes:** on Today, when rain or strong heat is likely in the next few hours, a hint such as "Rain likely this afternoon · Indoor ideas" applies the Indoor filter. The AI helper preselects the matching setting, and the caregiver can change it. It is an enhancement to FR-02 and FR-06, not a seventh core feature.
+  - **What it changes:** on Today, the weather hint suggests indoor play when rain or strong heat is likely, outdoor play in favorable conditions, or either otherwise. Tapping the hint routes caregivers directly to matching play ideas (in Flutter, opening the AI Idea Helper with `"Where will you play?"` preselected to `indoor`, `outdoor`, or `either`, which the caregiver can change at any time). It is an enhancement to FR-02 and FR-06, not a seventh core feature.
   - **Failure:** if Open-Meteo is slow (3-second timeout) or unavailable, the hint is simply not shown. No error state.
   - **Attribution and terms:** wherever the hint appears, show "Weather data by Open-Meteo.com" with a link (CC BY 4.0). Use stays non-commercial; revisit if the project becomes commercial.
   - **Scope:** planned in M4 and the first item dropped if the schedule slips.
@@ -218,7 +218,7 @@ graph TD
   3. *Open Library Subject API + 3-Tier AI Fallback (Chosen):*
      - Use Open Library REST API (`openlibrary.org/subjects/picture_books.json`) to dynamically fetch children's picture books and covers.
      - Implement a 3-tier fallback engine: Cloud Gemini (Tier 1) -> Local Ollama (`localhost:11434`, Tier 2 offline dev/demo fallback) -> Deterministic Curriculum Catalog (Tier 3 safety net).
-- **Status of implementation (7 November 2026):** the catalog books proxy with its fallback list ([API PR #20](https://github.com/Thesis-Titans/littlesteps-api/pull/20), [#25](https://github.com/Thesis-Titans/littlesteps-api/pull/25)), `POST /api/v1/ai/recommendations` with its deterministic fallback ([API PR #28](https://github.com/Thesis-Titans/littlesteps-api/pull/28)), and `POST /api/v1/ai/story-activity` with catalog fallback ([API PR #55](https://github.com/Thesis-Titans/littlesteps-api/pull/55)) are implemented. The optional Open-Meteo weather hint endpoint is implemented in `GET /api/v1/catalog/weather` ([API PR #56](https://github.com/Thesis-Titans/littlesteps-api/pull/56)). The Tier 1 Gemini provider is implemented behind configuration ([API PR #34](https://github.com/Thesis-Titans/littlesteps-api/pull/34)): it needs `GEMINI_API_KEY` and `GEMINI_MODEL` (there is no default model), is off by default, uses a circuit breaker (3 failures open it for 60 seconds) and caps the reply at 64KB. A live smoke test is still pending before it is enabled. The React Storybooks screen is tracked in [React #48](https://github.com/Thesis-Titans/littlesteps-react/issues/48).
+- **Status of implementation:** The catalog books proxy and search endpoints (`GET /api/v1/catalog/books`, `GET /api/v1/catalog/books/search`), `POST /api/v1/ai/recommendations` with deterministic catalog fallback and guardrailed hybrid adaptation, `POST /api/v1/ai/story-activity`, `POST /api/v1/ai/adapt`, and `GET /api/v1/catalog/weather` are all implemented and integrated across both the React web and Flutter mobile clients. The Tier 1 Gemini provider runs behind server-side configuration (`GEMINI_API_KEY` + explicit pinned `GEMINI_MODEL`, with no floating default alias), enforces an 8-second timeout, a 64 KB response cap, and a circuit breaker (3 consecutive failures open the circuit for 60 seconds).
 - **Decision:**
   - Implement `GET /api/v1/catalog/books` in `littlesteps-api` as a server-side proxy to Open Library with a 1-hour `Cache-Control` header and a local fallback book list.
   - Implement `POST /api/v1/ai/story-activity` to generate screen-free play ideas based on the fetched book metadata.
@@ -251,7 +251,7 @@ graph TD
 ---
 
 ### ADR-012: Child Profile Age Rules and Ownership Responses
-- **Status:** Accepted for the contract (decisions D1 and D4 recorded 30 October 2026 in [API PR #24](https://github.com/Thesis-Titans/littlesteps-api/pull/24); D2 and D3 were decided in the contract review and Mark may still review them; D2 and D3 decided in the contract review). The four profile routes are implemented and merged in API [PR #26](https://github.com/Thesis-Titans/littlesteps-api/pull/26) and [PR #29](https://github.com/Thesis-Titans/littlesteps-api/pull/29) ([API #8](https://github.com/Thesis-Titans/littlesteps-api/issues/8)); rate limiting is still planned. D5 (deletion execution) and D6 (production retention) were decided on 4 November 2026 (see Decision).
+- **Status:** Accepted and implemented across `GET`, `POST`, `PATCH`, and `DELETE` child routes (decisions D1–D4 recorded 30 October 2026; D5 deletion execution and D6 retention recorded 4 November 2026).
 - **Context:** The child profile stores a nickname and a birth month, not an exact birth date. Age bands drive catalog navigation and must not go stale. Ownership failures must not reveal whether another caregiver's child exists. Source: `docs/child-profile-contract.md` in `littlesteps-api`.
 - **Options Considered:**
   1. *Store the age band only:* simple, but the band goes stale and cannot be corrected from a birth month.
@@ -289,12 +289,12 @@ graph TD
 - **Decision:**
   - Closed loop: a caregiver searches or selects a book, gets a play idea from the story companion, and chooses "Add to today's plan", which writes to Firestore (`POST /api/v1/children/:id/plans`).
   - `GET /api/v1/catalog/books/search` proxies the Open Library search API with an in-memory cache.
-  - In-app Philippine rhymes under Explore, shown as "Provisional Academic Reference — Pending Review" until the content review in Docs #3 is done. Rights to the lyrics are not yet confirmed.
-  - AI stays limited to the idea helper (`POST /api/v1/ai/recommendations`), the story companion (`POST /api/v1/ai/story-activity`), and catalog-grounded adaptation (`POST /api/v1/ai/adapt`). `/ai/recommendations` is catalog-first and supports opt-in guardrailed custom material adaptation (`allowCustom: true`, `source: "ai_custom"`, `reviewed: false`) with pediatric hazard screening when safe household materials have no catalog overlap; all routes use fixed response schemas, pass non-diagnostic validation, and fail closed to deterministic fallback.
+  - In-app Philippine rhymes under Explore, served from Cloud Firestore (`catalog_rhymes`, `status: "source_checked"`) with documented cultural provenance in [Philippine Content Provenance](philippine-content-provenance.md) while formal adviser review in Docs #3 remains open.
+  - AI stays limited to the idea helper (`POST /api/v1/ai/recommendations`), the story companion (`POST /api/v1/ai/story-activity`), and catalog-grounded adaptation (`POST /api/v1/ai/adapt`). `/ai/recommendations` is catalog-first and supports opt-in guardrailed custom material adaptation (`allowCustom: true`, `source: "ai_custom"`, `reviewed: false`) with 3-layer pediatric hazard screening when safe household materials have no catalog overlap; all routes use fixed response schemas, pass non-diagnostic validation, and fail closed to deterministic fallback.
   - `POST /api/v1/ai/chat` and its keyword blocklist are removed.
 - **Consequences:**
   - *Positive:* a real data flow from external APIs (Open Library, Open-Meteo, Gemini) to the caregiver's plan in Firestore, with a small and defensible AI surface.
-  - *Trade-off:* no free-text conversation. A catalog-grounded "Adapt this activity" action is under consideration instead.
+  - *Trade-off:* no free-text conversation; structured adaptation is supported instead via `POST /api/v1/ai/adapt`.
 
 ---
 
@@ -331,10 +331,28 @@ graph TD
 - **Decision:**
   - Implement `/api/v1/children/:childId/books` (`GET`, `POST`, `DELETE`) mounted under authenticated child routes.
   - Store lightweight book metadata snapshots (`id`, `title`, `authors`, `coverUrl`, `subjects`, `createdAt`, `updatedAt`) using the Open Library work ID or sanitized slug as the document ID for natural idempotency.
-  - Enforce server-side Broken Object Level Authorization (BOLA) verifying `child.caregiverId === req.user.uid`.
+  - Enforce server-side Broken Object Level Authorization (BOLA) verifying `child.caregiverId === request.firebaseUser.uid`.
   - Include the bookshelf subcollection in cascade deletion when a child or caregiver profile is deleted (satisfying Data Privacy Act / RA 10173 and PRQ-02).
   - Update `openapi.yaml` to formalize the OpenAPI 3.1.0 contract.
 - **Consequences:**
   - *Positive:* Provides a true two-way cloud persistence pipeline for family storybooks, preserves sibling developmental separation, enables offline reading via client caching, guarantees natural idempotency, and satisfies academic requirements without architectural drift.
   - *Trade-off:* Requires client synchronization across both React and Flutter clients.
+
+---
+
+### ADR-016: Firestore Catalog Migration and 3-Layer Guardrailed Hybrid AI
+- **Status:** Accepted (27 November 2026)
+- **Context:**
+  - Early sprints stored learning activities, milestone prompts, and Philippine rhymes as hardcoded arrays inside TypeScript and Dart source files. Duplicating catalog fixtures across clients caused synchronization drift and required binary rebuilds for content updates.
+  - Additionally, caregivers frequently enter ordinary household items (including misspellings or Filipino/Hiligaynon terms such as `sabon`) that do not match the finite reviewed activity catalog, while infant and toddler safety requires strict hazard screening before suggesting any custom play idea.
+- **Options Considered:**
+  1. *Keep static arrays in backend and Flutter binaries:* Simple initially, but violates single-source-of-truth and prevents independent content curation.
+  2. *Firestore-backed global catalog collections with server-side TTL caching + 3-layer hybrid AI guardrails (Chosen):* Store `catalog_activities`, `catalog_milestones`, and `catalog_rhymes` in Cloud Firestore (seeded idempotently via `scripts/seed-catalog.mjs` from `seed/catalog-*.json`), read exclusively through the backend API with a 5-minute in-memory TTL cache, and pair catalog-first AI selection with an opt-in (`allowCustom: true`) 3-layer defense-in-depth hazard pipeline for unmatched safe household items.
+- **Decision:**
+  - Migrate all activities, milestone prompts, and Philippine rhymes into Cloud Firestore global collections (`catalog_activities`, `catalog_milestones`, `catalog_rhymes`) served via `GET /api/v1/catalog/activities`, `GET /api/v1/catalog/milestones`, and `GET /api/v1/catalog/rhymes`, with zero hardcoded catalog lists in the Flutter client.
+  - Protect custom material adaptations on `POST /api/v1/ai/recommendations` (`allowCustom: true`) with three layers: (1) input sanitization blocking extreme hazards and prompt probes while preserving typos and regional language words; (2) structured Gemini `materialAssessments` safety evaluation prior to generating a `"Material adaptation"` card (`reviewed: false`, zero fabricated citations); and (3) deterministic post-generation Zod, 33-term non-diagnostic denylist, and output hazard validation failing closed to Tier 3 reviewed catalog fallback.
+- **Consequences:**
+  - *Positive:* Establishes Cloud Firestore as the single source of truth for both caregiver records and learning catalogs; eliminates client-side catalog drift; supports flexible household-item play without compromising infant/toddler safety or clinical boundaries.
+  - *Trade-off:* Local emulators and fresh cloud environments must run the catalog seed script (`npm run seed:catalog:emulator` or `npm run seed:catalog:prod`) before serving catalog reads.
+
 

@@ -38,7 +38,7 @@ The recommendation request schema enforces strict object validation so any unrec
 | Field | Type and Bounds | Caregiver Input in the App |
 |---|---|---|
 | `ageBand` | Enum: `0-5m`, `6-11m`, `12-23m`, `24-35m`, `36-47m`, `48-59m`, `60-71m` | Pre-filled from the active child profile or chosen manually |
-| `setting` | Enum: `indoor`, `outdoor`, `either` (default `either`) | Setting selector (optionally informed by the local weather hint) |
+| `setting` | Enum: `indoor`, `outdoor`, `either` (default `either`) | `"Where will you play?"` selector (auto-preselected when launched from Today's symmetric Weather Hint banner) |
 | `timeMinutes` | Integer: 5 to 120 | Duration chips (`10`, `15`, `30`, `45` minutes; 30–45 minute requests group into toddler-paced Play Blocks) |
 | `materials` | Up to 10 strings, max 40 characters each (default `[]`) | Comma-separated household items trimmed and normalized server-side |
 | `language` | Enum: `en`, `fil`, `hil` | Language selector (English, Filipino, Hiligaynon) |
@@ -135,7 +135,7 @@ Every model reply passes two server-side validation gates before reaching the cl
 |---|---|---|---|
 | Tier 1 | Cloud Gemini REST provider with circuit breaker | 8,000 ms timeout; 64 KB response byte cap; circuit breaker opens for 60 s after 3 consecutive failures | Default path when API key and model are configured |
 | Tier 2 | Rule-based activity adaptation | Local execution (< 5 ms) | Used only by `POST /api/v1/ai/adapt` when Tier 1 fails or is rejected |
-| Tier 3 | Deterministic reviewed catalog ranking | Local execution (< 5 ms); no external network calls | Used by `/recommendations` and `/story-activity` on timeout, API error, open circuit, unconfigured provider, or validation failure |
+| Tier 3 | Deterministic reviewed catalog ranking | Cached Firestore catalog (5-min TTL); deterministic ranking | Used by `/recommendations` and `/story-activity` on timeout, API error, open circuit, unconfigured provider, or validation failure |
 
 All AI routes enforce fixed-window hourly rate limits of 10 requests per authenticated user (persisted via Firestore transactions) and 30 requests per IP address. Exceeding either cap returns HTTP `429 RATE_LIMITED` with a `Retry-After` header; the mobile app displays a `"Taking a short break"` wait notice alongside safe non-AI catalog picks (`Catalog picks · not AI`) so caregivers never hit a dead end. Any other network, timeout, or upstream error falls back cleanly to constrained reviewed catalog picks under a `"Using our activity list"` banner with zero AI labels and a `"Try again"` action—and if no catalog items can be loaded offline, displays an explicit `"No matching play ideas yet"` recovery card.
 
@@ -162,13 +162,13 @@ At the same time, an unconstrained chatbot is poorly suited to early childhood c
 
 ## 7. Privacy Considerations (RA 10173)
 
-LittleSteps follows data minimization and transparency principles aligned with the Philippine Data Privacy Act of 2012 (Republic Act No. 10173). Child profiles collect only a nickname and coarse age band—no full legal names, exact birth dates, gender, or photographs. Strict schema validation rejects extra fields so child names and caregiver IDs are never included in AI prompts. Private caregiver journals and milestone observations are stored in user-isolated Firestore subcollections and are never read by AI endpoints. Optional weather lookups round coordinates to two decimal places (~1.1 km). Every AI-backed suggestion displays the `Suggested by AI` badge and the disclaimer *"Observational play suggestion only. Not developmental assessment."*, and caregivers can change inputs, request another idea, or browse the catalog directly.
+LittleSteps follows data minimization and transparency principles aligned with the Philippine Data Privacy Act of 2012 (Republic Act No. 10173). Child profiles collect only a nickname and coarse age band—no full legal names, exact birth dates, gender, or photographs. Strict schema validation rejects extra fields so child names and caregiver IDs are never included in AI prompts. Private caregiver journals and milestone observations are stored in user-isolated Firestore subcollections and are never read by AI endpoints. Optional weather lookups round coordinates to two decimal places (~1.1 km). Every AI-backed suggestion displays the `Suggested by AI` badge (or `Material adaptation` for safe custom household items) and the disclaimer *"Observational play suggestion only. Not developmental assessment."*, and caregivers can select `"Edit preferences"`, request `"Another idea"`, or browse the catalog directly.
 
 ---
 
 ## 8. Automated Evaluation Summary
 
-A fixed 46-case automated safety evaluation benchmark runs in backend continuous integration alongside the full unit, integration, and security regression suites (`npm test`) across 21 ordinary play requests, 10 pediatric medical probes, 5 hazardous material cases, 5 prompt injections, and 5 off-topic queries, plus layered-guardrail `ai_custom` tests covering typos, regional terms, and Layer 3 fail-closed checks.
+A fixed 46-case automated safety evaluation benchmark runs in backend continuous integration alongside the full unit, integration, OpenAPI contract, and security regression suites (`npm test`) across 21 ordinary play requests, 10 pediatric medical probes, 5 hazardous material cases, 5 prompt injections, and 5 off-topic queries, plus layered-guardrail `ai_custom` tests covering typos, regional terms, and Layer 3 fail-closed checks.
 
 *Table 3. Automated AI Safety Evaluation Results (CI)*
 

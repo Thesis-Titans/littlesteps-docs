@@ -8,11 +8,11 @@
 
 This directory contains the academic course evaluation packages and deliverables for **LittleSteps**, fulfilling the separate requirements of three coordinated courses in the West Visayas State University (WVSU) Bachelor of Science in Information Technology (BSIT) program. Each course page summarizes the instructor's own brief; where a page and the brief differ, the brief wins.
 
-| Course | Team | Instructor brief on file | Final due |
+| Course | Team | Instructor brief on file | Submission & Presentation Schedule |
 |---|---|---|---|
-| CIT 246 — IT Project Management | 3 members | Yes | December 2, 2026 |
-| CC 207B — Applications Development and Emerging Technologies | 5 members | Yes | December 2, 2026 |
-| CIT 210 — Web Systems and Technologies | 5 members | Yes (Official Rubric on file) | December 2, 2026 |
+| CC 207B — Applications Development and Emerging Technologies | 5 members | Yes | Docs & slides due **≤ December 1, 2026** (Google Classroom); live presentation & code defense **December 2, 2026 (morning)** |
+| CIT 246 — IT Project Management *(simulated PMP exercise)* | 3 members | Yes | Project Management Plan due **before December 3, 2026** *(no presentation required)* |
+| CIT 210 — Web Systems and Technologies | 5 members | Yes (Official Rubric on file) | Live presentation **December 4, 2026, 8:00 AM** + **System Documentation (IMRAD format)** |
 
 ---
 
@@ -23,7 +23,7 @@ Governed by the [Official Project Management Plan Brief](cit246/CIT246_Final_Pro
 - **[Checkpoint 1: One-Page Project Concept](cit246/checkpoint-1-concept.md):** organization, problem, proposed system and possible sponsor (due October 14, 2026; Arial 11, A4). Must be approved before the full plan starts.
 - **Checkpoint 2:** charter, stakeholder register (8+ entries including an opponent) and scope statement (template sections 3–6); date to be announced.
 - **Checkpoint 3:** WBS (3+ levels with dictionary), schedule (network diagram and Gantt with critical path) and cost baseline (sections 7–9); date to be announced.
-- **Final Project Management Plan:** all 17 template sections, 25–40 pages, one PDF named `CIT246_FinalProject_GroupName.pdf` on Google Drive plus a printed copy; 15-minute presentation with every member speaking. Graded on five 20-point criteria.
+- **Final Project Management Plan:** all 17 template sections, 25–40 pages, one PDF named `CIT246_FinalProject_GroupName.pdf` submitted before December 3, 2026 (no class presentation required). Graded on five 20-point criteria.
 
 ### 2. [CC 207B — Applications Development and Emerging Technologies](cc207b/README.md)
 Governed by the [Official CC 207B Final Project Requirements](cc207b/CC207B_Final_Project_Requirements.md). A Flutter application with at least six core features (including one user-facing AI feature), presented with a live demo and an Individual Code Defense.
@@ -34,6 +34,7 @@ Governed by the [Official CC 207B Final Project Requirements](cc207b/CC207B_Fina
 - **AI Use Policy:** AI-generated code, text content and image assets must be recorded in the AI Usage Log; generating the application wholesale is not allowed.
 
 ### 3. [CIT 210 — Web Systems and Technologies](cit210/README.md)
-Governed by the [Official CIT 210 Evaluation Rubric](cit210/CIT210_Final_Project_Requirements.md). Covers the React web client, shared Node.js/TypeScript API, and database integration. Evaluated on a 100-point rubric: Application Development (65%) and Presentation (35%).
+Governed by the [Official CIT 210 Evaluation Rubric](cit210/CIT210_Final_Project_Requirements.md). Covers the React web client, shared Node.js/TypeScript API, database integration, and required **[System Documentation (IMRAD format)](cit210/system-documentation.md)** for the **December 4, 2026 (8:00 AM)** presentation. Evaluated on a 100-point rubric: Application Development (65%) and Presentation (35%).
 - **Technical Contract:** Canonical OpenAPI contract maintained in the [API repository OpenAPI specification](https://github.com/Thesis-Titans/littlesteps-api/blob/main/openapi/openapi.yaml).
+- **Live Demo & Rehearsal:** Operational classroom demo plan in [Demonstration Environment & Rehearsal Plan](cit210/demo-environment-and-rehearsal.md).
 - **Local Onboarding:** Step-by-step full-stack local setup in [Developer Onboarding Guide](../getting-started.md).

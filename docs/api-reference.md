@@ -3,7 +3,7 @@
 **Status:** Canonical Interface Specification Baseline  
 **Governing Standard:** OpenAPI 3.1.0 & ISO/IEC/IEEE 42010:2022 (Interface View)  
 **Owner:** Mark Alvin Cadangin (Technical Lead) & Justin (Backend Lead)  
-**Last Reviewed:** 2026-11-08  
+**Last Reviewed:** 2026-11-27  
 **Related Documents:** [Architecture Decisions](architecture-decisions.md) (ADR-001, ADR-003, ADR-010), [Data Model Specification](data-model.md), [Security, Privacy, and AI Safeguards](security-privacy-ai.md), [CIT 210 Deliverables](academic/cit210/README.md)
 
 ---
@@ -33,7 +33,7 @@ flowchart TD
 ### Why This Architecture Enhances Efficiency & Security (CIT 210 Presentation Focus)
 1. **Unified Dual-Client Backend:** A single, client-neutral REST API powers both the **CIT 210 React web client** and the **CC 207B Flutter mobile client**, eliminating duplicate database logic.
 2. **Strict Credential & Key Isolation:** Third-party credentials (Google Gemini API keys) and service account privileges remain strictly on the server. Client applications never possess external API keys.
-3. **Defense Against Broken Object Level Authorization (BOLA):** The API derives user identity directly from the verified cryptographic payload of the Firebase ID token (`req.user.uid`). It rejects requests that attempt to modify someone else's child records by manipulating URL parameters.
+3. **Defense Against Broken Object Level Authorization (BOLA):** The API derives user identity directly from the verified cryptographic payload of the Firebase ID token (`request.firebaseUser.uid`). It rejects requests that attempt to modify someone else's child records by manipulating URL parameters.
 4. **Resilient Data Augmentation Pipeline:** Combines real-world structured data from an external REST API (**Open Library**) with generative intelligence (**Google Gemini API**) through a multi-tier fallback that operates smoothly even offline.
 
 ---
@@ -77,7 +77,7 @@ sequenceDiagram
 ## 3. Authentication, Authorization & Security Rules
 
 ### 3.1 Bearer Token Protocol (NFR-SEC-01)
-All endpoints except `/health` and `/api/v1/catalog/*` (public reads) require an HTTP `Authorization` header containing a valid Firebase ID Token:
+All endpoints except `/health`, `/ready`, and `/api/v1/catalog/*` (public reads) require an HTTP `Authorization` header containing a valid Firebase ID Token:
 ```http
 Authorization: Bearer <Firebase_ID_Token>
 ```
@@ -99,13 +99,14 @@ Base URL (Local Emulator): `http://127.0.0.1:5001/{projectId}/asia-southeast1/ap
 | Method | Path | Auth | Purpose | Success (Status / Body) | Error Codes |
 | :--- | :--- | :---: | :--- | :--- | :--- |
 | `GET` | `/health` | None | Public liveness probe | `200 OK`<br/>`{ "status": "ok" }` | `500` |
-| `GET` | `/api/v1/me` | Bearer | Return the authenticated Firebase UID (email and `createdAt` are planned, not implemented) | `200 OK`<br/>`{ "uid": "abc" }` (planned additions: `email`, `createdAt`) | `401 UNAUTHENTICATED` |
+| `GET` | `/ready` | None | Readiness probe verifying Firestore connectivity | `200 OK`<br/>`{ "status": "ready", "firestore": "connected" }` | `503 SERVICE_UNAVAILABLE` |
+| `GET` | `/api/v1/me` | Bearer | Return the authenticated Firebase UID | `200 OK`<br/>`{ "uid": "abc" }` | `401 UNAUTHENTICATED` |
 | `GET` | `/api/v1/me/export` | Bearer | Download all records for the signed-in caregiver and their children as JSON (`profile`, `children`, `plans`, `observations`, `journalEntries`) | `200 OK`<br/>`{ "exportedAt": "...", "profile": { "uid": "..." }, "children": [...], "plans": [...], "observations": [...], "journalEntries": [...] }` | `401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` (cross-account attempt) |
 | `DELETE` | `/api/v1/me` | Bearer | Permanently delete the signed-in caregiver's children (with subcollections), caregiver profile document, and Firebase Auth user (decision D5) | `204 No Content` | `401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND`<br/>`500 INTERNAL_ERROR`<br/>`503 SERVICE_UNAVAILABLE` |
 
 ### 4.2 Child Profile Management (FR-01)
 
-> **Contract merged in littlesteps-api PRs #21, #22 and #24. The four `GET`/`POST`/`GET`/`PATCH` routes are implemented and merged in littlesteps-api PRs #26 and #29.** The routes are defined in `openapi/openapi.yaml` and `docs/child-profile-contract.md`; the implementation tracks [API #8](https://github.com/Thesis-Titans/littlesteps-api/issues/8). `DELETE` is not covered by that contract and stays at its earlier planned shape. Decisions D1 (API-to-storage mapping; `caregiverId` never returned) and D4 (nickname normalization and HTTP details) were recorded on 30 October 2026. D5 (deletion execution) and D6 (production retention) are open.
+> **Implemented across `GET`, `POST`, `PATCH`, and `DELETE`.** Formalized in `openapi/openapi.yaml` and `docs/child-profile-contract.md`. Decisions D1–D4 (API-to-storage mapping, `caregiverId` never returned, nickname normalization) and D5–D6 (hard cascade deletion execution and manual retention policy) are recorded in [ADR-012](architecture-decisions.md).
 
 | Method | Path | Auth | Purpose | Success (Status / Body) | Error Codes |
 | :--- | :--- | :---: | :--- | :--- | :--- |
@@ -173,11 +174,9 @@ Implemented in `littlesteps-api` PR #57 (Issue #11) and documented in `openapi/o
 | `PATCH` | `/api/v1/children/:childId/journal/:entryId` | Bearer | Update entry content, date, or linked items | `200 OK`<br/>`{ "id": "uuid", ... }` | `400 INVALID_INPUT`<br/>`401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND`<br/>`422 UNPROCESSABLE_ENTITY` |
 | `DELETE`| `/api/v1/children/:childId/journal/:entryId`| Bearer | Permanently delete journal note | `204 No Content` | `401 UNAUTHENTICATED`<br/>`404 RESOURCE_NOT_FOUND` |
 
-### 4.6 Weekly Summary (FR-05)
+### 4.6 Child Bookshelf & Family Storybooks (FR-04b)
 
-### 4.7 Child Bookshelf & Family Storybooks (FR-04b)
-
-Implemented in `littlesteps-api` PR #65 and documented in `openapi/openapi.yaml`. Provides a permanent family bookshelf subcollection under `caregivers/{uid}/children/{childId}/books/{bookId}` where caregivers store picture books they own at home to generate interactive AI play ideas.
+Implemented in `littlesteps-api` and documented in `openapi/openapi.yaml`. Provides a permanent family bookshelf subcollection under `caregivers/{uid}/children/{childId}/books/{bookId}` where caregivers store picture books they own at home to generate interactive AI play ideas.
 
 | Method | Path | Auth | Purpose | Success (Status / Body) | Error Codes |
 | :--- | :--- | :---: | :--- | :--- | :--- |
@@ -190,7 +189,7 @@ Behaviour on `main`:
 * **Closed-Loop Play Planning:** Saved books can be selected from the child's bookshelf and passed directly to `POST /api/v1/ai/story-activity` to generate a tailored play companion, which is then added to the child's daily schedule via `POST /api/v1/children/:childId/plans`.
 * **Right to Erasure:** Deleting a child cascades to permanently delete all documents in their `books` subcollection.
 
-### 4.8 Weekly Summary (FR-05)
+### 4.7 Weekly Summary (FR-05)
 
 Implemented in `littlesteps-api` PR #54 (Issue #12) and documented in `openapi/openapi.yaml`. Returns a deterministic, non-diagnostic reflection summary aggregating completed activities, developmental domain coverage, and recorded milestone observations over a 7-day UTC ISO calendar week.
 
@@ -245,16 +244,29 @@ To satisfy the CIT 210 requirement for a live external REST Data API, `littleste
 * **Closed-Loop Planning:** Books returned by this search can be passed to `POST /api/v1/ai/story-activity` to generate an AI play companion that can be scheduled directly to the child's daily routine (`POST /api/v1/children/:id/plans`).
 * **Offline Resilience:** On upstream failure or network interruption, returns a curated search fallback list matching common search queries.
 
-### 5.3 Learning Catalog: `GET /api/v1/catalog/activities` and `/api/v1/catalog/activities/:id`
+### 5.3 Learning Catalog: Activities, Milestones, and Rhymes
 
-> **Implemented in littlesteps-api PR #20** (OpenAPI version 0.2.0, review fixes in PR #23), using synthetic fixtures until the source review in Docs #3 is complete.
+> **Firestore-backed catalog (`catalog_activities`, `catalog_milestones`, `catalog_rhymes`)** with a 5-minute server-side in-memory TTL cache (`Cache-Control: public, max-age=3600`), seeded via `npm run seed:catalog:emulator` or `npm run seed:catalog:prod` (`littlesteps-api/scripts/seed-catalog.mjs`).
 
-* **Access:** Public read-only (unauthenticated).
-* **List query parameters (all optional):** `ageBand` (the seven bands in §4.2), `type` (`activity`, `story`, `rhyme`, `game`), `domain` (`cognitive`, `motor`, `language`, `socioEmotional`), `language` (`en`, `fil`, `hil`), `setting` (`indoor`, `outdoor`, `either`), `limit` (integer 1-50, default 20). Invalid values return `400 INVALID_INPUT`.
-* **List response:** `200 OK` with `{ "total": n, "items": [CatalogActivity] }` and `Cache-Control: public, max-age=3600`.
-* **By ID:** the `id` path parameter must match `^[a-z0-9-]+$` and be at most 64 characters, otherwise `400 INVALID_INPUT`. An unknown id returns `404 RESOURCE_NOT_FOUND`. Success is `200 OK` with one `CatalogActivity` and `Cache-Control: public, max-age=3600`.
-* **`CatalogActivity` fields:** `id`, `title`, `type`, `language`, `setting`, `ageBand`, `domain`, `durationMinutes` (1-180), `durationEstimate`, `materials`, `instructions` (array of steps), `provenanceSource`, `status` (`reviewed_approved`, `synthetic_fixture`; the OpenAPI draft also lists `draft`, which `data-model.md` does not) and `limitations`.
-* **Empty until reviewed:** production serves an empty catalog (`total: 0`, `items: []`, and `404` by id) until reviewed content is loaded. Synthetic engineering fixtures are never served as approved content.
+* **Activities (`GET /api/v1/catalog/activities` and `GET /api/v1/catalog/activities/:id`):**
+  * **Access:** Public read-only (unauthenticated).
+  * **List query parameters (all optional):** `ageBand` (the seven bands in §4.2), `type` (`activity`, `story`, `rhyme`, `game`), `domain` (`cognitive`, `motor`, `language`, `socioEmotional`), `language` (`en`, `fil`, `hil`), `setting` (`indoor`, `outdoor`, `either`), `limit` (integer 1-50, default 20). Invalid values return `400 INVALID_INPUT`.
+  * **List response:** `200 OK` with `{ "total": n, "items": [CatalogActivity] }` and `Cache-Control: public, max-age=3600`.
+  * **By ID:** the `id` path parameter must match `^[a-z0-9-]+$` and be at most 64 characters, otherwise `400 INVALID_INPUT`. An unknown id returns `404 RESOURCE_NOT_FOUND`. Success is `200 OK` with one `CatalogActivity` and `Cache-Control: public, max-age=3600`.
+  * **`CatalogActivity` fields:** `id`, `title`, `type`, `language`, `setting`, `ageBand`, `domain`, `durationMinutes` (1-180), `durationEstimate`, `materials`, `instructions` (array of steps), `provenanceSource`, `status` (`reviewed_approved`, `source_checked`, `synthetic_fixture`, `draft`) and `limitations`.
+  * **Content gating:** AI recommendations only draw from `reviewed_approved` and `source_checked` items; `synthetic_fixture` items are reserved for automated tests and never served as approved content.
+
+* **Reference Milestone Prompts (`GET /api/v1/catalog/milestones`):**
+  * **Access:** Public read-only (unauthenticated).
+  * **Query parameters (all optional):** `ageBand` (e.g., `0-11 months` through `60-71 months`), `domain` (`cognitive`, `motor`, `language`, `socioEmotional`), `limit` (integer 1-100, default 50). Invalid values return `400 INVALID_INPUT`.
+  * **Response:** `200 OK` with `{ "total": n, "items": [CatalogMilestone] }` and `Cache-Control: public, max-age=3600`.
+  * **`CatalogMilestone` fields:** `id`, `domain`, `title`, `lookFor` (array of observable caregiver cues), `ageBand`, `provenance`, `status`.
+
+* **Philippine Rhymes & Action Songs (`GET /api/v1/catalog/rhymes`):**
+  * **Access:** Public read-only (unauthenticated).
+  * **Query parameters (all optional):** `domain` (`cognitive`, `motor`, `language`, `socioEmotional`), `language` (`en`, `fil`, `hil`), `limit` (integer 1-100, default 50). Invalid values return `400 INVALID_INPUT`.
+  * **Response:** `200 OK` with `{ "total": n, "items": [CatalogRhyme] }` and `Cache-Control: public, max-age=3600`.
+  * **`CatalogRhyme` fields:** `id`, `title`, `subtitle`, `domain`, `domainLabel`, `language`, `lyrics` (array of lines), `actionPrompt`, `materials`, `durationMinutes`, `provenanceSource`, `status`.
 
 ### 5.4 Weather Hint: `GET /api/v1/catalog/weather`
 
@@ -295,7 +307,7 @@ LittleSteps integrates generative intelligence to enhance learning without relyi
 #### `POST /api/v1/ai/recommendations`
 Suggests up to three reviewed catalog activities for an age band, using only non-identifying parameters. Requires a Bearer token.
 
-> **Status:** implemented and merged in littlesteps-api PR #28 (30 October 2026); Gemini provider added in API PR #34; guardrailed hybrid custom material adaptation (`allowCustom: true`, `source: "ai_custom"`) merged in API PR #70 and upgraded to 3-layer defense-in-depth guardrails in API PR #73. The Gemini provider is off by default: it is used only when `GEMINI_API_KEY` and a pinned stable `GEMINI_MODEL` (e.g., `gemini-3.5-flash-lite`) are both set; otherwise, and on any provider failure, the response is the Tier 3 catalog fallback. Verified in backend CI (`npm test`) and local demo mode (`SERVE_SYNTHETIC_CATALOG=true`, `DEMO_ALLOW_SYNTHETIC_AI=true`).
+> **Status:** implemented and merged in littlesteps-api PR #28 (30 October 2026); Gemini provider added in API PR #34; guardrailed hybrid custom material adaptation (`allowCustom: true`, `source: "ai_custom"`) merged in API PR #70 and upgraded to 3-layer defense-in-depth guardrails in API PR #73. The Gemini provider is off by default: it is used only when `GEMINI_API_KEY` and a pinned stable `GEMINI_MODEL` (e.g., `gemini-3.5-flash-lite`) are both set; otherwise, and on any provider failure, the response is the Tier 3 catalog fallback. Verified in backend CI (`npm test`) and Firestore-backed `catalog_activities` (`reviewed_approved` and `source_checked` items).
 
 * **Request body (strict):** unknown fields are rejected with `400`, never ignored, so `childId`, nicknames, notes and similar fields cannot be sent.
 
@@ -334,7 +346,7 @@ Suggests up to three reviewed catalog activities for an age band, using only non
     "provenance": { "badge": null, "label": "Our picks", "disclaimer": "Observational play suggestion only. Not developmental assessment.", "model": null, "reviewed": true }
   }
   ```
-  The `activity` object is abbreviated above; see section 5.2 for its fields.
+  The `activity` object is abbreviated above; see section 5.3 for its fields.
 * **Empty results:** with an empty reviewed catalog the response is `200` with `suggestions: []` and `reason: "NO_REVIEWED_CONTENT"`. When the catalog has content but nothing matches the request, the response is `200` with an empty `suggestions` list and no `reason`. Clients should show an empty state, not an error.
 * **Errors:** `400 INVALID_INPUT` with `details` (`{ "field", "issue" }`; an unknown field is reported as `"Unknown field"`), `401 UNAUTHENTICATED`, `500 INTERNAL_ERROR`. `429 RATE_LIMITED` with `Retry-After` (see section 6.2). Every authenticated request counts toward the limit, including one that later fails validation. A provider failure is never an error response.
 * **Privacy boundary:** the request carries no child or caregiver identifiers. The provider prompt contains only age band, time, setting, cleaned materials (lowercased, control characters removed, truncated, de-duplicated), language, the pick count, and the id, title, domain and materials of candidate catalog items. It never contains user ID, token, email, child data, observations or journal text. Logs record only the event name, tier, latency and error class, never prompts, replies, materials or user identifiers.
@@ -373,6 +385,23 @@ Generates companion play and discussion activities based on a real book selected
   }
   ```
 * **Resilience and Fallback:** Bounded at 8 seconds. If provider is unconfigured, times out, throws, or provider output fails schema or non-diagnostic denylist validation, the endpoint gracefully falls back to deterministic Tier 3 catalog ranking matched on age band and subjects (`tier: 3`, `source: "catalog"`, `badge: null`).
+
+#### `POST /api/v1/ai/adapt`
+
+Adapts an existing reviewed catalog activity to fit a caregiver's immediate constraint without inventing clinical claims. Requires a Bearer token and shares the hourly AI rate limits (10/hr per user, 30/hr per IP).
+
+* **Request Payload (strict):** unknown or identifying fields are rejected with `400 INVALID_INPUT`.
+
+  | Field | Type | Rules |
+  | :--- | :--- | :--- |
+  | `activityId` | string, required | 1 to 100 characters referencing a catalog activity |
+  | `adjustment` | string, required | One of `shorter`, `easier`, `harder`, `missing_material` |
+  | `missingMaterial` | string, optional | Up to 60 characters (used when `adjustment` is `missing_material`) |
+  | `ageBand` | string, optional | One of the 7 canonical age bands (`0-5m` to `60-71m`) |
+
+* **Response `200 OK`** (`Cache-Control: no-store`):
+  Returns `{ "adapted": { "activityId", "originalTitle", "adaptedTitle", "adjustment", "instructions", "materials", "safetyNotice", "explanation" }, "source": "ai" | "fallback", "tier": 1 | 2, "provenance": { "badge": "Suggested by AI" | null, "disclaimer": "...", "model": "<GEMINI_MODEL>" | null } }`.
+* **Errors & Fallback:** Returns `404 RESOURCE_NOT_FOUND` if `activityId` does not exist in the catalog, `400 INVALID_INPUT`, `401 UNAUTHENTICATED`, `413 PAYLOAD_TOO_LARGE`, or `429 RATE_LIMITED`. On Gemini timeout, error, or validation failure, automatically falls back to deterministic Tier 2 rule-based adaptation (`tier: 2`, `source: "fallback"`, `badge: null`).
 
 ### 6.2 The Fallback Hierarchy
 
@@ -422,9 +451,9 @@ All error responses strictly follow the standardized JSON error envelope:
 | Route group | `Cache-Control` |
 | :--- | :--- |
 | Public catalog (`/api/v1/catalog/*`) | `public, max-age=3600` |
-| Catalog books fallback response | `public, max-age=60` |
-| AI routes (`/api/v1/ai/*`; `/ai/recommendations` is implemented, api PR #28), including its `429` response | `no-store` |
-| Authenticated routes: `/health` and `/api/v1/me` (implemented); `/api/v1/children` and `/api/v1/children/{childId}` (implemented, api PRs #26 and #29); `DELETE` (planned) | `no-store` |
+| Catalog books and weather fallback responses | `public, max-age=60` |
+| AI routes (`/api/v1/ai/recommendations`, `/api/v1/ai/story-activity`, `/api/v1/ai/adapt`), including `429` responses | `no-store` |
+| Health, readiness, and authenticated routes (`/health`, `/ready`, `/api/v1/me*`, `/api/v1/children*`) and all error responses | `no-store` |
 
 ### Complete HTTP Status to Error Code Mapping Table
 
@@ -432,14 +461,14 @@ All error responses strictly follow the standardized JSON error envelope:
 | :---: | :--- | :--- | :--- |
 | **`400`** | `INVALID_INPUT` (a body that is not valid JSON returns `INVALID_JSON`) | Zod validation failure, missing required fields, invalid catalog query or id format; the envelope includes `details` | Client highlights field errors |
 | **`401`** | `UNAUTHENTICATED` | Missing or invalid Bearer token | Client redirects to sign-in |
-| **`403`** | `ORIGIN_NOT_ALLOWED` | Request from an origin not in the CORS allowlist (implemented) | Client shows access denied alert |
+| **`403`** | `ORIGIN_NOT_ALLOWED` | Request from an origin not in the CORS allowlist | Client shows access denied alert |
 | **`404`** | `RESOURCE_NOT_FOUND` | Child ID, activity, or journal note does not exist OR belongs to another caregiver (BOLA) | Client shows item not found; prevents resource existence leakage |
 | **`422`** (Unprocessable Content, [RFC 9110 §15.5.21](https://www.rfc-editor.org/rfc/rfc9110#section-15.5.21)) | `UNPROCESSABLE_ENTITY` | Business logic violation (e.g. child birth month in the future or more than 71 months ago on create/edit, or creating a 21st child) | Client displays business rule explanation |
-| **`429`** | `RATE_LIMITED` | Implemented on `POST /api/v1/ai/recommendations` only (api PR #33): more than 10 requests in the UTC clock hour for the signed-in user, or the per-address cap (default 30 per hour). Planned for other endpoints | Client shows the rate-limited state or uses the Tier 3 catalog; response carries `Retry-After` with the real seconds until the window resets (1 to 3600) |
-| **`413`** | `PAYLOAD_TOO_LARGE` | Request body over the 100KB limit. Message: "The request body is too large." Sent with `no-store` (implemented, api PR #32) | Client shortens the request |
-| **`500`** | `INTERNAL_ERROR` | Unhandled server exception | Client displays generic error toast; hides internal stack traces |
+| **`429`** | `RATE_LIMITED` | Enforced across AI endpoints (`/ai/recommendations`, `/ai/story-activity`, `/ai/adapt`): more than 10 requests in the UTC clock hour for the signed-in user, or the per-address cap (default 30 per hour) | Client shows the rate-limited wait notice alongside Tier 3 catalog picks; response carries `Retry-After` with the real seconds until the window resets (1 to 3600) |
+| **`413`** | `PAYLOAD_TOO_LARGE` | Request body over the 100KB limit. Message: "The request body is too large." Sent with `no-store` | Client shortens the request |
+| **`500`** | `INTERNAL_ERROR` | Unhandled server exception | Client displays generic error alert; hides internal stack traces |
 | **`502`** | `UPSTREAM_SERVICE_ERROR`| Open Library or Gemini API unreachable | Server automatically triggers internal cached or deterministic fallback |
-| **`503`** | `SERVICE_UNAVAILABLE` | Transient conflict: the transaction that counts and creates a child, or the one that updates it (`POST /api/v1/children` or `PATCH /api/v1/children/{childId}`) was aborted by contention after the server's retries. This is not an AI provider failure (see `502` and `504`). Sent with `Retry-After: 1` and `no-store` | Client retries the same request after a moment |
+| **`503`** | `SERVICE_UNAVAILABLE` | Transient Firestore transaction contention (`POST /api/v1/children` or `PATCH /api/v1/children/{childId}`) or failed `/ready` check. Sent with `Retry-After: 1` and `no-store` | Client retries the same request after a moment |
 | **`504`** | `GATEWAY_TIMEOUT` | Upstream provider exceeds 8-second timeout | Server automatically triggers fallback response |
 
 ---

@@ -38,7 +38,7 @@
     <text x="120" y="16" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">http (^1.6.0)</text>
     <text x="12" y="42" font-size="8.8" font-weight="600" fill="#1F634D">Authenticated REST Networking</text>
     <text x="12" y="57" font-size="8.2" fill="#5A655F">• Centralized ApiClient &amp; AuthService</text>
-    <text x="12" y="71" font-size="8.2" fill="#5A655F">• Firebase bearer tokens &amp; 8s timeouts</text>
+    <text x="12" y="71" font-size="8.2" fill="#5A655F">• Firebase bearer tokens &amp; 10s timeouts</text>
     <text x="12" y="85" font-size="7.8" fill="#71717A">lib/services/api_client.dart</text>
   </g>
 
@@ -82,7 +82,7 @@
     <rect width="240" height="24" rx="4" fill="#F4F2E8"/>
     <text x="120" y="16" font-size="9.5" font-weight="700" fill="#2D312E" text-anchor="middle">url_launcher (^6.3.3)</text>
     <text x="12" y="42" font-size="8.8" font-weight="600" fill="#1F634D">External Citation Portals</text>
-    <text x="12" y="57" font-size="8.2" fill="#5A655F">• Opens ECCD, WHO, CDC, AAP &amp; Open-Meteo</text>
+    <text x="12" y="57" font-size="8.2" fill="#5A655F">• Opens ECCD, DepEd, WHO, CDC &amp; AAP</text>
     <text x="12" y="71" font-size="8.2" fill="#5A655F">• Safe external browser launch helper</text>
     <text x="12" y="85" font-size="7.8" fill="#71717A">lib/utils/url_helper.dart</text>
   </g>
@@ -105,8 +105,8 @@
     <rect width="240" height="24" rx="4" fill="#E2E8E2"/>
     <text x="120" y="16" font-size="9.5" font-weight="700" fill="#1F634D" text-anchor="middle">flutter_lints (^6.0.0 · dev)</text>
     <text x="12" y="42" font-size="8.8" font-weight="600" fill="#1F634D">Static Code Analysis</text>
-    <text x="12" y="57" font-size="8.2" fill="#5A655F">• Effective Dart lint rules in CI</text>
-    <text x="12" y="71" font-size="8.2" fill="#5A655F">• Enforces 0 issues on flutter analyze</text>
+    <text x="12" y="57" font-size="8.2" fill="#5A655F">• Effective Dart &amp; public_member_api_docs</text>
+    <text x="12" y="71" font-size="8.2" fill="#5A655F">• Enforces 0 issues (--fatal-infos)</text>
     <text x="12" y="85" font-size="7.8" fill="#71717A">analysis_options.yaml</text>
   </g>
 </svg>

@@ -3,8 +3,8 @@
 **Status:** Canonical Content Sourcing Baseline  
 **Governing Standard:** Republic Act No. 12199 (ECCD System Act) & RA 10173  
 **Owner:** Vincent (Backend & Content Lead)  
-**Last Reviewed:** 2026-10-30  
-**Related Documents:** [Research Register](research-register.md), [Product Scope](product-scope.md), [API Reference & Integration Guide](api-reference.md)
+**Last Reviewed:** 2026-11-27  
+**Related Documents:** [Product Scope](product-scope.md), [Data Model Specification](data-model.md), [API Reference & Integration Guide](api-reference.md), [Security, Privacy, and AI Safeguards](security-privacy-ai.md)
 
 ---
 
@@ -102,7 +102,8 @@ Philippine government publications are subject to specific legal conditions unde
 | **NELC — LRP 7 (Creative Resources, Songs & Rhymes)** | ECCD Council | 0–4 years | Traditional action songs, poems, rhymes, and creative movement. | Third-party borrowed works protected under RA 8293. Traditional folklore is separated from modern works, but published arrangements and translations may be protected. Unavailable for content authoring until permissions confirmed. | Official package identified; not inspected; provisional. Creative assets not audited. | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
 | **DepEd MATATAG Kindergarten Curriculum Guide** | Department of Education (DepEd) | 5–6 years (60–71 mo UX) | Foundational learning domains: Literacy, Numeracy, Socio-Emotional, Motor Development. | Official DepEd curriculum file (33-page file titled "MATATAG Curriculum Kindergarten", file created 30 August 2023 per its PDF metadata; the file states no DepEd Order number or edition year. The portal page, opened 2026-10-30, lists it as the Kindergarten download and cites only DM 54, s. 2023 for the pilot implementation of the MATATAG Curriculum, not as this guide's issuance; [MATATAG Portal](https://www.deped.gov.ph/matatagcurriculumk147/)). | **Author-checked**; competencies 8 and 23 confirmed (PDF pp. 18–19). | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
 | **Philippine Early Childhood Development (ECD) Checklist** *(not LRP 8: in the compiled file LRP 8 is the Family Support Program)* | ECCD Council | 0–59 months | Professional assessment checklist used by trained Child Development Teachers (CDTs) and Child Development Workers (CDWs) for early identification of delays. | **Strictly non-diagnostic in LittleSteps.** Do NOT reproduce scoring, calculate developmental quotients, or convert to parent-facing screening tool. | **Restricted professional tool**; not in the compiled LRP file; not inspected; provisional. Non-diagnostic observation prompts only. | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
-| **CDC Milestone Checklists** | US CDC | 0–5 years | Educational references for milestone prompts. | US CDC educational resource. While general government text may be public domain, specific checklists require independent verification. Must NOT be presented as a validated Philippine instrument. | **Educational reference only**; secondary cross-reference. | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
+| **WHO & UNICEF Nurturing Care Framework & *Care for Child Development (CCD)*** | WHO & UNICEF | 0–5 years | Evidence-based global play, responsive caregiving, and everyday household learning activities (`nurturing-care.org`). | Global public health educational guidance; used as secondary cross-reference alongside Philippine ECCD standards. | **Educational cross-reference**; secondary global baseline for infant/toddler/preschool home play. | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
+| **CDC Milestone Checklists (*Learn the Signs. Act Early.*)** | US CDC | 0–5 years | Educational references for milestone prompts and parent play tips (`cdc.gov/act-early`). | US CDC educational resource. While general government text may be public domain, specific checklists require independent verification. Must NOT be presented as a validated Philippine instrument. | **Educational reference only**; secondary cross-reference. | quote: unconfirmed; adapt: unconfirmed; link: unconfirmed |
 
 ---
 
@@ -559,11 +560,11 @@ limitations: "Provisional Academic Reference — Pending Review. Educational pro
 
 ---
 
-## 5.2 Milestone Prompts Catalog — Flutter App Developmental Observation Prompts
+## 5.2 Milestone Prompts Catalog (`catalog_milestones` in Cloud Firestore)
 
-The following are the 17 developmental observation prompts bundled as static content in the Flutter app (`lib/models/milestone.dart`), displayed on the **Milestones** screen filtered by the active child's age band. Authored by **Vincent John A. Tamaño** (WP-B4, Issue #6). Every record is **author-checked only** (`source_checked`) and awaits subject-matter adviser review; none is `reviewed_approved` for production catalog use. Source attribution follows UI/UX Spec §2.6 wording rules.
+The developmental observation prompts below are stored in Cloud Firestore (`catalog_milestones`, seeded from `littlesteps-api/seed/catalog-milestones.json`) and served dynamically via `GET /api/v1/catalog/milestones` with zero hardcoded prompt arrays in client binaries. The catalog spans six age bands (`0–11 months` through `60–71 months` DepEd MATATAG Kindergarten). Every record is **author-checked (`source_checked`)** and awaits subject-matter adviser sign-off (`reviewed_approved`) under Docs Issue #3. User-facing screens display clean source attributions (e.g., `ECCD Council NELF`, `DepEd MATATAG`, `CDC`, `WHO/UNICEF`) alongside the non-diagnostic notice, while internal review status is governed here and in Firestore metadata.
 
-> **Non-Diagnostic Commitment:** No prompt title, `look_for` cue, or provenance line uses language that scores, ranks, or labels a child's development. The screen shows "Observed on [date]" / "Not seen yet" only — per UI/UX Spec §7 J3 and the banned-words policy enforced in `milestones_screen_test.dart`.
+> **Non-Diagnostic Commitment:** No prompt title, `look_for` cue, or provenance line uses language that scores, ranks, or labels a child's development. Screens show `"Seen on [date]"` / `"Not seen yet"` / `"Not sure"` only — verified continuously by automated banned-words tests in Flutter and API CI.
 
 ---
 
@@ -835,9 +836,45 @@ Aligns with NELF (2010) Annex 4 printed pp. 95–105 (37–71 months; 4–5 year
 
 ---
 
-### 5.2.6 Banned-Words Audit
+### 5.2.6 Age Band: 60–71 months (Kindergarten Transition)
 
-All 17 prompts above were checked against the non-diagnostic banned-word list from `milestones_screen_test.dart`. Flutter CI enforces this continuously.
+Aligns with DepEd MATATAG Curriculum – Kindergarten (competencies inspected on PDF pp. 18–19) and NELF (2010) Annex 4 printed pp. 95–109 (61–71 month indicators). Source-checked; pending adviser review.
+
+```yaml
+- milestone_id: "lan-60-01"
+  domain: language
+  title: "Retells familiar stories and notices starting sounds"
+  age_band: "60-71 months"
+  provenance: "Source: DepEd MATATAG Curriculum - Kindergarten (Literacy)"
+  review_status: source_checked
+
+- milestone_id: "mot-60-01"
+  domain: motor
+  title: "Hops cleanly on one foot and draws basic shapes"
+  age_band: "60-71 months"
+  provenance: "Source: DepEd MATATAG Curriculum - Kindergarten & CDC 5-year tips"
+  review_status: source_checked
+
+- milestone_id: "cog-60-01"
+  domain: cognitive
+  title: "Counts up to ten objects and extends simple patterns"
+  age_band: "60-71 months"
+  provenance: "Source: DepEd MATATAG Curriculum - Kindergarten (Numeracy)"
+  review_status: source_checked
+
+- milestone_id: "soc-60-01"
+  domain: socioEmotional
+  title: "Follows simple rules and helps with family routines"
+  age_band: "60-71 months"
+  provenance: "Source: DepEd MATATAG Curriculum - Kindergarten & CDC 5-year tips"
+  review_status: source_checked
+```
+
+---
+
+### 5.2.7 Banned-Words Audit
+
+All Firestore `catalog_milestones` prompts (across all six age bands) are continuously verified against the non-diagnostic banned-word list in automated CI tests.
 
 | Banned word | Present in any title? |
 |---|---|
@@ -852,13 +889,56 @@ All 17 prompts above were checked against the non-diagnostic banned-word list fr
 
 ---
 
+## 5.3 Philippine Rhymes & Action Songs Catalog (`catalog_rhymes` in Cloud Firestore)
+
+Curated traditional Philippine songs and rhymes stored in Cloud Firestore (`catalog_rhymes`, seeded from `littlesteps-api/seed/catalog-rhymes.json`, served via `GET /api/v1/catalog/rhymes`). Every entry is `source_checked` pending formal adviser and copyright-arrangement verification under Docs Issue #3:
+
+| ID | Title | Language | Domain | Source Attribution |
+| :--- | :--- | :---: | :--- | :--- |
+| `rhyme-bahay-kubo` | Bahay Kubo | `fil` | Language (`Talking`) | Traditional Philippine Folk Song; ECCD Council NELF (2010) |
+| `rhyme-pakitong-kitong` | Tong Tong Tong Pakitong-kitong | `fil` | Motor (`Moving`) | Traditional Philippine Folk Song; ECCD Council NELF (2010) |
+| `rhyme-pen-pen` | Pen-Pen de Sarapen | `fil` | Cognitive (`Thinking`) | Philippine Traditional Rhyme; ECCD Council NELF (2010), Annex 4, p. 76 |
+| `rhyme-ako-may-lobo` | Ako ay May Lobo | `fil` | Socio-Emotional (`Feelings`) | Traditional Philippine Children's Song; ECCD Council NELF (2010) |
+| `rhyme-tatlong-bibe` | Tatlong Bibe | `fil` | Motor (`Moving`) | Traditional Philippine Action Song; ECCD Council NELF (2010) |
+| `rhyme-ili-ili-tulog-anay` | Ili-Ili Tulog Anay | `hil` | Socio-Emotional (`Feelings`) | Hiligaynon Traditional Lullaby (Western Visayas); ECCD Council NELF (2010) |
+
+---
+
 ## 6. Definition of Done & Gating for Catalog Authoring
 
 This evidence gate ([Docs Issue #3, still open](https://github.com/Thesis-Titans/littlesteps-docs/issues/3)) establishes that:
 
 1. **Current Legal Baseline Established:** RA 12199 (repealing RA 10410) is verified as the governing statute (signed May 8, 2025; [Lawphil text](https://lawphil.net/statutes/repacts/ra2025/ra_12199_2025.html)); government sources (PIA, DepEd, ECCD Council) report the IRR was signed on August 5, 2026, while official text, Official Gazette publication, and effectivity date remain pending inspection.
 2. **Jurisdictional Boundaries Distinct:** ECCD Council covers <5 years; DepEd covers 5–8 years. LittleSteps product navigation categories (including the 60–71 month Kindergarten transition band) are recognized as separate product UX groupings and not statutory categories.
-3. **Primary Source Documents Author-Checked:** NELF (2010), NELC LRP 3, and the DepEd MATATAG Kindergarten Curriculum – Kindergarten were checked by the author. Page locators are recorded per record as printed (NELF) or PDF (LRP) pages and were confirmed against the files on 2026-10-30; public URLs and access dates are `TODO` except for MATATAG. Other LRPs are identified but not inspected.
-4. **Item-Level Source-Checked Candidates (`source_checked`):** Candidate activities across all 7 LittleSteps UX bands are drafted into the provenance YAML schema. They are author-checked only and await subject-matter adviser review; Docs Issue #3 stays open until that review happens.
-5. **Operational Gating to Production (`reviewed_approved`):** While engineering tracks (API, React, Flutter) operate safely using clearly labeled `synthetic_fixture` records with *"Provisional Academic Reference — Pending Review"*, no production catalog item will be marked `reviewed_approved` without formal faculty / early childhood subject-matter reviewer sign-off.
-6. **Automated Documentation CI Active:** The documentation repository (`littlesteps-docs`) runs automated verification on pull requests and pushes via GitHub Actions (`Docs CI/verify`), validating relative internal link integrity, image references, and issue template structure.
+3. **Primary Source Documents Author-Checked:** NELF (2010), NELC LRP 3, and the DepEd MATATAG Kindergarten Curriculum were checked by the author. Page locators are recorded per record as printed (NELF) or PDF (LRP) pages; public URLs and access dates stay `TODO` for ECCD Council pages returning HTTP 403. Other LRPs are identified but not inspected.
+4. **Firestore Catalog Seed Parity (`source_checked`):** All `catalog_activities`, `catalog_milestones`, and `catalog_rhymes` records in Cloud Firestore carry `status: "source_checked"` and documented citations; Docs Issue #3 stays open until formal subject-matter adviser sign-off upgrades records to `reviewed_approved`.
+5. **Clean Caregiver-Facing Citations:** User-facing screens present clear public source attributions and the non-diagnostic notice without exposing internal engineering review placeholders; governance review status is maintained in this specification and Firestore metadata.
+6. **Automated Documentation CI Active:** The documentation repository runs automated verification (`Docs CI/verify`) validating relative internal links, image paths, and issue-template frontmatter.
+
+---
+
+## 7. External Technical, Statutory & Public-Health Research Register
+
+*(Consolidated from `docs/research-register.md`.)* Entries identify authoritative external sources informing LittleSteps architecture, security, privacy, accessibility, and early-learning provenance. Recheck official documentation before any public production deployment because service terms, pricing, and regulations evolve.
+
+| Topic | Source | How It Informs LittleSteps |
+| :--- | :--- | :--- |
+| Firebase ID-token verification | https://firebase.google.com/docs/auth/admin/verify-id-tokens | API verifies client-issued ID tokens server-side and derives the trusted UID cryptographically. |
+| Firebase HTTP functions & Express | https://firebase.google.com/docs/functions/http-events | Express 5 gateway hosted on Firebase Cloud Functions (2nd Gen, `asia-southeast1`). |
+| Firebase pricing plans | https://firebase.google.com/docs/projects/billing/firebase-pricing-plans | Billing and budget-alert gate required before cloud deployment. |
+| OWASP REST & Input Validation | https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html | Explicit CORS allowlist, 100 KB payload limits, Zod validation, BOLA ownership checks, and safe error envelopes. |
+| OWASP API1:2023 (BOLA) | https://api-security.owasp.org/editions/2023/en/0xa1-broken-object-level-authorization | Per-object authorization verifying `child.caregiverId === uid` on every child-scoped route. |
+| Philippine Data Privacy Act IRR (NPC) | https://privacy.gov.ph/implementing-rules-regulations-data-privacy-act-2012/ | Transparency, data minimization, data subject rights (export/erasure), and breach-notification framing. |
+| RA 12199 — ECCD System Act (2025) | https://lawphil.net/statutes/repacts/ra2025/ra_12199_2025.html | Statutory allocation: ECCD Council (<5 years) and DepEd (5–8 years); IRR signed August 5, 2026 (full text pending inspection). |
+| ECCD Council resources (NELF / NELC) | https://eccdcouncil.gov.ph/resources/ | Author-checked NELF (2010) Annex 4 and NELC LRP 3 (2015) local copies; portal returned HTTP 403 to automated checker. |
+| DepEd MATATAG Kindergarten Curriculum | https://www.deped.gov.ph/matatagcurriculumk147/ | Author-checked 33-page Kindergarten guide (competencies 8 & 23, PDF pp. 18–19) informing the 60–71 month band. |
+| Open Library Developers & Licensing | https://openlibrary.org/developers/licensing | External REST bibliographic data source for children's picture books and covers ([ADR-010](architecture-decisions.md), [ADR-013](architecture-decisions.md)). |
+| Gemini API billing & terms | https://ai.google.dev/gemini-api/docs/billing | Free tier used for course evaluation with synthetic data and strict prompt minimization; paid tier/Vertex AI required before real caregiver pilot ([ADR-008](architecture-decisions.md)). |
+| Open-Meteo terms & CC BY 4.0 | https://open-meteo.com/en/terms | Free, keyless non-commercial weather API (<10,000 calls/day) with mandatory attribution and coarse 2-decimal coordinates ([ADR-009](architecture-decisions.md)). |
+| WCAG 2.2 AA & Material 3 Adaptive | https://www.w3.org/TR/WCAG22/ | Contrast (4.5:1 text, 3:1 boundaries), 48 px/dp touch targets, 200% text scaling, and Material 3 window-size classes (`< 600`, `600–839`, `≥ 840`). |
+| Iloilo City & CSWDO contextual sources | [Iloilo Today](https://www.iloilotoday.com/iloilo-city-programs-projects-for-ilonggo-children/), [PIDS Workforce Study](https://pids.gov.ph/details/news/in-the-news/phl-faces-shortage-of-33k-daycare-centers-study), [CSWDO La Paz–Lapuz](https://www.govserv.org/PH/Iloilo-City/649162218285374/CSWDO-Lapaz-Lapuz-District), [Daily Tribune IRR Report](https://tribune.net.ph/2026/08/10/dilg-deped-set-nationwide-standards-for-early-childhood-care) | Contextual background for regional ECCD framing and the separate CIT 246 simulated IT Project Management Plan exercise. |
+
+### Evidence Limits & Follow-Up
+- Sources inform engineering and educational provenance; they do not constitute legal compliance determinations or clinical validation.
+- Subject-matter adviser sign-off under Docs Issue #3 is required before marking catalog entries `reviewed_approved` for public production.
+- Confirm current Firebase billing, AI provider terms, and third-party rhyme/asset permissions before any non-academic deployment.
