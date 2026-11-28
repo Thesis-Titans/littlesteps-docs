@@ -256,7 +256,17 @@ export function buildAndInstallApk({ adb, serial, flutterDir, envMode }) {
 
   const apkPath = path.join(flutterDir, 'build', 'app', 'outputs', 'flutter-apk', `app-${buildMode}.apk`);
   ui.step(`[Android] Installing APK onto ${serial}...`);
-  const installed = runSync(adb, ['-s', serial, 'install', '-r', apkPath], { stdio: 'inherit' });
+  let installed = runSync(adb, ['-s', serial, 'install', '-r', apkPath]);
+  if (installed.stdout) process.stdout.write(installed.stdout);
+  if (installed.stderr) process.stderr.write(installed.stderr);
+
+  const installLog = `${installed.stdout || ''}\n${installed.stderr || ''}`;
+  if (installed.status !== 0 && installLog.includes('INSTALL_FAILED_UPDATE_INCOMPATIBLE')) {
+    ui.warn(`[Android] Existing build signature differs; reinstalling ${ANDROID_APP_ID} cleanly...`);
+    runSync(adb, ['-s', serial, 'uninstall', ANDROID_APP_ID], { stdio: 'inherit' });
+    installed = runSync(adb, ['-s', serial, 'install', '-r', apkPath], { stdio: 'inherit' });
+  }
+
   if (installed.status !== 0) {
     return { ok: false, error: `Failed to install APK on ${serial}.` };
   }

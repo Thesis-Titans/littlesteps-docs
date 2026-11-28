@@ -133,6 +133,7 @@ export async function runWizardCommand(ws, scriptPath) {
     adbReverse: action === 'android',
     wireless: '',
     device: '',
+    androidSerial: '',
     installApkMode: 'none',
     scrcpy: false,
     alwaysOnTop: false,
@@ -160,7 +161,7 @@ export async function runWizardCommand(ws, scriptPath) {
     }
 
     if (selectedSerial) {
-      opts.device = selectedSerial;
+      opts.androidSerial = selectedSerial;
       opts.adbReverse = await promptOrCancel(
         clack.confirm({
           message: 'Forward local emulator ports (adb reverse 5001/9099) to phone?',
@@ -182,6 +183,9 @@ export async function runWizardCommand(ws, scriptPath) {
       opts.installApkMode = apk;
       if (apk === 'local') opts.adbReverse = true;
       if (apk === 'prod') opts.adbReverse = false;
+      if (action === 'flutter' && apk === 'none') {
+        opts.device = selectedSerial;
+      }
 
       if (commandExists('scrcpy')) {
         const sc = await promptOrCancel(
