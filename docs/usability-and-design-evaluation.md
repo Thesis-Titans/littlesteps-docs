@@ -3,7 +3,7 @@
 **Status:** Canonical Usability, Walkthrough & Design Review Package  
 **Governing Standards:** ISO 9241-11:2018 (Usability), Nielsen's 10 Usability Heuristics, & WCAG 2.2 AA  
 **Owners:** Nherie C. Acebuche (Frontend Lead), Mae Daniella Faith C. Benjamin (Usability & QA Lead), Vincent John A. Tamaño (Docs & Content Lead), Mark Alvin C. Cadangin (Technical Lead)  
-**Last Reviewed:** 2026-11-27  
+**Last Reviewed:** 2026-11-28  
 **Related Documents:** [UI/UX Design Specification](ui-ux-design-specification.md), [DESIGN.md](DESIGN.md), [Product Scope](product-scope.md), [Traceability Matrix](traceability-matrix.md), [Security, Privacy, and AI Safeguards](security-privacy-ai.md)
 
 ---
@@ -94,7 +94,24 @@ Evaluators assess all core user journeys (FR-01..06 + PRQ-01..03) across React a
 | **Justin Ace D. Ardeña** (`@Justin-Ardena`) | Backend Lead | H1 (Offline status), H9 (API error envelopes & rate limits) | Reviewed |
 | **Mark Alvin C. Cadangin** (`@markalvincadangin`) | Project & Tech Lead | H6 (Recognition), H10 (Help & documentation), Synthesis | Reviewed |
 
-### 3.3 Key Usability & HCI Enhancements Verified Across Both Clients
+### 3.3 React Web Client Heuristic Audit & Verified Resolutions (2026-11-28)
+
+A full code and UX pass over `littlesteps-react` verified all 10 heuristics and resolved every Severity 1–3 finding before CIT 210 submission:
+
+| Heuristic | Initial Severity | Verified Finding | Verified Resolution |
+| :--- | :---: | :--- | :--- |
+| **H1: Visibility of System Status** | 2 | Offline alerts used `kind="info"` on Journal, This Week, and Storybooks instead of `kind="offline"`; This Week omitted an `"unauthorized"` alert handler. | Standardized offline notices to `InlineAlert kind="offline"`, added `SessionExpiredAlert` across screens including This Week. |
+| **H2: Match Between System & Real World** | 3 | Internal placeholders (`"Pending Review"`, `"Sample wording, not reviewed"`, `"still being checked"`, `"to be confirmed by the team"`) and banned copy (`"Generate adaptation"`, `"Not developmental assessment."`, hardcoded `"toddler"`) appeared in UI strings. | Replaced all internal placeholders and jargon with calm caregiver copy, `"Adjust activity"`, and published framework citations (CDC, WHO/UNICEF, ECCD Council, DepEd MATATAG, Open Library). |
+| **H3: User Control & Freedom** | 3 | Empty-week `"Explore play ideas"` set `window.location.hash = "#/explore"` (no-op under `BrowserRouter`); `/forgot-password` linked to a non-existent route; Play Idea `<dialog>` lacked focus restoration; Settings disabled RA 10173 data export and account deletion. | Switched to `useNavigate()("/explore")`, added an inline Firebase password reset modal on Sign-In, unified modals on `ModalDialog` with `useRestoreFocus`, and wired live `GET /api/v1/me/export` and `DELETE /api/v1/me` in Settings. |
+| **H4: Consistency & Standards** | 2 | Chip toggle groups used invalid `role="radiogroup"`; inline `style={{ ... }}` and imperative image `onError` DOM mutation bypassed shared styling; auth forms duplicated password toggle markup. | Changed chip groups to `role="group"`, moved inline styles to tokenized CSS (`storybooks.css`, `milestones.css`, `this-week.css`), added declarative `StorybookCard`/`BookCover`, and shared `PasswordField`. |
+| **H5: Error Prevention** | 3 | `JournalScreen` and `ThisWeekScreen` omitted `key={activeChild.id}`, allowing unsaved journal drafts or filters to carry over when switching children. | Added `key={activeChild.id}` on inner child-scoped views so switching children always starts clean. |
+| **H6: Recognition Rather Than Recall** | 3 | Milestones bundled only `12-23m` prompts (leaving the other 6 age bands empty) and Today's sidebar hardcoded three `12-23m` cues for every child. | Wired Milestones to live `GET /api/v1/catalog/milestones` with full 7-band fallback (`0-5m` to `60-71m`) and populated Today's sidebar from the active child's age band. |
+| **H7: Flexibility & Efficiency of Use** | 2 | Today's Weather Hint only rendered a CTA on rainy weather and routed to `/explore` without preselecting `setting` in `IdeaHelper`. | Made Weather Hint CTA symmetric (`"Find indoor ideas"` / `"Find outdoor ideas"`) and passed route state `{ presetSetting }` to preselect `"Where will you play?"`. |
+| **H8: Aesthetic & Minimalist Design** | 1 | Retry buttons used inline top margins instead of `InlineAlert action`; Storybooks duplicated card markup across tabs; `catalog.css` mixed catalog and storybook rules. | Standardized `InlineAlert action={...}`, extracted reusable `StorybookCard`, and split `storybooks.css` out of `catalog.css`. |
+| **H9: Error Diagnosis & Recovery** | 2 | Journal offline retry constructed a synthetic `FormEvent` cast; activity adaptation relied on `as unknown as` casts. | Extracted clean `saveEntry()` handler and typed optional fields on `AdaptedActivitySuggestion`. |
+| **H10: Help & Documentation** | 2 | About lacked published framework links; Privacy and Help still described export/deletion as unavailable. | Centralized links in `src/config/externalLinks.ts`, added clickable framework citations on About, and synced Privacy/Help with live RA 10173 controls. |
+
+### 3.4 Key Usability & HCI Enhancements Verified Across Both Clients
 1. **Standardized Iconography (H4):** Replaced informal unicode emojis on user-facing screens with tokenized SVG/Material icons.
 2. **Grounded Caregiver Copy (H2):** Removed promotional buzzwords and clinical/technical jargon; standardized `"Edit preferences"`, `"Another idea"`, and sentence-case labels per [UI/UX Design Specification](ui-ux-design-specification.md) §2.6.
 3. **Header & Alert Affordance Cleanup (H8, [ADR-014](architecture-decisions.md)):** Eliminated the alert-styled `.today-hero` callout banner and 5-way greeting repetition; integrated the time-of-day greeting cleanly into the screen header subtitle.
@@ -103,7 +120,7 @@ Evaluators assess all core user journeys (FR-01..06 + PRQ-01..03) across React a
 6. **Horizontal Filter Bar & Responsive Stability (H4, H8):** Fixed scroll-position reset on horizontal chip bars (`HorizontalScrollFade`) and modularized Material 3 adaptive layout wrappers (`AppWindowSize`, `ResponsiveContentBox`, `AdaptiveTwoPane`) in Flutter.
 7. **Honest Offline & Fallback Invariants (H1, H5, H9):** Disabling network connectivity renders calm offline banners, disables unsafe writes without claiming success, and seamlessly serves reviewed Tier 3 catalog picks when AI is unavailable.
 
-### 3.4 Key UX Architecture Justifications
+### 3.5 Key UX Architecture Justifications
 - **Structured AI Form Instead of Free Chat:** Prevents pediatric hallucination and clinical advice requests, guarantees RA 10173 prompt minimization (zero child names or journal text), and keeps interaction under 5 seconds for busy caregivers.
 - **Bibliographic Book Metadata Instead of In-App Full Text:** Respects copyright on Open Library works and reinforces screen-free parent-child reading; in-app readable traditional Philippine rhymes (*Bahay Kubo*, *Ili-Ili Tulog Anay*, etc.) support families without physical picture books on hand.
 
